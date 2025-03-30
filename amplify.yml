@@ -1,0 +1,18 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use 20 || nvm install 20  # Ensure Node.js 20 is used
+        - node -v  # Verify the Node.js version
+        - yarn install # or npm install
+    build:
+      commands:
+        - yarn build # or npm run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
