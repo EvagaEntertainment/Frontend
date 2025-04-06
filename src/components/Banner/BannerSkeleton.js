@@ -1,13 +1,9 @@
 import React from "react";
-
-const BannerSkeleton = ({ height }) => {
+import './Banner.css'
+const BannerSkeleton = () => {
   return (
     <div className="w-full">
-      <div
-        className={`w-full bg-gray-200 animate-pulse ${
-          height ? `h-[${height}]` : "h-[14rem]"
-        }`}
-      ></div>
+      <div className={`w-full bg-gray-200 banner-skeleton shimmer h-[16rem]`}></div>
     </div>
   );
 };

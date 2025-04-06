@@ -295,18 +295,18 @@ const AdminDashboard = () => {
           </>
         )}
         {selectedMenu === "Banner" && <BannerTable />}
-        {selectedMenu === "Coupons" && <CouponsTable />}
+        {selectedMenu === "Coupons" && <CouponsTable term={term}/>}
         {selectedMenu === "Fee Breakdown by Category" && (
           <FeeBreakdownbyCategory />
         )}
         {selectedMenu === "Gst by Category" && <GstTable />}
         {selectedMenu === "Feedback" && <FeedbackTable />}
         {selectedMenu === "Waitlist" && <WaitlistTable term={term} />}
-        {selectedMenu === "New Orders" && <NewOrdertable />}
-        {selectedMenu === "Confirmed Orders" && <ConfirmOrder />}
-        {selectedMenu === "Ongoing Orders" && <OngoingOrder />}
-        {selectedMenu === "Completed Orders" && <CompletedOrder />}
-        {selectedMenu === "Cancelled Orders" && <CancelledOrder />}
+        {selectedMenu === "New Orders" && <NewOrdertable term={term}/>}
+        {selectedMenu === "Confirmed Orders" && <ConfirmOrder term={term}/>}
+        {selectedMenu === "Ongoing Orders" && <OngoingOrder term={term}/>}
+        {selectedMenu === "Completed Orders" && <CompletedOrder term={term}/>}
+        {selectedMenu === "Cancelled Orders" && <CancelledOrder term={term}/>}
         {selectedMenu === "Customer Query" && <CustomerQueryTable />}
         {selectedMenu === "Vendor Query" && <VendorQueryTable />}
         {selectedMenu === "All Services" && <AllVendorService term={term} />}

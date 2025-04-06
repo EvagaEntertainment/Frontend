@@ -9,9 +9,12 @@ import formatCurrency from "../../utils/formatCurrency";
 import PriceBreakdown from "./PriceBreakdownTable";
 import ReusableModal from "../Modal/Modal";
 import DateRangePicker from "../../utils/DateRangePicker";
+import useDebounce from "../../utils/useDebounce";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
 const gatewayFeeRate = 0.02;
-function OngoingOrder() {
+function OngoingOrder({ term }) {
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [allOrder, setAllOrder] = useState([]);
   const getAllNewOrderApi = useServices(orderApis.getAllOngoingOrder);
   const [oneOrder, setOneOrder] = useState([]);
@@ -21,6 +24,7 @@ function OngoingOrder() {
   const downloadOrdersCSVApi = useServices(orderApis.downloadOrdersCSV);
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("viewOrder");
+  const debounce = useDebounce(term);
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -32,9 +36,14 @@ function OngoingOrder() {
     setOpenModal(false);
   };
   const getAllNewOrderHandle = async () => {
+    const queryParams = {
+      search: debounce || "",
+      page: page || 1,
+    };
     try {
-      const response = await getAllNewOrderApi.callApi();
+      const response = await getAllNewOrderApi.callApi(queryParams);
       setAllOrder(response ? response.orders : []);
+      setTotalPages(response ? response.pagination.totalPages : 1);
       console.log(response);
     } catch (error) {
       setAllOrder([]);
@@ -45,21 +54,24 @@ function OngoingOrder() {
     setOneOrder(response?.order);
     console.log(response);
   };
-  const downloadOrdersCSVApiHandle = async(fromDate, toDate) => {
+  const downloadOrdersCSVApiHandle = async (fromDate, toDate) => {
     const queryParams = {
       fromDate: fromDate || "",
       toDate: toDate || "",
       // sortOrder: sortvalue || "asc",
     };
     try {
-      const response =await downloadOrdersCSVApi.callApi("active", queryParams);
+      const response = await downloadOrdersCSVApi.callApi(
+        "active",
+        queryParams
+      );
 
       if (response && response) {
         const blob = new Blob([response], { type: "text/csv" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "activeOrder.csv"; 
+        a.download = "activeOrder.csv";
         a.click();
         window.URL.revokeObjectURL(url);
       } else {
@@ -71,7 +83,7 @@ function OngoingOrder() {
   };
   useEffect(() => {
     getAllNewOrderHandle();
-  }, []);
+  }, [page, debounce]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -150,22 +162,22 @@ function OngoingOrder() {
       >
         Download
       </button>
-    <TableComponet
-      columns={columns}
-      data={allOrder}
-      page={page}
-      itemsPerPage={10}
-      onPageChange={handlePageChange}
-    />
-    <ReusableModal
-      open={openModal}
-      onClose={handleCloseModal}
-      title={modalType === "viewOrder" ? "View Order" : ""}
-    >
-      {modalType === "viewOrder" && (
-        <>
-        
-        <div className="w-full mx-auto p-6 bg-white ">
+      <TableComponetWithApi
+        columns={columns}
+        data={allOrder}
+        page={page}
+        itemsPerPage={10}
+        onPageChange={handlePageChange}
+        totalPages={totalPages}
+      />
+      <ReusableModal
+        open={openModal}
+        onClose={handleCloseModal}
+        title={modalType === "viewOrder" ? "View Order" : ""}
+      >
+        {modalType === "viewOrder" && (
+          <>
+            <div className="w-full mx-auto p-6 bg-white ">
               <h2 className="text-2xl font-bold mb-4 text-primary">
                 Order Details
               </h2>
@@ -272,24 +284,24 @@ function OngoingOrder() {
                 </p>
               </div>
             </div>
-        <PriceBreakdown
-          totalPrice={oneOrder.totalPrice}
-          gstAmount={oneOrder?.gstAmount}
-          gstPercentage={oneOrder?.gstPercentage}
-          platformFee={oneOrder?.platformFee}
-          platformGstAmount={oneOrder?.platformGstAmount}
-          gatewayFeeRate={gatewayFeeRate}
-          feesPercentage={oneOrder?.feesPercentage || 12}
-        />
-        </>
-      )}
-          {modalType === "download" && (
+            <PriceBreakdown
+              totalPrice={oneOrder.totalPrice}
+              gstAmount={oneOrder?.gstAmount}
+              gstPercentage={oneOrder?.gstPercentage}
+              platformFee={oneOrder?.platformFee}
+              platformGstAmount={oneOrder?.platformGstAmount}
+              gatewayFeeRate={gatewayFeeRate}
+              feesPercentage={oneOrder?.feesPercentage || 12}
+            />
+          </>
+        )}
+        {modalType === "download" && (
           <div className="w-full flex items-center justify-center">
             <DateRangePicker onSearch={downloadOrdersCSVApiHandle} />
           </div>
         )}
-    </ReusableModal>
-  </div>
+      </ReusableModal>
+    </div>
   );
 }
 

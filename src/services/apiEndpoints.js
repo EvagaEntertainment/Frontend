@@ -117,6 +117,9 @@ const apiEndpoints = {
     getOnePackageReview: (serviceId, packageId) =>
       `review/package/${serviceId}/${packageId}`,
     addReviewWithUserId: `review/create-review`,
+    calculatedistance: `distance/calculate-distance`,
+    getVendorPincode: (vendorId) => `vender/getVendorPinCode/${vendorId}`,
+    getServiceableRadius: (vendorId) => `vender/getServiceableRadius/${vendorId}`,
   },
   admin: {
     register: "admin/registerAdmin",
@@ -192,6 +195,7 @@ const apiEndpoints = {
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",
+    getAllPopular: "packages/getOnePackagePerCategory",
     getOnePackage: (serviceId, packageId) =>
       `packages/get-one-package/${serviceId}/${packageId}`,
   },

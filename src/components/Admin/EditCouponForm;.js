@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   TextField,
   MenuItem,
@@ -36,7 +36,6 @@ const EditCouponForm = ({
     packageName: "",
     autoApplyCoupon: false,
   });
-  console.log(existingCoupon);
 
   const [couponId, setCouponId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -71,24 +70,21 @@ const EditCouponForm = ({
   const handleVendorPackageChange = (event) => {
     const selectedPackageId = event.target.value;
 
-    // Find the selected package details from the vendorPackageList
     const selectedPackage = vendorPackageList.find(
       (pkg) => pkg._id === selectedPackageId
     );
 
-    // Update the coupon state with the selected package ID and name
     setCoupon((prevState) => ({
       ...prevState,
-      selectedpackage: selectedPackageId, // Store the ID
-      packageName: selectedPackage?.title || "", // Store the name for display purposes
+      selectedpackage: selectedPackageId,
+      packageName: selectedPackage?.title || "",
     }));
   };
-  // Handle discount type change: clear old value when switching
-    useEffect(() => {
-      if (coupon?.vendor && selectedCategory) {
-        vendorpackagesHandle();
-      }
-    }, [coupon?.vendor, selectedCategory]);
+  useEffect(() => {
+    if (coupon?.vendor && selectedCategory) {
+      vendorpackagesHandle();
+    }
+  }, [coupon?.vendor, selectedCategory]);
   const vendorpackagesHandle = async () => {
     await vendorpackageListHandle(coupon?.vendor, selectedCategory);
   };
@@ -100,14 +96,10 @@ const EditCouponForm = ({
       discountAmount: newType === "amount" ? coupon.discountAmount : "",
       discountPercentage:
         newType === "percentage" ? coupon.discountPercentage : "",
-      cap: newType === "percentage" ? coupon.cap : "", // Clear cap when switching to amount
+      cap: newType === "percentage" ? coupon.cap : "",
     });
   };
   const debounce = useDebounce(vendorSearch);
-  // const handleVendorSearch = async (event) => {
-  //   const searchTerm = event.target.value;
-  //   setVendorSearch(searchTerm);
-  // };
   useEffect(() => {
     const fetchVendors = async () => {
       try {
@@ -144,26 +136,24 @@ const EditCouponForm = ({
       console.warn("onUpdate is not defined");
     }
   };
-  console.log(coupon);
-  const handleVendorSearch = (event) => {
-    const searchText = event.target.value;
-    setVendorSearch(searchText);
 
-    if (searchText.length > 0) {
-      setFilteredVendors(
-        vendorsList.filter((vendor) =>
-          vendor.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredVendors([]);
-    }
-  };
+  const handleVendorSearch = useCallback(() => {
+    const filter = vendorsList?.find((item) => {
+      return String(item?._id) === String(existingCoupon?.vendorId?._id);
+    });
+
+    setVendorSearch(filter);
+  }, [vendorsList, existingCoupon]);
+
+  // useEffect(() => {
+  //   handleVendorSearch();
+  // }, [handleVendorSearch]);
   const handleVendorSelect = (vendor) => {
-    setCoupon({ ...coupon, vendor: vendor._id }); // Store selected vendor's ID in the state
-    setVendorSearch(vendor.name); // Display the selected vendor's name in the input field
-    setFilteredVendors([]); // Clear the dropdown
+    setCoupon({ ...coupon, vendor: vendor._id });
+    setVendorSearch(vendor.name);
+    setFilteredVendors([]);
   };
+  // console.log(vendorSearch);
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
@@ -201,38 +191,7 @@ const EditCouponForm = ({
             fullWidth
             label="Search Vendor (Optional)"
             value={vendorSearch}
-            onChange={handleVendorSearch}
           />
-
-          {vendorSearch && filteredVendors.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                width: "100%",
-                backgroundColor: "white",
-                border: "1px solid #ccc",
-                zIndex: 10,
-                maxHeight: "200px",
-                overflowY: "auto",
-              }}
-            >
-              {filteredVendors.map((vendor) => (
-                <div
-                  key={vendor._id}
-                  onClick={() => handleVendorSelect(vendor)}
-                  style={{
-                    padding: "8px",
-                    cursor: "pointer",
-                    borderBottom: "1px solid #eee",
-                  }}
-                >
-                  {vendor.name}
-                </div>
-              ))}
-            </div>
-          )}
         </Grid>
 
         <Grid item xs={12}>

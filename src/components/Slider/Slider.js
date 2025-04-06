@@ -29,7 +29,7 @@ function Slider({ bannerData, height, isLoading }) {
     >
       {isLoading==="loading"
         ? Array.from({ length: 3 }).map((_, index) => (
-            <BannerSkeleton key={index} height={'16rem'} />
+            <BannerSkeleton key={index} height={height} />
           ))
         : bannerData?.map((item) => (
             <Banner

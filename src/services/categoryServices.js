@@ -4,7 +4,7 @@ import apiEndpoints from "./apiEndpoints";
 const categoryApi = {
   addCategory: (categoryData) =>
     apiService.post(apiEndpoints.category.add, categoryData, {
-      headers: { "Content-Type": "multipart/form-data" }, // Ensure correct headers for file upload
+      headers: { "Content-Type": "multipart/form-data" },
     }),
 
   getCategories: () => apiService.get(apiEndpoints.category.getAll),

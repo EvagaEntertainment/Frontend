@@ -27,6 +27,7 @@ import axios from "axios";
 import RecentlyViewedCard from "../components/Cards/RecentlyViewedCard";
 import HorizontalScroll from "../utils/HorizontalScroll";
 import BackButton from "../utils/globalBackButton";
+import commonApis from "../services/commonApis";
 function CheckOut() {
   const { auth } = useAuth();
   const history = useNavigate();
@@ -55,6 +56,9 @@ function CheckOut() {
   const validateOrderApi = useServices(orderApis.valiDateUserOrder);
   const getUserProfileApi = useServices(userApi.getUserProfile);
   const SuggestSimilarServicesApi = useServices(userApi.SuggestSimilarServices);
+  const calculatedistanceApi = useServices(commonApis.calculatedistance);
+  const getVendorPincodeApi = useServices(commonApis.getVendorPincode);
+  const [distanceAndCostData, setDistanceAndCostData] = useState([]);
   const getUserdetailhandle = async () => {
     const response = await getUserProfileApi.callApi(userId);
     setUserData(response);
@@ -133,7 +137,7 @@ function CheckOut() {
   const handleEditUserAddress = async (data) => {
     try {
       console.log(data);
-      
+
       const formData = new FormData();
       formData.append("Name", data?.addressName);
       formData.append("address", data?.Address);
@@ -179,10 +183,7 @@ function CheckOut() {
       "alternatePhone",
       response?.addresses.alternatePhone || ""
     );
-    setValueEditAddress(
-      "AddressType",
-      response?.addresses.AddressType || ""
-    );
+    setValueEditAddress("AddressType", response?.addresses.AddressType || "");
   };
   const handleDeleteOneUserAddress = async () => {
     const response = await deleteOneAddress.callApi(selectedAddressId);
@@ -346,6 +347,122 @@ function CheckOut() {
       console.error("Error in Order Creation or Payment:", error);
     }
   };
+  const getEstimatedDistanceAndCostHandle = async (userPincode, cartItems) => {
+    try {
+      const uniqueVendorIds = [
+        ...new Set(cartItems?.map((item) => item.vendorId)),
+      ];
+
+      const vendorPincodePromises = uniqueVendorIds.map((vendorId) =>
+        getVendorPincodeApi.callApi(vendorId)
+      );
+
+      const vendorPincodeResponses = await Promise.all(vendorPincodePromises);
+
+      const vendorPincodeMap = {};
+      vendorPincodeResponses.forEach((response, index) => {
+        if (response && response.pincode) {
+          vendorPincodeMap[uniqueVendorIds[index]] = response.pincode;
+        }
+      });
+
+      const distanceCalculationPromises = cartItems.map((item) => {
+        try {
+          const vendorPincode = vendorPincodeMap[item.vendorId];
+          if (!vendorPincode) {
+            return Promise.resolve({
+              error: `Could not get pincode for vendor ${item.vendorId}`,
+              itemId: item._id,
+            });
+          }
+
+          const formData = {
+            userPincode: userPincode,
+            vendorPincode: vendorPincode,
+          };
+
+          return calculatedistanceApi
+            .callApi(formData)
+            .then((distanceResponse) => {
+              const distance = distanceResponse.data.distance;
+              console.log(item.travelCharge, "item.travelCharge");
+
+              const { FreeUpto, Thereon } = item.travelCharge || {};
+              let travelCharge = 0;
+
+              if (distance > FreeUpto) {
+                travelCharge = (distance - FreeUpto) * Thereon;
+              }
+
+              return {
+                success: true,
+                data: {
+                  distance,
+                  cost: distanceResponse.data.cost,
+                  travelCharge,
+                },
+                itemId: item._id,
+                vendorId: item.vendorId,
+              };
+            })
+            .catch((error) => ({
+              error: error.message || "Failed to calculate distance",
+              itemId: item._id,
+              vendorId: item.vendorId,
+            }));
+        } catch (err) {
+          console.error("Error in map iteration:", err);
+          return Promise.resolve({
+            error: err.message || "Unexpected error",
+            itemId: item._id,
+          });
+        }
+      });
+
+      const distanceResults = await Promise.all(distanceCalculationPromises);
+
+      const result = distanceResults.map((result) => {
+        if (result.success) {
+          return {
+            itemId: result.itemId,
+            vendorId: result.vendorId,
+            distance: result.data.distance,
+            cost: result.data.cost,
+            travelCharge: result.data.travelCharge,
+          };
+        } else {
+          return {
+            itemId: result.itemId,
+            vendorId: result.vendorId,
+            error: result.error,
+          };
+        }
+      });
+
+      return result;
+    } catch (error) {
+      console.error("Error in getEstimatedDistanceAndCostHandle:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    const fetchDistanceAndCost = async () => {
+      if (userSelectedAddress && cart?.items) {
+        try {
+          const result = await getEstimatedDistanceAndCostHandle(
+            userSelectedAddress?.pinCode,
+            cart?.items
+          );
+          setDistanceAndCostData(result);
+        } catch (error) {
+          console.error("Error fetching distance and cost:", error);
+        }
+      }
+    };
+
+    fetchDistanceAndCost();
+  }, [userSelectedAddress, cart]);
 
   if (!auth?.isAuthenticated || auth?.role !== "user") {
     return (
@@ -551,6 +668,7 @@ function CheckOut() {
             cart={cart}
             RemoveCode={RemoveCouponApiHandle}
             applyCoupon={handleApplyCoupon}
+            estimatedDistance={distanceAndCostData}
           />
         </div>
       </div>

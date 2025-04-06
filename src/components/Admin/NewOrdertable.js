@@ -9,10 +9,13 @@ import formatCurrency from "../../utils/formatCurrency";
 import ReusableModal from "../Modal/Modal";
 import PriceBreakdown from "./PriceBreakdownTable";
 import DateRangePicker from "../../utils/DateRangePicker";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
+import useDebounce from "../../utils/useDebounce";
 
 const gatewayFeeRate = 0.02;
-function NewOrdertable() {
+function NewOrdertable({ term }) {
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [allOrder, setAllOrder] = useState([]);
   const getAllNewOrderApi = useServices(orderApis.getAllNewOrder);
   const downloadOrdersCSVApi = useServices(orderApis.downloadOrdersCSV);
@@ -22,6 +25,7 @@ function NewOrdertable() {
   );
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("viewOrder");
+  const debounce = useDebounce(term);
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -33,9 +37,15 @@ function NewOrdertable() {
     setOpenModal(false);
   };
   const getAllNewOrderHandle = async () => {
+    const queryParams = {
+      search: debounce || "",
+      page: page || 1,
+    };
     try {
-      const response = await getAllNewOrderApi.callApi();
+      const response = await getAllNewOrderApi.callApi(queryParams);
       setAllOrder(response ? response.orders : []);
+      setTotalPages(response ? response.pagination.totalPages : 1);
+
       console.log(response);
     } catch (error) {
       setAllOrder([]);
@@ -46,21 +56,21 @@ function NewOrdertable() {
     setOneOrder(response?.order);
     console.log(response);
   };
-  const downloadOrdersCSVApiHandle = async(fromDate, toDate) => {
+  const downloadOrdersCSVApiHandle = async (fromDate, toDate) => {
     const queryParams = {
       fromDate: fromDate || "",
       toDate: toDate || "",
       // sortOrder: sortvalue || "asc",
     };
     try {
-      const response =await downloadOrdersCSVApi.callApi("new", queryParams);
+      const response = await downloadOrdersCSVApi.callApi("new", queryParams);
 
       if (response && response) {
         const blob = new Blob([response], { type: "text/csv" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "newOrder.csv"; 
+        a.download = "newOrder.csv";
         a.click();
         window.URL.revokeObjectURL(url);
       } else {
@@ -72,7 +82,8 @@ function NewOrdertable() {
   };
   useEffect(() => {
     getAllNewOrderHandle();
-  }, []);
+ 
+  }, [page, debounce]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -151,12 +162,13 @@ function NewOrdertable() {
       >
         Download
       </button>
-      <TableComponet
+      <TableComponetWithApi
         columns={columns}
         data={allOrder}
         page={page}
         itemsPerPage={10}
         onPageChange={handlePageChange}
+        totalPages={totalPages}
       />
       <ReusableModal
         open={openModal}

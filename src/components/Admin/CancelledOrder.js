@@ -9,9 +9,12 @@ import formatCurrency from "../../utils/formatCurrency";
 import PriceBreakdown from "./PriceBreakdownTable";
 import ReusableModal from "../Modal/Modal";
 import DateRangePicker from "../../utils/DateRangePicker";
+import useDebounce from "../../utils/useDebounce";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
 const gatewayFeeRate = 0.02;
-function CancelledOrder() {
+function CancelledOrder({ term }) {
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [allOrder, setAllOrder] = useState([]);
   const getAllNewOrderApi = useServices(orderApis.getAllCancelledOrder);
   const downloadOrdersCSVApi = useServices(orderApis.downloadOrdersCSV);
@@ -28,12 +31,17 @@ function CancelledOrder() {
     orderId: "",
     id: "",
   });
+  const debounce = useDebounce(term);
   const handleCloseModal = () => {
     setOpenModal(false);
   };
   const getAllNewOrderHandle = async () => {
+    const queryParams = {
+      search: debounce || "",
+      page: page || 1,
+    };
     try {
-      const response = await getAllNewOrderApi.callApi();
+      const response = await getAllNewOrderApi.callApi(queryParams);
       setAllOrder(response ? response.orders : []);
       console.log(response);
     } catch (error) {
@@ -48,7 +56,7 @@ function CancelledOrder() {
 
   useEffect(() => {
     getAllNewOrderHandle();
-  }, []);
+  }, [page, debounce]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -59,7 +67,10 @@ function CancelledOrder() {
       // sortOrder: sortvalue || "asc",
     };
     try {
-      const response = await downloadOrdersCSVApi.callApi("cancelled", queryParams);
+      const response = await downloadOrdersCSVApi.callApi(
+        "cancelled",
+        queryParams
+      );
 
       if (response && response) {
         const blob = new Blob([response], { type: "text/csv" });
@@ -151,12 +162,13 @@ function CancelledOrder() {
       >
         Download
       </button>
-      <TableComponet
+      <TableComponetWithApi
         columns={columns}
         data={allOrder}
         page={page}
         itemsPerPage={10}
         onPageChange={handlePageChange}
+        totalPages={totalPages}
       />
       <ReusableModal
         open={openModal}

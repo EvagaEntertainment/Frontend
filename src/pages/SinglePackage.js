@@ -61,6 +61,7 @@ function SinglePackage() {
       bio: response.getVendorDetails.bio,
       vendorId: response.data.vendorId,
     });
+
     const allMedia = [];
     if (response?.data?.services?.[0]?.values?.CoverImage) {
       const coverImage = response.data.services[0].values.CoverImage;
@@ -99,6 +100,25 @@ function SinglePackage() {
 
     setImages(allMedia);
   };
+  const sizeAndDimension =
+    singlePageData?.services?.[0]?.values?.["SizeAndDimension"] || [];
+  const sizeAndDimensionPrice = sizeAndDimension
+    .filter((dimension) => parseFloat(dimension?.Price))
+    .reduce((acc, dimension) => acc * parseFloat(dimension?.Price), 1);
+  const price =
+    singlePageData?.services?.[0]?.values?.Price ||
+    singlePageData?.services?.[0]?.values?.price ||
+    singlePageData?.services?.[0]?.values?.Pricing ||
+    singlePageData?.services?.[0]?.values?.Package?.[0]?.Rates ||
+    singlePageData?.services?.[0]?.values?.["OrderQuantity&Pricing"]?.[0]
+      ?.Rates ||
+    singlePageData?.services?.[0]?.values?.["Duration&Pricing"]?.[0]?.Amount ||
+    singlePageData?.services?.[0]?.values?.["SessionLength"]?.[0]?.Amount ||
+    singlePageData?.services?.[0]?.values?.["SessionLength&Pricing"]?.[0]
+      ?.Amount ||
+    singlePageData?.services?.[0]?.values?.["QtyPricing"]?.[0]?.Rates ||
+    sizeAndDimensionPrice;
+
   useEffect(() => {
     if (userId && (!cart || cart.length === 0)) {
       dispatch(fetchUserCart({ userId })).then((response) => {
@@ -126,7 +146,11 @@ function SinglePackage() {
     selectedsession,
     date,
     time,
-    pincode,securityAmount,setupPrice
+    pincode,
+    securityAmount,
+    setupPrice,
+    delivery,
+    travelCharge
   ) => {
     try {
       const formData = new FormData();
@@ -139,6 +163,8 @@ function SinglePackage() {
       formData.append("defaultPrice", Number(defaultPrice));
       formData.append("setupCost", Number(setupPrice));
       formData.append("security", Number(securityAmount));
+      formData.append("delivery", Number(delivery));
+      formData.append("travelCharge", JSON.stringify(travelCharge));
       formData.append("selectedSessions", JSON.stringify(selectedsession));
 
       const response = await addToCartApi.callApi(userId, formData);
@@ -216,23 +242,7 @@ function SinglePackage() {
           DataToRender={singlePageData?.services?.[0]?.values}
           experience={singlePageData?.YearofExperience}
           companyName={vendorProfile.name}
-          price={
-            singlePageData?.services?.[0]?.values?.Price ||
-            singlePageData?.services?.[0]?.values?.price ||
-            singlePageData?.services?.[0]?.values?.Pricing ||
-            singlePageData?.services?.[0]?.values?.Package?.[0]?.Rates ||
-            singlePageData?.services?.[0]?.values?.[
-              "OrderQuantity&Pricing"
-            ]?.[0]?.Rates ||
-            singlePageData?.services?.[0]?.values?.["Duration&Pricing"]?.[0]
-              ?.Amount ||
-            singlePageData?.services?.[0]?.values?.["SessionLength"]?.[0]
-              ?.Amount ||
-            singlePageData?.services?.[0]?.values?.[
-              "SessionLength&Pricing"
-            ]?.[0]?.Amount ||
-            singlePageData?.services?.[0]?.values?.["QtyPricing"]?.[0]?.Rates
-          }
+          price={price}
           eventData={singlePageData?.services?.[0]?.values?.EventType}
           tAndC={
             singlePageData?.services?.[0]?.values?.["Terms&Conditions"]
@@ -266,6 +276,7 @@ function SinglePackage() {
           packageIncartData={packageIncartData}
           serviceId={serviceId}
           packageId={packageId}
+          vendorId={vendorProfile?.vendorId}
         />
       </div>
     </motion.div>

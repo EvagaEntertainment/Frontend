@@ -24,7 +24,8 @@ function CheckoutSummary({
   selectedCouponCode,
   applyCoupon,
   editAddress,
-  platformGstAmount
+  platformGstAmount,
+  estimatedDistance,
 }) {
   const navigate = useNavigate();
 
@@ -36,7 +37,6 @@ function CheckoutSummary({
     setIsPlacingOrder(true);
     if (!selectedAddress) {
       editAddress(true);
-      // toast.error("Please select an address before placing the order!");
       setIsPlacingOrder(false);
       return;
     }
@@ -103,6 +103,11 @@ function CheckoutSummary({
     }
     return [];
   }, [totalWithFee, partialPaymentPart]);
+  const totalTravelCharge = estimatedDistance
+    ? estimatedDistance
+        .reduce((sum, item) => sum + (item.travelCharge || 0), 0)
+        .toFixed(2)
+    : "0.00";
   useEffect(() => {
     if (partialPaymentPart > 1) {
       setPartialAmount(paymentDetails);
@@ -209,6 +214,14 @@ function CheckoutSummary({
         <span className="text-textGray text-[22px]">
           {formatCurrency(totalWithFee)}
         </span>
+      </div>
+      <div className="text-normal flex justify-between font-semibold mb-6 mt-6">
+        <p className="text-esm text-textGray">
+          Your Estimated Travel Cost is{" "}
+          <span className="text-primary text-sm">₹{totalTravelCharge}</span>,
+          and this will be collected by the vendor at the time of service
+          delivery.
+        </p>
       </div>
 
       <div className="flex justify-center items-center">

@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from "react";
-import TableComponet from "../../utils/TableComponet";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineDelete } from "react-icons/md";
 import ReusableModal from "../Modal/Modal";
@@ -13,14 +12,15 @@ import { formatDate } from "../../utils/formatDate";
 import DeleteForm from "./DeleteForm";
 import { fetchCategories } from "../../context/redux/slices/categorySlice";
 import useDebounce from "../../utils/useDebounce";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
 
-const CouponsTable = memo(() => {
+const CouponsTable = memo((term) => {
   const [page, setPage] = useState(1);
   const [oneCouponData, setOneCouponData] = useState();
   const [vendorsList, setVendorsList] = useState(null);
   const [vendorPackageList, setVendorPackageList] = useState(null);
   const [couponId, setCouponId] = useState(null);
-  const { coupons } = useSelector((state) => state.coupon);
+  const { coupons,totalPages } = useSelector((state) => state.coupon);
   const addCoupons = useServices(adminActionsApi.addCoupons);
   const getOneCoupons = useServices(adminActionsApi.getOneCoupons);
   const editOneCoupons = useServices(adminActionsApi.editOneCoupons);
@@ -36,7 +36,7 @@ const CouponsTable = memo(() => {
   const { categories } = useSelector((state) => state.category);
   const allCategoriesOption = { _id: "all", name: "All" };
   const [isCategoriesFetched, setIsCategoriesFetched] = useState(false);
-
+  const debounce = useDebounce(term);
   useEffect(() => {
     if (!isCategoriesFetched && (!categories || categories.length === 0)) {
       dispatch(fetchCategories()).then((response) => {
@@ -57,7 +57,8 @@ const CouponsTable = memo(() => {
     cap,
     selectedCategory,
     vendor,
-    applyAutoCoupon,selectedpackage
+    applyAutoCoupon,
+    selectedpackage,
   }) => {
     const formData = new FormData();
     formData.append("code", code);
@@ -123,22 +124,25 @@ const CouponsTable = memo(() => {
       vendorId,
       categoryId
     );
-    setVendorPackageList(response?.services)
-
-    
+    setVendorPackageList(response?.services);
   };
   useEffect(() => {
-    if (
-      !isFetched &&
-      (!coupons || (Array.isArray(coupons) && coupons.length === 0))
-    ) {
-      dispatch(fetchCoupons()).then((action) => {
-        if (action.payload?.length === 0) {
-          setIsFetched(true);
+    const queryParams = {
+      search: debounce || "",
+      page: page || 1,
+    };
+  
+ 
+    if (!isFetched || debounce || page) {
+      dispatch(fetchCoupons(queryParams)).then((action) => {
+        if (!isFetched) {
+          setIsFetched(true); 
         }
       });
     }
-  }, [dispatch, coupons, isFetched]);
+  }, [dispatch, debounce, page, isFetched]);
+  
+  
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -207,6 +211,8 @@ const CouponsTable = memo(() => {
       ),
     },
   ];
+ 
+  
 
   return (
     <div>
@@ -216,7 +222,7 @@ const CouponsTable = memo(() => {
       >
         Add Coupon
       </button>
-      <TableComponet
+      <TableComponetWithApi
         columns={columns}
         data={coupons}
         page={page}

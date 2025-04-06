@@ -65,7 +65,8 @@ const adminActionsApi = {
 
   deleteBanner: (bannerId) =>
     apiService.delete(apiEndpoints.adminActions.deleteBanner(bannerId)),
-  getAllCoupons: () => apiService.get(apiEndpoints.adminActions.getAllCoupons),
+  getAllCoupons: (queryParams) =>
+    apiService.get(apiEndpoints.adminActions.getAllCoupons, queryParams),
   addCoupons: (formData) =>
     apiService.post(apiEndpoints.adminActions.addCoupons, formData),
   getOneCoupons: (couponId) =>

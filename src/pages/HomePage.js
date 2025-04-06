@@ -31,7 +31,7 @@ function Home() {
   }));
   const { allPackages } = useSelector((state) => state.package);
   const isLoading = useSelector((state) => state.package.isLoading);
-  const getAllPackages = useServices(packageApis.getAllPackage);
+  const getAllPackages = useServices(packageApis.getAllPopular);
   const userIntereststatus = useServices(userApi.userIntereststatus);
   const GetRecentViewpackageApi = useServices(userApi.GetRecentViewpackage);
   const SuggestSimilarServicesApi = useServices(userApi.SuggestSimilarServices);
@@ -46,6 +46,8 @@ function Home() {
     dispatch(setLoading(true));
     try {
       const response = await getAllPackages.callApi();
+      console.log(response, "response");
+
       dispatch(addPackage(response?.data));
     } catch (error) {
       console.error("Error fetching packages:", error);
@@ -88,7 +90,7 @@ function Home() {
     }
   }, [userId]);
   useEffect(() => {
-    if (auth?.isAuthenticated && auth?.role === "user") {
+    if (auth?.isAuthenticated && auth?.role === "user" && userId) {
       handleGetWishList(userId);
     }
   }, [auth.isAuthenticated, auth.role, userId]);
@@ -97,12 +99,12 @@ function Home() {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories());
     }
-  
+
     if (!userBanner || userBanner.length === 0) {
       dispatch(fetchUserBanner());
     }
   }, [dispatch, categories, userBanner]);
-  
+
   useEffect(() => {
     if (!fetchedRef.current && (!allPackages || allPackages.length === 0)) {
       handleGetAllPackages();
@@ -124,7 +126,7 @@ function Home() {
       <div className="flex justify-center items-center contain-content w-[100%]">
         <Slider
           bannerData={userBanner}
-          height={"16em"}
+          height={"16rem"}
           isLoading={bannerStatus === "loading"}
         />
       </div>
@@ -175,6 +177,32 @@ function Home() {
                   const popularimage = imageUrl?.startsWith("service/")
                     ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
                     : imageUrl;
+                  const sizeAndDimension =
+                    service.serviceDetails?.values?.["SizeAndDimension"] || [];
+                  const sizeAndDimensionPrice = sizeAndDimension
+                    .filter((dimension) => parseFloat(dimension?.Price))
+                    .reduce(
+                      (acc, dimension) => acc * parseFloat(dimension?.Price),
+                      1
+                    );
+                  const price =
+                    service.serviceDetails?.values?.price ||
+                    service.serviceDetails?.values?.Pricing ||
+                    service.serviceDetails?.values?.Price ||
+                    service.serviceDetails?.values?.Package?.[0]?.Rates ||
+                    service.serviceDetails?.values?.[
+                      "OrderQuantity&Pricing"
+                    ]?.[0]?.Rates ||
+                    service.serviceDetails?.values?.["Duration&Pricing"]?.[0]
+                      ?.Amount ||
+                    service.serviceDetails?.values?.["SessionLength"]?.[0]
+                      ?.Amount ||
+                    service.serviceDetails?.values?.[
+                      "SessionLength&Pricing"
+                    ]?.[0]?.Amount ||
+                    service.serviceDetails?.values?.["QtyPricing"]?.[0]
+                      ?.Rates ||
+                    sizeAndDimensionPrice;
 
                   return (
                     <ProductCard
@@ -186,25 +214,7 @@ function Home() {
                         service.serviceDetails?.values?.FoodTruckName
                       }
                       category={service?.categoryName}
-                      price={
-                        service.serviceDetails?.values?.price ||
-                        service.serviceDetails?.values?.Pricing ||
-                        service.serviceDetails?.values?.Price ||
-                        service.serviceDetails?.values?.Package?.[0]?.Rates ||
-                        service.serviceDetails?.values?.[
-                          "OrderQuantity&Pricing"
-                        ]?.[0]?.Rates ||
-                        service.serviceDetails?.values?.[
-                          "Duration&Pricing"
-                        ]?.[0]?.Amount ||
-                        service.serviceDetails?.values?.["SessionLength"]?.[0]
-                          ?.Amount ||
-                        service.serviceDetails?.values?.[
-                          "SessionLength&Pricing"
-                        ]?.[0]?.Amount ||
-                        service.serviceDetails?.values?.["QtyPricing"]?.[0]
-                          ?.Rates
-                      }
+                      price={price}
                       rating={0}
                       reviews={0}
                       serviceId={service?._id}
@@ -288,7 +298,6 @@ function Home() {
           </div>
         </div>
       )}
-   
     </motion.div>
   );
 }

@@ -32,6 +32,12 @@ const commonApis = {
     ),
   addReviewWithUserId: (formdata) =>
     apiService.post(apiEndpoints.common.addReviewWithUserId, formdata),
+  calculatedistance: (formdata) =>
+    apiService.post(apiEndpoints.common.calculatedistance, formdata),
+  getVendorPincode: (vendorId) =>
+    apiService.get(apiEndpoints.common.getVendorPincode(vendorId)),
+  getServiceableRadius: (vendorId) =>
+    apiService.get(apiEndpoints.common.getServiceableRadius(vendorId)),
 };
 
 export default commonApis;

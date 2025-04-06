@@ -20,6 +20,8 @@ import { internalRoutes } from "../../utils/internalRoutes";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import { pascalToNormal } from "../../utils/PascalToNormalConverter";
+import useServices from "../../hooks/useServices";
+import commonApis from "../../services/commonApis";
 
 function AddorBuyCard({
   bio,
@@ -29,6 +31,7 @@ function AddorBuyCard({
   packageIncartData,
   packageId,
   serviceId,
+  vendorId,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -60,12 +63,72 @@ function AddorBuyCard({
   const [securityAmount, setSecurityAmount] = useState(
     Number(renderPrice?.SecurityDeposit) || 0
   );
+  const [delivery, setDelivery] = useState(Number(renderPrice?.delivery) || 0);
   const handleDateChange = (newDate) => {
     setDate(newDate);
     setDateInput(newDate.toLocaleDateString());
     setShowCalendar(false);
   };
+  const [isServiceable, setIsServiceable] = useState(null);
+  const getVendorPincodeApi = useServices(commonApis.getVendorPincode);
+  const calculatedistanceApi = useServices(commonApis.calculatedistance);
+  const getVendorPincodeApiHandle = async (vendorId) => {
+    try {
+      // 1. Fetch vendor details first
+      const vendorResponse = await getVendorPincodeApi.callApi(vendorId);
+      if (!vendorResponse?.success) {
+        throw new Error("Vendor details fetch failed");
+      }
 
+      const { pincode: vendorPincode, serviceableRadius } = vendorResponse;
+
+      // 2. Calculate distance - wrapped in Promise for better error handling
+      const checkServiceability = async () => {
+        const distanceResponse = await calculatedistanceApi.callApi({
+          userPincode: pincode,
+          vendorPincode,
+        });
+
+        if (!distanceResponse?.success) {
+          throw new Error("Distance calculation failed");
+        }
+
+        const distance = parseFloat(distanceResponse.data.distance);
+        return {
+          distance,
+          isServiceable: distance <= serviceableRadius,
+          serviceableRadius,
+        };
+      };
+
+      const { distance, isServiceable } = await checkServiceability();
+      setIsServiceable(isServiceable);
+
+      return isServiceable;
+    } catch (error) {
+      console.error("Service check error:", error.message);
+      toast.error(
+        error.message === "Vendor details fetch failed"
+          ? "Couldn't verify vendor service area"
+          : "Couldn't calculate delivery distance"
+      );
+      setIsServiceable(null);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const pincodeNumber = Number(pincode);
+    const isPincodeValid =
+      !isNaN(pincodeNumber) &&
+      pincode.length === 6 &&
+      pincodeNumber >= 100000 &&
+      pincodeNumber <= 999999;
+
+    if (vendorId && isPincodeValid) {
+      getVendorPincodeApiHandle(vendorId);
+    }
+  }, [vendorId, pincode]); // pincode is included in dependencies
   const keysToRender = [
     "AddOns",
     "Capacity & Pricing",
@@ -109,20 +172,23 @@ function AddorBuyCard({
 
   const [quantity, setQuantity] = useState(1);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const [dimensionPrice, setDimensionPrice] = useState(0);
   const calculatedPrice = useMemo(() => {
     const basePrice = Number(renderPrice?.Price || renderPrice?.Pricing) || 0;
     setBasePrice(basePrice);
     setSetupPrice(Number(renderPrice?.SetupCost) || 0);
     setSecurityAmount(Number(renderPrice?.SecurityDeposit) || 0);
+    setDelivery(Number(renderPrice?.delivery) || 0);
+    
     const addOnsPrice = selectedAddOns.reduce((total, addOn) => {
       if (addOn.type === "Package") {
         return total + Number(addOn.Rates || 0);
       }
       return total + Number(addOn.Amount || addOn.Rates || 0) * addOn.quantity;
     }, 0);
-
-    return basePrice + addOnsPrice;
-  }, [renderPrice, selectedAddOns]);
+  
+    return basePrice + addOnsPrice + dimensionPrice; // Include dimension price
+  }, [renderPrice, selectedAddOns, dimensionPrice]);
 
   const handleQuantityChange = useCallback((newQuantity) => {
     setQuantity(newQuantity);
@@ -268,7 +334,9 @@ function AddorBuyCard({
           formattedTime,
           pincode,
           securityAmount,
-          setupPrice
+          setupPrice,
+          delivery,
+          renderPrice?.TravelCharges?.[0]
         );
         // toast.success("Item added to the cart successfully.");
         return true;
@@ -385,7 +453,6 @@ function AddorBuyCard({
       setFormattedTime(formatted24Hour);
     }
   };
-console.log(renderPrice);
 
   if (!renderPrice || Object.keys(renderPrice).length === 0) {
     return <div>Loading...</div>;
@@ -498,6 +565,11 @@ console.log(renderPrice);
             />
           </div>
         </div>
+        {isServiceable === false && (
+          <p className="text-red-600 text-sm">
+            Service is not available for this pincode.
+          </p>
+        )}
         {renderPrice?.SecurityDeposit && (
           <span className="flex items-center justify-between py-2">
             <p className="text-primary text-sm font-semibold text-normal">
@@ -603,10 +675,22 @@ console.log(renderPrice);
                     </div>
                     {value.map((item, idx) => {
                       const isPackage = key === "Package";
+                      const isSizeAndDimension = key === "SizeAndDimension";
+
+                      // Skip rendering if it's a dimension item (we'll handle it separately)
+                      if (isSizeAndDimension && idx > 0) return null;
+
+                      // For SizeAndDimension, merge all dimension items into one
+                      const mergedDimensions = isSizeAndDimension
+                        ? value.reduce((acc, curr) => ({ ...acc, ...curr }), {})
+                        : null;
+
                       const rateInfo = isPackage
                         ? item.Rates
                         : item.Amount || item?.Rates;
-                      const uom = isPackage ? item.days : item.Uom || item.UOM;
+                      const uom = isPackage
+                        ? item.days || item["Package Name"]
+                        : item.Uom || item.UOM;
                       const minQuantity = Math.max(
                         1,
                         parseInt(item.MinQty || item["Min servings"], 10) || 1
@@ -614,6 +698,7 @@ console.log(renderPrice);
                       const Particulars =
                         item?.Particulars || item?.["Flavour/Variety"];
                       const size = item?.["Serving Size"];
+
                       return (
                         <AddOnCounter
                           key={`${key}-${idx}`}
@@ -644,6 +729,11 @@ console.log(renderPrice);
                               (addon) => addon.type === "Package"
                             )
                           }
+                          isSizeAndDimension={isSizeAndDimension}
+                          dimensions={
+                            isSizeAndDimension ? mergedDimensions : null
+                          }
+                          setDimensionPrice={isSizeAndDimension ? setDimensionPrice : null} 
                         />
                       );
                     })}
@@ -654,13 +744,18 @@ console.log(renderPrice);
         </div>
         <div className="space-y-3 mt-4">
           {!packageIncart ? (
-            <button className="btn-primary" onClick={handleAddTocart}>
+            <button
+              className="btn-primary"
+              onClick={handleAddTocart}
+              disabled={!isServiceable ? true : false}
+            >
               Add to Cart
             </button>
           ) : (
             <button
               className="btn-primary"
               onClick={() => navigate(internalRoutes.checkout)}
+              disabled={!isServiceable ? true : false}
             >
               Go to Cart
             </button>
@@ -675,6 +770,7 @@ console.log(renderPrice);
               }
               navigate(internalRoutes.checkout);
             }}
+            disabled={!isServiceable ? true : false}
           >
             Buy Now
           </button>

@@ -9,9 +9,12 @@ import formatCurrency from "../../utils/formatCurrency";
 import PriceBreakdown from "./PriceBreakdownTable";
 import ReusableModal from "../Modal/Modal";
 import DateRangePicker from "../../utils/DateRangePicker";
+import useDebounce from "../../utils/useDebounce";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
 const gatewayFeeRate = 0.02;
-function CompletedOrder() {
+function CompletedOrder({term}) {
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [allOrder, setAllOrder] = useState([]);
   const getAllNewOrderApi = useServices(orderApis.getAllCompleteOrder);
   const downloadOrdersCSVApi = useServices(orderApis.downloadOrdersCSV);
@@ -24,6 +27,7 @@ function CompletedOrder() {
   const handleOpenModal = () => {
     setOpenModal(true);
   };
+  const debounce = useDebounce(term);
   const [orderIdAndItemId, setOrderIdAndItemId] = useState({
     orderId: "",
     id: "",
@@ -32,9 +36,14 @@ function CompletedOrder() {
     setOpenModal(false);
   };
   const getAllNewOrderHandle = async () => {
+    const queryParams = {
+      search: debounce || "",
+      page: page || 1,
+    };
     try {
-      const response = await getAllNewOrderApi.callApi();
+      const response = await getAllNewOrderApi.callApi(queryParams);
       setAllOrder(response ? response.orders : []);
+      setTotalPages(response ? response.pagination.totalPages : 1);
       console.log(response);
     } catch (error) {
       setAllOrder([]);
@@ -49,7 +58,6 @@ function CompletedOrder() {
     const queryParams = {
       fromDate: fromDate || "",
       toDate: toDate || "",
-      // sortOrder: sortvalue || "asc",
     };
     try {
       const response =await downloadOrdersCSVApi.callApi("completed", queryParams);
@@ -72,7 +80,7 @@ function CompletedOrder() {
 
   useEffect(() => {
     getAllNewOrderHandle();
-  }, []);
+  }, [page, debounce]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -151,12 +159,13 @@ function CompletedOrder() {
       >
         Download
       </button>
-      <TableComponet
+      <TableComponetWithApi
         columns={columns}
         data={allOrder}
         page={page}
         itemsPerPage={10}
         onPageChange={handlePageChange}
+        totalPages={totalPages}
       />
       <ReusableModal
         open={openModal}
