@@ -47,21 +47,18 @@ function ProductCard({
     <div className="w-[250px] h-auto border rounded-lg bg-white overflow-hidden flex-shrink-0 cursor-pointer">
       <div className="w-full h-[180px]" onClick={onClick}>
         {popularimage ? (
-          <picture>
-            <source srcset={popularimage} type="image/webp" />
-            <img
-              src={popularimage}
-              alt={title}
-              className="w-full h-full object-cover rounded-t-md"
-              style={{
-                aspectRatio: "4 / 5",
-                objectFit: "cover",
-                display: "block",
-              }}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
+          <img
+            src={popularimage}
+            alt={title}
+            className="w-full h-full object-cover rounded-t-md"
+            style={{
+              aspectRatio: "4 / 5",
+              objectFit: "cover",
+              display: "block",
+            }}
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className="w-full h-full bg-gray-200 animate-pulse rounded-t-md"></div>
         )}
