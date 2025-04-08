@@ -180,7 +180,14 @@ const AppContent = () => {
             }
             path={internalRoutes.home}
           />
-          <Route element={<Loader />} path={internalRoutes.interest} />
+          <Route
+            element={
+              <Suspense fallback={<Loader />}>
+                <InterestSelection />
+              </Suspense>
+            }
+            path={internalRoutes.interest}
+          />
           <Route
             element={
               <Suspense fallback={<Loader />}>
