@@ -14,7 +14,7 @@ function Footer() {
   )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   return (
-    <footer className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full mt-6">
+    <footer className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full mt-6 min-h-[200px]">
       {/* Back to Top */}
       <div
         onClick={backToTop}
