@@ -5,16 +5,22 @@ function Footer() {
   const backToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const email = "info@evagaentertainment.com"; 
-  const subject = "Support Request"; 
-  const body = "Hello Support Team,\n\nI need assistance with..."; 
+  const email = "info@evagaentertainment.com";
+  const subject = "Support Request";
+  const body = "Hello Support Team,\n\nI need assistance with...";
 
   const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
     email
   )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   return (
-    <footer className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full mt-6 min-h-[200px]">
+    <footer
+      className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full mt-6 "
+      style={{
+        minHeight: "200px",
+        contain: "layout paint style", // New: CSS containment
+      }}
+    >
       {/* Back to Top */}
       <div
         onClick={backToTop}
@@ -129,58 +135,58 @@ function Footer() {
       <div className="container mx-auto px-5 md:hidden grid grid-cols-2 gap-y-5 justify-center items-start ">
         {/* Footer Links */}
         <div className=" gap-6 text-sm">
-        <div className=" col-span-2 flex-col flex justify-start items-start gap-4 text-sm">
-          <h3 className=" font-semibold">Connect With Us</h3>
-          <div className="flex flex-col  gap-2">
-            <a
-              href="https://www.facebook.com/share/15UhbdRWh8/?mibextid=wwXIfr "
-              target="_blank"
-              aria-label="Facebook"
-              className="text-sm medium"
-            >
-              Facebook
-            </a>
-            <a
-              href="https://www.instagram.com/evagaentertainment/?igsh=MmcwdjJzMHUwd3k2&utm_source=qr"
-              target="_blank"
-              aria-label="Instagram"
-              className="text-sm medium"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.linkedin.com/company/evaga-entertainment"
-              target="_blank"
-              aria-label="X"
-              className="text-sm medium"
-            >
-              Linkedin
-            </a>
-            <a
-              href="https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"
-              target="_blank"
-              aria-label="X"
-              className="text-sm medium"
-            >
-              WhatsApp
-            </a>{" "}
-            <a
-              href="https://x.com/EvagaOfficial"
-              target="_blank"
-              aria-label="X"
-              className="text-sm medium"
-            >
-              Twitter
-            </a>
-            <a
-              href="mailto:info@evagaentertainment.com"
-              aria-label="Email"
-              className="text-sm medium"
-            >
-              Email Support
-            </a>
+          <div className=" col-span-2 flex-col flex justify-start items-start gap-4 text-sm">
+            <h3 className=" font-semibold">Connect With Us</h3>
+            <div className="flex flex-col  gap-2">
+              <a
+                href="https://www.facebook.com/share/15UhbdRWh8/?mibextid=wwXIfr "
+                target="_blank"
+                aria-label="Facebook"
+                className="text-sm medium"
+              >
+                Facebook
+              </a>
+              <a
+                href="https://www.instagram.com/evagaentertainment/?igsh=MmcwdjJzMHUwd3k2&utm_source=qr"
+                target="_blank"
+                aria-label="Instagram"
+                className="text-sm medium"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://www.linkedin.com/company/evaga-entertainment"
+                target="_blank"
+                aria-label="X"
+                className="text-sm medium"
+              >
+                Linkedin
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"
+                target="_blank"
+                aria-label="X"
+                className="text-sm medium"
+              >
+                WhatsApp
+              </a>{" "}
+              <a
+                href="https://x.com/EvagaOfficial"
+                target="_blank"
+                aria-label="X"
+                className="text-sm medium"
+              >
+                Twitter
+              </a>
+              <a
+                href="mailto:info@evagaentertainment.com"
+                aria-label="Email"
+                className="text-sm medium"
+              >
+                Email Support
+              </a>
+            </div>
           </div>
-        </div>
           <div className="mt-4">
             <ul className="space-y-4">
               {footerMenuItems.leftMenu.map((item, index) => (
@@ -215,7 +221,6 @@ function Footer() {
           </ul>
         </div>
 
-      
         <div className=" col-span-2">
           <div className="mt-4 text-sm">
             <h3>Registered Office Address</h3>
