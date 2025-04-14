@@ -238,7 +238,7 @@ function CompletedOrder({term}) {
                   <strong className="text-primary">Full Address:</strong>{" "}
                   {oneOrder?.address?.address},{" "}
                   {oneOrder?.address?.addressLine1},{" "}
-                  {oneOrder?.address?.addressLine2}
+                  {oneOrder?.address?.addressLine2},{oneOrder?.address?.city},
                 </p>
                 <p>
                   <strong className="text-primary">State:</strong>{" "}
@@ -247,6 +247,21 @@ function CompletedOrder({term}) {
                 <p>
                   <strong className="text-primary">Pin Code:</strong>{" "}
                   {oneOrder?.address?.pinCode}
+                </p>{" "}
+                <p>
+                  {" "}
+                  <strong className="text-primary">Phone:</strong>{" "}
+                  {oneOrder?.address?.phone}
+                </p>{" "}
+                <p>
+                  {" "}
+                  <strong className="text-primary">Alternate Phone:</strong>{" "}
+                  {oneOrder?.address?.alternatePhone}
+                </p>{" "}
+                <p>
+                  {" "}
+                  <strong className="text-primary">Address Type:</strong>{" "}
+                  {oneOrder?.address?.addressType}
                 </p>
               </div>
               <h3 className="text-xl font-semibold mt-6 text-primary">
