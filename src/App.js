@@ -22,6 +22,7 @@ import { fetchUserWishlist } from "./context/redux/slices/wishlistSlice";
 import Cookies from "js-cookie";
 import GlobalEventHandlers from "./utils/GlobalEventHandlers";
 import Loader from "./components/Loaders/Loader";
+import WhatsAppButton from "./utils/WhatsAppButton";
 const Home = lazy(() => import("./pages/HomePage"));
 const SinglePackage = lazy(() => import("./pages/SinglePackage"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
@@ -89,6 +90,12 @@ const AppContent = () => {
     internalRoutes.adminDashboard,
     internalRoutes.interest,
   ];
+  const noWhatsappPaths = [
+    internalRoutes.adminSignup,
+    internalRoutes.adminLogin,
+    internalRoutes.adminDashboard,
+    internalRoutes.interest,
+  ];
   useEffect(() => {
     if (
       auth?.isAuthenticated &&
@@ -128,6 +135,8 @@ const AppContent = () => {
           pauseOnHover
           theme="light"
         />
+        {!noWhatsappPaths.includes(location.pathname) && <WhatsAppButton />}
+
         <GoToTop />
         <Routes>
           <Route
