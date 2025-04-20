@@ -159,7 +159,6 @@ function SearchResultPage() {
       }}
     >
       <div className="flex md:flex-row flex-col w-full lg:w-11/12 relative">
-        {/* Filter card for desktop */}
         <div className="lg:w-1/4 lg:block hidden px-4 py-2 sticky top-0 self-start">
           <FilterCard
             filters={filters}
@@ -248,6 +247,7 @@ function SearchResultPage() {
                       )}
                       serviceId={item?._id}
                       packageId={item?.serviceDetails?._id}
+                      discountPercentage={item?.serviceDiscount}
                     />
                   );
                 })

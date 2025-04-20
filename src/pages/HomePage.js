@@ -230,6 +230,7 @@ function Home() {
                           item.packageDetails?._id ===
                             service?.serviceDetails?._id
                       )}
+                      discountPercentage={service?.serviceDiscount}
                     />
                   );
                 })}

@@ -19,6 +19,7 @@ function ProductCard({
   isFavourite,
   serviceId,
   packageId,
+  discountPercentage,
 }) {
   const userId = Cookies.get("userId");
   const wishlist = useServices(userApi.toggleWishlist);
@@ -81,7 +82,18 @@ function ProductCard({
         </div>
         <div className="flex items-center justify-between mt-4">
           <p className="text-normal font-bold text-primary flex items-center justify-center">
-            {price ? formatCurrency(price) : "comming soon"}{" "}
+            {price ? (
+              <span className="flex items-center justify-center">
+                {formatCurrency(price)}
+                {discountPercentage?.discountPercentage && (
+                  <span className="text-esm text-[#F9D703] mx-2">
+                    {discountPercentage.discountPercentage}%
+                  </span>
+                )}
+              </span>
+            ) : (
+              "coming soon"
+            )}
             <span className="text-esm font-medium text-gray-600 flex items-center justfiy-center gap-2">
               <p>/- </p>Starting
             </span>

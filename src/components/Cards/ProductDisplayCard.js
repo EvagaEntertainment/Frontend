@@ -26,6 +26,7 @@ function ProductDisplayCard({
   isFavourite,
   serviceId,
   packageId,
+  discountPercentage,
 }) {
   const keysToRender = [
     "Event Type",
@@ -115,7 +116,7 @@ function ProductDisplayCard({
           onWishlistToggle={() => toggleWishlistHandle(userId)}
         />
         <div className="flex flex-row-reverse md:block gap-2 md:gap-0">
-        <div className="text-normal font-medium text-primary md:pt-2 pr-4 justify-start">
+          <div className="text-normal font-medium text-primary md:pt-2 pr-4 justify-start">
             Starting
           </div>
           <div className="text-normal font-bold text-primary mb-4">
@@ -133,6 +134,11 @@ function ProductDisplayCard({
               )
             )}
             /-
+            {discountPercentage?.discountPercentage && (
+              <span className="text-sm text-[#F9D703] mx-2">
+                {discountPercentage.discountPercentage}%
+              </span>
+            )}
           </div>
         </div>
       </div>

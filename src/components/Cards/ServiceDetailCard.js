@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { FaRegShareFromSquare } from "react-icons/fa6";
-import { FcLike } from "react-icons/fc";
-import { IoBagOutline } from "react-icons/io5";
+import { motion } from "framer-motion";
 import parse from "html-react-parser";
 import formatCurrency from "../../utils/formatCurrency";
-import share from "../../assets/Temporary Images/share-square 1.png";
 import Year from "../../assets/Temporary Images/briefcase-blank 1.png";
 import event from "../../assets/Temporary Images/party-horn 1.png";
 import inclusion from "../../assets/Temporary Images/web-test 1.png";
@@ -36,6 +33,7 @@ function ServiceDetailCard({
   isFavourite,
   serviceId,
   packageId,
+  discount,
 }) {
   const keysToRender = [
     "Event Type",
@@ -165,9 +163,35 @@ function ServiceDetailCard({
       <hr style={{ margin: "0.2rem 0" }} />
       <div className="flex flex-row items-center">
         <p className="text-lg font-medium text-primary pt-2 pr-2">Price</p>
-        <p className="text-xl font-bold text-primary ">
-          {formatCurrency(price)}
-        </p>
+        <div className=" flex items-center gap-2">
+          <p className="text-xl font-bold text-primary flex  items-center">
+            {formatCurrency(price)}
+          </p>
+          {discount?.discountPercentage && (
+            <motion.span
+              className="inline-flex items-center px-2 py-1 rounded-md bg-yellow-100 text-yellow-800 text-sm font-medium"
+              initial={{
+                opacity: 0.7,
+                boxShadow: "0 0 0 rgba(234, 179, 8, 0)",
+              }}
+              animate={{
+                opacity: [0.7, 1, 0.7],
+                boxShadow: [
+                  "0 0 0 rgba(234, 179, 8, 0)",
+                  "0 0 8px rgba(234, 179, 8, 0.5)",
+                  "0 0 0 rgba(234, 179, 8, 0)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {discount.discountPercentage}% OFF
+            </motion.span>
+          )}
+        </div>
       </div>
 
       {keysToRender?.map((key, index) => {

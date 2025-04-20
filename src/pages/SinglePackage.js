@@ -23,6 +23,7 @@ function SinglePackage() {
   const AddRecentViewApi = useServices(userApi.AddRecentView);
   const dispatch = useDispatch();
   const [singlePageData, setSinglePageData] = useState();
+  const [discountPercentage, setDiscountPercentage] = useState(null);
   const [packageIncartStatus, setPackageIncartStatus] = useState(false);
   const [packageIncartData, setPackageIncartData] = useState(null);
   const [vendorProfile, setVendorProfile] = useState({
@@ -51,6 +52,7 @@ function SinglePackage() {
   const handlegetOnePackage = async () => {
     const response = await getAllPackages.callApi(serviceId, packageId);
     setSinglePageData(response && response?.data);
+    setDiscountPercentage(response?.coupon && response?.coupon);
     setpackageCategory({
       ...packageCategory,
       category: response.category.name,
@@ -237,6 +239,7 @@ function SinglePackage() {
             singlePageData?.services?.[0]?.values?.FoodTruckName
           }
           category={packageCategory.category}
+          discount={discountPercentage}
           rating={0}
           reviews={0}
           DataToRender={singlePageData?.services?.[0]?.values}
