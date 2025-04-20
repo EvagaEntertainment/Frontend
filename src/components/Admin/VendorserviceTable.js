@@ -127,10 +127,10 @@ function VendorserviceTable({
     setSelectedVendor(null);
   };
   console.log(serviceValue);
-  
+
   const renderValue = (key, value) => {
     console.log(key, value);
-    
+
     const imageKeys = [
       "CoverImage",
       "RecceReport",
@@ -528,23 +528,29 @@ function VendorserviceTable({
                     })}
                   </div>
                   {service?.status === false ? (
-                    <div className="flex items-center justify-center w-full gap-2">
-                      <button
-                        className="btn-primary w-fit px-2"
-                        onClick={() => [
-                          handleOpen1(),
-                          setpackageCredentials({
-                            ...packageCredentials,
-                            packageId: service?._id,
-                          }),
-                        ]}
-                      >
-                        Approve/Reject The Service{" "}
-                      </button>
-                    </div>
+                    service?.packageStatus === "Rejected" ? (
+                      <p className="text-primary text-xl font-semibold">
+                        Service Is Already Rejected
+                      </p>
+                    ) : (
+                      <div className="flex items-center justify-center w-full gap-2">
+                        <button
+                          className="btn-primary w-fit px-2"
+                          onClick={() => [
+                            handleOpen1(),
+                            setpackageCredentials({
+                              ...packageCredentials,
+                              packageId: service?._id,
+                            }),
+                          ]}
+                        >
+                          Approve/Reject The Service
+                        </button>
+                      </div>
+                    )
                   ) : (
                     <p className="text-primary text-xl font-semibold">
-                      Service Is Already verified
+                      Service Is Already Verified
                     </p>
                   )}
                 </div>

@@ -195,77 +195,85 @@ function ServiceDetailCard({
       </div>
 
       {keysToRender?.map((key, index) => {
-        const value = DataToRender?.[key];
+    const value = DataToRender?.[key];
 
-        if (value === "") {
-          return null;
-        }
-
-        if (Array.isArray(value) && value.length > 0) {
-          return (
-            <div
-              className="mt-4 flex gap-4 items-start justify-start"
-              key={index}
-            >
-              <span className="bg-textLightGray p-2 rounded-[50%]">
-                <img
-                  src={iconMapping[key] ?? deliverable}
-                  alt="event"
-                  className="object-contain h-[1.5rem]"
-                />
-              </span>
-              <div className="mb-4 w-full">
-                <h3 className="text-normal font-meduim text-primary">
-                  {pascalToNormal(key)}
-                </h3>
-                <hr style={{ margin: "0.3rem 0" }} />
-                <div className="flex gap-2 mt-1 flex-wrap">
-                  {value?.map((item, idx) => {
-                    if (typeof item === "object" && item !== null) {
-                      return (
-                        <div key={idx} className="flex gap-2 flex-wrap">
-                          {Object.entries(item).map(([subKey, subValue]) => (
-                            <span
-                              key={subKey}
-                              className="bg-gray-200 text-textGray text-sm px-3 py-1 rounded-md"
-                            >
-                              {pascalToNormal(subKey)}: {subValue}
-                            </span>
-                          ))}
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <span
-                          key={idx}
-                          className="bg-gray-200 text-textGray text-sm px-3 py-1 rounded-md"
-                        >
-                          {item}
-                        </span>
-                      );
-                    }
-                  })}
-                </div>
-              </div>
-            </div>
-          );
-        } else if (typeof value === "string" && value !== "") {
-          return (
-            <div className="flex gap-4 items-start justify-start" key={index}>
-              <div className="mb-4 w-full flex items-center">
-                <h3 className="text-normal font-meduim text-primary">
-                  {pascalToNormal(key)}
-                </h3>
-                <span className="text-textGray text-normal px-3 py-1 rounded-md">
-                  {value}
-                </span>
-              </div>
-            </div>
-          );
-        }
-
+    if (value === "") {
         return null;
-      })}
+    }
+
+    // Helper function to capitalize first letter if it's lowercase
+    const capitalizeIfNeeded = (str) => {
+        if (!str) return str;
+        return str.charAt(0) === str.charAt(0).toLowerCase() 
+            ? str.charAt(0).toUpperCase() + str.slice(1)
+            : str;
+    };
+
+    if (Array.isArray(value) && value.length > 0) {
+        return (
+            <div
+                className="mt-4 flex gap-4 items-start justify-start"
+                key={index}
+            >
+                <span className="bg-textLightGray p-2 rounded-[50%]">
+                    <img
+                        src={iconMapping[key] ?? deliverable}
+                        alt="event"
+                        className="object-contain h-[1.5rem]"
+                    />
+                </span>
+                <div className="mb-4 w-full">
+                    <h3 className="text-normal font-meduim text-primary">
+                        {pascalToNormal(key)}
+                    </h3>
+                    <hr style={{ margin: "0.3rem 0" }} />
+                    <div className="flex gap-2 mt-1 flex-wrap">
+                        {value?.map((item, idx) => {
+                            if (typeof item === "object" && item !== null) {
+                                return (
+                                    <div key={idx} className="flex gap-2 flex-wrap">
+                                        {Object.entries(item).map(([subKey, subValue]) => (
+                                            <span
+                                                key={subKey}
+                                                className="bg-gray-200 text-textGray text-sm px-3 py-1 rounded-md"
+                                            >
+                                                {pascalToNormal(subKey)}: {typeof subValue === 'string' ? capitalizeIfNeeded(subValue) : subValue}
+                                            </span>
+                                        ))}
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <span
+                                        key={idx}
+                                        className="bg-gray-200 text-textGray text-sm px-3 py-1 rounded-md"
+                                    >
+                                        {typeof item === 'string' ? capitalizeIfNeeded(item) : item}
+                                    </span>
+                                );
+                            }
+                        })}
+                    </div>
+                </div>
+            </div>
+        );
+    } else if (typeof value === "string" && value !== "") {
+        return (
+            <div className="flex gap-4 items-start justify-start" key={index}>
+                <div className="mb-4 w-full flex items-center">
+                    <h3 className="text-normal font-meduim text-primary">
+                        {pascalToNormal(key)}
+                    </h3>
+                    <span className="text-textGray text-normal px-3 py-1 rounded-md">
+                        {capitalizeIfNeeded(value)}
+                    </span>
+                </div>
+            </div>
+        );
+    }
+
+    return null;
+})}
       <div className="flex gap-4 items-start justify-start">
         <span className="bg-textLightGray p-2 rounded-[50%]">
           <img src={terms} alt="event" className="object-contain h-[1.5rem]" />

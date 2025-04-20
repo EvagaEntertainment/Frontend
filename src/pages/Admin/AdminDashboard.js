@@ -21,7 +21,6 @@ import CouponsTable from "../../components/Admin/CouponsTable";
 import FeeBreakdownbyCategory from "../../components/Admin/FeeBreakdownbyCategory";
 import GstTable from "../../components/Admin/GstTable";
 import WaitlistTable from "../../components/Admin/waitlistTable";
-import FeedbackForm from "../../components/Forms/FeedbackForm";
 import FeedbackTable from "../../components/Admin/FeedbackTable";
 import NewOrdertable from "../../components/Admin/NewOrdertable";
 import ConfirmOrder from "../../components/Admin/ConfirmOrder";
