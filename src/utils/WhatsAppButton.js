@@ -7,7 +7,7 @@ const WhatsAppButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [message, setMessage] = useState("");
 
-  const phoneNumber = "+918296157611";
+  const phoneNumber = "+918050279101";
   const defaultMessage = "Hello! I have a question about your services.";
 
   const handleSubmit = (e) => {
