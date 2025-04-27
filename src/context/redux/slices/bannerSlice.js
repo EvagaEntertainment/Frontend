@@ -4,7 +4,7 @@ import commonApis from "../../../services/commonApis";
 const initialState = {
   banner: [],
   userBanner: [],
-  vendorBanner: [],
+  vendorBanner: null,
   error: null,
   status: "idle",
 };

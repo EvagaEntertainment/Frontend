@@ -105,6 +105,7 @@ const AppContent = () => {
       dispatch(fetchUserWishlist(userId));
     }
   }, [auth, allWishlist, userId, dispatch]);
+
   // useEffect(() => {
   //   const handleWheel = (event) => {
   //     if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {

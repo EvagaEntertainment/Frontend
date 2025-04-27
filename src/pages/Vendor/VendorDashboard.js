@@ -77,9 +77,12 @@ const VendorDashboard = () => {
   useEffect(() => {
     // Check if vendorBanner is null, undefined, or an empty array
     if (!vendorBanner || vendorBanner.length === 0) {
+    
+      
       // Only dispatch if vendorBanner is null or undefined (initial state)
       // or if it's an empty array but hasn't been fetched yet
       if (vendorBanner === null || vendorBanner === undefined) {
+        console.log('vendor banner');
         dispatch(fetchVendorBanner());
       }
     }
