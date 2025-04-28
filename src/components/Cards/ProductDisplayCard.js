@@ -15,12 +15,6 @@ function ProductDisplayCard({
   title,
   category,
   vendor,
-  inclusions,
-  deliverables,
-  addOns,
-  price,
-  rating,
-  reviews,
   eventData,
   onClick,
   isFavourite,
@@ -45,6 +39,21 @@ function ProductDisplayCard({
   const wishlist = useServices(userApi.toggleWishlist);
   const { auth } = useAuth();
   const dispatch = useDispatch();
+  const sizeAndDimension = eventData?.values?.["SizeAndDimension"] || [];
+  const sizeAndDimensionPrice = sizeAndDimension
+    .filter((dimension) => parseFloat(dimension?.Price))
+    .reduce((acc, dimension) => acc * parseFloat(dimension?.Price), 1);
+  const price =
+    eventData?.values?.Price ||
+    eventData?.values?.price ||
+    eventData?.values?.Pricing ||
+    eventData?.values?.["OrderQuantity&Pricing"]?.[0]?.Rates ||
+    eventData?.values?.["Duration&Pricing"]?.[0]?.Amount ||
+    eventData?.values?.["SessionLength"]?.[0]?.Amount ||
+    eventData?.values?.["SessionLength&Pricing"]?.[0]?.Amount ||
+    eventData?.values?.Package?.[0]?.Rates ||
+    eventData?.values?.QtyPricing?.[0]?.Rates ||
+    sizeAndDimensionPrice;
   const toggleWishlistHandle = async () => {
     if (auth?.isAuthenticated && auth?.role === "user") {
       const formdata = new FormData();
@@ -120,19 +129,7 @@ function ProductDisplayCard({
             Starting
           </div>
           <div className="text-normal font-bold text-primary mb-4">
-            {formatCurrency(
-              Number(
-                eventData?.values?.Price ||
-                  eventData?.values?.price ||
-                  eventData?.values?.Pricing ||
-                  eventData?.values?.["OrderQuantity&Pricing"]?.[0]?.Rates ||
-                  eventData?.values?.["Duration&Pricing"]?.[0]?.Amount ||
-                  eventData?.values?.["SessionLength"]?.[0]?.Amount ||
-                  eventData?.values?.["SessionLength&Pricing"]?.[0]?.Amount ||
-                  eventData?.values?.Package?.[0]?.Rates ||
-                  eventData?.values?.QtyPricing?.[0]?.Rates
-              )
-            )}
+            {formatCurrency(Number(price))}
             /-
             {discountPercentage?.discountPercentage && (
               <span className="text-sm text-[#F9D703] mx-2">
