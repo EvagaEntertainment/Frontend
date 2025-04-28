@@ -106,19 +106,6 @@ const AppContent = () => {
     }
   }, [auth, allWishlist, userId, dispatch]);
 
-  // useEffect(() => {
-  //   const handleWheel = (event) => {
-  //     if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
-  //       event.preventDefault();
-  //     }
-  //   };
-
-  //   window.addEventListener("wheel", handleWheel, { passive: false });
-
-  //   return () => {
-  //     window.removeEventListener("wheel", handleWheel);
-  //   };
-  // }, []);
   return (
     <>
       {!noNavbarPaths.includes(location.pathname) && <DynamicNav />}

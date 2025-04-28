@@ -3,14 +3,10 @@ import BannerImg from "../../assets/Temporary Images/Banner.png";
 import { useNavigate } from "react-router-dom";
 function Banner({ image, height, category }) {
   const navigate = useNavigate();
-  const handleSearch = () => {
-    const query = new URLSearchParams({
-      q: "",
-      category: category,
-    }).toString();
-
+  const handleSearch = React.useCallback(() => {
+    const query = new URLSearchParams({ q: "", category }).toString();
     navigate(`/search?${query}`);
-  };
+  }, [category, navigate]);
 
   return (
     <div className="w-full">
@@ -25,6 +21,9 @@ function Banner({ image, height, category }) {
             : "object-fill w-full "
         }
         decoding="async"
+        loading="lazy"
+        width={1200}  // Add intrinsic dimensions
+        height={400} // Add intrinsic dimensions
         onClick={category ? () => handleSearch() : undefined}
       />
     </div>

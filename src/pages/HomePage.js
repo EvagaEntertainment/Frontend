@@ -55,11 +55,6 @@ function Home() {
       dispatch(setLoading(false));
     }
   };
-  // const SuggestSimilarServicesApiHandle = async () => {
-  //   const formdata = new FormData();
-  //   formdata.append("items", JSON.stringify(cart?.items));
-  //   const response = await SuggestSimilarServicesApi.callApi(formdata);
-  // };
   const handleGetWishList = async (userId) => {
     const response = await wishlist.callApi(userId);
     dispatch(addWishlist(response?.wishlist));
@@ -77,7 +72,6 @@ function Home() {
       console.log(false);
       history(internalRoutes.interest);
     }
-    // console.log(response);
   };
   useEffect(() => {
     if (userId && auth?.isAuthenticated && auth?.role === "user") {
@@ -123,7 +117,7 @@ function Home() {
         scale: { duration: 0.5, ease: "easeOut" },
       }}
     >
-      <div className="flex justify-center items-center contain-content w-[100%]">
+      <div className="flex justify-center items-center contain-content w-full">
         <Slider
           bannerData={userBanner}
           height={"16rem"}
