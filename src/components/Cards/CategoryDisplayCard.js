@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-const CategoryDisplayCard = React.memo(({ image, text, catId }) => {
+function CategoryDisplayCard({ image, text, onClick, catId }) {
   const history = useNavigate();
   const handleSearch = (categoryId, categoryName) => {
     const query = new URLSearchParams({
@@ -25,7 +25,6 @@ const CategoryDisplayCard = React.memo(({ image, text, catId }) => {
           width="800" // Add approximate intrinsic width
           height="600" // Add approximate intrinsic height
           loading="lazy"
-          decoding="async"
         />
       </div>
 
@@ -34,6 +33,6 @@ const CategoryDisplayCard = React.memo(({ image, text, catId }) => {
       </p>
     </div>
   );
-});
+}
 
 export default CategoryDisplayCard;

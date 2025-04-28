@@ -21,9 +21,6 @@ function Slider({ bannerData, height, isLoading }) {
       mouseTracking
       responsive={responsive}
       disableButtonsControls
-      disableDotsControls={isLoading === "loading"}
-      animationDuration={800} // Smoother transition
-      disableSlideInfo={true} // Reduce calculations
       autoPlay
       infinite
       autoPlayInterval={4000}
