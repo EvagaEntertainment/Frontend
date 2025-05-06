@@ -510,8 +510,8 @@ function CheckOut() {
   }
   return (
     <>
-      <div className="w-full mt-5 md:mt-auto px-[2.5%] py-[2%] flex flex-col md:flex-row gap-4 justify-between">
-        <div className="flex-1 md:flex-[0.72] flex flex-col gap-4 w-full">
+      <div  className="w-full mt-5 md:mt-auto px-[2.5%] py-[2%] flex flex-col md:flex-row gap-4 justify-between">
+        <div className="flex-1 md:flex-[0.75] min-w-0 w-full">
           <div className="flex items-start justify-start">
             {!isEditingAddress && <BackButton />}
           </div>
@@ -650,7 +650,7 @@ function CheckOut() {
             </div>
           )}
         </div>
-        <div className="flex-1 md:flex-[0.23] w-full">
+        <div className="flex-1 md:flex-[0.25] w-full">
           <CheckoutSummary
             totalOfcart={cart?.totalOfCart}
             platformFee={cart?.platformFee}
