@@ -46,7 +46,7 @@ function Home() {
     dispatch(setLoading(true));
     try {
       const response = await getAllPackages.callApi();
-      console.log(response, "response");
+  
 
       dispatch(addPackage(response?.data));
     } catch (error) {
@@ -67,7 +67,7 @@ function Home() {
   const GetRecentViewpackageApiHandle = async () => {
     const response = await GetRecentViewpackageApi.callApi(userId);
     setRecentView(response ? response?.recentlyViewed : []);
-    console.log(response);
+ 
   };
   const userIntereststatusHandle = async () => {
     const response = await userIntereststatus.callApi(userId);
@@ -77,7 +77,6 @@ function Home() {
       console.log(false);
       history(internalRoutes.interest);
     }
-    // console.log(response);
   };
   useEffect(() => {
     if (userId && auth?.isAuthenticated && auth?.role === "user") {
