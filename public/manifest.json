@@ -3,27 +3,27 @@
   "name": "Evaga Entertainment",
   "icons": [
     {
-      "src": "EvagaFaviconColor.png",
+      "src": "coloredFavicon.webp",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "EvagaFaviconColor.png",
+      "src": "coloredFavicon.webp",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "EvagaFaviconColor.png",
+      "src": "coloredFavicon.webp",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "/favicon-192.png",
+      "src": "/coloredFavicon.webp",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/favicon-512.png",
+      "src": "/coloredFavicon.webp",
       "sizes": "512x512",
       "type": "image/png"
     }
