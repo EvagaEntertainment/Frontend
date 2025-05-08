@@ -19,6 +19,7 @@ function BookingCTA({term}) {
       page: page || 1,
       // sortOrder: sortvalue || "asc",
     };
+    
     const response = await getAllBookingCtaApi.callApi(queryParams);
     setAllErrorLogs(response ? response?.data : []);
     setTotalPages(response ? response?.totalPages : 1);

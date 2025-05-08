@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import userApi from "../../services/userApi";
 import { fetchUserWishlist } from "../../context/redux/slices/wishlistSlice";
+import BookNowCTA from "../../utils/BookNowCTA";
 function ProductDisplayCard({
   image,
   title,
@@ -125,6 +126,7 @@ function ProductDisplayCard({
           onWishlistToggle={() => toggleWishlistHandle(userId)}
         />
         <div className="flex flex-row-reverse md:block gap-2 md:gap-0">
+    
           <div className="text-normal font-medium text-primary md:pt-2 pr-4 justify-start">
             Starting
           </div>
@@ -137,6 +139,7 @@ function ProductDisplayCard({
               </span>
             )}
           </div>
+          <BookNowCTA/>
         </div>
       </div>
     </div>
