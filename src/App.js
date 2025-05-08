@@ -23,6 +23,7 @@ import Cookies from "js-cookie";
 import GlobalEventHandlers from "./utils/GlobalEventHandlers";
 import Loader from "./components/Loaders/Loader";
 import WhatsAppButton from "./utils/WhatsAppButton";
+import ThankYou from "./pages/ThankYou.js";
 const Home = lazy(() => import("./pages/HomePage"));
 const SinglePackage = lazy(() => import("./pages/SinglePackage"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
@@ -72,6 +73,7 @@ const AdvertisewithUs = lazy(() => import("./pages/AdvertisewithUs"));
 const Blog = lazy(() => import("./pages/Blog"));
 const SingleBlogPage = lazy(() => import("./pages/singleBlogPage"));
 const InterestSelection = lazy(() => import("./pages/InterestSelection"));
+const BookingForm = lazy(() => import("./pages/BookingForm.js"));
 const AppContent = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
@@ -446,6 +448,22 @@ const AppContent = () => {
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <AdminDashboard />
                 </ProtectedRoute>
+              </Suspense>
+            }
+          />{" "}
+          <Route
+            path={internalRoutes.bookingForm}
+            element={
+              <Suspense fallback={<Loader />}>
+                <BookingForm />
+              </Suspense>
+            }
+          />{" "}
+          <Route
+            path={internalRoutes.thankyou}
+            element={
+              <Suspense fallback={<Loader />}>
+                <ThankYou />
               </Suspense>
             }
           />

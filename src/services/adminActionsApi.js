@@ -182,6 +182,8 @@ const adminActionsApi = {
     apiService.get(apiEndpoints.adminActions.getAllErrorLogs, queryParams),
   getOneError: (id) =>
     apiService.get(apiEndpoints.adminActions.getOneError(id)),
+  getAllBookingCta: (queryParams) =>
+    apiService.get(apiEndpoints.adminActions.getAllBookingCta,queryParams),
 };
 
 export default adminActionsApi;

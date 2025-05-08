@@ -12,7 +12,7 @@ import {
 import { TfiWrite } from "react-icons/tfi";
 import { RiCoupon3Line } from "react-icons/ri";
 import MainLogo from "../../assets/Temporary Images/Evaga Logo.png";
-import { TbBrandBlogger, TbReport } from "react-icons/tb";
+import { TbBrandBlogger, TbBrandBooking, TbReport } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
 import { BiMessageAltError } from "react-icons/bi";
 import {
@@ -180,6 +180,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           icon: <FaFirstOrder />,
         },
         { id: "Feedback", label: "Feedback Form", icon: <FaWpforms /> },
+        { id: "BookingCTA", label: "Booking CTA", icon: <TbBrandBooking  /> },
       ],
     },
     { id: "Admin Users", label: "Roles", icon: <FaUserShield /> },

@@ -119,7 +119,9 @@ const apiEndpoints = {
     addReviewWithUserId: `review/create-review`,
     calculatedistance: `distance/calculate-distance`,
     getVendorPincode: (vendorId) => `vender/getVendorPinCode/${vendorId}`,
-    getServiceableRadius: (vendorId) => `vender/getServiceableRadius/${vendorId}`,
+    getServiceableRadius: (vendorId) =>
+      `vender/getServiceableRadius/${vendorId}`,
+    bookCta: "bookingCTA/bookings",
   },
   admin: {
     register: "admin/registerAdmin",
@@ -192,6 +194,7 @@ const apiEndpoints = {
       `newsletter/deleteone/${newsletterId}`,
     getAllErrorLogs: `logerror/logs`,
     getOneError: (id) => `logerror/getOneError/${id}`,
+    getAllBookingCta: `bookingCTA/admin/bookings`,
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

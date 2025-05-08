@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchUserWishlist } from "../../context/redux/slices/wishlistSlice";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
+import BookNowCTA from "../../utils/BookNowCTA";
 function ProductCard({
   popularimage,
   title,
@@ -103,6 +104,7 @@ function ProductCard({
             onWishlistToggle={() => toggleWishlistHandle(userId)}
           />
         </div>
+        <BookNowCTA/>
       </div>
     </div>
   );

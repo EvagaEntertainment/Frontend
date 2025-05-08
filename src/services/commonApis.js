@@ -38,6 +38,8 @@ const commonApis = {
     apiService.get(apiEndpoints.common.getVendorPincode(vendorId)),
   getServiceableRadius: (vendorId) =>
     apiService.get(apiEndpoints.common.getServiceableRadius(vendorId)),
+  bookingCta: (formdata) =>
+    apiService.post(apiEndpoints.common.bookCta, formdata),
 };
 
 export default commonApis;

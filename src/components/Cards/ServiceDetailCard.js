@@ -20,6 +20,7 @@ import { internalRoutes } from "../../utils/internalRoutes";
 import ReusableModal from "../Modal/Modal";
 import Reviews from "./Review";
 import { pascalToNormal } from "../../utils/PascalToNormalConverter";
+import BookNowCTA from "../../utils/BookNowCTA";
 function ServiceDetailCard({
   title,
   category,
@@ -193,6 +194,7 @@ function ServiceDetailCard({
           )}
         </div>
       </div>
+        <BookNowCTA/>
 
       {keysToRender?.map((key, index) => {
     const value = DataToRender?.[key];

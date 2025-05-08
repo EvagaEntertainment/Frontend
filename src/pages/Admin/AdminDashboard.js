@@ -44,6 +44,7 @@ import ReusableModal from "../../components/Modal/Modal";
 import { useForm } from "react-hook-form";
 import adminApi from "../../services/adminApi";
 import { toast } from "react-toastify";
+import BookingCTA from "../../components/Admin/BookingCTA";
 const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
@@ -320,6 +321,7 @@ const AdminDashboard = () => {
         {selectedMenu === "Blog" && <AdminBlog />}
         {selectedMenu === "NewsLetter" && <AdminNewsLetter />}
         {selectedMenu === "Error Logs" && <AdminErrorLogs />}
+        {selectedMenu === "BookingCTA" && <BookingCTA term={term}/>}
       </div>
       <ReusableModal open={open} onClose={handleClose} width={"50%"}>
         <div className="max-w-ld mx-auto  p-6 bg-white rounded-lg ">
