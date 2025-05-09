@@ -14,7 +14,8 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
-
+import { toast } from "react-toastify";
+import axios from "axios";
 const BookingForm = () => {
   const {
     register,
@@ -24,37 +25,101 @@ const BookingForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const bookingCtaApi = useServices(commonApis.bookingCta);
+  // const onSubmit = async (data) => {
+  //   try {
+  //     setLoading(true);
+
+  //     const formdata = new FormData();
+
+  //     // Append all form fields
+  //     formdata.append('name', data.name);
+  //     formdata.append('phone', data.phone);
+  //     formdata.append('email', data.email);
+  //     formdata.append('eventType', data.eventType);
+  //     formdata.append('preferredDate', new Date(data.preferredDate).toISOString());
+
+  //     // If you have file uploads, append them like this:
+  //     // formdata.append('file', data.file[0]);
+
+  //     const response = await bookingCtaApi.callApi(formdata);
+
+  //     if (response.success) {
+  //       navigate("/thank-you");
+  //     } else {
+  //       throw new Error(response.message || 'Submission failed');
+  //     }
+  //   } catch (error) {
+  //     console.error("Submission error:", error);
+  //     // Optionally show error to user
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      
+
+      // 1. First prepare FormData for your original API call (unchanged)
       const formdata = new FormData();
-      
-      // Append all form fields
-      formdata.append('name', data.name);
-      formdata.append('phone', data.phone);
-      formdata.append('email', data.email);
-      formdata.append('eventType', data.eventType);
-      formdata.append('preferredDate', new Date(data.preferredDate).toISOString());
-  
-      // If you have file uploads, append them like this:
-      // formdata.append('file', data.file[0]);
-  
+      formdata.append("name", data.name);
+      formdata.append("phone", data.phone);
+      formdata.append("email", data.email);
+      formdata.append("eventType", data.eventType);
+      formdata.append(
+        "preferredDate",
+        new Date(data.preferredDate).toISOString()
+      );
+
+      // 2. Get UTM parameters from current URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmParams = {
+        utm_source: urlParams.get("utm_source"),
+        utm_medium: urlParams.get("utm_medium"),
+        utm_campaign: urlParams.get("utm_campaign"),
+        utm_term: urlParams.get("utm_term"),
+        utm_content: urlParams.get("utm_content"),
+      };
+
+      // 3. Call your original booking API (unchanged)
       const response = await bookingCtaApi.callApi(formdata);
-      
+
+      // 4. Prepare payload for Make webhook (using Axios)
+      const webhookPayload = {
+        fullName: data.name,
+        email: data.email,
+        phoneNumber: data.phone,
+        interestedEvent: data.eventType,
+        interestedDate: new Date(data.preferredDate).toISOString(),
+        submittedAt: new Date().toISOString(),
+        device: navigator.userAgent,
+        ...utmParams,
+      };
+
+      // 5. Send to Make webhook using Axios
+     const response1= await axios.post(
+        "https://hook.us2.make.com/boqfxicjksa1otbong8fni9qfq4fxagh",
+        webhookPayload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+console.log(response1);
+
       if (response.success) {
         navigate("/thank-you");
       } else {
-        throw new Error(response.message || 'Submission failed');
+        throw new Error(response.message || "Submission failed");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      // Optionally show error to user
+      toast.error(error?.message);
     } finally {
       setLoading(false);
     }
   };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
