@@ -93,7 +93,7 @@ const BookingForm = () => {
         interestedDate: new Date(data.preferredDate).toISOString(),
         submittedAt: new Date().toISOString(),
         device: navigator.userAgent,
-        ...utmParams,
+        // ...utmParams,
       };
 
       // 5. Send to Make webhook using Axios

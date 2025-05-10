@@ -4,20 +4,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#6A1B9A ", // Example primary color (adjust based on actual Figma color)
+        primary: "#6A1B9A ",
         highlight: "#DDCDE7",
         purpleSecondary: "#4A0072",
         purpleHighlight: "#6A1A9A",
         grayBg: "#dfdfdf",
         borderPrimary: "#D2D2D2",
         backgroundOffWhite: "#FAFAFA",
-        secondaryWhite: "#FFFFFF", // White for text/backgrounds
+        secondaryWhite: "#FFFFFF", 
         highlightYellow: "#F9D703",
         highlightYellowPrimary: "#FFD700",
-        accent: "#c264fc", // Adjust based on button or accent colors in Figma
-        background: "#F3E8FF", // Light background color
-        textPrimary: "#333333", // Primary text color
-        textSecondary: "#7A7A7A", // Secondary text color
+        accent: "#c264fc", 
+        background: "#F3E8FF", 
+        textPrimary: "#333333", 
+        textSecondary: "#7A7A7A", 
         borderSecondary: "#D9D9D9",
         textGray: "#757575",
         textLightGray: "#7575751A",
