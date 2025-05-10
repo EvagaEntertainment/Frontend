@@ -60,7 +60,7 @@ const BookingForm = () => {
     try {
       setLoading(true);
 
-      // 1. First prepare FormData for your original API call (unchanged)
+      // 1. Prepare FormData for your original API
       const formdata = new FormData();
       formdata.append("name", data.name);
       formdata.append("phone", data.phone);
@@ -71,51 +71,46 @@ const BookingForm = () => {
         new Date(data.preferredDate).toISOString()
       );
 
-      // 2. Get UTM parameters from current URL
+      // 2. Get UTM parameters
       const urlParams = new URLSearchParams(window.location.search);
       const utmParams = {
-        utm_source: urlParams.get("utm_source"),
-        utm_medium: urlParams.get("utm_medium"),
-        utm_campaign: urlParams.get("utm_campaign"),
-        utm_term: urlParams.get("utm_term"),
-        utm_content: urlParams.get("utm_content"),
+        utm_source: urlParams.get("utm_source") || null,
+        utm_medium: urlParams.get("utm_medium") || null,
+        utm_campaign: urlParams.get("utm_campaign") || null,
+        utm_term: urlParams.get("utm_term") || null,
+        utm_content: urlParams.get("utm_content") || null,
       };
 
-      // 3. Call your original booking API (unchanged)
+      // 3. Call your original API
       const response = await bookingCtaApi.callApi(formdata);
 
-      // 4. Prepare payload for Make webhook (using Axios)
+      // 4. Prepare Make.com payload (with UTM)
       const webhookPayload = {
-        fullName: data.name,
-        email: data.email,
-        phoneNumber: data.phone,
-        interestedEvent: data.eventType,
+        ...data,
         interestedDate: new Date(data.preferredDate).toISOString(),
         submittedAt: new Date().toISOString(),
         device: navigator.userAgent,
-        // ...utmParams,
+        utm_params: utmParams, // Structured UTM data
       };
 
-      // 5. Send to Make webhook using Axios
-     const response1= await axios.post(
+      // 5. Send to Make.com (using fetch instead of axios to avoid CORS issues)
+      const makeResponse = await fetch(
         "https://hook.us2.make.com/boqfxicjksa1otbong8fni9qfq4fxagh",
-        webhookPayload,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(webhookPayload),
         }
       );
-console.log(response1);
+
+      if (!makeResponse.ok) throw new Error("Make webhook failed");
 
       if (response.success) {
         navigate("/thank-you");
-      } else {
-        throw new Error(response.message || "Submission failed");
       }
     } catch (error) {
-      console.error("Submission error:", error);
-      toast.error(error?.message);
+      console.error("Error:", error);
+      toast.error(error?.message || "Submission failed");
     } finally {
       setLoading(false);
     }
