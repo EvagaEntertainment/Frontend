@@ -7,14 +7,14 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Evaga Entertainment" />
     <meta name="p:domain_verify" content="4ffff8fe28fdfc5268597c4a91669fb1" />
-    <meta name="facebook-domain-verification" content="your_verification_id">
+    <meta name="facebook-domain-verification" content="your_verification_id" />
     <link rel="apple-touch-icon" href="favicon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://api.evagaentertainment.com" />
-    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=..."
@@ -73,55 +73,72 @@
     /></noscript> -->
     <script async src="https://connect.facebook.net/en_US/fbevents.js"></script>
     <script>
-      (function() {
+      (function () {
         // 1. Basic initialization
         window._fbq = window._fbq || [];
-        window.fbq = function() {
+        window.fbq = function () {
           window._fbq.push(arguments);
         };
         window.fbq.push = window._fbq.push;
         window.fbq.loaded = true;
-        window.fbq.version = '2.0';
+        window.fbq.version = "2.0";
         window.fbq.queue = [];
-    
+
         // 2. Load the Facebook Pixel script
-        var script = document.createElement('script');
-        script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+        var script = document.createElement("script");
+        script.src = "https://connect.facebook.net/en_US/fbevents.js";
         script.async = true;
         script.defer = true;
-        
+
         // 3. Fallback if blocked by ad blocker
-        script.onerror = function() {
-          console.log('Facebook Pixel blocked - using image fallback');
-          var img = document.createElement('img');
-          img.src = 'https://www.facebook.com/tr?id=1539348276629405&ev=PageView&noscript=1';
-          img.style.display = 'none';
+        script.onerror = function () {
+          console.log("Facebook Pixel blocked - using image fallback");
+          var img = document.createElement("img");
+          img.src =
+            "https://www.facebook.com/tr?id=1539348276629405&ev=PageView&noscript=1";
+          img.style.display = "none";
           document.body.appendChild(img);
         };
-    
+
         // 4. Standard initialization
-        script.onload = function() {
-          fbq('init', '1539348276629405');
-          fbq('track', 'PageView');
+        script.onload = function () {
+          fbq("init", "1539348276629405");
+          fbq("track", "PageView");
         };
-    
+
         document.head.appendChild(script);
       })();
     </script>
     <noscript>
-      <img height="1" width="1" style="display:none" 
-           src="https://www.facebook.com/tr?id=1539348276629405&ev=PageView&noscript=1" />
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1539348276629405&ev=PageView&noscript=1"
+      />
     </noscript>
-    
+
     <!-- End Meta Pixel Code -->
-     
- 
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-7E93XYE809"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7E93XYE809");
+    </script>
     <title>Evaga Entertainment</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="error-modal"></div>
-
   </body>
 </html>
