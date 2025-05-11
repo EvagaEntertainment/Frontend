@@ -28,7 +28,7 @@ function RefundAndCancellation() {
         Last updated on Feb 07th 2025
       </p>
       <p className="text-textGray mb-4">
-        At Evaga Entertainment, we strive to provide a seamless and enjoyable
+        At Eevagga, we strive to provide a seamless and enjoyable
         event planning experience. However, we understand that unforeseen
         circumstances may arise, necessitating cancellations or refunds. This
         policy outlines our approach to cancellations, refunds, and rescheduling
@@ -141,7 +141,7 @@ function RefundAndCancellation() {
             <li>
               If an event is canceled due to unforeseen circumstances beyond
               control (natural disasters, pandemics, government restrictions),
-              Evaga Entertainment will work with vendors to facilitate
+              Eevagga will work with vendors to facilitate
               rescheduling or offer partial refunds based on vendor policies.
             </li>
             <li>
@@ -162,7 +162,7 @@ function RefundAndCancellation() {
           </h2>
           <ul className="list-disc pl-10">
             <li>
-              If a vendor cancels a service, Evaga Entertainment will either:
+              If a vendor cancels a service, Eevagga will either:
             </li>
             <ul className="list-[square] pl-10">
               <li>Offer a full refund.</li>
@@ -188,7 +188,7 @@ function RefundAndCancellation() {
               time of booking.
             </li>
             <li>
-              Evaga Entertainment is not responsible for delays due to bank
+              Eevagga is not responsible for delays due to bank
               processing times.
             </li>
           </ul>

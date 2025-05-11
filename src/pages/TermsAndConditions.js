@@ -33,7 +33,7 @@ function TermsAndConditions() {
           <h2 className="text-xl font-semibold mb-4">1. DEFINITIONS</h2>
           <ul className="list-disc pl-8">
             <li>
-              "Platform" refers to Evaga Entertainment’s website and mobile
+              "Platform" refers to Eevagga website and mobile
               application.
             </li>
             <li>
@@ -45,7 +45,7 @@ function TermsAndConditions() {
               event-related services on the Platform.
             </li>
             <li>
-              "We," "Us," or "Evaga" refers to Evaga Entertainment Pvt Ltd.
+              "We," "Us," or "Eevagga" refers to Evaga Entertainment Pvt Ltd.
             </li>
           </ul>
         </section>
@@ -56,12 +56,12 @@ function TermsAndConditions() {
           </h2>
           <p>
             2.1. These Terms constitute a legally binding agreement between you
-            and Evaga. By accessing or using the Platform, you agree to comply
+            and Eevagga. By accessing or using the Platform, you agree to comply
             with all its terms, conditions, and applicable laws.
           </p>
           <br />
           <p>
-            2.2. Evaga reserves the right to modify, amend, or update these
+            2.2. Eevagga reserves the right to modify, amend, or update these
             Terms at its sole discretion without prior notice. Continued use of
             the Platform after such modifications constitutes acceptance of the
             revised Terms.
@@ -69,7 +69,7 @@ function TermsAndConditions() {
           <br />
           <p>
             2.3. Any breach of these Terms shall result in the immediate
-            termination of your account, without prejudice to Evaga’s rights to
+            termination of your account, without prejudice to Eevagga’s rights to
             seek damages and legal recourse.
           </p>
         </section>
@@ -108,29 +108,29 @@ function TermsAndConditions() {
           <p>
             4.3. Users are solely responsible for maintaining the
             confidentiality of their account credentials. Any unauthorized use
-            must be reported to Evaga immediately. Evaga shall not be liable for
+            must be reported to Eevagga  immediately. Eevagga shall not be liable for
             losses resulting from unauthorized access due to negligence.
           </p>
         </section>
 
         <section className="border-b border-gray-400 pb-4">
           <h2 className="text-xl font-semibold mb-4">
-            5. ROLE OF EVAGA – MARKETPLACE DISCLAIMER
+            5. ROLE OF Eevagga – MARKETPLACE DISCLAIMER
           </h2>
           <p>
-            5.1. Evaga operates as an intermediary marketplace connecting Users
+            5.1. Eevagga operates as an intermediary marketplace connecting Users
             with independent third-party vendors for event-related services.
           </p>
           <br />
           <p>
-            5.2. Evaga does not own, control, endorse, or guarantee the quality,
+            5.2. Eevagga  does not own, control, endorse, or guarantee the quality,
             availability, legality, or performance of services offered by
             vendors. The contract for services is strictly between the User and
-            Vendor, and Evaga bears no liability for any disputes, damages, or
+            Vendor, and Eevagga bears no liability for any disputes, damages, or
             non-performance.
           </p>
           <br />
-          <p>5.3. Evaga shall not be liable for:</p>
+          <p>5.3. Eevagga shall not be liable for:</p>
           <ul className="list-disc pl-8">
             <li>Service deficiencies, negligence, or breaches by vendors.</li>
             <li>Cancellations, rescheduling, or delays caused by vendors.</li>
@@ -141,7 +141,7 @@ function TermsAndConditions() {
         <section className="border-b border-gray-400 pb-4">
           <h2 className="text-xl font-semibold mb-4">6. FORCE MAJEURE</h2>
           <p>
-            6.1. Evaga and its vendors shall not be held liable for any failure
+            6.1. Eevagga and its vendors shall not be held liable for any failure
             or delay in performance caused by events beyond their reasonable
             control, including but not limited to:
           </p>
@@ -175,13 +175,13 @@ function TermsAndConditions() {
               reputation harm.
             </li>
             <li>
-              A penalty of the transaction value, for misuse of Evaga's payment
+              A penalty of the transaction value, for misuse of Eevagga's payment
               system.
             </li>
           </ul>
           <br />
           <p>
-            7.2. Evaga reserves the right to report fraudulent activities to
+            7.2. Eevagga reserves the right to report fraudulent activities to
             relevant law enforcement authorities.
           </p>
         </section>
@@ -191,7 +191,7 @@ function TermsAndConditions() {
             8. VENDOR LIABILITY CLAUSE
           </h2>
           <p>
-            8.1. Vendors listed on the Evaga platform are independent entities
+            8.1. Vendors listed on the Eevagga platform are independent entities
             and bear full legal responsibility for their services, including
             compliance with consumer protection laws.
           </p>
@@ -199,14 +199,14 @@ function TermsAndConditions() {
           <p>8.2. Users acknowledge that:</p>
           <ul className="list-disc pl-8">
             <li>
-              Evaga is not liable for any vendor’s failure to deliver services.
+              Eevagga is not liable for any vendor’s failure to deliver services.
             </li>
             <li>
               Vendors are solely responsible for service quality, fulfillment,
               and any resulting disputes.
             </li>
             <li>
-              Any legal claims must be directed towards the vendor, and Evaga
+              Any legal claims must be directed towards the vendor, and Eevagga
               shall not be named as a party in such disputes.
             </li>
           </ul>
@@ -214,7 +214,7 @@ function TermsAndConditions() {
           <p>
             8.3. Vendors must ensure compliance with all applicable laws, and
             failure to do so may result in de-listing, penalties, or legal
-            action by Evaga.
+            action by Eevagga.
           </p>
         </section>
 
@@ -229,13 +229,13 @@ function TermsAndConditions() {
           </p>
           <br />
           <p>
-            9.2. Evaga reserves the right to impose service fees, commissions,
+            9.2. Eevagga reserves the right to impose service fees, commissions,
             or transactional charges on bookings, which shall be disclosed at
             the time of payment.
           </p>
           <br />
           <p>
-            9.3. Evaga is not liable for technical failures, payment processing
+            9.3. Eevagga is not liable for technical failures, payment processing
             delays, chargebacks, or unauthorized transactions initiated by the
             User’s financial institution.
           </p>
@@ -257,20 +257,20 @@ function TermsAndConditions() {
           </h2>
           <p>
             11.1. All content, trademarks, logos, text, images, and software on
-            the Platform are the intellectual property of Evaga or its
+            the Platform are the intellectual property of Eevagga or its
             licensors.
           </p>
           <br />
           <p>
             11.2. Users may not copy, reproduce, modify, distribute, or exploit
             any content from the Platform without prior written consent from
-            Evaga.
+            Eevagga.
           </p>
           <br />
           <p>
             11.2. Users may not copy, reproduce, modify, distribute, or exploit
             any content from the Platform without prior written consent from
-            Evaga.
+            Eevagga.
           </p>
         </section>
 
@@ -289,13 +289,13 @@ function TermsAndConditions() {
               statements.
             </li>
             <li>
-              Evaga reserves the right to remove or modify any content deemed
+              Eevagga reserves the right to remove or modify any content deemed
               inappropriate.
             </li>
           </ul>
           <br />
           <p>
-            12.2. Users grant Evaga a non-exclusive, worldwide, royalty-free
+            12.2. Users grant Eevagga a non-exclusive, worldwide, royalty-free
             license to use, display, and distribute user-generated content for
             marketing purposes.
           </p>
@@ -306,7 +306,7 @@ function TermsAndConditions() {
             13. LIMITATION OF LIABILITY
           </h2>
           <p>
-            13.1. To the fullest extent permitted by law, Evaga shall not be
+            13.1. To the fullest extent permitted by law, Eevagga shall not be
             liable for any:
           </p>
           <ul className="list-disc pl-8">
@@ -319,7 +319,7 @@ function TermsAndConditions() {
         <section className="border-b border-gray-400 pb-4">
           <h2 className="text-xl font-semibold mb-4">14. INDEMNIFICATION</h2>
           <p>
-            14.1. Users agree to indemnify and hold Evaga harmless from any
+            14.1. Users agree to indemnify and hold Eevagga harmless from any
             claims, damages, losses, or liabilities arising from:
           </p>
           <ul className="list-disc pl-8">
@@ -334,7 +334,7 @@ function TermsAndConditions() {
             15. TERMINATION OF ACCESS
           </h2>
           <p>
-            15.1. Evaga reserves the right to suspend or terminate user access
+            15.1. Eevagga reserves the right to suspend or terminate user access
             for any breach of these Terms, fraudulent activity, or misuse of the
             Platform.
           </p>
@@ -358,7 +358,7 @@ function TermsAndConditions() {
           </p>
           <br />
           <p>
-            16.3. Modifications: Evaga may update these Terms from time to time.
+            16.3. Modifications: Eevagga may update these Terms from time to time.
             Continued use of the Platform constitutes acceptance of the modified
             Terms.
           </p>
@@ -366,7 +366,7 @@ function TermsAndConditions() {
 
         <section className="border-b border-gray-400 pb-4">
           <p>
-            By using the Evaga Platform, you acknowledge that you have read,
+            By using the Eevagga Platform, you acknowledge that you have read,
             understood, and agreed to these Terms and Conditions. If you have
             any questions, please contact us at info@evagaentertainment.com
           </p>

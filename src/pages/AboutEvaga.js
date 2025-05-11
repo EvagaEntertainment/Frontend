@@ -37,7 +37,7 @@ function AboutEvaga() {
         className="text-primary lg:text-3xl text-2xl font-semibold"
         variants={childVariants}
       >
-        About Evaga
+        About Eevagga 
       </motion.h1>
 
       <motion.p
@@ -45,7 +45,7 @@ function AboutEvaga() {
         variants={childVariants}
       >
         In a world where celebrations define our most cherished moments, event
-        planning remains <b>complex, fragmented, and overwhelming</b>. Evaga was
+        planning remains <b>complex, fragmented, and overwhelming</b>. Eevagga  was
         born out of a bold vision—to <b>revolutionize the event industry</b> by
         creating India's first comprehensive, tech-driven event marketplace.
         <br />
@@ -55,7 +55,7 @@ function AboutEvaga() {
           stunning venues and world-class caterers to celebrated photographers,
           entertainers, and décor artists
         </b>
-        . With a <b>digital-first, AI-powered approach</b>, Evaga{" "}
+        . With a <b>digital-first, AI-powered approach</b>, Eevagga {" "}
         <b>
           removes middlemen, ensures price transparency, and simplifies the
           event planning journey
@@ -72,13 +72,13 @@ function AboutEvaga() {
         <b>
           intimate wedding, a grand corporate gala, or an electrifying music
           festival or any personal events like birthdays, baby showers, etc.
-          Evaga empowers people to dream big and execute flawlessly
+          Eevagga  empowers people to dream big and execute flawlessly
         </b>
         . We’re not just building a marketplace; we’re{" "}
         <b>shaping the future of events</b> in India.
         <br />
         <br />
-        <b>Welcome to Evaga—where every event is extraordinary.</b>
+        <b>Welcome to Eevagga—where every event is extraordinary.</b>
       </motion.p>
     </motion.div>
   );

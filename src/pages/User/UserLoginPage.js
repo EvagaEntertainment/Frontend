@@ -55,7 +55,7 @@ function UserLoginPage() {
       <div className=" flex-1 flex justify-center items-center">
         <AuthBox>
           <div className=" text-center flex items-center justify-center flex-col">
-            <h4 className=" text-primary text-xl">Welcome Back to Evaga!</h4>
+            <h4 className=" text-primary text-xl">Welcome Back to Eevagga!</h4>
             <h4 className=" text-primary text-normal max-w-[18rem]">
               Access your account to plan and manage unforgettable events
               effortlessly
@@ -75,7 +75,7 @@ function UserLoginPage() {
             </Link>
           </div>
           <div className=" flex gap-2 font-semibold">
-            <h5>New to Evaga?</h5>
+            <h5>New to Eevagga?</h5>
             <Link to={internalRoutes.userSignup}>
               <button className=" btn-transparent ">Create an account</button>
             </Link>

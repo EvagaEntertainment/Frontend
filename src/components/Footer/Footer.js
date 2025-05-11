@@ -1,4 +1,5 @@
 import { companyDetails } from "../../utils/companyDetails";
+import CopyrightYear from "../../utils/CopyrightYear";
 import { footerMenuItems } from "../../utils/footerMenuList";
 import { Link } from "react-router-dom";
 function Footer() {
@@ -57,7 +58,7 @@ function Footer() {
                 Facebook
               </a>
               <a
-                href="https://www.instagram.com/evagaentertainment/?igsh=MmcwdjJzMHUwd3k2&utm_source=qr"
+                href="https://www.instagram.com/eevaggaofficial?igsh=d3M3NG4yb3lia3Nn&utm_source=qr"
                 target="_blank"
                 aria-label="Instagram"
                 className="text-sm medium"
@@ -81,7 +82,7 @@ function Footer() {
                 WhatsApp
               </a>{" "}
               <a
-                href="https://x.com/EvagaOfficial"
+                href="https://x.com/eevagga?s=11"
                 target="_blank"
                 aria-label="X"
                 className="text-sm medium"
@@ -129,7 +130,7 @@ function Footer() {
         </div>
         {/* Footer Bottom */}
         <div className="text-center mt-6 text-sm">
-          <p>© 2024 {companyDetails.fullName} All rights reserved</p>
+          <p> &copy; <CopyrightYear /> {companyDetails.fullName} All rights reserved</p>
         </div>
       </div>
       <div className="container mx-auto px-5 md:hidden grid grid-cols-2 gap-y-5 justify-center items-start ">

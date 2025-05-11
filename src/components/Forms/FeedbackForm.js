@@ -104,7 +104,7 @@ const FeedbackForm = () => {
       transition={{ duration: 0.5 }}
     >
       <h2 className="text-2xl font-semibold mb-4 text-center text-primary">
-        Evaga Entertainment - Feedback Form
+        Eevagga - Feedback Form
       </h2>
       <p className="text-textGray text-center mb-6">
         Thank you for sharing your valuable feedback! Your insights will help us
@@ -187,7 +187,7 @@ const FeedbackForm = () => {
             2. User Experience (UI/UX & Platform Usability)
           </legend>
           <label className="block mt-2 font-semibold text-primary">
-            How easy was it to navigate the Evaga platform?
+            How easy was it to navigate the Eevagga platform?
           </label>
           <div className="flex flex-col">
             {["Very Easy", "Somewhat Easy", "Neutral", "Difficult"].map(
@@ -383,7 +383,7 @@ const FeedbackForm = () => {
             4. Platform Uniqueness & Future Improvements
           </legend>
           <label className="block mt-2 font-semibold text-primary">
-            What do you think makes Evaga unique compared to other event
+            What do you think makes Eevagga unique compared to other event
             planning platforms? <i>(Select all that apply)</i>
           </label>
           <div className="flex flex-col">
@@ -462,7 +462,7 @@ const FeedbackForm = () => {
             5. Vendor Feedback
           </legend>
           <label className="block mt-2 font-semibold text-primary">
-            Did you book any services through Evaga?
+            Did you book any services through Eevagga?
           </label>
           <div className="flex flex-col">
             {["Yes", "No, I just explored the platform"].map((option) => (
@@ -570,7 +570,7 @@ const FeedbackForm = () => {
             <p className="text-red-500">This field is required</p>
           )}
           <label className="block mt-2 font-semibold text-primary">
-            Would you book a vendor through Evaga again?
+            Would you book a vendor through Eevagga again?
           </label>
           <div className="flex flex-col">
             {["Yes", "No"].map((option) => (

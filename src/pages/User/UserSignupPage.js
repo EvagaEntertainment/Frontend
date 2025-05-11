@@ -65,7 +65,7 @@ function UserSignupPage() {
         <AuthBox>
           <div className=" text-center">
             <h4 className=" text-primary text-3xl">Sign Up</h4>
-            <h4 className=" text-primary text-xl">Welcome to Evaga</h4>
+            <h4 className=" text-primary text-xl">Welcome to Eevagga</h4>
           </div>
 
           <AuthForm

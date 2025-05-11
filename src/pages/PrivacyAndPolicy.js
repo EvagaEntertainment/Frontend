@@ -32,7 +32,7 @@ function PrivacyAndPolicy() {
           {" "}
           Evaga Entertainment Pvt Ltd
         </span>{" "}
-        ("Evaga," "we," "our," "us") respects your privacy and is committed to
+        ("Eevagga," "we," "our," "us") respects your privacy and is committed to
         protecting the personal information you share with us. This Privacy
         Policy explains how we collect, use, disclose, and safeguard your
         information when you visit our website, use our services, or interact
