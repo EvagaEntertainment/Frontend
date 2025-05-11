@@ -26,24 +26,24 @@ function CustomerService() {
 
   const faqData = [
     {
-      question: "What is Eevagga Entertainment?",
+      question: "What is Eevagga?",
       answer:
-        "Eevagga Entertainment is an online marketplace that connects customers with the best event vendors and services. Whether you're planning a wedding, corporate event, birthday, or any special occasion, we help you find the right professionals to bring your event to life.",
+        "Eevagga is an online marketplace that connects customers with the best event vendors and services. Whether you're planning a wedding, corporate event, birthday, or any special occasion, we help you find the right professionals to bring your event to life.",
     },
     {
-      question: "How does Eevagga Entertainment work?",
+      question: "How does Eevagga work?",
       answer:
         "Eevagga allows you to browse and book vendors across various event categories. Simply search for the service you need, compare options, and book directly through our platform.",
     },
     {
-      question: "Is Eevagga Entertainment free to use?",
+      question: "Is Eevagga free to use?",
       answer:
         "Yes! Browsing and exploring vendors is completely free. You only pay for the services you book.",
     },
     {
       question: "What types of events does Eevagga cover?",
       answer:
-        "Eevagga Entertainment caters to personal and corporate events, including weddings, birthdays, corporate functions, concerts, exhibitions, and more.",
+        "Eevagga caters to personal and corporate events, including weddings, birthdays, corporate functions, concerts, exhibitions, and more.",
     },
     {
       question: "How do I book a vendor?",
