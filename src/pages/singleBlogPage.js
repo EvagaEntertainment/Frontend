@@ -75,12 +75,15 @@ function SingleBlogPage() {
         sx={{
           width: "100%",
           position: "relative",
-          paddingTop: "125%", // This creates the 4:5 aspect ratio (5/4 = 1.25 or 125%)
           borderRadius: 1,
           mb: 4,
           border: "1px solid",
           borderColor: "divider",
-          overflow: "hidden", // Ensures the image stays within the rounded borders
+          overflow: "hidden",
+          // Fixed height for laptop/desktop (min-width: 900px)
+          height: { xs: "auto", md: "525px" }, // Mobile: auto, Desktop: 525px
+          // Maintain 4:5 aspect ratio for mobile (xs) using padding
+          paddingTop: { xs: "125%", md: 0 }, // Only apply aspect ratio on mobile
         }}
       >
         <Box
@@ -95,7 +98,10 @@ function SingleBlogPage() {
             left: 0,
             width: "100%",
             height: "100%",
-            objectFit: "cover", // This ensures the image covers the container while maintaining aspect ratio
+            // Show full image (no cropping) with letterboxing if needed
+            objectFit: "contain",
+            // Optional: Add a background for letterboxed areas
+            bgcolor: "background.default",
           }}
         />
       </Box>
