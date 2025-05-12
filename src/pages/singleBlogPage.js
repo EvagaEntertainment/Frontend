@@ -71,18 +71,34 @@ function SingleBlogPage() {
       </Typography>
 
       <Box
-        component="img"
-        src={`${process.env.REACT_APP_API_Aws_Image_BASE_URL + blog?.coverImage}`}
-        alt={blog?.title}
+        component="div"
         sx={{
           width: "100%",
-          height: "auto",
+          position: "relative",
+          paddingTop: "125%", // This creates the 4:5 aspect ratio (5/4 = 1.25 or 125%)
           borderRadius: 1,
           mb: 4,
           border: "1px solid",
           borderColor: "divider",
+          overflow: "hidden", // Ensures the image stays within the rounded borders
         }}
-      />
+      >
+        <Box
+          component="img"
+          src={`${
+            process.env.REACT_APP_API_Aws_Image_BASE_URL + blog?.coverImage
+          }`}
+          alt={blog?.title}
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover", // This ensures the image covers the container while maintaining aspect ratio
+          }}
+        />
+      </Box>
 
       <Typography
         dangerouslySetInnerHTML={{ __html: blog?.content }}
@@ -100,7 +116,7 @@ function SingleBlogPage() {
             borderColor: "divider",
           },
         }}
-          className="text-textGray"
+        className="text-textGray"
       />
     </Box>
   );

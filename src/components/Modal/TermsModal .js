@@ -80,11 +80,11 @@ const TermsModal = ({ open, handleClose }) => {
                 "Submit" constitutes acceptance).
               </p>
               <p className="text-textGray">
-                Welcome to Evaga Entertainment Pvt. Ltd. ("Evaga," "we," or
+                Welcome to Evaga Entertainment Pvt. Ltd. ("Eevagga," "we," or
                 "us"). By registering as a vendor and using our platform, you
                 ("Vendor," "you," or "your") agree to abide by the following
                 Terms and Conditions. Acceptance of these terms is mandatory for
-                maintaining your profile on the Evaga platform. Please read them
+                maintaining your profile on the Eevagga platform. Please read them
                 carefully.
               </p>
               {/* Section 1 */}
@@ -134,11 +134,11 @@ const TermsModal = ({ open, handleClose }) => {
                     adhering to the agreed-upon terms with customers.
                   </li>
                   <li>
-                    2.2 Timely communication with customers and Evaga is
+                    2.2 Timely communication with customers and Eevagga is
                     mandatory to ensure a seamless event experience.
                   </li>
                   <li>
-                    2.3 Evaga reserves the right to take appropriate action,
+                    2.3 Eevagga reserves the right to take appropriate action,
                     including but not limited to removing your profile, for
                     repeated customer complaints or non-compliance with
                     commitments.
@@ -152,14 +152,14 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    3.1 Vendors agree to a commission structure where Evaga will
+                    3.1 Vendors agree to a commission structure where Eevagga will
                     deduct 12% of the payment received from customers for the
                     services or products listed on the platform. Additionally,
                     2% will be deducted for payment gateway charges if incurred
-                    by Evaga.
+                    by Eevagga.
                   </li>
                   <li>
-                    3.2 Payments from customers will be made directly to Evaga.
+                    3.2 Payments from customers will be made directly to Eevagga.
                     After deducting the commission, applicable payment gateway
                     fees, TDS, and GST (if applicable), the remaining amount
                     will be transferred to the Vendor via net banking.
@@ -179,7 +179,7 @@ const TermsModal = ({ open, handleClose }) => {
                   </li>
                   <li>
                     3.4 In case of a refund, Vendors must return the refunded
-                    amount to Evaga within two (2) days of receiving a
+                    amount to Eevagga within two (2) days of receiving a
                     notification of refund.
                   </li>
                   <li>
@@ -187,11 +187,11 @@ const TermsModal = ({ open, handleClose }) => {
                     pricing based on seasonality and demand trends.
                   </li>
                   <li>
-                    3.6 Evaga offers optional premium features such as top
+                    3.6 Eevagga offers optional premium features such as top
                     listings or e-banner advertisements for an additional fee.
                   </li>
                   <li>
-                    3.7 Any payment disputes must be reported to Evaga within
+                    3.7 Any payment disputes must be reported to Eevagga within
                     seven (7) days of receiving the payment to initiate
                     resolution.
                   </li>
@@ -204,24 +204,24 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    4.1 Vendors grant Evaga the right to use their photos,
+                    4.1 Vendors grant Eevagga the right to use their photos,
                     videos, and other promotional content on various platforms,
                     including but not limited to the web app, mobile app, and
                     social media channels such as Instagram, Facebook, Twitter,
                     and LinkedIn.
                   </li>
                   <li>
-                    4.2 Evaga reserves the right to shoot videos or photos of
+                    4.2 Eevagga reserves the right to shoot videos or photos of
                     Vendor services and use them for promotional purposes on our
                     platform.
                   </li>
                   <li>
-                    4.3 Vendors agree that Evaga may use their content without
+                    4.3 Vendors agree that Eevagga may use their content without
                     additional compensation, except where explicitly agreed
                     otherwise.
                   </li>
                   <li>
-                    4.4 Evaga may charge Vendors for premium promotional
+                    4.4 Eevagga may charge Vendors for premium promotional
                     features, including but not limited to featured listings and
                     e-banners.
                   </li>
@@ -251,17 +251,17 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    6.1 Evaga is not responsible for any damages, losses, or
+                    6.1 Eevagga is not responsible for any damages, losses, or
                     liabilities arising from services provided by Vendors.
                   </li>
                   <li>
-                    6.2 Evaga has no responsibility for any mishaps or incidents
+                    6.2 Eevagga has no responsibility for any mishaps or incidents
                     occurring at the event from either the Vendor’s side or the
                     customer/client’s side, as we act solely as a platform
                     connecting the final customer and the service provider.
                   </li>
                   <li>
-                    6.3 Vendors agree to indemnify and hold harmless Evaga, its
+                    6.3 Vendors agree to indemnify and hold harmless Eevagga, its
                     employees, directors, and affiliates from any claims,
                     damages, or expenses resulting from their actions or
                     omissions.
@@ -275,16 +275,16 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    7.1 Evaga reserves the right to suspend or terminate a
+                    7.1 Eevagga reserves the right to suspend or terminate a
                     Vendor’s profile for reasons including but not limited to
                     breach of these Terms and Conditions, misconduct, fraudulent
                     activity, non-compliance with applicable laws, or repeated
                     customer complaints. Prior to suspension or termination,
-                    Evaga will provide the Vendor with a written notice
+                    Eevagga will provide the Vendor with a written notice
                     outlining the reason(s) for the action and will offer a
                     reasonable period (typically 7 days) for the Vendor to
                     resolve the issue or present their case. If the issue is not
-                    resolved satisfactorily, Evaga may proceed with the
+                    resolved satisfactorily, Eevagga may proceed with the
                     suspension or termination of the Vendor’s profile. In the
                     case of termination, the Vendor must fulfill any outstanding
                     commitments and resolve any pending disputes with customers
@@ -292,7 +292,7 @@ const TermsModal = ({ open, handleClose }) => {
                   </li>
                   <li>
                     7.2 Vendors may terminate their profile by providing written
-                    notice to Evaga. Termination does not absolve the Vendor
+                    notice to Eevagga. Termination does not absolve the Vendor
                     from fulfilling prior commitments or resolving outstanding
                     disputes.
                   </li>
@@ -305,7 +305,7 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    8.1 Evaga will mediate disputes between Vendors and
+                    8.1 Eevagga will mediate disputes between Vendors and
                     customers in good faith to attempt to resolve any issues
                     related to service delivery, payment, or other contractual
                     matters. Should mediation fail to resolve the dispute to the
@@ -326,7 +326,7 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    9.1 Evaga reserves the right to update or modify these Terms
+                    9.1 Eevagga reserves the right to update or modify these Terms
                     and Conditions at any time. Vendors will be notified of
                     significant changes via email or platform notification.
                     Continued use of the platform after such notification
@@ -393,26 +393,26 @@ const TermsModal = ({ open, handleClose }) => {
                 </h2>
                 <ul className=" ml-1 text-textGray space-y-2">
                   <li>
-                    12.1 Vendor Support Services: Evaga will provide ongoing
+                    12.1 Vendor Support Services: Eevagga will provide ongoing
                     support to vendors through various channels, including
                     email, phone, and the vendor dashboard on the platform.
                   </li>
                   <li>
-                    12.2 Response Time: Evaga aims to respond to support
+                    12.2 Response Time: Eevagga aims to respond to support
                     inquiries within 48 hours of receipt. For urgent matters,
                     vendors should contact the support team via phone, email, or
                     chat.
                   </li>
                   <li>
-                    12.3 Support Scope: Evaga will assist in mediating disputes
+                    12.3 Support Scope: Eevagga will assist in mediating disputes
                     between Vendors and customers related to service quality,
                     delays, cancellations, and any issues that arise during or
                     after the event. The platform will provide a neutral and
                     objective approach to resolving these disputes. However,
-                    Evaga will not assume liability for the outcome of the
+                    Eevagga will not assume liability for the outcome of the
                     dispute, as our role is limited to facilitating
                     communication and providing guidance. In cases of unresolved
-                    disputes, Evaga may recommend alternative dispute resolution
+                    disputes, Eevagga may recommend alternative dispute resolution
                     methods but is not obligated to enforce any final
                     resolutions.
                   </li>
@@ -420,7 +420,7 @@ const TermsModal = ({ open, handleClose }) => {
                     12.4 Availability: Vendor support is available during
                     regular business hours, from 9:00 AM to 6:00 PM, Monday to
                     Saturday. Our support team will not be available on public
-                    holidays. Evaga will inform vendors of any planned service
+                    holidays. Eevagga will inform vendors of any planned service
                     disruptions or updates in advance.
                   </li>
                 </ul>

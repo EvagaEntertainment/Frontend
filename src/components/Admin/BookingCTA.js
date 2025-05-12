@@ -4,7 +4,8 @@ import adminActionsApi from "../../services/adminActionsApi";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import { formatDate } from "../../utils/formatDate";
 import useDebounce from "../../utils/useDebounce";
-function BookingCTA({term}) {
+import { formatDateTime } from "../../utils/formatDateTime";
+function BookingCTA({ term }) {
   const [page, setPage] = useState(1);
   const [allErrorLogs, setAllErrorLogs] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -19,16 +20,15 @@ function BookingCTA({term}) {
       page: page || 1,
       // sortOrder: sortvalue || "asc",
     };
-    
+
     const response = await getAllBookingCtaApi.callApi(queryParams);
     setAllErrorLogs(response ? response?.data : []);
     setTotalPages(response ? response?.totalPages : 1);
-
   };
 
   useEffect(() => {
     getAllErrorLogsApiHandle();
-  }, [page,debounce]);
+  }, [page, debounce]);
   const columns = [
     { label: "No", key: "index", render: (_, i) => i + 1 },
     {
@@ -48,9 +48,14 @@ function BookingCTA({term}) {
       key: "eventType",
     },
     {
-      label: "Date",
+      label: "Event Date",
       key: "preferredDate",
       render: (row) => formatDate(row?.preferredDate),
+    },
+    {
+      label: "Form Submitted Date",
+      key: "preferredDate",
+      render: (row) => formatDateTime(row?.createdAt),
     },
   ];
   return (

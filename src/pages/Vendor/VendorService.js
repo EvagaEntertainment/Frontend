@@ -25,24 +25,24 @@ function VendorService() {
 
   const faqData = [
     {
-      question: "What is Evaga Entertainment?",
+      question: "What is Eevagga?",
       answer:
-        "Evaga Entertainment is an online marketplace that connects customers with the best event vendors and services. Whether you're planning a wedding, corporate event, birthday, or any special occasion, we help you find the right professionals to bring your event to life.",
+        "Eevagga is an online marketplace that connects customers with the best event vendors and services. Whether you're planning a wedding, corporate event, birthday, or any special occasion, we help you find the right professionals to bring your event to life.",
     },
     {
-      question: "How does Evaga Entertainment work?",
+      question: "How does Eevagga work?",
       answer:
-        "Evaga allows you to browse and book vendors across various event categories. Simply search for the service you need, compare options, and book directly through our platform.",
+        "Eevagga allows you to browse and book vendors across various event categories. Simply search for the service you need, compare options, and book directly through our platform.",
     },
     {
-      question: "Is Evaga Entertainment free to use?",
+      question: "Is Eevagga free to use?",
       answer:
         "Yes! Browsing and exploring vendors is completely free. You only pay for the services you book.",
     },
     {
-      question: "What types of events does Evaga cover?",
+      question: "What types of events does Eevagga cover?",
       answer:
-        "Evaga Entertainment caters to personal and corporate events, including weddings, birthdays, corporate functions, concerts, exhibitions, and more.",
+        "Eevagga caters to personal and corporate events, including weddings, birthdays, corporate functions, concerts, exhibitions, and more.",
     },
     {
       question: "How do I book a vendor?",
@@ -62,7 +62,7 @@ function VendorService() {
     {
       question: "Are there any additional charges?",
       answer:
-        "Evaga is a fully transparent platform, redefining how India plans and executes events. Before making the full payment, you will receive a complete cost breakdown, ensuring there are no hidden charges.",
+        "Eevagga is a fully transparent platform, redefining how India plans and executes events. Before making the full payment, you will receive a complete cost breakdown, ensuring there are no hidden charges.",
     },
     {
       question:
@@ -129,7 +129,7 @@ function VendorService() {
       </span>
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 px-5 py-5 md:px-[2%] md:py-[2%] w-full">
         <div className="flex-[0.28] flex flex-col gap-2">
-          <h3 className="text-primary text-xl font-semibold">Evaga Support</h3>
+          <h3 className="text-primary text-xl font-semibold">Eevagga Support</h3>
           <hr />
           {/* <p
           className={
