@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     Cookies.set("accessToken", accessToken, { expires: 1 });
     Cookies.set("role", role, { expires: 1 });
     Cookies.set("userId", userId, { expires: 1 });
-    notificationService.success("Welcome to Evaga!");
+    notificationService.success("Welcome to Eevagga!");
   
     // Check if a redirect URL is provided
     const params = new URLSearchParams(location.search);

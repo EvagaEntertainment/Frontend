@@ -17,7 +17,6 @@ function UserSignupPage() {
   const dispatch = useDispatch();
   const { login } = useAuth();
   const handleFormSubmit = async (data) => {
-    console.log(data, "handleFormSubmit");
     const response = await registerUser.callApi(data);
 
     if (response.token && response.role && response.userId) {
