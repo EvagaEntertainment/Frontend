@@ -24,6 +24,7 @@ import GlobalEventHandlers from "./utils/GlobalEventHandlers";
 import Loader from "./components/Loaders/Loader";
 import WhatsAppButton from "./utils/WhatsAppButton";
 import ThankYou from "./pages/ThankYou.js";
+import StickyAd from "./utils/StickyAd.js";
 const Home = lazy(() => import("./pages/HomePage"));
 const SinglePackage = lazy(() => import("./pages/SinglePackage"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
@@ -125,8 +126,8 @@ const AppContent = () => {
           pauseOnHover
           theme="light"
         />
-        {!noWhatsappPaths.includes(location.pathname) && <WhatsAppButton />}
-
+        {!noWhatsappPaths.includes(location.pathname) && <WhatsAppButton />}{" "}
+        {!noWhatsappPaths.includes(location.pathname) && <StickyAd />}
         <GoToTop />
         <Routes>
           <Route
