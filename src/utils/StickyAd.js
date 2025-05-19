@@ -8,9 +8,7 @@ const StickyAd = () => {
 
   useEffect(() => {
     const adDismissed = Cookies.get("adDismissed");
-    if (!adDismissed) {
-      setTimeout(() => setShowAd(true), 2000); // 2-second delay
-    }
+    if (!adDismissed) setTimeout(() => setShowAd(true), 1000);
   }, []);
 
   const handleDismiss = () => {
@@ -18,119 +16,137 @@ const StickyAd = () => {
     setShowAd(false);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        ease: [0.25, 0.1, 0.25, 1],
+        duration: 0.6
+      }
+    },
+    exit: {
+      y: "100%",
+      opacity: 0,
+      transition: { ease: "easeIn", duration: 0.3 }
+    }
+  };
+
+  const textVariants = {
+    hidden: { width: 0, opacity: 0 },
+    visible: {
+      width: "100%",
+      opacity: 1,
+      transition: {
+        ease: "easeInOut",
+        duration: 0.8,
+        delay: 0.3
+      }
+    }
+  };
+
+  const buttonVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        bounce: 0.6,
+        duration: 0.8
+      }
+    }
+  };
+
   return (
     <AnimatePresence>
       {showAd && (
         <motion.div
-          initial={{ y: 40, opacity: 0, scale: 0.95 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            transition: {
-              type: "spring",
-              stiffness: 350,
-              damping: 22,
-              delay: 0.1,
-              duration: 0.7,
-            },
-          }}
-          exit={{
-            y: 60,
-            opacity: 0,
-            transition: {
-              ease: "easeIn",
-              duration: 0.25,
-            },
-          }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className="fixed inset-x-0 bottom-0 flex justify-center z-50 px-4 pb-4"
         >
-          <motion.div
-            className="w-full max-w-xl rounded-xl shadow-lg overflow-hidden"
-            style={{
-              background: "linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)",
-              border: "1px solid rgba(0,0,0,0.08)",
-            }}
-          >
-            <div className="relative p-5">
-              {/* Enhanced close button */}
+          <div className="w-full max-w-xl bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="relative p-6">
+              {/* Close button */}
               <motion.button
                 onClick={handleDismiss}
-                initial={{ rotate: -45, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                whileHover={{
-                  rotate: 90,
-                  scale: 1.1,
-                  backgroundColor: "rgba(0,0,0,0.03)",
-                }}
-                whileTap={{ scale: 0.85 }}
-                className="absolute top-3 right-3 p-1 text-gray-500 hover:text-gray-700 rounded-full transition-all"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                whileHover={{ rotate: 90, scale: 1.1 }}
+                transition={{ type: "spring", delay: 0.8 }}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 p-1.5 rounded-full bg-gray-100"
                 aria-label="Close"
               >
                 <FiX className="text-lg" />
               </motion.button>
 
-              {/* Content with refined animations */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { staggerChildren: 0.15 },
-                }}
-                className="text-center space-y-2"
-              >
-                <motion.h3
-                  initial={{ y: -12, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="text-xl font-medium text-gray-900"
-                >
-                  Wedding Planning Overload?
-                </motion.h3>
+              {/* Content */}
+              <div className="text-center space-y-2">
+                {/* Typing effect with cursor */}
+                <div className="overflow-hidden mx-auto max-w-max">
+                  <motion.h3
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-2xl font-medium text-gray-900 whitespace-nowrap relative"
+                  >
+                    Wedding Planning Overload?
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ repeat: Infinity, duration: 0.8 }}
+                      className="absolute -right-3 top-0.5 text-gray-400"
+                    >
+                      |
+                    </motion.span>
+                  </motion.h3>
+                </div>
 
+                {/* Subtext */}
                 <motion.p
-                  initial={{ y: -8, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
-                  className="text-gray-500 text-normal"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: 1,
+                    transition: { delay: 1.1, duration: 0.4 }
+                  }}
+                  className="text-gray-500 text-sm"
                 >
                   We handle the details so you can enjoy the magic
                 </motion.p>
 
-                <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
+                {/* Bouncing buttons */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
                   <motion.a
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    whileHover={{
-                      y: -3,
-                      boxShadow: "0 6px 16px rgba(106, 27, 154, 0.2)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ type: "spring", stiffness: 400 }}
+                    variants={buttonVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ y: -3 }}
                     href="mailto:info@evagaentertainment.com"
-                    className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#6A1B9A] to-[#4A0072] hover:from-[#5A169A] hover:to-[#3A0062] text-white font-medium px-4 py-3 rounded-xl transition-all"
+                    className="flex items-center justify-center gap-2 bg-[#6A1B9A] text-white px-6 py-3.5 rounded-xl font-medium"
                   >
-                    <FiMail className="relative top-[1px]" /> Email Us
+                    <FiMail className="text-lg" /> Email Experts
                   </motion.a>
 
                   <motion.a
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    whileHover={{
-                      y: -3,
-                      boxShadow: "0 6px 16px rgba(249, 215, 3, 0.25)",
-                    }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ type: "spring", stiffness: 400, delay: 0.1 }}
+                    variants={buttonVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ y: -3 }}
+                    transition={{ delay: 0.1 }}
                     href="tel:+918050279101"
-                    className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#F9D703] to-[#CBAB00] hover:from-[#E9C703] hover:to-[#BB9B00] text-gray-900 font-medium px-4 py-3 rounded-xl transition-all"
+                    className="flex items-center justify-center gap-2 bg-[#F9D703] text-gray-900 px-6 py-3.5 rounded-xl font-medium"
                   >
-                    <FiPhone className="relative top-[1px]" /> Call Us
+                    <FiPhone className="text-lg" /> Instant Call
                   </motion.a>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
