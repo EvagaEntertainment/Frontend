@@ -21,11 +21,11 @@ function HomeSearchBar({ cities, value, onChange }) {
   const debounce = useDebounce(search);
   const { searchTerm } = useSelector((state) => state.userSearch);
 
-  useEffect(() => {
-    if (!categories || categories.length === 0) {
-      dispatch(fetchCategories());
-    }
-  }, [dispatch, categories]);
+  // useEffect(() => {
+  //   if (!categories || categories.length === 0) {
+  //     dispatch(fetchCategories());
+  //   }
+  // }, [dispatch, categories]);
 
   useEffect(() => {
     const savedCategory = Cookies.get("selectedCategory");

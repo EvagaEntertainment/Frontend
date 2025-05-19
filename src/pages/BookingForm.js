@@ -16,6 +16,7 @@ import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { generateMonthOptions } from "../utils/generateMonthOptions";
 const BookingForm = () => {
   const {
     register,
@@ -66,10 +67,12 @@ const BookingForm = () => {
       formdata.append("phone", data.phone);
       formdata.append("email", data.email);
       formdata.append("eventType", data.eventType);
-      formdata.append(
-        "preferredDate",
-        new Date(data.preferredDate).toISOString()
-      );
+      formdata.append("eventLocation", data.eventLocation);
+      formdata.append("eventMonth", data.eventMonth);
+      // formdata.append(
+      //   "preferredDate",
+      //   new Date(data.preferredDate).toISOString()
+      // );
 
       // 2. Get UTM parameters
       const urlParams = new URLSearchParams(window.location.search);
@@ -87,7 +90,7 @@ const BookingForm = () => {
       // 4. Prepare Make.com payload (with UTM)
       const webhookPayload = {
         ...data,
-        interestedDate: new Date(data.preferredDate).toISOString(),
+        interestedDate: data?.eventMonth,
         submittedAt: new Date().toISOString(),
         device: navigator.userAgent,
         utm_params: utmParams, // Structured UTM data
@@ -175,7 +178,6 @@ const BookingForm = () => {
               }}
             />
           </motion.div>
-
           {/* Contact Info Group */}
           <motion.div
             variants={itemVariants}
@@ -231,7 +233,6 @@ const BookingForm = () => {
               }}
             />
           </motion.div>
-
           {/* Event Type */}
           <motion.div variants={itemVariants}>
             <FormControl fullWidth>
@@ -261,38 +262,72 @@ const BookingForm = () => {
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
-          </motion.div>
-
-          {/* Date Picker */}
+          </motion.div>{" "}
+          {/* Event Location */}
           <motion.div variants={itemVariants}>
-            <TextField
-              fullWidth
-              label="Preferred Date"
-              type="date"
-              variant="outlined"
-              {...register("preferredDate", { required: "Date is required" })}
-              error={!!errors.preferredDate}
-              helperText={errors.preferredDate?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {/* <CalendarToday sx={{ color: '#CBAB00' }} /> */}
-                  </InputAdornment>
-                ),
-                sx: {
+            <FormControl fullWidth>
+              <InputLabel id="event-type-label" sx={{ color: "#CBAB00" }}>
+                Event Location
+              </InputLabel>
+              <Select
+                labelId="event-type-label"
+                label="Event Location"
+                variant="outlined"
+                {...register("eventLocation", {
+                  required: "Event Location is required",
+                })}
+                error={!!errors.eventLocation}
+                IconComponent={ExpandMore}
+                sx={{
                   borderRadius: "16px",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#FFD700",
                   },
-                },
-              }}
-              InputLabelProps={{
-                shrink: true,
-                sx: { color: "#CBAB00" },
-              }}
-            />
+                }}
+              >
+                <MenuItem value="Bangalore">Bangalore </MenuItem>
+                <MenuItem value="Delhi">Delhi </MenuItem>
+                <MenuItem value="Lucknow">Lucknow</MenuItem>
+                <MenuItem value="Agra">Agra</MenuItem>
+                <MenuItem value="Goa">Goa</MenuItem>
+                <MenuItem value="Jaipur">Jaipur</MenuItem>
+                <MenuItem value="Udaipur">Udaipur </MenuItem>
+                <MenuItem value="Phuket">Phuket </MenuItem>
+                <MenuItem value="Oman">Oman </MenuItem>
+                <MenuItem value="Srilanka">Srilanka </MenuItem>
+                <MenuItem value="Dubai">Dubai </MenuItem>
+                <MenuItem value="Bharain">Bharain </MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
           </motion.div>
-
+          {/* Date Picker */}
+          <motion.div variants={itemVariants}>
+            <FormControl fullWidth>
+              <InputLabel id="event-month-label" sx={{ color: "#CBAB00" }}>
+                Event Month
+              </InputLabel>
+              <Select
+                labelId="event-month-label"
+                label="Event Month"
+                variant="outlined"
+                {...register("eventMonth", {
+                  required: "Event Month is required",
+                })}
+                error={!!errors.eventMonth}
+                IconComponent={ExpandMore}
+                sx={{
+                  borderRadius: "16px",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#FFD700",
+                  },
+                }}
+                select
+              >
+                {generateMonthOptions()}
+              </Select>
+            </FormControl>
+          </motion.div>
           {/* Submit Button */}
           <motion.div
             variants={itemVariants}

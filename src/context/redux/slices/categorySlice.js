@@ -19,7 +19,6 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-
 export const addCategory = createAsyncThunk(
   "category/addCategory",
   async (categoryData, { rejectWithValue }) => {

@@ -47,10 +47,18 @@ function BookingCTA({ term }) {
       label: "Event Type",
       key: "eventType",
     },
+    // {
+    //   label: "Event Date",
+    //   key: "preferredDate",
+    //   render: (row) => row?.preferredDate ?? "",
+    // },
     {
-      label: "Event Date",
-      key: "preferredDate",
-      render: (row) => formatDate(row?.preferredDate),
+      label: "Event Month",
+      key: "eventMonth",
+    },
+    {
+      label: "Event Location",
+      key: "eventLocation",
     },
     {
       label: "Form Submitted Date",

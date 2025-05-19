@@ -94,7 +94,7 @@ function Home() {
     }
   }, [auth.isAuthenticated, auth.role, userId]);
   const fetchedRef = useRef(false);
-  useEffect(() => {
+useEffect(() => {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories());
     }

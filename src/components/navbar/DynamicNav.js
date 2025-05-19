@@ -105,7 +105,7 @@ const DynamicNav = () => {
   ];
 
   const guestMenu = [
-    { component: <HomeSearchableCityDropdown />, roles: [] },
+    // { component: <HomeSearchableCityDropdown />, roles: [] },
     {
       component: (
         <div className="hidden lg:inline">
@@ -235,7 +235,7 @@ const DynamicNav = () => {
   })(Cookies.set);
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-purpleSecondary text-white shadow-lg w-full flex justify-between items-center flex-wrap px-4 md:px-10">
+      <nav className="z-50 bg-purpleSecondary text-white shadow-lg w-full flex justify-between items-center flex-wrap px-4 md:px-10">
         <div className="flex items-center justify-between w-full lg:w-auto py-3">
           {/* Brand */}
           <Link to="/" className="hover:text-gray-300">
@@ -511,7 +511,7 @@ const DynamicNav = () => {
           </div>
         )}
       </nav>
-      {(auth.role === "user" || !auth.isAuthenticated) && (
+      {/* {(auth.role === "user" || !auth.isAuthenticated) && (
         <div className="bg-primary px-[2.5%] flex items-center justify-start gap-12 text-white flex-wrap gap-y-2">
           <motion.span
             className="flex items-center justify-center gap-2 text-white cursor-pointer text-normal py-1"
@@ -530,7 +530,7 @@ const DynamicNav = () => {
             <p>All</p>
           </motion.span>
 
-          {/* <motion.div
+          <motion.div
             className="py-1"
             initial="rest"
             whileHover="hover"
@@ -548,7 +548,7 @@ const DynamicNav = () => {
             >
               Evaga Xperience
             </Link>
-          </motion.div> */}
+          </motion.div>
 
           <motion.div
             className="py-1"
@@ -580,7 +580,7 @@ const DynamicNav = () => {
             <Link to={internalRoutes.wishlist}>Wishlist</Link>
           </motion.div>
 
-          {/* <motion.div
+          <motion.div
             className="py-1"
             initial="rest"
             whileHover="hover"
@@ -598,7 +598,7 @@ const DynamicNav = () => {
             >
               Community
             </Link>
-          </motion.div> */}
+          </motion.div>
 
           <motion.div
             className="py-1"
@@ -637,7 +637,7 @@ const DynamicNav = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
