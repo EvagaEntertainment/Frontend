@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import { FaFilter } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import BackButton from "../utils/globalBackButton";
+import ProductCard from "../components/Cards/ProductCard";
 function SearchResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -144,9 +145,7 @@ function SearchResultPage() {
       return result;
     };
   })(Cookies.set);
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
+
   return (
     <motion.div
       className="w-full flex items-center flex-col justify-center"
@@ -159,16 +158,16 @@ function SearchResultPage() {
       }}
     >
       <div className="flex md:flex-row flex-col w-full lg:w-11/12 relative">
-        <div className="lg:w-1/4 lg:block hidden px-4 py-2 sticky top-0 self-start">
+        {/* <div className="lg:w-1/4 lg:block hidden px-4 py-2 sticky top-0 self-start">
           <FilterCard
             filters={filters}
             onFilterChange={handleFilterChange}
             onSliderChange={handleSliderChange}
           />
-        </div>
+        </div> */}
 
         {/* Filter card for mobile */}
-        <div
+        {/* <div
           className={`lg:hidden fixed h-fit  inset-y-0 top-40 left-0 rounded-md z-50 w-fit bg-white shadow-lg transform ${
             isMobileFilterVisible ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out`}
@@ -186,18 +185,18 @@ function SearchResultPage() {
               onSliderChange={handleSliderChange}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Floating filter button for mobile */}
-        <button
+        {/* <button
           className={` ${
             isMobileFilterVisible ? "hidden" : ""
           } lg:hidden fixed bottom-10 left-4 bg-white text-primary p-3 rounded-full shadow-md shadow-gray-400 z-50`}
           onClick={() => setIsMobileFilterVisible(true)}
         >
           <FaFilter size={24} />
-        </button>
-        <div className="flex flex-col w-full lg:w-3/4 mt-6">
+        </button> */}
+        <div className="flex flex-col w-full  mt-6">
           <div className="w-full px-4 pt-2 flex items-center justify-between ">
             <BackButton />
             <SortandFilterCard
@@ -210,44 +209,79 @@ function SearchResultPage() {
           </div>
 
           <div className="w-full px-4 pb-2">
-            <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1  grid-cols-1      
+  sm:grid-cols-2  
+  md:grid-cols-3    
+  lg:grid-cols-4    
+  xl:grid-cols-5   
+  2xl:grid-cols-5   gap-6">
               {searchResult?.length >= 0 ? (
-                searchResult.map((item) => {
+                searchResult?.map((service, index) => {
                   const imageUrl =
-                    (Array.isArray(item.serviceDetails?.values?.CoverImage)
-                      ? item.serviceDetails?.values?.CoverImage[0]
-                      : item.serviceDetails?.values?.CoverImage) ||
-                    (Array.isArray(item.serviceDetails?.values?.ProductImage)
-                      ? item.serviceDetails?.values?.ProductImage[0]
-                      : item.serviceDetails?.values?.ProductImage);
+                    (Array.isArray(service.serviceDetails?.values?.CoverImage)
+                      ? service.serviceDetails?.values?.CoverImage[0]
+                      : service.serviceDetails?.values?.CoverImage) ||
+                    (Array.isArray(service.serviceDetails?.values?.ProductImage)
+                      ? service.serviceDetails?.values?.ProductImage[0]
+                      : service.serviceDetails?.values?.ProductImage);
 
                   const popularimage = imageUrl?.startsWith("service/")
                     ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
                     : imageUrl;
+                  const sizeAndDimension =
+                    service.serviceDetails?.values?.["SizeAndDimension"] || [];
+                  const sizeAndDimensionPrice = sizeAndDimension
+                    .filter((dimension) => parseFloat(dimension?.Price))
+                    .reduce(
+                      (acc, dimension) => acc * parseFloat(dimension?.Price),
+                      1
+                    );
+                  const price =
+                    service.serviceDetails?.values?.price ||
+                    service.serviceDetails?.values?.Pricing ||
+                    service.serviceDetails?.values?.Price ||
+                    service.serviceDetails?.values?.Package?.[0]?.Rates ||
+                    service.serviceDetails?.values?.[
+                      "OrderQuantity&Pricing"
+                    ]?.[0]?.Rates ||
+                    service.serviceDetails?.values?.["Duration&Pricing"]?.[0]
+                      ?.Amount ||
+                    service.serviceDetails?.values?.["SessionLength"]?.[0]
+                      ?.Amount ||
+                    service.serviceDetails?.values?.[
+                      "SessionLength&Pricing"
+                    ]?.[0]?.Amount ||
+                    service.serviceDetails?.values?.["QtyPricing"]?.[0]
+                      ?.Rates ||
+                    sizeAndDimensionPrice;
+
                   return (
-                    <ProductDisplayCard
-                      key={item?.serviceDetails?._id || item?.title}
-                      image={popularimage}
+                    <ProductCard
+                      key={service?.serviceDetails?._id}
+                      popularimage={popularimage}
                       title={
-                        item?.serviceDetails?.values?.Title ||
-                        item?.serviceDetails?.values?.FoodTruckName ||
-                        item?.serviceDetails?.values?.VenueName
+                        service.serviceDetails?.values?.Title ||
+                        service.serviceDetails?.values?.VenueName ||
+                        service.serviceDetails?.values?.FoodTruckName
                       }
-                      category={item?.categoryName}
-                      eventData={item?.serviceDetails}
+                      category={service?.categoryName}
+                      price={price}
+                      rating={0}
+                      reviews={0}
+                      serviceId={service?._id}
+                      packageId={service?.serviceDetails?._id}
                       onClick={() =>
                         navigate(
-                          `${internalRoutes.SinglePackage}/${item?._id}/${item?.serviceDetails?._id}`
+                          `${internalRoutes.SinglePackage}/${service?._id}/${service?.serviceDetails?._id}`
                         )
                       }
                       isFavourite={allWishlist?.some(
-                        (val) =>
-                          val._id === item?._id &&
-                          val.packageDetails?._id === item?.serviceDetails?._id
+                        (item) =>
+                          item._id === service?._id &&
+                          item.packageDetails?._id ===
+                            service?.serviceDetails?._id
                       )}
-                      serviceId={item?._id}
-                      packageId={item?.serviceDetails?._id}
-                      discountPercentage={item?.serviceDiscount}
+                      discountPercentage={service?.serviceDiscount}
                     />
                   );
                 })

@@ -46,7 +46,6 @@ function Home() {
     dispatch(setLoading(true));
     try {
       const response = await getAllPackages.callApi();
-  
 
       dispatch(addPackage(response?.data));
     } catch (error) {
@@ -67,7 +66,6 @@ function Home() {
   const GetRecentViewpackageApiHandle = async () => {
     const response = await GetRecentViewpackageApi.callApi(userId);
     setRecentView(response ? response?.recentlyViewed : []);
- 
   };
   const userIntereststatusHandle = async () => {
     const response = await userIntereststatus.callApi(userId);
@@ -94,7 +92,7 @@ function Home() {
     }
   }, [auth.isAuthenticated, auth.role, userId]);
   const fetchedRef = useRef(false);
-useEffect(() => {
+  useEffect(() => {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories());
     }
