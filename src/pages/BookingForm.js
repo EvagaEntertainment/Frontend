@@ -98,7 +98,7 @@ const BookingForm = () => {
 
       // 5. Send to Make.com (using fetch instead of axios to avoid CORS issues)
       const makeResponse = await fetch(
-        "https://hook.us2.make.com/boqfxicjksa1otbong8fni9qfq4fxagh",
+        "https://hook.us2.make.com/kuo3ufmp7udaos5gcsk7fvnvcgyw2b3k",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
