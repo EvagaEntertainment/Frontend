@@ -109,6 +109,23 @@ const AppContent = () => {
     }
   }, [auth, allWishlist, userId, dispatch]);
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+
+    if (urlParams.toString().includes("utm_")) {
+      const utmParams = {
+        utm_source: urlParams.get("utm_source"),
+        utm_medium: urlParams.get("utm_medium"),
+        utm_campaign: urlParams.get("utm_campaign"),
+        utm_term: urlParams.get("utm_term"),
+        utm_content: urlParams.get("utm_content"),
+      };
+
+      // Store in sessionStorage
+      sessionStorage.setItem("utmParams", JSON.stringify(utmParams));
+    }
+  }, [location.search]);
+
   return (
     <>
       {!noNavbarPaths.includes(location.pathname) && <DynamicNav />}
