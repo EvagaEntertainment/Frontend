@@ -16,7 +16,7 @@ function Footer() {
 
   return (
     <footer
-      className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full  "
+      className="bg-purpleSecondary text-backgroundOffWhite pb-10 font-semibold w-full mt-6 "
       style={{
         minHeight: "200px",
         contain: "layout paint style", // New: CSS containment

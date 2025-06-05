@@ -25,12 +25,7 @@ import Loader from "./components/Loaders/Loader";
 import WhatsAppButton from "./utils/WhatsAppButton";
 import ThankYou from "./pages/ThankYou.js";
 import StickyAd from "./utils/StickyAd.js";
-import Navbar from "./components/navbar/Navbar.jsx";
-import AboutEvaga from "./pages/AboutEvaga";
-import OurService from "./pages/OurService.jsx";
-import Home from "./pages/HomepageNew.jsx";
-import CategoryPage from "./pages/CatgeoryPage.jsx";
-// const Home = lazy(() => import("./pages/HomepageNew.jsx"));
+const Home = lazy(() => import("./pages/HomePage"));
 const SinglePackage = lazy(() => import("./pages/SinglePackage"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
 const VendorDashboard = lazy(() => import("./pages/Vendor/VendorDashboard"));
@@ -61,8 +56,7 @@ const UserForgotPassword = lazy(() =>
 const UserProfile = lazy(() => import("./pages/User/UserProfile"));
 const PressRelease = lazy(() => import("./pages/PressRelease"));
 const CheckOut = lazy(() => import("./pages/CheckOut"));
-// const AboutEvaga = lazy(() => import("./pages/AboutEvaga"));
-
+const AboutEvaga = lazy(() => import("./pages/AboutEvaga"));
 const RefundAndCancellation = lazy(() =>
   import("./pages/RefundAndCancellation")
 );
@@ -81,7 +75,6 @@ const Blog = lazy(() => import("./pages/Blog"));
 const SingleBlogPage = lazy(() => import("./pages/singleBlogPage"));
 const InterestSelection = lazy(() => import("./pages/InterestSelection"));
 const BookingForm = lazy(() => import("./pages/BookingForm.js"));
-// const OurService = lazy(() => import("./pages/OurService.jsx"));
 const AppContent = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
@@ -89,18 +82,7 @@ const AppContent = () => {
   const userId = Cookies.get("userId");
   const { allWishlist } = useSelector((state) => state.wishlist);
   const noNavbarPaths = [
-       internalRoutes.vendorDashboard,
-    internalRoutes.vendorProfile,
-    internalRoutes.vendorServices,
-    internalRoutes.vendorOrders,
-    internalRoutes.vendorOrderDeatil,
-    internalRoutes.vendorSupport,
-    internalRoutes.vendorCommunity,
-    internalRoutes.vendorCreateservice,
-    internalRoutes.vendorEditservice,
-  ];
-  const noNewNavbarPaths = [
-    internalRoutes.vendorOrders,
+    internalRoutes.userSignup,
     internalRoutes.userLogin,
     internalRoutes.adminSignup,
     internalRoutes.adminLogin,
@@ -110,15 +92,6 @@ const AppContent = () => {
     internalRoutes.userForgotPassword,
     internalRoutes.adminDashboard,
     internalRoutes.interest,
-    internalRoutes.vendorDashboard,
-    internalRoutes.vendorProfile,
-    internalRoutes.vendorServices,
-    internalRoutes.vendorOrders,
-    internalRoutes.vendorOrderDeatil,
-    internalRoutes.vendorSupport,
-    internalRoutes.vendorCommunity,
-    internalRoutes.vendorCreateservice,
-    internalRoutes.vendorEditservice,
   ];
   const noWhatsappPaths = [
     internalRoutes.adminSignup,
@@ -135,20 +108,6 @@ const AppContent = () => {
       dispatch(fetchUserWishlist(userId));
     }
   }, [auth, allWishlist, userId, dispatch]);
-  useEffect(() => {
-    const preventDefault = (e) => e.preventDefault();
-    const events = ["selectstart", "contextmenu", "copy", "cut", "dragstart"];
-
-    events.forEach((event) => {
-      document.addEventListener(event, preventDefault);
-    });
-
-    return () => {
-      events.forEach((event) => {
-        document.removeEventListener(event, preventDefault);
-      });
-    };
-  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -166,11 +125,10 @@ const AppContent = () => {
       sessionStorage.setItem("utmParams", JSON.stringify(utmParams));
     }
   }, [location.search]);
+
   return (
     <>
-      {noNavbarPaths.includes(location.pathname) && <DynamicNav />}
-      {!noNewNavbarPaths.includes(location.pathname) && <Navbar />}
-
+      {!noNavbarPaths.includes(location.pathname) && <DynamicNav />}
       <GlobalEventHandlers>
         <GlobalLoader />
         <ToastContainer
@@ -222,22 +180,6 @@ const AppContent = () => {
               </Suspense>
             }
             path={internalRoutes.profile}
-          />{" "}
-          <Route
-            element={
-              // <Suspense fallback={<Loader />}>
-              <OurService />
-              // </Suspense>
-            }
-            path={internalRoutes.ourServices}
-          />{" "}
-          <Route
-            element={
-              // <Suspense fallback={<Loader />}>
-              <CategoryPage />
-              // </Suspense>
-            }
-            path={`${internalRoutes.categoryPage}/:category`}
           />
           <Route
             element={
@@ -249,9 +191,9 @@ const AppContent = () => {
           />
           <Route
             element={
-              // <Suspense fallback={<Loader />}>
-              <Home />
-              // </Suspense>
+              <Suspense fallback={<Loader />}>
+                <Home />
+              </Suspense>
             }
             path={internalRoutes.home}
           />
@@ -313,9 +255,9 @@ const AppContent = () => {
           />
           <Route
             element={
-              // <Suspense fallback={<Loader />}>
-              <AboutEvaga />
-              // </Suspense>
+              <Suspense fallback={<Loader />}>
+                <AboutEvaga />
+              </Suspense>
             }
             path={internalRoutes.aboutUs}
           />

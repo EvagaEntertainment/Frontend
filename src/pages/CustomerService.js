@@ -26,54 +26,75 @@ function CustomerService() {
 
   const faqData = [
     {
-      question: "What types of events does Eevagga cater to?",
+      question: "What is Eevagga?",
       answer:
-        "We specialize in a wide range of events including weddings, birthdays, baby showers, school and college functions, corporate events and more. Whether you want a full event package or standalone services, we have you covered.",
+        "Eevagga is an online marketplace that connects customers with the best event vendors and services. Whether you're planning a wedding, corporate event, birthday, or any special occasion, we help you find the right professionals to bring your event to life.",
     },
     {
-      question: "Can I customize my event package?",
+      question: "How does Eevagga work?",
       answer:
-        "Yes! You can choose from ready-made event packages or build your own by selecting standalone services that suit your specific needs and budget.",
+        "Eevagga allows you to browse and book vendors across various event categories. Simply search for the service you need, compare options, and book directly through our platform.",
     },
     {
-      question: "How do I book an event with Eevagga?",
+      question: "Is Eevagga free to use?",
       answer:
-        "Booking is easy! You can explore our services online, select your preferred package or individual services, and book directly through our platform. Our team will then get in touch to assist you further.",
+        "Yes! Browsing and exploring vendors is completely free. You only pay for the services you book.",
     },
     {
-      question: "Do you provide services across India?",
+      question: "What types of events does Eevagga cover?",
       answer:
-        "Currently, we primarily serve major cities and metro areas and few foreign countries with plans to expand. Please check availability for your location during the booking process.",
+        "Eevagga caters to personal and corporate events, including weddings, birthdays, corporate functions, concerts, exhibitions, and more.",
     },
     {
-      question: "Are your vendors and service providers verified?",
+      question: "How do I book a vendor?",
       answer:
-        "Absolutely. All our vendors and partners go through a rigorous verification process to ensure quality, reliability, and professionalism.",
+        "To book a vendor: \n● Browse available vendors for your event category. \n● Compare profiles, services, and pricing. \n● Click 'Book Now' and follow the steps to confirm your reservation.",
     },
     {
-      question: "What if I need help planning my event?",
+      question: "How do payments work?",
       answer:
-        "Our expert event planners are available to guide you through every step, from conceptualization to execution, making the entire process seamless and stress-free.",
+        "We currently offer all major payment channels, including: \n● Cards (Credit/Debit) \n● UPI \n● Wallets \n● Net Banking \nNote: We only accept online payments—Cash on Delivery (COD) is not available.",
     },
     {
-      question: "Can I get a quote before booking?",
+      question: "Can I cancel my booking?",
       answer:
-        "Yes, detailed quotes are provided upfront based on your selected services or package, ensuring transparency with no hidden costs.",
+        "Yes, cancellation policies vary by vendor. Please check our Cancellation Policy before making a booking.",
     },
     {
-      question: "What is your cancellation and refund policy?",
+      question: "Are there any additional charges?",
       answer:
-        "Our cancellation and refund policies vary depending on the services booked. Please refer to the specific terms during booking or contact our support team for assistance.",
+        "Eevagga is a fully transparent platform, redefining how India plans and executes events. Before making the full payment, you will receive a complete cost breakdown, ensuring there are no hidden charges.",
     },
     {
-      question: "Do you offer last-minute bookings?",
+      question:
+        "I need a package, not an individual service. How can I book one?",
       answer:
-        "We understand that plans can change suddenly; we try to accommodate last-minute bookings whenever possible. Contact us directly to check availability.",
+        "If you need a customized event package: \n● Contact our team, and we’ll curate the best package based on your budget and requirements. \n● We are also launching Auto-Built Packages and AI-Enabled Event Packages soon to make planning even easier!",
     },
     {
-      question: "How can I contact Eevagga for support or queries?",
+      question: "How do I know if a vendor is reliable?",
       answer:
-        "You can reach us via the contact form on our website, email, or phone. Our dedicated support team is ready to assist you promptly.",
+        "We thoroughly verify our vendors and feature customer reviews and ratings to help you make an informed decision.",
+    },
+    {
+      question: "What if I need multiple services for my event?",
+      answer:
+        "You can book multiple vendors across different categories to ensure all your event needs are met.",
+    },
+    {
+      question: "How do I contact customer support?",
+      answer:
+        "You can reach out to us via: \n● Email: info@evagaentertainment.com \n● Phone: +91 82961 57611 \n● Live Chat: Available on our website",
+    },
+    {
+      question: "What if a vendor cancels my booking?",
+      answer:
+        "In case of a vendor cancellation, we will assist you in finding an alternative vendor or provide a full refund as per the vendor’s cancellation policy.",
+    },
+    {
+      question: "Can I leave a review after my event?",
+      answer:
+        "Yes! We encourage customers to share their experiences to help others make informed decisions.",
     },
   ];
 

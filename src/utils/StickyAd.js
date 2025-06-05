@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMail, FiPhone, FiX } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa6";
 
 const StickyAd = () => {
   const [showAd, setShowAd] = useState(false);
@@ -13,26 +12,26 @@ const StickyAd = () => {
   }, []);
 
   const handleDismiss = () => {
-    Cookies.set("adDismissed", "true", { expires: 3 });
+    Cookies.set("adDismissed", "true", { expires: 30 });
     setShowAd(false);
   };
 
   // Animation variants
   const containerVariants = {
     hidden: { y: "100%", opacity: 0 },
-    visible: {
-      y: 0,
+    visible: { 
+      y: 0, 
       opacity: 1,
       transition: {
         ease: [0.25, 0.1, 0.25, 1],
-        duration: 0.6,
-      },
+        duration: 0.6
+      }
     },
     exit: {
       y: "100%",
       opacity: 0,
-      transition: { ease: "easeIn", duration: 0.3 },
-    },
+      transition: { ease: "easeIn", duration: 0.3 }
+    }
   };
 
   const textVariants = {
@@ -43,9 +42,9 @@ const StickyAd = () => {
       transition: {
         ease: "easeInOut",
         duration: 0.8,
-        delay: 0.3,
-      },
-    },
+        delay: 0.3
+      }
+    }
   };
 
   const buttonVariants = {
@@ -56,9 +55,9 @@ const StickyAd = () => {
       transition: {
         type: "spring",
         bounce: 0.6,
-        duration: 0.8,
-      },
-    },
+        duration: 0.8
+      }
+    }
   };
 
   return (
@@ -96,7 +95,7 @@ const StickyAd = () => {
                     animate="visible"
                     className="text-2xl font-medium text-gray-900 whitespace-nowrap relative"
                   >
-                  Too Much to Plan?
+                    Wedding Planning Overload?
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -111,13 +110,13 @@ const StickyAd = () => {
                 {/* Subtext */}
                 <motion.p
                   initial={{ opacity: 0 }}
-                  animate={{
+                  animate={{ 
                     opacity: 1,
-                    transition: { delay: 1.1, duration: 0.4 },
+                    transition: { delay: 1.1, duration: 0.4 }
                   }}
                   className="text-gray-500 text-sm"
                 >
-                 We handle the details — you enjoy the moment.
+                  We handle the details so you can enjoy the magic
                 </motion.p>
 
                 {/* Bouncing buttons */}
@@ -127,12 +126,10 @@ const StickyAd = () => {
                     initial="hidden"
                     animate="visible"
                     whileHover={{ y: -3 }}
-                    href="https://wa.me/918050279101" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-gradient-to-br from-[#075E54] via-[#128C7E] to-[#25D366] text-white px-6 py-3.5 rounded-xl font-medium"
+                    href="mailto:info@evagaentertainment.com"
+                    className="flex items-center justify-center gap-2 bg-[#6A1B9A] text-white px-6 py-3.5 rounded-xl font-medium"
                   >
-                    <FaWhatsapp className="text-lg" /> Instant Chat
+                    <FiMail className="text-lg" /> Email Experts
                   </motion.a>
 
                   <motion.a
