@@ -108,6 +108,9 @@ function Home() {
       fetchedRef.current = true;
     }
   }, [allPackages, handleGetAllPackages]);
+  useEffect(() => {
+    console.log(allPackages);
+  }, [allPackages]);
   return (
     <motion.div
       className=" flex flex-col justify-center items-center gap-4 w-full"
