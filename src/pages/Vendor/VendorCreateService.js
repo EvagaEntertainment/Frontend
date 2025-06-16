@@ -529,7 +529,7 @@ function VendorCreateService() {
               textSize={"1rem"}
             />
           </div>
-          <div className="w-full gap-4 grid grid-cols-1 md:grid-cols-4 text-primary">
+          {/* <div className="w-full gap-4 grid grid-cols-1 md:grid-cols-4 text-primary">
             <p className="text-base font-semibold">About the Service</p>
             <textarea
               type="text"
@@ -550,7 +550,7 @@ function VendorCreateService() {
                 Years
               </p>
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="w-11/12 flex items-start justify-start flex-col">
