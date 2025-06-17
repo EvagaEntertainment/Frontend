@@ -31,9 +31,7 @@ function ServiceCard({
           <h5 className="text-primary font-semibold text-xl ">
             {title ? title : "Wedding Photography"}
           </h5>
-          <p className="text-textGray font-noraml">
-            {yearofexp ? yearofexp : "5"} years
-          </p>
+         
         </span>
         <TruncateText text={desc ? desc : ``} maxLines={2} />
         {InclusionData && (

@@ -63,27 +63,12 @@ function VendorCreateService() {
 
   const addNewServiceHandle = async () => {
     try {
-      if (!abouttheService.trim()) {
-        toast.error("Please fill in the 'About the Service' field.");
-        return;
-      }
-
-      if (
-        !yearofExperience.trim() ||
-        isNaN(yearofExperience) ||
-        yearofExperience <= 0
-      ) {
-        toast.error("Please enter a valid 'Year(s) of Experience'.");
-        return;
-      }
       setLoading(true);
       const userId = Cookies.get("userId");
       const formData = new FormData();
       formData.append("formTemplateId", selectedFormId);
       formData.append("Category", selectedCategory);
       formData.append("SubCategory", selectedSubCategory);
-      formData.append("AbouttheService", abouttheService);
-      formData.append("YearofExperience", yearofExperience);
 
       const services = formInstances.map((service, serviceIndex) => {
         const correspondingCateringPackages =
@@ -96,7 +81,7 @@ function VendorCreateService() {
           cateringValueInVenue: inHouseCateringMenuData,
           cateringPackageVenue: correspondingCateringPackages.map(
             (packageItem) => packageItem.data || []
-          ), 
+          ),
         };
       });
 
@@ -451,8 +436,6 @@ function VendorCreateService() {
     }
   };
   const handleAddPInHouseCateringPackage = (groupIndex) => {
- 
-
     setInHouseCateringPackageDataData((prev) => {
       // Ensure the group exists
       const newData = [...prev];
@@ -471,10 +454,9 @@ function VendorCreateService() {
   };
 
   const handleRemoveForm = (index) => {
- 
     setFormInstances((prev) => {
       const updated = prev.filter((_, i) => i !== index);
-   
+
       return updated;
     });
   };
@@ -615,7 +597,7 @@ function VendorCreateService() {
                     data: formData,
                     saved: true,
                   };
-             
+
                   setFormInstances(updatedInstances);
                 }}
                 setOpenMasterVenueModal={setOpenMasterVenueModal}
