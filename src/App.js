@@ -14,7 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactGA from "react-ga4";
 import DynamicNav from "./components/navbar/DynamicNav";
 import Footer from "./components/Footer/Footer";
-import GlobalLoader from "./components/Loaders/GlobalLoader";
 import { lazy, Suspense, useEffect } from "react";
 import GoToTop from "./GoToTop";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,8 +29,9 @@ import AboutEvaga from "./pages/AboutEvaga";
 import OurService from "./pages/OurService.jsx";
 import Home from "./pages/HomepageNew.jsx";
 import CategoryPage from "./pages/CatgeoryPage.jsx";
+import ViewAllPage from "./pages/ViewAllPage.jsx";
 // const Home = lazy(() => import("./pages/HomepageNew.jsx"));
-const SinglePackage = lazy(() => import("./pages/SinglePackage"));
+const SinglePackage = lazy(() => import("./pages/SinglePackageNew.jsx"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
 const VendorDashboard = lazy(() => import("./pages/Vendor/VendorDashboard"));
 const VendorSignUpPage = lazy(() => import("./pages/Vendor/VendorSignUpPage"));
@@ -89,7 +89,7 @@ const AppContent = () => {
   const userId = Cookies.get("userId");
   const { allWishlist } = useSelector((state) => state.wishlist);
   const noNavbarPaths = [
-       internalRoutes.vendorDashboard,
+    internalRoutes.vendorDashboard,
     internalRoutes.vendorProfile,
     internalRoutes.vendorServices,
     internalRoutes.vendorOrders,
@@ -98,9 +98,23 @@ const AppContent = () => {
     internalRoutes.vendorCommunity,
     internalRoutes.vendorCreateservice,
     internalRoutes.vendorEditservice,
-    internalRoutes.adminDashboard,
+  ];
+  const noFooterPaths = [
+    internalRoutes.vendorDashboard,
+    internalRoutes.vendorProfile,
+    internalRoutes.vendorServices,
+    internalRoutes.vendorOrders,
+    internalRoutes.vendorOrderDeatil,
+    internalRoutes.vendorSupport,
+    internalRoutes.vendorCommunity,
+    internalRoutes.vendorCreateservice,
+    internalRoutes.vendorEditservice,
+     internalRoutes.adminSignup,
     internalRoutes.adminLogin,
-    internalRoutes.adminSignup,
+    internalRoutes.adminDashboard,
+    internalRoutes.vendorForgotPassword,
+    internalRoutes.vendorLogin,
+    internalRoutes.vendorSignup,
   ];
   const noNewNavbarPaths = [
     internalRoutes.vendorOrders,
@@ -138,20 +152,36 @@ const AppContent = () => {
       dispatch(fetchUserWishlist(userId));
     }
   }, [auth, allWishlist, userId, dispatch]);
-  useEffect(() => {
-    const preventDefault = (e) => e.preventDefault();
-    const events = ["selectstart", "contextmenu", "copy", "cut", "dragstart"];
+useEffect(() => {
+  const preventDefault = (e) => {
+    // Check if target is an element that supports closest()
+    if (!e.target || typeof e.target.closest !== 'function') {
+      return; // Skip if not a DOM element
+    }
 
+    // Check if the event target is inside a ReactQuill editor
+    const isInsideQuill = e.target.closest('.ql-editor') || 
+                         e.target.closest('.ql-toolbar');
+    
+    // If it's inside Quill, allow default behavior
+    if (isInsideQuill) return;
+    
+    // Otherwise, prevent default
+    e.preventDefault();
+  };
+
+  const events = ["selectstart", "contextmenu", "copy", "cut", "dragstart"];
+
+  events.forEach((event) => {
+    document.addEventListener(event, preventDefault, { capture: true });
+  });
+
+  return () => {
     events.forEach((event) => {
-      document.addEventListener(event, preventDefault);
+      document.removeEventListener(event, preventDefault, { capture: true });
     });
-
-    return () => {
-      events.forEach((event) => {
-        document.removeEventListener(event, preventDefault);
-      });
-    };
-  }, []);
+  };
+}, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -175,7 +205,7 @@ const AppContent = () => {
       {!noNewNavbarPaths.includes(location.pathname) && <Navbar />}
 
       <GlobalEventHandlers>
-        <GlobalLoader />
+        {/* <GlobalLoader /> */}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -241,6 +271,14 @@ const AppContent = () => {
               // </Suspense>
             }
             path={`${internalRoutes.categoryPage}/:category`}
+          />{" "}
+          <Route
+            element={
+              // <Suspense fallback={<Loader />}>
+              <ViewAllPage />
+              // </Suspense>
+            }
+            path={`${internalRoutes.viewAllPage}/:category`}
           />
           <Route
             element={
@@ -427,11 +465,7 @@ const AppContent = () => {
             path={`${internalRoutes.vendorOrderDeatil + "/:orderId/:itemId"}`}
           />
           <Route
-            element={
-              <Suspense fallback={<Loader />}>
-                <SinglePackage />
-              </Suspense>
-            }
+            element={<SinglePackage />}
             path={`${internalRoutes.SinglePackage + "/:serviceId/:packageId"}`}
           />
           <Route
@@ -547,7 +581,7 @@ const AppContent = () => {
             }
           />
         </Routes>
-        {!noNavbarPaths.includes(location.pathname) && <Footer />}
+        {!noFooterPaths.includes(location.pathname) && <Footer />}
       </GlobalEventHandlers>
     </>
   );

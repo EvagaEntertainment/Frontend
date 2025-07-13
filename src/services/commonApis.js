@@ -7,7 +7,8 @@ const commonApis = {
   getVendorBanner: () => apiService.get(apiEndpoints.common.getVendorBanner()),
   getAbout2banner: () => apiService.get(apiEndpoints.common.getAbout2banner()),
   getAbout1banner: () => apiService.get(apiEndpoints.common.getAbout1banner()),
-  getOurServicesBanner: () => apiService.get(apiEndpoints.common.getOurServicesBanner()),
+  getOurServicesBanner: () =>
+    apiService.get(apiEndpoints.common.getOurServicesBanner()),
   addToWaitlist: (formdata) =>
     apiService.post(apiEndpoints.common.addtowaitlist, formdata),
   addFeedBack: (formdata) =>
@@ -43,6 +44,19 @@ const commonApis = {
     apiService.get(apiEndpoints.common.getServiceableRadius(vendorId)),
   bookingCta: (formdata) =>
     apiService.post(apiEndpoints.common.bookCta, formdata),
+  categoryWissPackage: (queryParams) =>
+    apiService.get(apiEndpoints.common.categoryWissPackage, queryParams),
+  categoryViewAllPackage: (queryParams) =>
+    apiService.get(apiEndpoints.common.categoryViewAllPackage, queryParams),
+  createGallery: (formdata) =>
+    apiService.post(apiEndpoints.common.createGallery, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+  getGallery: (queryParams) => apiService.get(apiEndpoints.common.getGallery,queryParams),
+  getGalleryForUser: (queryParams) => apiService.get(apiEndpoints.common.getGalleryForUser,queryParams),
+  deleteGallery: (galleryId) => apiService.delete(apiEndpoints.common.deleteGallery(galleryId)),
 };
 
 export default commonApis;
