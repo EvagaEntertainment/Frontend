@@ -242,6 +242,7 @@ const BookingForm = () => {
                 <MenuItem value="Corporate">Corporate</MenuItem>
                 <MenuItem value="Baby Showers">Baby Showers</MenuItem>
                 <MenuItem value="Birthdays">Birthdays</MenuItem>
+                <MenuItem value="House Warming">House Warming</MenuItem>
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
