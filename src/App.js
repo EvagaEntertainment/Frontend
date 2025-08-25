@@ -30,6 +30,7 @@ import OurService from "./pages/OurService.jsx";
 import Home from "./pages/HomepageNew.jsx";
 import CategoryPage from "./pages/CatgeoryPage.jsx";
 import ViewAllPage from "./pages/ViewAllPage.jsx";
+import CustomPackages from "./pages/CustomPackages.jsx";
 // const Home = lazy(() => import("./pages/HomepageNew.jsx"));
 const SinglePackage = lazy(() => import("./pages/SinglePackageNew.jsx"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
@@ -109,7 +110,7 @@ const AppContent = () => {
     internalRoutes.vendorCommunity,
     internalRoutes.vendorCreateservice,
     internalRoutes.vendorEditservice,
-     internalRoutes.adminSignup,
+    internalRoutes.adminSignup,
     internalRoutes.adminLogin,
     internalRoutes.adminDashboard,
     internalRoutes.vendorForgotPassword,
@@ -152,36 +153,36 @@ const AppContent = () => {
       dispatch(fetchUserWishlist(userId));
     }
   }, [auth, allWishlist, userId, dispatch]);
-useEffect(() => {
-  const preventDefault = (e) => {
-    // Check if target is an element that supports closest()
-    if (!e.target || typeof e.target.closest !== 'function') {
-      return; // Skip if not a DOM element
-    }
+  useEffect(() => {
+    const preventDefault = (e) => {
+      // Check if target is an element that supports closest()
+      if (!e.target || typeof e.target.closest !== "function") {
+        return; // Skip if not a DOM element
+      }
 
-    // Check if the event target is inside a ReactQuill editor
-    const isInsideQuill = e.target.closest('.ql-editor') || 
-                         e.target.closest('.ql-toolbar');
-    
-    // If it's inside Quill, allow default behavior
-    if (isInsideQuill) return;
-    
-    // Otherwise, prevent default
-    e.preventDefault();
-  };
+      // Check if the event target is inside a ReactQuill editor
+      const isInsideQuill =
+        e.target.closest(".ql-editor") || e.target.closest(".ql-toolbar");
 
-  const events = ["selectstart", "contextmenu", "copy", "cut", "dragstart"];
+      // If it's inside Quill, allow default behavior
+      if (isInsideQuill) return;
 
-  events.forEach((event) => {
-    document.addEventListener(event, preventDefault, { capture: true });
-  });
+      // Otherwise, prevent default
+      e.preventDefault();
+    };
 
-  return () => {
+    const events = ["selectstart", "contextmenu", "copy", "cut", "dragstart"];
+
     events.forEach((event) => {
-      document.removeEventListener(event, preventDefault, { capture: true });
+      document.addEventListener(event, preventDefault, { capture: true });
     });
-  };
-}, []);
+
+    return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, preventDefault, { capture: true });
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -565,10 +566,28 @@ useEffect(() => {
             }
           />{" "}
           <Route
+            path={internalRoutes.adminDashboard}
+            element={
+              <Suspense fallback={<Loader />}>
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              </Suspense>
+            }
+          />{" "}
+          <Route
             path={internalRoutes.bookingForm}
             element={
               <Suspense fallback={<Loader />}>
                 <BookingForm />
+              </Suspense>
+            }
+          />{" "}
+          <Route
+            path={internalRoutes.customPackages}
+            element={
+              <Suspense fallback={<Loader />}>
+                <CustomPackages />
               </Suspense>
             }
           />{" "}
