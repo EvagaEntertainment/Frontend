@@ -46,6 +46,7 @@ import adminApi from "../../services/adminApi";
 import { toast } from "react-toastify";
 import BookingCTA from "../../components/Admin/BookingCTA";
 import Gallery from "../../components/Admin/gallery";
+import AdminCustomEvent from "../../components/Admin/AdminCustomEvent";
 const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
@@ -324,6 +325,7 @@ const AdminDashboard = () => {
         {selectedMenu === "Error Logs" && <AdminErrorLogs />}
         {selectedMenu === "BookingCTA" && <BookingCTA term={term} />}
         {selectedMenu === "Gallery" && <Gallery />}
+        {selectedMenu === "AdminCustomEvent" && <AdminCustomEvent />}
       </div>
       <ReusableModal open={open} onClose={handleClose} width={"50%"}>
         <div className="max-w-ld mx-auto  p-6 bg-white rounded-lg ">

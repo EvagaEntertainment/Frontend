@@ -14,7 +14,7 @@ import { RiCoupon3Line } from "react-icons/ri";
 import MainLogo from "../../assets/Temporary Images/Evaga Logo.png";
 import { TbBrandBlogger, TbBrandBooking, TbReport } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
-import { BiMessageAltError } from "react-icons/bi";
+import { BiMessageAltError, BiSolidCalendarEvent } from "react-icons/bi";
 import {
   FaChevronDown,
   FaChevronUp,
@@ -80,6 +80,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       children: [
         { id: "Banner", label: "Banner", icon: <FaRegImage /> },
         { id: "Gallery", label: "Gallery", icon: <LuGalleryThumbnails  /> },
+        { id: "AdminCustomEvent", label: "Custom Event", icon: <BiSolidCalendarEvent  /> },
         { id: "Coupons", label: "Coupons", icon: <RiCoupon3Line /> },
         {
           id: "Fee Breakdown by Category",

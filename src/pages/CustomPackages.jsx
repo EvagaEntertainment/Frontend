@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 function CustomPackages() {
+  const navigate = useNavigate();
+  
   // Form data
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedEventType, setSelectedEventType] = useState('');
@@ -69,6 +72,8 @@ function CustomPackages() {
       hasFormData
     });
   }, [selectedEventType, selectedAge, selectedTheme, selectedFoodType, selectedCourses, hasFormData, formValues]);
+
+
 
   // Handle keyboard refresh attempts (Ctrl+R, F5)
   useEffect(() => {
@@ -354,27 +359,29 @@ function CustomPackages() {
 
   const confirmClose = () => {
     setShowCloseConfirm(false);
-    // Reset form and close
+    // Reset form and navigate to home page
     setCurrentStep(1);
     setSelectedEventType('');
     setSelectedAge('');
     setSelectedTheme('');
     setSelectedFoodType('');
     setSelectedCourses([]);
-    window.close() || window.history.back();
+    // Navigate to home page
+    navigate('/');
   };
 
   const confirmBack = () => {
     setShowBackConfirm(false);
-    // Reset form and go back
+    // Reset form and navigate to home page
     setCurrentStep(1);
     setSelectedEventType('');
     setSelectedAge('');
     setSelectedTheme('');
     setSelectedFoodType('');
     setSelectedCourses([]);
-    window.history.back();
-  };
+    // Navigate to home page
+    navigate('/');
+    }
 
   const cancelAction = () => {
     setShowCloseConfirm(false);
@@ -421,21 +428,24 @@ function CustomPackages() {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Event Type <span className="text-red-500">*</span></h2>
-        <p className="text-gray-600">What type of event are you planning?</p>
+      <div className="mb-8 text-center">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-4">
+          Event Type <span className="text-red-500">*</span>
+        </h2>
+        <p className="text-gray-600 text-lg">What type of event are you planning?</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mt-4"></div>
       </div>
 
       <div className="space-y-3">
         {eventTypes.map((eventType) => (
           <motion.div
             key={eventType}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
               selectedEventType === eventType
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                : 'border-gray-200 hover:border-purple-300 bg-white'
             }`}
             onClick={() => {
               setSelectedEventType(eventType);
@@ -443,24 +453,42 @@ function CustomPackages() {
               clearStepError('eventType');
             }}
           >
-            <div className="flex items-center space-x-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                selectedEventType === eventType ? 'bg-purple-100' : 'bg-gray-100'
+            <div className="flex items-center space-x-4">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                selectedEventType === eventType 
+                  ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                  : 'bg-gray-100 text-gray-400'
               }`}>
-                <span className={`text-sm ${
-                  selectedEventType === eventType ? 'text-purple-600' : 'text-gray-400'
+                <span className={`text-lg ${
+                  selectedEventType === eventType ? 'animate-pulse' : ''
                 }`}>
                   {selectedEventType === eventType ? '✓' : '🎉'}
                 </span>
               </div>
-              <span className="font-medium text-gray-800">{eventType}</span>
+              <span className="font-semibold text-gray-800 text-lg">{eventType}</span>
+              
+              {/* Selection indicator */}
+              {selectedEventType === eventType && (
+                <div className="ml-auto">
+                  <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                </div>
+              )}
             </div>
           </motion.div>
         ))}
       </div>
 
       {errors.eventType && (
-        <p className="text-red-500 text-sm mt-2">⚠️ {errors.eventType.message}</p>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="p-4 bg-red-50 border border-red-200 rounded-xl form-error-enhanced"
+        >
+          <p className="text-red-600 text-sm flex items-center">
+            <span className="mr-2 text-lg">⚠️</span>
+            {errors.eventType.message}
+          </p>
+        </motion.div>
       )}
     </motion.div>
   );
@@ -472,21 +500,24 @@ function CustomPackages() {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Age Group <span className="text-red-500">*</span></h2>
-        <p className="text-gray-600">What's the age group for this event?</p>
+      <div className="mb-8 text-center">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-4">
+          Age Group <span className="text-red-500">*</span>
+        </h2>
+        <p className="text-gray-600 text-lg">What's the age group for this event?</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mx-auto mt-4"></div>
       </div>
 
       <div className="space-y-3">
         {ageGroups.map((age) => (
           <motion.div
             key={age}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
               selectedAge === age
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 shadow-green-200'
+                : 'border-gray-200 hover:border-green-300 bg-white'
             }`}
             onClick={() => {
               setSelectedAge(age);
@@ -494,24 +525,42 @@ function CustomPackages() {
               clearStepError('ageGroup');
             }}
           >
-            <div className="flex items-center space-x-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                selectedAge === age ? 'bg-green-100' : 'bg-gray-100'
+            <div className="flex items-center space-x-4">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                selectedAge === age 
+                  ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-lg scale-110' 
+                  : 'bg-gray-100 text-gray-400'
               }`}>
-                <span className={`text-sm ${
-                  selectedAge === age ? 'text-green-600' : 'text-gray-400'
+                <span className={`text-lg ${
+                  selectedAge === age ? 'animate-pulse' : ''
                 }`}>
                   {selectedAge === age ? '✓' : '🎂'}
                 </span>
               </div>
-              <span className="font-medium text-gray-800">{age}</span>
+              <span className="font-semibold text-gray-800 text-lg">{age}</span>
+              
+              {/* Selection indicator */}
+              {selectedAge === age && (
+                <div className="ml-auto">
+                  <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full selection-indicator"></div>
+                </div>
+              )}
             </div>
           </motion.div>
         ))}
       </div>
 
       {errors.ageGroup && (
-        <p className="text-red-500 text-sm mt-2">⚠️ {errors.ageGroup.message}</p>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="p-4 bg-red-50 border border-red-200 rounded-xl form-error-enhanced"
+        >
+          <p className="text-red-600 text-sm flex items-center">
+            <span className="mr-2 text-lg">⚠️</span>
+            {errors.ageGroup.message}
+          </p>
+        </motion.div>
       )}
     </motion.div>
   );
@@ -524,21 +573,24 @@ function CustomPackages() {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Theme Selection <span className="text-red-500">*</span></h2>
-        <p className="text-gray-600">Choose a theme that matches your event vision</p>
+      <div className="mb-8 text-center">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-4">
+          Theme Selection <span className="text-red-500">*</span>
+        </h2>
+        <p className="text-gray-600 text-lg">Choose a theme that matches your event vision</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4"></div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {themes.map((theme) => (
           <motion.div
             key={theme.name}
-            whileHover={{ scale: 1.03, y: -5 }}
+            whileHover={{ scale: 1.03, y: -8 }}
             whileTap={{ scale: 0.98 }}
-            className={`border-2 rounded-2xl cursor-pointer transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl ${
+            className={`border-2 rounded-3xl cursor-pointer transition-all duration-500 overflow-hidden theme-card-enhanced ${
               selectedTheme === theme.name
-                ? 'border-purple-500 bg-purple-50 shadow-purple-200'
-                : 'border-gray-200 hover:border-purple-300 bg-white'
+                ? 'border-purple-500 bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 shadow-2xl shadow-purple-200'
+                : 'border-gray-200 hover:border-purple-300 bg-white hover:shadow-xl'
             }`}
             onClick={() => {
               setSelectedTheme(theme.name);
@@ -546,52 +598,61 @@ function CustomPackages() {
               clearStepError('theme');
             }}
           >
-            {/* Theme Image - Larger and more prominent */}
-            <div className="w-full h-48 bg-gray-100 overflow-hidden">
+            {/* Enhanced Theme Image */}
+            <div className="w-full h-56 bg-gray-100 overflow-hidden relative">
               <img
                 src={theme.image}
                 alt={theme.name}
-                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                 loading="lazy"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'flex';
                 }}
               />
-              {/* Fallback icon when image fails to load */}
-              <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-purple-100 to-purple-200">
-                <span className="text-5xl text-purple-400">✨</span>
+              {/* Enhanced fallback icon */}
+              <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100">
+                <span className="text-6xl text-purple-400 animate-pulse">✨</span>
+              </div>
+              
+              {/* Floating decorative elements */}
+              <div className="absolute top-4 right-4 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <span className="text-purple-600 text-sm">🎨</span>
               </div>
             </div>
             
-            {/* Theme Details */}
+            {/* Enhanced Theme Details */}
             <div className="p-6">
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-800 text-xl mb-2">{theme.name}</h3>
+                  <h3 className="font-bold text-gray-800 text-xl mb-3">{theme.name}</h3>
                   <p className="text-gray-600 leading-relaxed">{theme.description}</p>
                 </div>
                 
-                {/* Selection Indicator */}
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ml-4 transition-all duration-200 ${
+                {/* Enhanced Selection Indicator */}
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ml-4 transition-all duration-300 ${
                   selectedTheme === theme.name 
-                    ? 'bg-purple-500 text-white shadow-lg' 
+                    ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 text-white shadow-lg scale-110' 
                     : 'bg-gray-100 text-gray-400'
                 }`}>
-                  <span className="text-lg">
+                  <span className="text-xl">
                     {selectedTheme === theme.name ? '✓' : '✨'}
                   </span>
                 </div>
               </div>
               
-              {/* Selection Status */}
+              {/* Enhanced Selection Status */}
               {selectedTheme === theme.name && (
-                <div className="mt-4 p-3 bg-purple-100 rounded-lg border border-purple-200">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-purple-700">Theme Selected</span>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mt-4 p-4 bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 rounded-xl border border-purple-200 success-state"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-semibold text-purple-700">Theme Selected</span>
                   </div>
-                </div>
+                </motion.div>
               )}
             </div>
           </motion.div>
@@ -602,10 +663,10 @@ function CustomPackages() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="p-4 bg-red-50 border border-red-200 rounded-lg"
+          className="p-4 bg-red-50 border border-red-200 rounded-xl form-error-enhanced"
         >
           <p className="text-red-600 text-sm flex items-center">
-            <span className="mr-2">⚠️</span>
+            <span className="mr-2 text-lg">⚠️</span>
             {errors.theme.message}
           </p>
         </motion.div>
@@ -1005,166 +1066,365 @@ function CustomPackages() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-32 h-32 text-green-200 opacity-60">
-        <LeafDecoration className="w-full h-full" rotation={45} />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Close Button - Top Right */}
+      <div className="absolute top-6 right-6 z-50">
+        <motion.button
+          onClick={handleClose}
+          className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-110"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </motion.button>
       </div>
-      <div className="absolute top-0 right-0 w-24 h-24 text-green-200 opacity-60">
-        <LeafDecoration className="w-full h-full" rotation={-30} />
+
+      {/* Fabulous Hero Heading Section */}
+      <div className="relative z-20 pt-12 pb-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto px-6"
+        >
+          {/* Main Heading */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+              Create Your Dream
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Event Package
+            </span>
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            Let us craft the perfect celebration experience tailored just for you. 
+            From themes to menus, we'll bring your vision to life with style and elegance.
+          </p>
+          
+          {/* Decorative Elements */}
+          <div className="flex justify-center items-center space-x-8 mb-8">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse"></div>
+              <div className="w-3 h-3 bg-gradient-to-r from-pink-400 to-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+              <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></div>
+            </div>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+          </div>
+          
+          {/* Feature Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 feature-card-magical relative"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <span className="text-white text-2xl">🎨</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Custom Themes</h3>
+              <p className="text-gray-600 text-sm">Personalized themes that match your vision perfectly</p>
+              {/* Sparkle effect */}
+              <div className="absolute top-2 right-2 w-3 h-3 bg-yellow-300 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 feature-card-magical relative"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <span className="text-white text-2xl">🍽️</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Gourmet Menus</h3>
+              <p className="text-gray-600 text-sm">Curated food selections for every taste and preference</p>
+              {/* Sparkle effect */}
+              <div className="absolute top-2 right-2 w-3 h-3 bg-pink-300 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 feature-card-magical relative"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <span className="text-white text-2xl">✨</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Premium Service</h3>
+              <p className="text-gray-600 text-sm">White-glove service to make your event unforgettable</p>
+              {/* Sparkle effect */}
+              <div className="absolute top-2 right-2 w-3 h-3 bg-blue-300 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
+            </motion.div>
+          </div>
+
+          {/* Scroll Down Arrow - Left Side */}
+          <div className="absolute left-8 bottom-4 z-30">
+            <motion.button
+              onClick={() => {
+                document.querySelector('.flex.relative.z-10')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
+              className="group flex flex-col items-center space-y-2 text-purple-600 hover:text-purple-700 transition-colors duration-300"
+              whileHover={{ y: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                <motion.svg 
+                  className="w-6 h-6 text-purple-600" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </motion.svg>
+              </div>
+              <span className="text-sm font-medium text-purple-600 group-hover:text-purple-700 transition-colors duration-300">
+                Scroll to Form
+              </span>
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
-      <div className="absolute top-20 left-10 w-16 h-16 text-green-100 opacity-40">
-        <LeafDecoration className="w-full h-full" rotation={15} />
-      </div>
-      <div className="absolute top-16 right-16 w-20 h-20 text-green-100 opacity-40">
-        <LeafDecoration className="w-full h-full" rotation={-15} />
+
+      {/* Enhanced Decorative Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-purple-200 rounded-full opacity-20 animate-spin-slow"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-r from-pink-200 to-purple-200 rounded-full opacity-30 animate-bounce-slow"></div>
+        <div className="absolute bottom-20 left-20 w-20 h-20 border-2 border-pink-200 transform rotate-45 opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-40 right-10 w-16 h-16 bg-gradient-to-r from-purple-200 to-blue-200 rounded-full opacity-25 animate-spin-slow"></div>
+        
+        {/* Enhanced leaf decorations */}
+        <div className="absolute top-0 left-0 w-40 h-40 text-green-200 opacity-40">
+          <LeafDecoration className="w-full h-full" rotation={45} />
+        </div>
+        <div className="absolute top-0 right-0 w-32 h-32 text-green-200 opacity-40">
+          <LeafDecoration className="w-full h-full" rotation={-30} />
+        </div>
+        <div className="absolute top-32 left-16 w-24 h-24 text-green-100 opacity-30">
+          <LeafDecoration className="w-full h-full" rotation={15} />
+        </div>
+        <div className="absolute top-24 right-24 w-28 h-28 text-green-100 opacity-30">
+          <LeafDecoration className="w-full h-full" rotation={-15} />
+        </div>
+        
+        {/* New floating stars */}
+        <div className="absolute top-16 left-1/4 animate-float">
+          <div className="w-6 h-6 text-yellow-300">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div className="absolute top-32 right-1/3 animate-float" style={{animationDelay: '1s'}}>
+          <div className="w-4 h-4 text-pink-300">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div className="absolute bottom-32 left-1/3 animate-float" style={{animationDelay: '2s'}}>
+          <div className="w-5 h-5 text-purple-300">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+        </div>
+        
+        {/* New floating circles */}
+        <div className="absolute top-48 left-1/2 animate-float" style={{animationDelay: '0.5s'}}>
+          <div className="w-4 h-4 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse"></div>
+        </div>
+        <div className="absolute bottom-48 right-1/4 animate-float" style={{animationDelay: '1.5s'}}>
+          <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse"></div>
+        </div>
+
+        {/* Additional floating particles */}
+        <div className="absolute top-64 left-1/3 w-2 h-2 bg-blue-300 rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+        <div className="absolute top-80 right-1/4 w-3 h-3 bg-pink-300 rounded-full animate-pulse" style={{animationDelay: '0.7s'}}></div>
+        <div className="absolute bottom-64 left-1/4 w-2 h-2 bg-purple-300 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
+        <div className="absolute top-96 left-1/2 w-2 h-2 bg-yellow-300 rounded-full animate-pulse" style={{animationDelay: '0.9s'}}></div>
+        <div className="absolute bottom-80 right-1/3 w-3 h-3 bg-green-300 rounded-full animate-pulse" style={{animationDelay: '1.4s'}}></div>
+
+        {/* Additional floating particles */}
+        <div className="absolute top-64 left-1/3 w-2 h-2 bg-blue-300 rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+        <div className="absolute top-80 right-1/4 w-3 h-3 bg-pink-300 rounded-full animate-pulse" style={{animationDelay: '0.7s'}}></div>
+        <div className="absolute bottom-64 left-1/4 w-2 h-2 bg-purple-300 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
       </div>
 
       <div className="flex relative z-10">
-        {/* Left Sidebar - Visual & Information */}
-        <div className="hidden lg:block w-2/5 bg-gradient-to-br from-purple-50 to-purple-100 p-8 relative">
-          {/* Decorative corner elements */}
-          <div className="absolute top-0 left-0 w-20 h-20 text-purple-200 opacity-60">
+        {/* Enhanced Left Sidebar */}
+        <div className="hidden lg:block w-2/5 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-8 relative backdrop-blur-sm">
+          {/* Enhanced decorative corner elements */}
+          <div className="absolute top-0 left-0 w-24 h-24 text-purple-200 opacity-60">
             <LeafDecoration className="w-full h-full" rotation={0} />
           </div>
-          <div className="absolute bottom-0 right-0 w-16 h-16 text-purple-200 opacity-60">
+          <div className="absolute bottom-0 right-0 w-20 h-20 text-purple-200 opacity-60">
             <LeafDecoration className="w-full h-full" rotation={180} />
           </div>
+          
+          {/* New corner accents */}
+          <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-bl-full opacity-40"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-blue-200 to-purple-200 rounded-tr-full opacity-40"></div>
 
           <div className="sticky top-8">
-            {/* Logo */}
+            {/* Enhanced Logo */}
             <div className="mb-8">
-              <div className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
                   <span className="text-white text-xl font-bold">E</span>
                 </div>
-                <span className="text-2xl font-bold text-purple-800">Evaga</span>
+                <span className="text-3xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
+                  Evaga
+                </span>
               </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Enhanced Hero Image */}
             <div className="mb-8">
-              <div className="relative">
-                <div className="w-full h-64 bg-gradient-to-br from-purple-200 to-purple-300 rounded-2xl flex items-center justify-center">
-                  <span className="text-6xl">🎉</span>
+              <div className="relative group">
+                <div className="w-full h-72 bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-500">
+                  <span className="text-8xl transform group-hover:rotate-12 transition-transform duration-500">🎉</span>
                 </div>
-                <div className="absolute inset-0 border-2 border-purple-200 rounded-2xl"></div>
+                <div className="absolute inset-0 border-4 border-gradient-to-r from-purple-300 via-pink-300 to-blue-300 rounded-3xl opacity-60"></div>
+                
+                {/* Floating elements around hero */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 bg-yellow-300 rounded-full animate-bounce"></div>
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-pink-300 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
+                <div className="absolute -bottom-2 -left-2 w-5 h-5 bg-blue-300 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
+                <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '1.5s'}}></div>
               </div>
             </div>
 
-            {/* Introduction */}
+            {/* Enhanced Introduction */}
             <div className="mb-8">
-              <div className="text-center">
-                <div className="flex items-center justify-center space-x-4 mb-4">
-                  <div className="w-16 h-px bg-purple-300"></div>
-                  <h3 className="text-lg font-semibold text-purple-800">Your Event Requirements</h3>
-                  <div className="w-16 h-px bg-purple-300"></div>
+              <div className="text-center relative">
+                <div className="flex items-center justify-center space-x-6 mb-6">
+                  <div className="w-20 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+                  <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
+                    Your Event Requirements
+                  </h3>
+                  <div className="w-20 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-lg">
                   Let's start with these details to help us create your personalized package, which will include theme suggestions, decor ideas, food options and more.
                 </p>
+                
+                {/* Decorative dots */}
+                <div className="flex justify-center space-x-2 mt-4">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse" style={{animationDelay: '1s'}}></div>
+                </div>
               </div>
             </div>
 
-            {/* Elegant Progress Indicators */}
+            {/* Enhanced Progress Indicators */}
             <div className="mb-8">
               <div className="text-center mb-6">
-                <h4 className="text-lg font-semibold text-purple-800 mb-2">Progress</h4>
-                <div className="w-full bg-purple-200 rounded-full h-2">
+                <h4 className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-3">
+                  Progress
+                </h4>
+                <div className="w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 rounded-full h-3 shadow-inner">
                   <motion.div
-                    className="bg-purple-600 h-2 rounded-full transition-all duration-500 ease-out"
+                    className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 h-3 rounded-full shadow-lg transition-all duration-500 ease-out progress-enhanced"
                     initial={{ width: 0 }}
                     animate={{ width: `${(currentStep / 5) * 100}%` }}
                   />
                 </div>
-                <p className="text-sm text-purple-600 mt-2 font-medium">
+                <p className="text-sm text-purple-600 mt-3 font-medium">
                   Step {currentStep} of 5 • {Math.round((currentStep / 5) * 100)}% Complete
                 </p>
               </div>
 
-              {/* Current Step Highlight */}
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-purple-100">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-lg font-bold">{currentStep}</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-purple-800">{getStepTitle()}</h5>
-                    <p className="text-sm text-gray-600">Current step</p>
+              {/* Enhanced Current Step Highlight */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-purple-100 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full -mr-10 -mt-10 opacity-60"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <span className="text-white text-xl font-bold">{currentStep}</span>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-purple-800 text-lg">{getStepTitle()}</h5>
+                      <p className="text-sm text-gray-600">Current step</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Decorative bottom element */}
+            {/* Enhanced decorative bottom element */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center mx-auto opacity-60">
-                <span className="text-purple-600 text-2xl">✨</span>
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 rounded-full flex items-center justify-center mx-auto opacity-60 shadow-lg">
+                <span className="text-purple-600 text-3xl">✨</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Column - Form */}
-        <div className="w-full lg:w-3/5 p-8">
-          {/* Close Button */}
-          <div className="flex justify-end mb-6">
-            <div className="flex items-center space-x-3">
-              {/* Debug indicator - shows when form has data */}
+        {/* Enhanced Right Column - Form */}
+        <div className="w-full lg:w-3/5 p-8 relative">
+          {/* Enhanced Debug Section */}
+          <div className="flex justify-end mb-8">
+            <div className="flex items-center space-x-4">
+              {/* Enhanced debug indicator */}
               {hasFormData && (
-                <div className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full border border-yellow-300">
-                  Form has data
+                <div className="px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 text-xs rounded-full border border-yellow-300 shadow-sm">
+                  ✨ Form has data
                 </div>
               )}
-              {/* Test buttons for debugging */}
-              <button 
-                onClick={() => setShowRefreshConfirm(true)}
-                className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full border border-blue-300 hover:bg-blue-200"
-              >
-                Test Refresh
-              </button>
-              <button 
-                onClick={() => setShowBackConfirm(true)}
-                className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full border border-green-300 hover:bg-green-200"
-              >
-                Test Back
-              </button>
-              <button 
-                onClick={handleClose}
-                className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
-              >
-                ×
-              </button>
             </div>
           </div>
 
-          {/* Form Container */}
+          {/* Enhanced Form Container */}
           <div className="max-w-2xl">
-            {/* Progress Header */}
+            {/* Enhanced Progress Header */}
             <div className="mb-8">
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="text-sm text-gray-500">{currentStep}/5</span>
-                <span className="text-lg font-semibold text-gray-800">{getStepTitle()}</span>
-                <button className="ml-2 text-gray-400 hover:text-gray-600">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center space-x-3 mb-3">
+                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Step {currentStep}/5</span>
+                <span className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
+                  {getStepTitle()}
+                </span>
+                <button className="ml-2 text-gray-400 hover:text-purple-600 transition-colors duration-200">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
               </div>
+              
+              {/* Step description with enhanced styling */}
+              <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 rounded-xl p-4 border border-purple-100">
+                <p className="text-gray-600 text-center font-medium">
+                  {getStepDescription(currentStep)}
+                </p>
+              </div>
             </div>
 
-            {/* Form Content */}
+            {/* Enhanced Form Content */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
               <AnimatePresence mode="wait">
                 {renderStepContent()}
               </AnimatePresence>
 
-              {/* Navigation Buttons */}
+              {/* Enhanced Navigation Buttons */}
               <div className="flex justify-between pt-8">
                 <motion.button
                   type="button"
                   onClick={handleBackNavigation}
-                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-all duration-200"
+                  className="px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 rounded-xl font-medium hover:from-gray-300 hover:to-gray-400 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -1175,20 +1435,20 @@ function CustomPackages() {
                   <motion.button
                     type="button"
                     onClick={nextStep}
-                    className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200"
+                    className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-medium hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Next
+                    Next →
                   </motion.button>
                 ) : (
                   <motion.button
                     type="submit"
-                    className="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-all duration-200"
+                    className="px-10 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Submit Package Request
+                    ✨ Submit Package Request
                   </motion.button>
                 )}
               </div>
@@ -1197,7 +1457,7 @@ function CustomPackages() {
         </div>
       </div>
 
-      {/* Confirmation Modals */}
+      {/* Enhanced Confirmation Modals */}
       <ConfirmationModal
         isOpen={showCloseConfirm}
         onConfirm={confirmClose}
