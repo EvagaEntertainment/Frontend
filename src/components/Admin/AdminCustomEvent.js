@@ -36,15 +36,17 @@ function AdminCustomEvent() {
     { value: "checkbox", label: "Checkbox", icon: "☑️" },
     { value: "textarea", label: "Text Area", icon: "📄" },
     { value: "file", label: "File Upload", icon: "📎" },
-    { value: "url", label: "URL Field", icon: "🔗" }
+    { value: "url", label: "URL Field", icon: "🔗" },
+    { value: "themeCards", label: "Theme Cards", icon: "🎨" },
+    { value: "foodMenu", label: "Food Menu", icon: "🍽️" }
   ];
   
-  // Predefined event templates with all fields configured
+  // Event template types with field structures (empty data for admin to fill)
   const eventTemplates = {
     birthday: {
       name: "Birthday Party",
       icon: "🎂",
-      description: "Complete birthday party booking form with age groups, themes, and preferences",
+      description: "Birthday party form with age groups, themes, and preferences - customize the data",
       fields: [
         {
           id: "ageGroup",
@@ -53,7 +55,7 @@ function AdminCustomEvent() {
           type: "select",
           required: true,
           placeholder: "Select age group",
-          options: ["Children (0-12)", "Teens (13-19)", "Adults (20+)", "Seniors (60+)"],
+          options: [], // Admin will fill this
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -74,26 +76,26 @@ function AdminCustomEvent() {
           required: true,
           placeholder: "Enter number of guests",
           options: [],
-          validation: { min: "1", max: "500", pattern: "" }
-        },
-        {
-          id: "theme",
-          name: "theme",
-          label: "Party Theme",
-          type: "text",
-          required: true,
-          placeholder: "e.g., Superhero, Princess, Sports",
-          options: [],
           validation: { min: "", max: "", pattern: "" }
         },
         {
-          id: "budgetRange",
-          name: "budgetRange",
-          label: "Budget Range",
-          type: "select",
+          id: "themeCards",
+          name: "themeCards",
+          label: "Theme Cards",
+          type: "themeCards",
           required: true,
-          placeholder: "Select budget range",
-          options: ["Budget", "Standard", "Premium", "Luxury"],
+          placeholder: "Add theme cards with images, titles, and descriptions",
+          options: [], // Admin will add theme cards
+          validation: { min: "", max: "", pattern: "" }
+        },
+        {
+          id: "budget",
+          name: "budget",
+          label: "Budget (₹)",
+          type: "number",
+          required: true,
+          placeholder: "Enter your budget amount",
+          options: [],
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -104,6 +106,16 @@ function AdminCustomEvent() {
           required: false,
           placeholder: "e.g., Home, Garden, Restaurant",
           options: [],
+          validation: { min: "", max: "", pattern: "" }
+        },
+        {
+          id: "foodMenu",
+          name: "foodMenu",
+          label: "Food & Beverage Menu",
+          type: "foodMenu",
+          required: false,
+          placeholder: "Create your food menu with categories and items",
+          options: [], // Admin will add food categories and items
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -121,7 +133,7 @@ function AdminCustomEvent() {
     wedding: {
       name: "Wedding",
       icon: "💒",
-      description: "Comprehensive wedding planning form with ceremony types and preferences",
+      description: "Wedding planning form with ceremony types and preferences - customize the data",
       fields: [
         {
           id: "weddingDate",
@@ -140,7 +152,7 @@ function AdminCustomEvent() {
           type: "select",
           required: true,
           placeholder: "Select ceremony type",
-          options: ["Traditional", "Modern", "Religious", "Civil", "Destination"],
+          options: [], // Admin will fill this
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -151,16 +163,16 @@ function AdminCustomEvent() {
           required: true,
           placeholder: "Enter number of guests",
           options: [],
-          validation: { min: "10", max: "1000", pattern: "" }
+          validation: { min: "", max: "", pattern: "" }
         },
         {
-          id: "budgetRange",
-          name: "budgetRange",
-          label: "Budget Range",
-          type: "select",
+          id: "budget",
+          name: "budget",
+          label: "Budget (₹)",
+          type: "number",
           required: true,
-          placeholder: "Select budget range",
-          options: ["Budget", "Standard", "Premium", "Luxury"],
+          placeholder: "Enter your budget amount",
+          options: [],
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -188,7 +200,7 @@ function AdminCustomEvent() {
     corporate: {
       name: "Corporate Event",
       icon: "🏢",
-      description: "Professional corporate event booking with business requirements",
+      description: "Corporate event booking with business requirements - customize the data",
       fields: [
         {
           id: "eventDate",
@@ -207,7 +219,7 @@ function AdminCustomEvent() {
           type: "select",
           required: true,
           placeholder: "Select event type",
-          options: ["Conference", "Seminar", "Team Building", "Product Launch", "Annual Meeting", "Training"],
+          options: [], // Admin will fill this
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -218,7 +230,7 @@ function AdminCustomEvent() {
           required: true,
           placeholder: "Enter number of attendees",
           options: [],
-          validation: { min: "5", max: "1000", pattern: "" }
+          validation: { min: "", max: "", pattern: "" }
         },
         {
           id: "duration",
@@ -228,16 +240,16 @@ function AdminCustomEvent() {
           required: true,
           placeholder: "Enter duration in hours",
           options: [],
-          validation: { min: "1", max: "24", pattern: "" }
+          validation: { min: "", max: "", pattern: "" }
         },
         {
-          id: "budgetRange",
-          name: "budgetRange",
-          label: "Budget Range",
-          type: "select",
+          id: "budget",
+          name: "budget",
+          label: "Budget (₹)",
+          type: "number",
           required: true,
-          placeholder: "Select budget range",
-          options: ["Standard", "Premium", "Enterprise"],
+          placeholder: "Enter your budget amount",
+          options: [],
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -265,7 +277,7 @@ function AdminCustomEvent() {
     party: {
       name: "Private Party",
       icon: "🎉",
-      description: "Custom private party booking with flexible options",
+      description: "Private party booking with flexible options - customize the data",
       fields: [
         {
           id: "partyDate",
@@ -284,7 +296,7 @@ function AdminCustomEvent() {
           type: "select",
           required: true,
           placeholder: "Select party type",
-          options: ["House Party", "Garden Party", "Pool Party", "Dinner Party", "Cocktail Party"],
+          options: [], // Admin will fill this
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -294,7 +306,7 @@ function AdminCustomEvent() {
           type: "select",
           required: true,
           placeholder: "Select age group",
-          options: ["Young Adults (18-30)", "Adults (30-50)", "Mixed Ages", "All Ages"],
+          options: [], // Admin will fill this
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -305,7 +317,7 @@ function AdminCustomEvent() {
           required: true,
           placeholder: "Enter number of guests",
           options: [],
-          validation: { min: "5", max: "200", pattern: "" }
+          validation: { min: "", max: "", pattern: "" }
         },
         {
           id: "theme",
@@ -318,13 +330,13 @@ function AdminCustomEvent() {
           validation: { min: "", max: "", pattern: "" }
         },
         {
-          id: "budgetRange",
-          name: "budgetRange",
-          label: "Budget Range",
-          type: "select",
+          id: "budget",
+          name: "budget",
+          label: "Budget (₹)",
+          type: "number",
           required: true,
-          placeholder: "Select budget range",
-          options: ["Budget", "Standard", "Premium"],
+          placeholder: "Enter your budget amount",
+          options: [],
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -438,6 +450,30 @@ function AdminCustomEvent() {
   };
 
   // Form builder functions
+  const addFormField = () => {
+    const newField = {
+      id: `field_${Date.now()}`,
+      name: "",
+      label: "",
+      type: "text",
+      required: false,
+      placeholder: "",
+      options: [],
+      validation: {
+        min: "",
+        max: "",
+        pattern: ""
+      }
+    };
+    
+    // Initialize theme cards with empty options if type is themeCards
+    if (newField.type === "themeCards") {
+      newField.options = [];
+    }
+    
+    setEventFormFields([...eventFormFields, newField]);
+  };
+
   const selectTemplate = (templateKey) => {
     const template = eventTemplates[templateKey];
     if (template) {
@@ -451,23 +487,7 @@ function AdminCustomEvent() {
     }
   };
 
-  const addFormField = () => {
-    const newField = {
-      id: `custom_${Date.now()}`,
-      name: "",
-      label: "",
-      type: "text",
-      required: false,
-      placeholder: "",
-      options: [],
-      validation: {
-        min: "",
-        max: "",
-        pattern: ""
-      }
-    };
-    setEventFormFields([...eventFormFields, newField]);
-  };
+
 
   const updateFormField = (id, updates) => {
     setEventFormFields(prev => 
@@ -519,21 +539,185 @@ function AdminCustomEvent() {
     );
   };
 
+  // Theme Cards specific functions
+  const addThemeCard = (fieldId) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: [...field.options, {
+                name: "",
+                image: "",
+                description: ""
+              }]
+            }
+          : field
+      )
+    );
+  };
+
+  const updateThemeCard = (fieldId, cardIndex, updates) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.map((card, idx) => 
+                idx === cardIndex ? { ...card, ...updates } : card
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeThemeCard = (fieldId, cardIndex) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.filter((_, idx) => idx !== cardIndex)
+            }
+          : field
+      )
+    );
+  };
+
+  // Food Menu specific functions
+  const addFoodCategory = (fieldId) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: [...field.options, {
+                categoryName: "",
+                items: []
+              }]
+            }
+          : field
+      )
+    );
+  };
+
+  const updateFoodCategory = (fieldId, categoryIndex, updates) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.map((category, idx) => 
+                idx === categoryIndex ? { ...category, ...updates } : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeFoodCategory = (fieldId, categoryIndex) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.filter((_, idx) => idx !== categoryIndex)
+            }
+          : field
+      )
+    );
+  };
+
+  const addFoodItem = (fieldId, categoryIndex) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.map((category, idx) => 
+                idx === categoryIndex 
+                  ? { ...category, items: [...category.items, { 
+                      name: "", 
+                      price: "", 
+                      description: "", 
+                      dietaryType: "veg",
+                      spiceLevel: "medium",
+                      isPopular: false
+                    }] }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const updateFoodItem = (fieldId, categoryIndex, itemIndex, updates) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.map((category, idx) => 
+                idx === categoryIndex 
+                  ? { 
+                      ...category, 
+                      items: category.items.map((item, itemIdx) => 
+                        itemIdx === itemIndex ? { ...item, ...updates } : item
+                      )
+                    }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeFoodItem = (fieldId, categoryIndex, itemIndex) => {
+    setEventFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: field.options.map((category, idx) => 
+                idx === categoryIndex 
+                  ? { 
+                      ...category, 
+                      items: category.items.filter((_, itemIdx) => itemIdx !== itemIndex)
+                    }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
   const renderFormFieldBuilder = (field) => {
     const { id, name, label, type, required, placeholder, options, validation } = field;
     
     return (
       <div key={id} className="border border-gray-200 rounded-lg p-4 space-y-4 bg-gray-50">
-        <div className="flex items-center justify-between">
-          <h4 className="font-medium text-gray-800">Field #{id}</h4>
-          <button
-            type="button"
-            onClick={() => removeFormField(id)}
-            className="text-red-500 hover:text-red-700 p-1"
-          >
-            🗑️
-          </button>
-        </div>
+                 <div className="flex items-center justify-between">
+           <h4 className="font-medium text-gray-800">
+             📋 {label || `Field #${id}`}
+             {type === "themeCards" && (
+               <span className="ml-2 text-sm text-purple-600">
+                 ({options.length} theme{options.length !== 1 ? 's' : ''})
+               </span>
+             )}
+           </h4>
+           <button
+             type="button"
+             onClick={() => removeFormField(id)}
+             className="text-red-500 hover:text-red-700 p-1"
+           >
+             🗑️
+           </button>
+         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Field Label */}
@@ -550,37 +734,49 @@ function AdminCustomEvent() {
             />
           </div>
           
-          {/* Field Type */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Field Type *
-            </label>
-            <select
-              value={type}
-              onChange={(e) => updateFormField(id, { type: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              {availableFieldTypes.map(fieldType => (
-                <option key={fieldType.value} value={fieldType.value}>
-                  {fieldType.icon} {fieldType.label}
-                </option>
-              ))}
-            </select>
-          </div>
+                                {/* Field Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Field Type *
+              </label>
+              <select
+                value={type}
+                onChange={(e) => {
+                  const newType = e.target.value;
+                  updateFormField(id, { 
+                    type: newType,
+                    // Reset options when switching to themeCards
+                    options: newType === "themeCards" ? [] : options
+                  });
+                }}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                {availableFieldTypes.map(fieldType => (
+                  <option key={fieldType.value} value={fieldType.value}>
+                    {fieldType.icon} {fieldType.label}
+                  </option>
+                ))}
+              </select>
+              {type === "themeCards" && (
+                <p className="text-xs text-blue-600 mt-1">
+                  🎨 Creates multiple theme cards with images, titles, and descriptions
+                </p>
+              )}
+            </div>
           
-          {/* Field Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Field Name *
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => updateFormField(id, { name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="e.g., guestCount"
-            />
-          </div>
+                                {/* Field Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Field Name *
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => updateFormField(id, { name: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="e.g., guestCount"
+              />
+            </div>
           
           {/* Placeholder */}
           <div>
@@ -649,48 +845,493 @@ function AdminCustomEvent() {
             </div>
           </div>
         )}
+
+        {/* File Upload Configuration */}
+        {type === "file" && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium text-gray-700">
+                File Upload Settings
+              </label>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Accepted File Types
+                </label>
+                <select
+                  value={validation.fileTypes || "all"}
+                  onChange={(e) => updateFormField(id, { 
+                    validation: { ...validation, fileTypes: e.target.value } 
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                  <option value="all">All Files</option>
+                  <option value="image">Images Only</option>
+                  <option value="document">Documents Only</option>
+                  <option value="video">Videos Only</option>
+                  <option value="audio">Audio Only</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Max File Size (MB)
+                </label>
+                <input
+                  type="number"
+                  value={validation.maxFileSize || "10"}
+                  onChange={(e) => updateFormField(id, { 
+                    validation: { ...validation, maxFileSize: e.target.value } 
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="e.g., 10"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+                 {/* Food Menu Configuration */}
+         {type === "foodMenu" && (
+           <div className="space-y-4">
+             {/* Dietary Preferences Summary */}
+             {options.length > 0 && (
+               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                 <h4 className="text-sm font-medium text-blue-800 mb-3">🍽️ Dietary Preferences Summary</h4>
+                 <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+                   {(() => {
+                     const counts = {
+                       veg: 0, nonVeg: 0, vegan: 0, egg: 0, seafood: 0, jain: 0
+                     };
+                     
+                     options.forEach(category => {
+                       category.items.forEach(item => {
+                         if (item.dietaryType === 'veg') counts.veg++;
+                         else if (item.dietaryType === 'non-veg') counts.nonVeg++;
+                         else if (item.dietaryType === 'vegan') counts.vegan++;
+                         else if (item.dietaryType === 'egg') counts.egg++;
+                         else if (item.dietaryType === 'seafood') counts.seafood++;
+                         else if (item.dietaryType === 'jain') counts.jain++;
+                       });
+                     });
+                     
+                     return [
+                       { label: '🥬 Veg', count: counts.veg, color: 'bg-green-100 text-green-800' },
+                       { label: '🍗 Non-Veg', count: counts.nonVeg, color: 'bg-red-100 text-red-800' },
+                       { label: '🌱 Vegan', count: counts.vegan, color: 'bg-emerald-100 text-emerald-800' },
+                       { label: '🥚 Egg', count: counts.egg, color: 'bg-yellow-100 text-yellow-800' },
+                       { label: '🐟 Seafood', count: counts.seafood, color: 'bg-blue-100 text-blue-800' },
+                       { label: '🕉️ Jain', count: counts.jain, color: 'bg-purple-100 text-purple-800' }
+                     ].map((item, index) => (
+                       <div key={index} className={`text-center p-2 rounded-md ${item.color}`}>
+                         <div className="text-xs font-medium">{item.label}</div>
+                         <div className="text-lg font-bold">{item.count}</div>
+                       </div>
+                     ));
+                   })()}
+                 </div>
+               </div>
+             )}
+             
+             <div className="flex items-center justify-between">
+               <label className="block text-sm font-medium text-gray-700">
+                 Food Menu Categories *
+               </label>
+               <button
+                 type="button"
+                 onClick={() => addFoodCategory(id)}
+                 className="px-4 py-2 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
+               >
+                 <span>🍽️</span>
+                 <span>Add Food Category</span>
+               </button>
+             </div>
+             
+             <div className="space-y-4">
+               {options.length === 0 ? (
+                 <div className="text-center py-6 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                   <p className="text-sm">No food categories added yet</p>
+                   <p className="text-xs">Click "Add Food Category" to start building your menu</p>
+                 </div>
+               ) : (
+                 options.map((category, categoryIndex) => (
+                   <div key={categoryIndex} className="border border-gray-200 rounded-lg p-4 bg-white">
+                     <div className="flex items-center justify-between mb-4">
+                       <h5 className="font-medium text-gray-800">Food Category #{categoryIndex + 1}</h5>
+                       <button
+                         type="button"
+                         onClick={() => removeFoodCategory(id, categoryIndex)}
+                         className="text-red-500 hover:text-red-700 p-2"
+                       >
+                         🗑️
+                       </button>
+                     </div>
+                     
+                     {/* Category Name */}
+                     <div className="mb-4">
+                       <label className="block text-sm font-medium text-gray-700 mb-1">
+                         Category Name *
+                       </label>
+                       <input
+                         type="text"
+                         value={category.categoryName}
+                         onChange={(e) => updateFoodCategory(id, categoryIndex, { categoryName: e.target.value })}
+                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                         placeholder="e.g., Starters, Main Course, Desserts"
+                       />
+                     </div>
+                     
+                     {/* Food Items */}
+                     <div className="space-y-3">
+                       <div className="flex items-center justify-between">
+                         <label className="block text-sm font-medium text-gray-700">
+                           Food Items
+                         </label>
+                         <button
+                           type="button"
+                           onClick={() => addFoodItem(id, categoryIndex)}
+                           className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-md hover:bg-green-200 transition-colors duration-200 flex items-center space-x-2"
+                         >
+                           <span>➕</span>
+                           <span>Add Item</span>
+                         </button>
+                       </div>
+                       
+                       {category.items.length === 0 ? (
+                         <div className="text-center py-4 text-gray-400 border border-dashed border-gray-200 rounded-lg">
+                           <p className="text-xs">No food items in this category</p>
+                         </div>
+                       ) : (
+                         <div className="space-y-3">
+                           {category.items.map((item, itemIndex) => (
+                             <div key={itemIndex} className="border border-gray-200 rounded-lg p-3 bg-gray-50">
+                               <div className="flex items-center justify-between mb-3">
+                                 <div className="flex items-center space-x-2">
+                                   <h6 className="font-medium text-gray-700">Food Item #{itemIndex + 1}</h6>
+                                   {/* Dietary Type Icon */}
+                                   <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+                                     {item.dietaryType === 'veg' && '🥬'}
+                                     {item.dietaryType === 'non-veg' && '🍗'}
+                                     {item.dietaryType === 'vegan' && '🌱'}
+                                     {item.dietaryType === 'egg' && '🥚'}
+                                     {item.dietaryType === 'seafood' && '🐟'}
+                                     {item.dietaryType === 'jain' && '🕉️'}
+                                   </span>
+                                   {/* Popular Badge */}
+                                   {item.isPopular && (
+                                     <span className="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">
+                                       ⭐ Popular
+                                     </span>
+                                   )}
+                                 </div>
+                                 <button
+                                   type="button"
+                                   onClick={() => removeFoodItem(id, categoryIndex, itemIndex)}
+                                   className="text-red-500 hover:text-red-700 p-1"
+                                 >
+                                   ✕
+                                 </button>
+                               </div>
+                               
+                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                 {/* Item Name */}
+                                 <div>
+                                   <label className="block text-xs font-medium text-gray-700 mb-1">
+                                     Item Name *
+                                   </label>
+                                   <input
+                                     type="text"
+                                     value={item.name}
+                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { name: e.target.value })}
+                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                     placeholder="e.g., Butter Chicken"
+                                   />
+                                 </div>
+                                 
+                                 {/* Item Price */}
+                                 <div>
+                                   <label className="block text-xs font-medium text-gray-700 mb-1">
+                                     Price (₹) *
+                                   </label>
+                                   <input
+                                     type="number"
+                                     value={item.price}
+                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { price: e.target.value })}
+                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                     placeholder="e.g., 250"
+                                   />
+                                 </div>
+                               </div>
+
+                               {/* Dietary Preferences Row */}
+                               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                                 {/* Dietary Type */}
+                                 <div>
+                                   <label className="block text-xs font-medium text-gray-700 mb-1">
+                                     Dietary Type *
+                                   </label>
+                                   <select
+                                     value={item.dietaryType}
+                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { dietaryType: e.target.value })}
+                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                   >
+                                     <option value="veg">🥬 Vegetarian</option>
+                                     <option value="non-veg">🍗 Non-Vegetarian</option>
+                                     <option value="vegan">🌱 Vegan</option>
+                                     <option value="egg">🥚 Egg</option>
+                                     <option value="seafood">🐟 Seafood</option>
+                                     <option value="jain">🕉️ Jain</option>
+                                   </select>
+                                 </div>
+                                 
+                                 {/* Spice Level */}
+                                 <div>
+                                   <label className="block text-xs font-medium text-gray-700 mb-1">
+                                     Spice Level
+                                   </label>
+                                   <select
+                                     value={item.spiceLevel}
+                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { spiceLevel: e.target.value })}
+                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                   >
+                                     <option value="mild">🌶️ Mild</option>
+                                     <option value="medium">🌶️🌶️ Medium</option>
+                                     <option value="hot">🌶️🌶️🌶️ Hot</option>
+                                     <option value="extra-hot">🌶️🌶️🌶️🌶️ Extra Hot</option>
+                                   </select>
+                                 </div>
+                                 
+                                 {/* Popular Item */}
+                                 <div>
+                                   <label className="block text-xs font-medium text-gray-700 mb-1">
+                                     Popular Item
+                                   </label>
+                                   <div className="flex items-center space-x-2">
+                                     <input
+                                       type="checkbox"
+                                       checked={item.isPopular}
+                                       onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
+                                       className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
+                                     />
+                                     <span className="text-xs text-gray-600">Mark as popular</span>
+                                   </div>
+                                 </div>
+                               </div>
+
+                               {/* Item Description */}
+                               <div>
+                                 <label className="block text-xs font-medium text-gray-700 mb-1">
+                                   Description
+                                 </label>
+                                 <input
+                                   type="text"
+                                   value={item.description}
+                                   onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { description: e.target.value })}
+                                   className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                   placeholder="e.g., Rich and creamy curry with tender chicken"
+                                 />
+                               </div>
+                             </div>
+                           ))}
+                         </div>
+                       )}
+                     </div>
+                   </div>
+                 ))
+               )}
+             </div>
+           </div>
+         )}
+
+         {/* Theme Cards Configuration */}
+         {type === "themeCards" && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium text-gray-700">
+                Theme Cards *
+              </label>
+              <button
+                type="button"
+                onClick={() => addThemeCard(id)}
+                className="px-4 py-2 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
+              >
+                <span>🎨</span>
+                <span>Add Theme Card</span>
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              {options.length === 0 ? (
+                <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                  <p className="text-lg mb-2">No theme cards added yet</p>
+                  <p className="text-sm">Click "Add Theme Card" to start building your theme collection</p>
+                </div>
+              ) : (
+                options.map((card, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4 bg-white">
+                  <div className="flex items-center justify-between mb-3">
+                    <h5 className="font-medium text-gray-800">Theme Card #{index + 1}</h5>
+                    <button
+                      type="button"
+                      onClick={() => removeThemeCard(id, index)}
+                      className="text-red-500 hover:text-red-700 p-2"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Theme Name */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Theme Name *
+                      </label>
+                      <input
+                        type="text"
+                        value={card.name}
+                        onChange={(e) => updateThemeCard(id, index, { name: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="e.g., Princess & Prince"
+                      />
+                    </div>
+                    
+                    {/* Theme Image Upload */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Theme Image *
+                      </label>
+                      <div className="space-y-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              // For now, we'll store the file name and create a preview
+                              // In production, you'd upload to server and get URL
+                              const reader = new FileReader();
+                              reader.onload = (e) => {
+                                updateThemeCard(id, index, { 
+                                  image: e.target.result,
+                                  fileName: file.name 
+                                });
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        />
+                        {card.fileName && (
+                          <p className="text-xs text-green-600">
+                            ✓ {card.fileName}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Theme Description */}
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Description *
+                    </label>
+                    <textarea
+                      value={card.description}
+                      onChange={(e) => updateThemeCard(id, index, { description: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      placeholder="e.g., Royal elegance with crowns and castles"
+                      rows="2"
+                    />
+                  </div>
+                  
+                  {/* Preview */}
+                  {card.image && (
+                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Preview:
+                      </label>
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={card.image}
+                          alt={card.name || "Theme"}
+                          className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="flex-1">
+                          <h6 className="font-medium text-gray-800">{card.name || "Theme Name"}</h6>
+                          <p className="text-sm text-gray-600">{card.description || "Description"}</p>
+                        </div>
+                      </div>
+                    </div>
+                                     )}
+                 </div>
+               ))
+              )}
+            </div>
+          </div>
+        )}
         
-        {/* Validation Rules */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Min Value
-            </label>
-            <input
-              type="text"
-              value={validation.min}
-              onChange={(e) => updateFormField(id, { validation: { ...validation, min: e.target.value } })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="e.g., 0"
-            />
+        {/* Validation Rules - Only show for relevant field types */}
+        {(type === "number" || type === "text" || type === "email" || type === "phone" || type === "url") && (
+          <div className="space-y-4">
+            <h5 className="text-sm font-medium text-gray-700">Validation Rules</h5>
+            
+            {/* Min/Max for numbers */}
+            {type === "number" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Min Value
+                  </label>
+                  <input
+                    type="number"
+                    value={validation.min}
+                    onChange={(e) => updateFormField(id, { validation: { ...validation, min: e.target.value } })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="e.g., 0"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Max Value
+                  </label>
+                                     <input
+                     type="number"
+                     value={validation.max}
+                     onChange={(e) => updateFormField(id, { validation: { ...validation, max: e.target.value } })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                     placeholder="e.g., 1000"
+                   />
+                </div>
+              </div>
+            )}
+            
+            {/* Pattern for text-based fields */}
+            {(type === "text" || type === "email" || type === "phone" || type === "url") && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Pattern (Regex)
+                </label>
+                <input
+                  type="text"
+                  value={validation.pattern}
+                  onChange={(e) => updateFormField(id, { validation: { ...validation, pattern: e.target.value } })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="e.g., [A-Za-z]+ for letters only"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Leave empty for no pattern validation
+                </p>
+              </div>
+            )}
           </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Max Value
-            </label>
-            <input
-              type="text"
-              value={validation.max}
-              onChange={(e) => updateFormField(id, { validation: { ...validation, max: e.target.value } })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="e.g., 1000"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Pattern
-            </label>
-            <input
-              type="text"
-              value={validation.pattern}
-              onChange={(e) => updateFormField(id, { validation: { ...validation, pattern: e.target.value } })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="e.g., [A-Za-z]+"
-            />
-          </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -778,15 +1419,27 @@ function AdminCustomEvent() {
         </span>
       ),
     },
-    {
-      label: "Fields Count",
-      key: "fieldsCount",
-      render: (row) => (
-        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-          {row?.formFields?.length || 0} fields
-        </span>
-      ),
-    },
+         {
+       label: "Fields Count",
+       key: "fieldsCount",
+       render: (row) => {
+         const totalFields = row?.formFields?.length || 0;
+         const themeCardFields = row?.formFields?.filter(field => field.type === 'themeCards').length || 0;
+         
+         return (
+           <div className="space-y-1">
+             <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium block">
+               {totalFields} fields
+             </span>
+             {themeCardFields > 0 && (
+               <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium block">
+                 🎨 {themeCardFields} theme card{themeCardFields > 1 ? 's' : ''}
+               </span>
+             )}
+           </div>
+         );
+       },
+     },
     {
       label: "Status",
       key: "status",
@@ -927,12 +1580,12 @@ function AdminCustomEvent() {
                     <h3 className="text-lg font-medium text-gray-700">
                       Step 2: Configure {selectedTemplate === "custom" ? "Custom Template" : eventTemplates[selectedTemplate]?.name}
                     </h3>
-                    <p className="text-sm text-gray-500">
-                      {selectedTemplate === "custom" 
-                        ? "Build your custom event form from scratch" 
-                        : "Customize the template fields and add new ones as needed"
-                      }
-                    </p>
+                                         <p className="text-sm text-gray-500">
+                       {selectedTemplate === "custom" 
+                         ? "Build your custom event form from scratch" 
+                         : "Template comes with all necessary fields. Customize the data, options, and validation rules."
+                       }
+                     </p>
                   </div>
                   <button
                     type="button"
@@ -969,16 +1622,7 @@ function AdminCustomEvent() {
                         )}
                       </div>
                       
-                      <div className="flex items-end">
-                        <button
-                          type="button"
-                          onClick={addFormField}
-                          className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center justify-center space-x-2"
-                        >
-                          <span>➕</span>
-                          <span>Add Custom Field</span>
-                        </button>
-                      </div>
+                      
                     </div>
                   </div>
                   
@@ -988,12 +1632,12 @@ function AdminCustomEvent() {
                       🎯 Form Fields ({eventFormFields.length})
                     </h3>
                     
-                    {eventFormFields.length === 0 ? (
-                      <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
-                        <p className="text-lg mb-2">No form fields added yet</p>
-                        <p className="text-sm">Click "Add Custom Field" to start building your form</p>
-                      </div>
-                    ) : (
+                                         {eventFormFields.length === 0 ? (
+                       <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                         <p className="text-lg mb-2">Template fields loaded!</p>
+                         <p className="text-sm">All necessary fields are ready. Customize the data, options, and validation rules below.</p>
+                       </div>
+                     ) : (
                       <div className="space-y-4">
                         {eventFormFields.map((field) => renderFormFieldBuilder(field))}
                       </div>
@@ -1032,9 +1676,9 @@ function AdminCustomEvent() {
                         </svg>
                         Creating Form...
                       </>
-                    ) : (
-                      `Create ${selectedTemplate === "custom" ? "Custom Event" : eventTemplates[selectedTemplate]?.name} Form (${eventFormFields.length} fields)`
-                    )}
+                                         ) : (
+                       `Create ${selectedTemplate === "custom" ? "Custom Event" : eventTemplates[selectedTemplate]?.name} Form`
+                     )}
                   </button>
                 </form>
               </div>
