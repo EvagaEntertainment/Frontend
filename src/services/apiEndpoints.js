@@ -131,6 +131,24 @@ const apiEndpoints = {
     getGallery: "galleryRoute",
     getGalleryForUser: "galleryRoute/gallery",
     deleteGallery: (galleryId) =>`galleryRoute/${galleryId}`,
+    // Custom Events endpoints
+    getCustomEvents: "customEvents",
+    getCustomEventById: (id) => `customEvents/${id}`,
+    getCustomEventsByType: (eventType) => `customEvents/type/${eventType}`,
+    createCustomEvent: "customEvents",
+    updateCustomEvent: (id) => `customEvents/${id}`,
+    toggleActiveStatus: (id) => `customEvents/${id}/toggle-active`,
+    deleteCustomEvent: (id) => `customEvents/${id}`,
+    getCustomEventStats: "customEvents/stats",
+    getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
+    validateFormData: "customEvents/validate",
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+      `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
+    // Public custom events endpoints
+    getPublicCustomEvents: "customEvents/public",
+    getPublicCustomEventsByType: (eventType) => `customEvents/public/type/${eventType}`,
+    getPublicCustomEventNames: "customEvents/public/events/names",
+    getPublicCustomEventById: (id) => `customEvents/public/events/${id}`,
   },
   admin: {
     register: "admin/registerAdmin",
@@ -204,6 +222,19 @@ const apiEndpoints = {
     getAllErrorLogs: `logerror/logs`,
     getOneError: (id) => `logerror/getOneError/${id}`,
     getAllBookingCta: `bookingCTA/admin/bookings`,
+    // Custom Events Admin endpoints
+    getCustomEvents: "customEvents",
+    getCustomEventById: (id) => `customEvents/${id}`,
+    getCustomEventsByType: (eventType) => `customEvents/type/${eventType}`,
+    createCustomEvent: "customEvents",
+    updateCustomEvent: (id) => `customEvents/${id}`,
+    toggleActiveStatus: (id) => `customEvents/${id}/toggle-active`,
+    deleteCustomEvent: (id) => `customEvents/${id}`,
+    getCustomEventStats: "customEvents/stats",
+    getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
+    validateFormData: "customEvents/validate",
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+      `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

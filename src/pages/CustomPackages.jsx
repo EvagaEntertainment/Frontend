@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import useServices from '../hooks/useServices';
+import commonApis from '../services/commonApis';
 
 function CustomPackages() {
   const navigate = useNavigate();
@@ -16,31 +18,62 @@ function CustomPackages() {
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [showRefreshConfirm, setShowRefreshConfirm] = useState(false);
-  const [isNavigatingAway, setIsNavigatingAway] = useState(false);
 
-  // Steps array
-  const steps = ['Event Type', 'Age Group', 'Theme Selection', 'Food & Beverage', 'Additional Details'];
+
+  // Custom Events API state
+  const [customEventNames, setCustomEventNames] = useState([]);
+  const [selectedCustomEvent, setSelectedCustomEvent] = useState(null);
+  const [customEventFormFields, setCustomEventFormFields] = useState([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(false);
+  const [isLoadingEventDetails, setIsLoadingEventDetails] = useState(false);
+  const [customEventError, setCustomEventError] = useState(null);
+
+  // API hooks
+  const { callApi: getEventNames } = useServices(commonApis.getPublicCustomEventNames);
+  const { callApi: getEventDetails } = useServices(commonApis.getPublicCustomEventById);
+
+  // Steps array - always use custom event flow since we only show API events
+  const getSteps = () => {
+    if (selectedCustomEvent && customEventFormFields.length > 0) {
+      return ['Event Type', 'Custom Event Form', 'Additional Details'];
+    }
+    return ['Event Type', 'Additional Details']; // Simplified flow when no custom event selected
+  };
+  
+  const steps = getSteps();
 
   // Step descriptions
   const getStepDescription = (stepNumber) => {
+    if (selectedCustomEvent && customEventFormFields.length > 0) {
+      const customDescriptions = {
+        1: 'Choose the type of event you\'re planning',
+        2: 'Fill out the custom event form',
+        3: 'Add final details and requirements'
+      };
+      return customDescriptions[stepNumber] || '';
+    }
+    
     const descriptions = {
       1: 'Choose the type of event you\'re planning',
-      2: 'Select the appropriate age group',
-      3: 'Pick a theme that matches your vision',
-      4: 'Customize your menu preferences',
-      5: 'Add final details and requirements'
+      2: 'Add final details and requirements'
     };
     return descriptions[stepNumber] || '';
   };
 
   // Step titles
   const getStepTitle = () => {
+    if (selectedCustomEvent && customEventFormFields.length > 0) {
+      const customTitles = {
+        1: 'Event Type',
+        2: 'Custom Event Form',
+        3: 'Additional Details'
+      };
+      return customTitles[currentStep] || '';
+    }
+    
     const titles = {
       1: 'Event Type',
-      2: 'Age Group', 
-      3: 'Theme Selection',
-      4: 'Food & Beverage',
-      5: 'Additional Details'
+      2: 'Additional Details'
     };
     return titles[currentStep] || '';
   };
@@ -72,6 +105,31 @@ function CustomPackages() {
       hasFormData
     });
   }, [selectedEventType, selectedAge, selectedTheme, selectedFoodType, selectedCourses, hasFormData, formValues]);
+
+  // Fetch custom event names on component mount
+  useEffect(() => {
+    const fetchCustomEventNames = async () => {
+      try {
+        setIsLoadingEvents(true);
+        setCustomEventError(null);
+        const response = await getEventNames();
+        
+        if (response && response.success) {
+          console.log('Custom events API response:', response);
+          setCustomEventNames(response.data?.events || []);
+        } else {
+          setCustomEventError('Failed to fetch custom events');
+        }
+      } catch (err) {
+        console.error('Error fetching custom event names:', err);
+        setCustomEventError('Error fetching custom events');
+      } finally {
+        setIsLoadingEvents(false);
+      }
+    };
+
+    fetchCustomEventNames();
+  }, []); // Empty dependency array - only run once on mount
 
 
 
@@ -195,6 +253,32 @@ function CustomPackages() {
     sessionStorage.removeItem('showRefreshModal');
   }, []);
 
+  // Handle custom event selection
+  const handleCustomEventSelection = async (eventId) => {
+    try {
+      setIsLoadingEventDetails(true);
+      setCustomEventError(null);
+      const response = await getEventDetails(eventId);
+      
+      if (response && response.success) {
+        setSelectedCustomEvent(response.data);
+        setCustomEventFormFields(response.data.eventFormFields || []);
+        // Set the event type to the custom event name
+        setSelectedEventType(response.data.eventType || response.data.templateName);
+        setValue('eventType', response.data.eventType || response.data.templateName);
+        clearStepError('eventType');
+      } else {
+        setCustomEventError('Failed to fetch event details');
+      }
+    } catch (err) {
+      console.error('Error fetching event details:', err);
+      setCustomEventError('Error fetching event details');
+    } finally {
+      setIsLoadingEventDetails(false);
+    }
+  };
+
+  // Combine static event types with custom events
   const eventTypes = [
     'Birthday Party',
     'Wedding',
@@ -204,6 +288,8 @@ function CustomPackages() {
     'Graduation Party',
     'Other'
   ];
+
+
 
   const ageGroups = [
     '1 year',
@@ -336,16 +422,12 @@ function CustomPackages() {
       }
     }
     
-    if (currentStep < 5) {
+    if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
     }
   };
 
-  const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
+
 
   const handleClose = () => {
     // Always show confirmation, regardless of form data
@@ -436,46 +518,84 @@ function CustomPackages() {
         <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mt-4"></div>
       </div>
 
+      {/* Loading state */}
+      {isLoadingEvents && (
+        <div className="text-center py-8">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <p className="text-gray-600 mt-2">Loading custom events...</p>
+        </div>
+      )}
+
+      {/* Error state */}
+      {customEventError && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-xl mb-6">
+          <p className="text-red-600 text-sm flex items-center">
+            <span className="mr-2 text-lg">⚠️</span>
+            {customEventError}
+          </p>
+        </div>
+      )}
+
       <div className="space-y-3">
-        {eventTypes.map((eventType) => (
-          <motion.div
-            key={eventType}
-            whileHover={{ scale: 1.02, y: -4 }}
-            whileTap={{ scale: 0.98 }}
-            className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
-              selectedEventType === eventType
-                ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
-                : 'border-gray-200 hover:border-purple-300 bg-white'
-            }`}
-            onClick={() => {
-              setSelectedEventType(eventType);
-              setValue('eventType', eventType);
-              clearStepError('eventType');
-            }}
-          >
-            <div className="flex items-center space-x-4">
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                selectedEventType === eventType 
-                  ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
-                  : 'bg-gray-100 text-gray-400'
-              }`}>
-                <span className={`text-lg ${
-                  selectedEventType === eventType ? 'animate-pulse' : ''
+        {/* Custom Events from API */}
+        {customEventNames.length > 0 ? (
+          customEventNames.map((customEvent) => (
+            <motion.div
+              key={customEvent._id}
+              whileHover={{ scale: 1.02, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+                selectedEventType === (customEvent.eventType || customEvent.templateName)
+                  ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                  : 'border-gray-200 hover:border-purple-300 bg-white'
+              }`}
+              onClick={() => handleCustomEventSelection(customEvent._id)}
+            >
+              <div className="flex items-center space-x-4">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                  selectedEventType === (customEvent.eventType || customEvent.templateName)
+                    ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                    : 'bg-gray-100 text-gray-400'
                 }`}>
-                  {selectedEventType === eventType ? '✓' : '🎉'}
-                </span>
+                  <span className={`text-lg ${
+                    selectedEventType === (customEvent.eventType || customEvent.templateName) ? 'animate-pulse' : ''
+                  }`}>
+                    {selectedEventType === (customEvent.eventType || customEvent.templateName) ? '✓' : '🎉'}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-semibold text-gray-800 text-lg">
+                    {customEvent.eventType || customEvent.templateName}
+                  </span>
+                </div>
+                
+                {/* Selection indicator */}
+                {selectedEventType === (customEvent.eventType || customEvent.templateName) && (
+                  <div className="ml-auto">
+                    <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                  </div>
+                )}
               </div>
-              <span className="font-semibold text-gray-800 text-lg">{eventType}</span>
               
-              {/* Selection indicator */}
-              {selectedEventType === eventType && (
-                <div className="ml-auto">
-                  <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+              {/* Loading indicator for event details */}
+              {isLoadingEventDetails && selectedEventType === (customEvent.eventType || customEvent.templateName) && (
+                <div className="mt-3 flex items-center space-x-2 text-purple-600">
+                  <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600"></div>
+                  <span className="text-sm">Loading event details...</span>
                 </div>
               )}
+            </motion.div>
+          ))
+        ) : (
+          !isLoadingEvents && (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-gray-400">📝</span>
+              </div>
+              <p className="text-gray-500">No custom event templates available</p>
             </div>
-          </motion.div>
-        ))}
+          )
+        )}
       </div>
 
       {errors.eventType && (
@@ -909,6 +1029,117 @@ function CustomPackages() {
     </motion.div>
   );
 
+  // Render custom event form fields
+  const renderCustomEventForm = () => (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="space-y-6"
+    >
+      <div className="mb-8 text-center">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-4">
+          {selectedCustomEvent?.eventType || selectedCustomEvent?.templateName} <span className="text-red-500">*</span>
+        </h2>
+        <p className="text-gray-600 text-lg">Fill out the custom event form</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div className="space-y-6">
+        {customEventFormFields.map((field, index) => (
+          <div key={field.id || index} className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              {field.label} {field.required && <span className="text-red-500">*</span>}
+            </label>
+            
+            {field.type === 'text' && (
+              <input
+                type="text"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+            )}
+            
+            {field.type === 'number' && (
+              <input
+                type="number"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+                min={field.validation?.min || undefined}
+                max={field.validation?.max || undefined}
+              />
+            )}
+            
+            {field.type === 'date' && (
+              <input
+                type="date"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            )}
+            
+            {field.type === 'select' && (
+              <select
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="">Select {field.label.toLowerCase()}</option>
+                {field.options?.map((option, optionIndex) => (
+                  <option key={optionIndex} value={option.value || option}>
+                    {option.label || option}
+                  </option>
+                ))}
+              </select>
+            )}
+            
+            {field.type === 'textarea' && (
+              <textarea
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                rows={4}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+            )}
+            
+            {field.type === 'themeCards' && (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Theme cards will be displayed here. This is a complex field type that requires special handling.
+                </p>
+                {/* You can expand this to show theme cards if needed */}
+              </div>
+            )}
+            
+            {field.type === 'foodMenu' && (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Food menu will be displayed here. This is a complex field type that requires special handling.
+                </p>
+                {/* You can expand this to show food menu if needed */}
+              </div>
+            )}
+            
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm mt-2">{errors[field.name].message}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+
   const renderStep5 = () => (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -990,17 +1221,26 @@ function CustomPackages() {
   );
 
   const renderStepContent = () => {
+    // Handle custom event flow
+    if (selectedCustomEvent && customEventFormFields.length > 0) {
+      switch (currentStep) {
+        case 1:
+          return renderStep1();
+        case 2:
+          return renderCustomEventForm();
+        case 3:
+          return renderStep5(); // Additional details
+        default:
+          return renderStep1();
+      }
+    }
+    
+    // Handle simplified flow (no custom event selected)
     switch (currentStep) {
       case 1:
         return renderStep1();
       case 2:
-        return renderStep2();
-      case 3:
-        return renderStep3();
-      case 4:
-        return renderStep4();
-      case 5:
-        return renderStep5();
+        return renderStep5(); // Additional details
       default:
         return renderStep1();
     }
@@ -1106,7 +1346,7 @@ function CustomPackages() {
             From themes to menus, we'll bring your vision to life with style and elegance.
           </p>
           
-          {/* Decorative Elements */}
+      {/* Decorative Elements */}
           <div className="flex justify-center items-center space-x-8 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
             <div className="flex space-x-2">
@@ -1208,16 +1448,16 @@ function CustomPackages() {
         
         {/* Enhanced leaf decorations */}
         <div className="absolute top-0 left-0 w-40 h-40 text-green-200 opacity-40">
-          <LeafDecoration className="w-full h-full" rotation={45} />
-        </div>
+        <LeafDecoration className="w-full h-full" rotation={45} />
+      </div>
         <div className="absolute top-0 right-0 w-32 h-32 text-green-200 opacity-40">
-          <LeafDecoration className="w-full h-full" rotation={-30} />
-        </div>
+        <LeafDecoration className="w-full h-full" rotation={-30} />
+      </div>
         <div className="absolute top-32 left-16 w-24 h-24 text-green-100 opacity-30">
-          <LeafDecoration className="w-full h-full" rotation={15} />
-        </div>
+        <LeafDecoration className="w-full h-full" rotation={15} />
+      </div>
         <div className="absolute top-24 right-24 w-28 h-28 text-green-100 opacity-30">
-          <LeafDecoration className="w-full h-full" rotation={-15} />
+        <LeafDecoration className="w-full h-full" rotation={-15} />
         </div>
         
         {/* New floating stars */}
@@ -1341,11 +1581,11 @@ function CustomPackages() {
                   <motion.div
                     className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 h-3 rounded-full shadow-lg transition-all duration-500 ease-out progress-enhanced"
                     initial={{ width: 0 }}
-                    animate={{ width: `${(currentStep / 5) * 100}%` }}
+                    animate={{ width: `${(currentStep / steps.length) * 100}%` }}
                   />
                 </div>
                 <p className="text-sm text-purple-600 mt-3 font-medium">
-                  Step {currentStep} of 5 • {Math.round((currentStep / 5) * 100)}% Complete
+                  Step {currentStep} of {steps.length} • {Math.round((currentStep / steps.length) * 100)}% Complete
                 </p>
               </div>
 
@@ -1356,10 +1596,10 @@ function CustomPackages() {
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <span className="text-white text-xl font-bold">{currentStep}</span>
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                       <h5 className="font-semibold text-purple-800 text-lg">{getStepTitle()}</h5>
-                      <p className="text-sm text-gray-600">Current step</p>
+                    <p className="text-sm text-gray-600">Current step</p>
                     </div>
                   </div>
                 </div>
@@ -1431,7 +1671,7 @@ function CustomPackages() {
                   ← Back
                 </motion.button>
 
-                {currentStep < 5 ? (
+                {currentStep < steps.length ? (
                   <motion.button
                     type="button"
                     onClick={nextStep}
@@ -1490,5 +1730,423 @@ function CustomPackages() {
     </div>
   );
 }
+
+// ===== FORM COMPONENTS =====
+
+// Enhanced Card Component for Event Types and Age Groups
+const FormCard = ({ 
+  title, 
+  icon, 
+  isSelected, 
+  onClick, 
+  className = "",
+  children 
+}) => (
+  <motion.div
+    whileHover={{ scale: 1.02, y: -4 }}
+    whileTap={{ scale: 0.98 }}
+    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+      isSelected
+        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+        : 'border-gray-200 hover:border-purple-300 bg-white'
+    } ${className}`}
+    onClick={onClick}
+  >
+    <div className="flex items-center space-x-4">
+      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+        isSelected 
+          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+          : 'bg-gray-100 text-gray-400'
+      }`}>
+        <span className={`text-lg ${
+          isSelected ? 'animate-pulse' : ''
+        }`}>
+          {isSelected ? '✓' : icon}
+        </span>
+      </div>
+      <span className="font-semibold text-gray-800 text-lg">{title}</span>
+      
+      {/* Selection indicator */}
+      {isSelected && (
+        <div className="ml-auto">
+          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+        </div>
+      )}
+    </div>
+    {children}
+  </motion.div>
+);
+
+// Enhanced Theme Card Component
+const ThemeCard = ({ 
+  theme, 
+  isSelected, 
+  onClick 
+}) => (
+  <motion.div
+    whileHover={{ scale: 1.03, y: -8 }}
+    whileTap={{ scale: 0.98 }}
+    className={`border-2 rounded-3xl cursor-pointer transition-all duration-500 overflow-hidden theme-card-enhanced ${
+      isSelected
+        ? 'border-purple-500 bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 shadow-2xl shadow-purple-200'
+        : 'border-gray-200 hover:border-purple-300 bg-white hover:shadow-xl'
+    }`}
+    onClick={onClick}
+  >
+    {/* Enhanced Theme Image */}
+    <div className="w-full h-56 bg-gray-100 overflow-hidden relative">
+      <img
+        src={theme.image}
+        alt={theme.name}
+        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+        loading="lazy"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.nextSibling.style.display = 'flex';
+        }}
+      />
+      {/* Enhanced fallback icon */}
+      <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100">
+        <span className="text-6xl text-purple-400 animate-pulse">✨</span>
+      </div>
+      
+      {/* Floating decorative elements */}
+      <div className="absolute top-4 right-4 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <span className="text-purple-600 text-sm">🎨</span>
+      </div>
+    </div>
+    
+    {/* Enhanced Theme Details */}
+    <div className="p-6">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <h3 className="font-bold text-gray-800 text-xl mb-3">{theme.name}</h3>
+          <p className="text-gray-600 leading-relaxed">{theme.description}</p>
+        </div>
+        
+        {/* Enhanced Selection Indicator */}
+        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ml-4 transition-all duration-300 ${
+          isSelected 
+            ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 text-white shadow-lg scale-110' 
+            : 'bg-gray-100 text-gray-400'
+        }`}>
+          <span className="text-xl">
+            {isSelected ? '✓' : '✨'}
+          </span>
+        </div>
+      </div>
+      
+      {/* Enhanced Selection Status */}
+      {isSelected && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="mt-4 p-4 bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 rounded-xl border border-purple-200 success-state"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+            <span className="text-sm font-semibold text-purple-700">Theme Selected</span>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  </motion.div>
+);
+
+// Enhanced Food Type Card Component
+const FoodTypeCard = ({ 
+  type, 
+  isSelected, 
+  onClick 
+}) => (
+  <motion.div
+    whileHover={{ scale: 1.01 }}
+    whileTap={{ scale: 0.99 }}
+    className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+      isSelected
+        ? 'border-purple-500 bg-purple-50'
+        : 'border-gray-200 hover:border-gray-300'
+    }`}
+    onClick={onClick}
+  >
+    <div className="flex items-center space-x-3">
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+        isSelected ? 'bg-purple-100' : 'bg-gray-100'
+      }`}>
+        <span className={`text-sm ${
+          isSelected ? 'text-purple-600' : 'text-gray-400'
+        }`}>
+          {isSelected ? '✓' : '🍽️'}
+        </span>
+      </div>
+      <span className="font-medium text-gray-800">{type}</span>
+    </div>
+  </motion.div>
+);
+
+// Enhanced Course Selection Card Component
+const CourseCard = ({ 
+  course, 
+  isSelected, 
+  onClick 
+}) => (
+  <motion.div
+    whileHover={{ scale: 1.01 }}
+    whileTap={{ scale: 0.99 }}
+    className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+      isSelected
+        ? 'border-green-500 bg-green-50'
+        : 'border-gray-200 hover:border-gray-300'
+    }`}
+    onClick={onClick}
+  >
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-3">
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+          isSelected ? 'bg-green-100' : 'bg-gray-100'
+        }`}>
+          <span className={`text-sm ${
+            isSelected ? 'text-green-600' : 'text-gray-400'
+          }`}>
+            {isSelected ? '✓' : '🥘'}
+          </span>
+        </div>
+        <span className="font-medium text-gray-800">{course}</span>
+      </div>
+      
+      {/* Selection Count */}
+      {isSelected && (
+        <div className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
+          Selected
+        </div>
+      )}
+    </div>
+  </motion.div>
+);
+
+// Enhanced Form Input Component
+const FormInput = ({ 
+  label, 
+  type = "text", 
+  placeholder, 
+  required = false, 
+  error, 
+  register, 
+  name,
+  className = "",
+  ...props 
+}) => (
+  <div className={className}>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      type={type}
+      {...register(name, { required: required ? `${label} is required` : false })}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      placeholder={placeholder}
+      {...props}
+    />
+    {error && (
+      <p className="text-red-500 text-sm mt-1">{error.message}</p>
+    )}
+  </div>
+);
+
+// Enhanced Form Select Component
+const FormSelect = ({ 
+  label, 
+  options, 
+  placeholder, 
+  required = false, 
+  error, 
+  register, 
+  name,
+  className = "",
+  ...props 
+}) => (
+  <div className={className}>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <select
+      {...register(name, { required: required ? `${label} is required` : false })}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      {...props}
+    >
+      <option value="">{placeholder}</option>
+      {options.map((option) => (
+        <option key={option.value || option} value={option.value || option}>
+          {option.label || option}
+        </option>
+      ))}
+    </select>
+    {error && (
+      <p className="text-red-500 text-sm mt-1">{error.message}</p>
+    )}
+  </div>
+);
+
+// Enhanced Form Textarea Component
+const FormTextarea = ({ 
+  label, 
+  placeholder, 
+  required = false, 
+  error, 
+  register, 
+  name,
+  rows = 4,
+  className = "",
+  ...props 
+}) => (
+  <div className={className}>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <textarea
+      {...register(name)}
+      rows={rows}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      placeholder={placeholder}
+      {...props}
+    />
+    {error && (
+      <p className="text-red-500 text-sm mt-1">{error.message}</p>
+    )}
+  </div>
+);
+
+// Enhanced Checkbox Component
+const FormCheckbox = ({ 
+  label, 
+  name, 
+  register, 
+  value,
+  className = "",
+  ...props 
+}) => (
+  <label className={`flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50 ${className}`}>
+    <input
+      type="checkbox"
+      {...register(name)}
+      value={value}
+      className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+      {...props}
+    />
+    <span className="text-gray-700">{label}</span>
+  </label>
+);
+
+// Enhanced Error Message Component
+const ErrorMessage = ({ error, className = "" }) => {
+  if (!error) return null;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className={`p-4 bg-red-50 border border-red-200 rounded-xl form-error-enhanced ${className}`}
+    >
+      <p className="text-red-600 text-sm flex items-center">
+        <span className="mr-2 text-lg">⚠️</span>
+        {error.message}
+      </p>
+    </motion.div>
+  );
+};
+
+// Enhanced Progress Bar Component
+const ProgressBar = ({ currentStep, totalSteps, className = "" }) => (
+  <div className={`text-center mb-6 ${className}`}>
+    <h4 className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-3">
+      Progress
+    </h4>
+    <div className="w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 rounded-full h-3 shadow-inner">
+      <motion.div
+        className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 h-3 rounded-full shadow-lg transition-all duration-500 ease-out progress-enhanced"
+        initial={{ width: 0 }}
+        animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
+      />
+    </div>
+    <p className="text-sm text-purple-600 mt-3 font-medium">
+      Step {currentStep} of {totalSteps} • {Math.round((currentStep / totalSteps) * 100)}% Complete
+    </p>
+  </div>
+);
+
+// Enhanced Step Header Component
+const StepHeader = ({ 
+  stepNumber, 
+  totalSteps, 
+  title, 
+  description, 
+  className = "" 
+}) => (
+  <div className={`mb-8 ${className}`}>
+    <div className="flex items-center space-x-3 mb-3">
+      <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Step {stepNumber}/{totalSteps}</span>
+      <span className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
+        {title}
+      </span>
+      <button className="ml-2 text-gray-400 hover:text-purple-600 transition-colors duration-200">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+    </div>
+    
+    {/* Step description with enhanced styling */}
+    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 rounded-xl p-4 border border-purple-100">
+      <p className="text-gray-600 text-center font-medium">
+        {description}
+      </p>
+    </div>
+  </div>
+);
+
+// Enhanced Navigation Buttons Component
+const NavigationButtons = ({ 
+  currentStep, 
+  totalSteps, 
+  onBack, 
+  onNext, 
+  onSubmit,
+  isLastStep = false,
+  className = "" 
+}) => (
+  <div className={`flex justify-between pt-8 ${className}`}>
+    <motion.button
+      type="button"
+      onClick={onBack}
+      className="px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 rounded-xl font-medium hover:from-gray-300 hover:to-gray-400 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced"
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      ← Back
+    </motion.button>
+
+    {!isLastStep ? (
+      <motion.button
+        type="button"
+        onClick={onNext}
+        className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-medium hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        Next →
+      </motion.button>
+    ) : (
+      <motion.button
+        type="submit"
+        onClick={onSubmit}
+        className="px-10 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        ✨ Submit Package Request
+      </motion.button>
+    )}
+  </div>
+);
 
 export default CustomPackages;

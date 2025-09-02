@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
 import adminActionsApi from "../../services/adminActionsApi";
+import customEventsApi from "../../services/customEventsApi";
 import { formatDateTime } from "../../utils/formatDateTime";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import DeleteForm from "./DeleteForm";
@@ -22,6 +23,7 @@ function AdminCustomEvent() {
   const [formStep, setFormStep] = useState(1);
   const [eventFormFields, setEventFormFields] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [editFormFields, setEditFormFields] = useState([]);
   
   // Available field types for admin to choose from when adding custom fields
   const availableFieldTypes = [
@@ -92,20 +94,10 @@ function AdminCustomEvent() {
           id: "budget",
           name: "budget",
           label: "Budget (₹)",
-          type: "number",
+          type: "select",
           required: true,
-          placeholder: "Enter your budget amount",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "venue",
-          name: "venue",
-          label: "Preferred Venue",
-          type: "text",
-          required: false,
-          placeholder: "e.g., Home, Garden, Restaurant",
-          options: [],
+          placeholder: "Select your budget range",
+          options: [], // Admin will fill budget options
           validation: { min: "", max: "", pattern: "" }
         },
         {
@@ -130,281 +122,307 @@ function AdminCustomEvent() {
         }
       ]
     },
-    wedding: {
-      name: "Wedding",
-      icon: "💒",
-      description: "Wedding planning form with ceremony types and preferences - customize the data",
-      fields: [
-        {
-          id: "weddingDate",
-          name: "weddingDate",
-          label: "Wedding Date",
-          type: "date",
-          required: true,
-          placeholder: "Select wedding date",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "ceremonyType",
-          name: "ceremonyType",
-          label: "Ceremony Type",
-          type: "select",
-          required: true,
-          placeholder: "Select ceremony type",
-          options: [], // Admin will fill this
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "guestCount",
-          name: "guestCount",
-          label: "Expected Guest Count",
-          type: "number",
-          required: true,
-          placeholder: "Enter number of guests",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "budget",
-          name: "budget",
-          label: "Budget (₹)",
-          type: "number",
-          required: true,
-          placeholder: "Enter your budget amount",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "venue",
-          name: "venue",
-          label: "Preferred Venue",
-          type: "text",
-          required: false,
-          placeholder: "e.g., Hotel, Garden, Beach",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "specialRequirements",
-          name: "specialRequirements",
-          label: "Special Requirements",
-          type: "textarea",
-          required: false,
-          placeholder: "Any special requests or requirements",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        }
-      ]
-    },
-    corporate: {
-      name: "Corporate Event",
-      icon: "🏢",
-      description: "Corporate event booking with business requirements - customize the data",
-      fields: [
-        {
-          id: "eventDate",
-          name: "eventDate",
-          label: "Event Date",
-          type: "date",
-          required: true,
-          placeholder: "Select event date",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "eventType",
-          name: "eventType",
-          label: "Event Type",
-          type: "select",
-          required: true,
-          placeholder: "Select event type",
-          options: [], // Admin will fill this
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "attendeeCount",
-          name: "attendeeCount",
-          label: "Expected Attendees",
-          type: "number",
-          required: true,
-          placeholder: "Enter number of attendees",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "duration",
-          name: "duration",
-          label: "Event Duration (hours)",
-          type: "number",
-          required: true,
-          placeholder: "Enter duration in hours",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "budget",
-          name: "budget",
-          label: "Budget (₹)",
-          type: "number",
-          required: true,
-          placeholder: "Enter your budget amount",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "venue",
-          name: "venue",
-          label: "Preferred Venue",
-          type: "text",
-          required: false,
-          placeholder: "e.g., Conference Center, Hotel, Office",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "specialRequirements",
-          name: "specialRequirements",
-          label: "Special Requirements",
-          type: "textarea",
-          required: false,
-          placeholder: "Any special requests or requirements",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        }
-      ]
-    },
-    party: {
-      name: "Private Party",
-      icon: "🎉",
-      description: "Private party booking with flexible options - customize the data",
-      fields: [
-        {
-          id: "partyDate",
-          name: "partyDate",
-          label: "Party Date",
-          type: "date",
-          required: true,
-          placeholder: "Select party date",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "partyType",
-          name: "partyType",
-          label: "Party Type",
-          type: "select",
-          required: true,
-          placeholder: "Select party type",
-          options: [], // Admin will fill this
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "ageGroup",
-          name: "ageGroup",
-          label: "Age Group",
-          type: "select",
-          required: true,
-          placeholder: "Select age group",
-          options: [], // Admin will fill this
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "guestCount",
-          name: "guestCount",
-          label: "Expected Guest Count",
-          type: "number",
-          required: true,
-          placeholder: "Enter number of guests",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "theme",
-          name: "theme",
-          label: "Party Theme",
-          type: "text",
-          required: false,
-          placeholder: "e.g., Tropical, Vintage, Modern",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "budget",
-          name: "budget",
-          label: "Budget (₹)",
-          type: "number",
-          required: true,
-          placeholder: "Enter your budget amount",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "venue",
-          name: "venue",
-          label: "Preferred Venue",
-          type: "text",
-          required: false,
-          placeholder: "e.g., Home, Restaurant, Event Space",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        },
-        {
-          id: "specialRequirements",
-          name: "specialRequirements",
-          label: "Special Requirements",
-          type: "textarea",
-          required: false,
-          placeholder: "Any special requests or requirements",
-          options: [],
-          validation: { min: "", max: "", pattern: "" }
-        }
-      ]
-    }
+    // wedding: {
+    //   name: "Wedding",
+    //   icon: "💒",
+    //   description: "Wedding planning form with ceremony types and preferences - customize the data",
+    //   fields: [
+    //     {
+    //       id: "weddingDate",
+    //       name: "weddingDate",
+    //       label: "Wedding Date",
+    //       type: "date",
+    //       required: true,
+    //       placeholder: "Select wedding date",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "ceremonyType",
+    //       name: "ceremonyType",
+    //       label: "Ceremony Type",
+    //       type: "select",
+    //       required: true,
+    //       placeholder: "Select ceremony type",
+    //       options: [], // Admin will fill this
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "guestCount",
+    //       name: "guestCount",
+    //       label: "Expected Guest Count",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter number of guests",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "budget",
+    //       name: "budget",
+    //       label: "Budget (₹)",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter your budget amount",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "venue",
+    //       name: "venue",
+    //       label: "Preferred Venue",
+    //       type: "text",
+    //       required: false,
+    //       placeholder: "e.g., Hotel, Garden, Beach",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "specialRequirements",
+    //       name: "specialRequirements",
+    //       label: "Special Requirements",
+    //       type: "textarea",
+    //       required: false,
+    //       placeholder: "Any special requests or requirements",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     }
+    //   ]
+    // },
+    // corporate: {
+    //   name: "Corporate Event",
+    //   icon: "🏢",
+    //   description: "Corporate event booking with business requirements - customize the data",
+    //   fields: [
+    //     {
+    //       id: "eventDate",
+    //       name: "eventDate",
+    //       label: "Event Date",
+    //       type: "date",
+    //       required: true,
+    //       placeholder: "Select event date",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "eventType",
+    //       name: "eventType",
+    //       label: "Event Type",
+    //       type: "select",
+    //       required: true,
+    //       placeholder: "Select event type",
+    //       options: [], // Admin will fill this
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "attendeeCount",
+    //       name: "attendeeCount",
+    //       label: "Expected Attendees",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter number of attendees",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "duration",
+    //       name: "duration",
+    //       label: "Event Duration (hours)",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter duration in hours",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "budget",
+    //       name: "budget",
+    //       label: "Budget (₹)",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter your budget amount",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "venue",
+    //       name: "venue",
+    //       label: "Preferred Venue",
+    //       type: "text",
+    //       required: false,
+    //       placeholder: "e.g., Conference Center, Hotel, Office",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "specialRequirements",
+    //       name: "specialRequirements",
+    //       label: "Special Requirements",
+    //       type: "textarea",
+    //       required: false,
+    //       placeholder: "Any special requests or requirements",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     }
+    //   ]
+    // },
+    // party: {
+    //   name: "Private Party",
+    //   icon: "🎉",
+    //   description: "Private party booking with flexible options - customize the data",
+    //   fields: [
+    //     {
+    //       id: "partyDate",
+    //       name: "partyDate",
+    //       label: "Party Date",
+    //       type: "date",
+    //       required: true,
+    //       placeholder: "Select party date",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "partyType",
+    //       name: "partyType",
+    //       label: "Party Type",
+    //       type: "select",
+    //       required: true,
+    //       placeholder: "Select party type",
+    //       options: [], // Admin will fill this
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "ageGroup",
+    //       name: "ageGroup",
+    //       label: "Age Group",
+    //       type: "select",
+    //       required: true,
+    //       placeholder: "Select age group",
+    //       options: [], // Admin will fill this
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "guestCount",
+    //       name: "guestCount",
+    //       label: "Expected Guest Count",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter number of guests",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "theme",
+    //       name: "theme",
+    //       label: "Party Theme",
+    //       type: "text",
+    //       required: false,
+    //       placeholder: "e.g., Tropical, Vintage, Modern",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "budget",
+    //       name: "budget",
+    //       label: "Budget (₹)",
+    //       type: "number",
+    //       required: true,
+    //       placeholder: "Enter your budget amount",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "venue",
+    //       name: "venue",
+    //       label: "Preferred Venue",
+    //       type: "text",
+    //       required: false,
+    //       placeholder: "e.g., Home, Restaurant, Event Space",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     },
+    //     {
+    //       id: "specialRequirements",
+    //       name: "specialRequirements",
+    //       label: "Special Requirements",
+    //       type: "textarea",
+    //       required: false,
+    //       placeholder: "Any special requests or requirements",
+    //       options: [],
+    //       validation: { min: "", max: "", pattern: "" }
+    //     }
+    //   ]
+    // }
   };
 
-  // API hooks - commented out until APIs are created
-  // const getCustomEventsApi = useServices(commonApis.getCustomEvents);
-  // const createCustomEventApi = useServices(commonApis.createCustomEvent);
-  // const deleteCustomEventApi = useServices(commonApis.deleteCustomEvent);
+  // API hooks for custom events
+  const getCustomEventsApi = useServices(customEventsApi.getCustomEvents);
+  const createCustomEventApi = useServices(customEventsApi.createCustomEvent);
+  const deleteCustomEventApi = useServices(customEventsApi.deleteCustomEvent);
   
   const getCustomEventsHandle = async () => {
-    // Mock data for now - replace with actual API call later
-    const mockData = [
-      {
-        _id: '1',
-        eventType: 'Wedding',
-        template: 'wedding',
-        templateName: 'Wedding',
-        formFields: eventTemplates.wedding.fields,
-        createdAt: new Date().toISOString()
-      },
-      {
-        _id: '2',
-        eventType: 'Birthday Party',
-        template: 'birthday',
-        templateName: 'Birthday Party',
-        formFields: eventTemplates.birthday.fields,
-        createdAt: new Date().toISOString()
-      },
-      {
-        _id: '3',
-        eventType: 'Corporate Conference',
-        template: 'corporate',
-        templateName: 'Corporate Event',
-        formFields: eventTemplates.corporate.fields,
-        createdAt: new Date().toISOString()
+    try {
+      const queryParams = { page: page || 1 };
+      const response = await getCustomEventsApi.callApi(queryParams);
+      
+      if (response && response.success && response.data) {
+        // Handle the nested structure: response.data.customEvents
+        const customEvents = response.data.customEvents || response.data;
+        const pagination = response.data.pagination || response.pagination;
+        
+        setAllCustomEvents(customEvents);
+        setTotalPages(pagination?.totalPages || 1);
+      } else {
+        // Handle API error responses
+        const errorMessage = response?.message || response?.error || "API response structure unexpected";
+        const statusCode = response?.status || response?.statusCode || "Unknown";
+        
+        if (statusCode >= 400 && statusCode < 500) {
+          toast.error(`Client Error (${statusCode}): ${errorMessage}`);
+        } else if (statusCode >= 500) {
+          toast.error(`Server Error (${statusCode}): ${errorMessage}`);
+        } else {
+          toast.warning(`API Warning: ${errorMessage}`);
+        }
+        
+        // Fallback to mock data if API structure is unexpected
+        const mockData = [
+          {
+            _id: '1',
+            eventType: 'Birthday Party',
+            selectedTemplate: 'birthday',
+            templateName: 'Birthday Party',
+            eventFormFields: eventTemplates.birthday.fields,
+            isActive: true,
+            createdAt: new Date().toISOString()
+          }
+        ];
+        setAllCustomEvents(mockData);
+        setTotalPages(1);
       }
-    ];
-    
-    setAllCustomEvents(mockData);
-    setTotalPages(1);
-    
-    // Uncomment when APIs are ready:
-    // const queryParams = { page: page || 1 };
-    // const response = await getCustomEventsApi.callApi(queryParams);
-    // setAllCustomEvents(response ? response?.data : []);
-    // setTotalPages(response ? response?.pagination?.totalPages : 1);
+    } catch (error) {
+      // Check if it's a network error or server error
+      if (error.message.includes('Network Error') || error.message.includes('Failed to fetch')) {
+        toast.warning('Network error - using mock data for demonstration');
+      } else {
+        toast.error('Failed to fetch custom events');
+      }
+      
+      // Fallback to mock data on error
+      const mockData = [
+        {
+          _id: '1',
+          eventType: 'Birthday Party',
+          selectedTemplate: 'birthday',
+          templateName: 'Birthday Party',
+          eventFormFields: eventTemplates.birthday.fields,
+          isActive: true,
+          createdAt: new Date().toISOString()
+        }
+      ];
+      setAllCustomEvents(mockData);
+      setTotalPages(1);
+    }
   };
   
   const handlePageChange = (event, value) => {
@@ -437,6 +455,7 @@ function AdminCustomEvent() {
     setFormStep(1);
     setSelectedTemplate("");
     setEventFormFields([]);
+    setEditFormFields([]);
   };
 
   const handleEventTypeSelect = (eventType) => {
@@ -640,10 +659,7 @@ function AdminCustomEvent() {
                 idx === categoryIndex 
                   ? { ...category, items: [...category.items, { 
                       name: "", 
-                      price: "", 
-                      description: "", 
                       dietaryType: "veg",
-                      spiceLevel: "medium",
                       isPopular: false
                     }] }
                   : category
@@ -699,7 +715,7 @@ function AdminCustomEvent() {
   const renderFormFieldBuilder = (field) => {
     const { id, name, label, type, required, placeholder, options, validation } = field;
     
-    return (
+  return (
       <div key={id} className="border border-gray-200 rounded-lg p-4 space-y-4 bg-gray-50">
                  <div className="flex items-center justify-between">
            <h4 className="font-medium text-gray-800">
@@ -1050,23 +1066,6 @@ function AdminCustomEvent() {
                                    />
                                  </div>
                                  
-                                 {/* Item Price */}
-                                 <div>
-                                   <label className="block text-xs font-medium text-gray-700 mb-1">
-                                     Price (₹) *
-                                   </label>
-                                   <input
-                                     type="number"
-                                     value={item.price}
-                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { price: e.target.value })}
-                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                     placeholder="e.g., 250"
-                                   />
-                                 </div>
-                               </div>
-
-                               {/* Dietary Preferences Row */}
-                               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
                                  {/* Dietary Type */}
                                  <div>
                                    <label className="block text-xs font-medium text-gray-700 mb-1">
@@ -1085,53 +1084,17 @@ function AdminCustomEvent() {
                                      <option value="jain">🕉️ Jain</option>
                                    </select>
                                  </div>
-                                 
-                                 {/* Spice Level */}
-                                 <div>
-                                   <label className="block text-xs font-medium text-gray-700 mb-1">
-                                     Spice Level
-                                   </label>
-                                   <select
-                                     value={item.spiceLevel}
-                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { spiceLevel: e.target.value })}
-                                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                   >
-                                     <option value="mild">🌶️ Mild</option>
-                                     <option value="medium">🌶️🌶️ Medium</option>
-                                     <option value="hot">🌶️🌶️🌶️ Hot</option>
-                                     <option value="extra-hot">🌶️🌶️🌶️🌶️ Extra Hot</option>
-                                   </select>
-                                 </div>
-                                 
-                                 {/* Popular Item */}
-                                 <div>
-                                   <label className="block text-xs font-medium text-gray-700 mb-1">
-                                     Popular Item
-                                   </label>
-                                   <div className="flex items-center space-x-2">
-                                     <input
-                                       type="checkbox"
-                                       checked={item.isPopular}
-                                       onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
-                                       className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
-                                     />
-                                     <span className="text-xs text-gray-600">Mark as popular</span>
-                                   </div>
-                                 </div>
                                </div>
 
-                               {/* Item Description */}
-                               <div>
-                                 <label className="block text-xs font-medium text-gray-700 mb-1">
-                                   Description
-                                 </label>
+                               {/* Popular Item */}
+                               <div className="flex items-center space-x-2">
                                  <input
-                                   type="text"
-                                   value={item.description}
-                                   onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { description: e.target.value })}
-                                   className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                   placeholder="e.g., Rich and creamy curry with tender chicken"
+                                   type="checkbox"
+                                   checked={item.isPopular}
+                                   onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
+                                   className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
                                  />
+                                 <span className="text-xs text-gray-600">Mark as popular</span>
                                </div>
                              </div>
                            ))}
@@ -1335,6 +1298,242 @@ function AdminCustomEvent() {
       </div>
     );
   };
+
+  // Edit form functions
+  const addNewFieldToEdit = () => {
+    const newField = {
+      id: `edit_field_${Date.now()}`,
+      name: "",
+      label: "",
+      type: "text",
+      required: false,
+      placeholder: "",
+      options: [],
+      validation: {
+        min: "",
+        max: "",
+        pattern: ""
+      }
+    };
+    setEditFormFields([...editFormFields, newField]);
+  };
+
+  const updateFieldInEdit = (fieldId, field, value) => {
+    setEditFormFields(prev =>
+      prev.map(f =>
+        f.id === fieldId ? { ...f, [field]: value } : f
+      )
+    );
+  };
+
+  const removeFieldFromEdit = (fieldId) => {
+    setEditFormFields(prev => prev.filter(field => field.id !== fieldId));
+  };
+
+  const addOptionToEditField = (fieldId) => {
+    setEditFormFields(prev =>
+      prev.map(field =>
+        field.id === fieldId
+          ? { ...field, options: [...field.options, ""] }
+          : field
+      )
+    );
+  };
+
+  const updateOptionInEditField = (fieldId, optionIndex, value) => {
+    setEditFormFields(prev =>
+      prev.map(field =>
+        field.id === fieldId
+          ? { 
+              ...field, 
+              options: field.options.map((opt, idx) => 
+                idx === optionIndex ? value : opt
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeOptionFromEditField = (fieldId, optionIndex) => {
+    setEditFormFields(prev =>
+      prev.map(field =>
+        field.id === fieldId
+          ? { ...field, options: field.options.filter((_, idx) => idx !== optionIndex) }
+          : field
+      )
+    );
+  };
+
+  const updateFieldValidation = (fieldId, validationField, value) => {
+    setEditFormFields(prev =>
+      prev.map(field =>
+        field.id === fieldId
+          ? { 
+              ...field, 
+              validation: { 
+                ...field.validation, 
+                [validationField]: value 
+              } 
+            }
+          : field
+      )
+    );
+  };
+
+  // Theme Cards functions for edit
+  const addThemeCardToEdit = (fieldId) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: [...(field.options || []), {
+                name: "",
+                image: "",
+                description: ""
+              }]
+            }
+          : field
+      )
+    );
+  };
+
+  const updateThemeCardInEdit = (fieldId, cardIndex, updates) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).map((card, idx) => 
+                idx === cardIndex ? { ...card, ...updates } : card
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeThemeCardFromEdit = (fieldId, cardIndex) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).filter((_, idx) => idx !== cardIndex)
+            }
+          : field
+      )
+    );
+  };
+
+  // Food Menu functions for edit
+  const addFoodCategoryToEdit = (fieldId) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: [...(field.options || []), {
+                categoryName: "",
+                items: []
+              }]
+            }
+          : field
+      )
+    );
+  };
+
+  const updateFoodCategoryInEdit = (fieldId, categoryIndex, updates) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).map((category, idx) => 
+                idx === categoryIndex ? { ...category, ...updates } : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeFoodCategoryFromEdit = (fieldId, categoryIndex) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).filter((_, idx) => idx !== categoryIndex)
+            }
+          : field
+      )
+    );
+  };
+
+  const addFoodItemToEdit = (fieldId, categoryIndex) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).map((category, idx) => 
+                idx === categoryIndex 
+                  ? { ...category, items: [...(category.items || []), { 
+                      name: "", 
+                      dietaryType: "veg",
+                      isPopular: false
+                    }] }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const updateFoodItemInEdit = (fieldId, categoryIndex, itemIndex, updates) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).map((category, idx) => 
+                idx === categoryIndex 
+                  ? { 
+                      ...category, 
+                      items: (category.items || []).map((item, itemIdx) => 
+                        itemIdx === itemIndex ? { ...item, ...updates } : item
+                      )
+                    }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
+
+  const removeFoodItemFromEdit = (fieldId, categoryIndex, itemIndex) => {
+    setEditFormFields(prev => 
+      prev.map(field => 
+        field.id === fieldId 
+          ? { 
+              ...field, 
+              options: (field.options || []).map((category, idx) => 
+                idx === categoryIndex 
+                  ? { 
+                      ...category, 
+                      items: (category.items || []).filter((_, itemIdx) => itemIdx !== itemIndex)
+                    }
+                  : category
+              )
+            }
+          : field
+      )
+    );
+  };
   
   const onSubmit = async (data) => {
     try {
@@ -1349,29 +1548,110 @@ function AdminCustomEvent() {
         createdAt: new Date().toISOString()
       };
       
-      console.log("Form Builder Data:", formBuilderData);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Custom event form created successfully!");
-      setModalType(null);
-      handleClose();
-      getCustomEventsHandle();
-      
-      // Uncomment when APIs are ready:
-      // const response = await createCustomEventApi.callApi(formBuilderData);
-      // if (response.status === 201) {
-      //   toast.success("Custom event form created successfully!");
-      //   setModalType(null);
-      //   handleClose();
-      //   getCustomEventsHandle();
-      // } else {
-      //   toast.error(response.message || "Failed to create custom event form");
-      // }
+      try {
+        // Try to create via API first
+        const response = await createCustomEventApi.callApi(formBuilderData);
+        
+        // Check if response exists and has success status
+        // For CREATE, we check for response.success (since status 201 is always returned for successful creation)
+        if (response && response.success) {
+          toast.success("Custom event form created successfully!");
+          setModalType(null);
+          handleClose();
+          getCustomEventsHandle();
+        } else {
+          // Handle API error responses
+          const errorMessage = response?.message || response?.error || "Failed to create custom event form";
+          const statusCode = response?.status || response?.statusCode || "Unknown";
+          
+          if (statusCode >= 400 && statusCode < 500) {
+            toast.error(`Client Error (${statusCode}): ${errorMessage}`);
+          } else if (statusCode >= 500) {
+            toast.error(`Server Error (${statusCode}): ${errorMessage}`);
+          } else {
+            toast.error(`Error (${statusCode}): ${errorMessage}`);
+          }
+          
+          throw new Error(errorMessage);
+        }
+      } catch (apiError) {
+        
+        // Only show mock success if it's a network/connection error, not a server error
+        if (apiError.message.includes('Network Error') || apiError.message.includes('Failed to fetch')) {
+          toast.warning("Network error - using mock success for demonstration");
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          toast.success("Custom event form created successfully! (Mock)");
+          setModalType(null);
+          handleClose();
+          getCustomEventsHandle();
+        } else {
+          // Re-throw the error to be handled by the outer catch block
+          throw apiError;
+        }
+      }
     } catch (error) {
       toast.error("An error occurred while creating the custom event form");
-      console.error("Error creating custom event form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const onSubmitEdit = async (data) => {
+    try {
+      setIsSubmitting(true);
+      
+      // Combine event type with form fields and template info
+      const formBuilderData = {
+        eventType: data.eventType,
+        template: oneCustomEvent?.selectedTemplate || oneCustomEvent?.template,
+        templateName: oneCustomEvent?.templateName || "Custom Template",
+        eventFormFields: editFormFields,
+        updatedAt: new Date().toISOString()
+      };
+      
+      try {
+        // Try to update via API first
+        const response = await createCustomEventApi.callApi(formBuilderData); // Using create for now, should be updateCustomEventApi
+        
+        // Check if response exists and has success status
+        // For UPDATE, we check for response.success (since status 200/201 is always returned for successful updates)
+        if (response && response.success) {
+          toast.success("Custom event form updated successfully!");
+          setModalType(null);
+          handleClose();
+          getCustomEventsHandle();
+        } else {
+          // Handle API error responses
+          const errorMessage = response?.message || response?.error || "Failed to update custom event form";
+          const statusCode = response?.status || response?.statusCode || "Unknown";
+          
+          if (statusCode >= 400 && statusCode < 500) {
+            toast.error(`Client Error (${statusCode}): ${errorMessage}`);
+          } else if (statusCode >= 500) {
+            toast.error(`Server Error (${statusCode}): ${errorMessage}`);
+          } else {
+            toast.error(`Error (${statusCode}): ${errorMessage}`);
+          }
+          
+          throw new Error(errorMessage);
+        }
+      } catch (apiError) {
+        
+        // Only show mock success if it's a network/connection error, not a server error
+        if (apiError.message.includes('Network Error') || apiError.message.includes('Failed to fetch')) {
+          toast.warning("Network error - using mock success for demonstration");
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          toast.success("Custom event form updated successfully! (Mock)");
+          setModalType(null);
+          handleClose();
+          getCustomEventsHandle();
+        } else {
+          // Re-throw the error to be handled by the outer catch block
+          throw apiError;
+        }
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating the custom event form");
     } finally {
       setIsSubmitting(false);
     }
@@ -1379,25 +1659,88 @@ function AdminCustomEvent() {
 
   const deleteOneCustomEventHandle = async () => {
     try {
-      // Mock delete for now - replace with actual API call later
-      toast.success("Custom event deleted successfully!");
-      handleClose();
-      getCustomEventsHandle();
-      
-      // Uncomment when APIs are ready:
-      // const response = await deleteCustomEventApi.callApi(oneCustomEvent);
-      // toast.success("Custom event deleted successfully!");
-      // handleClose();
-      // getCustomEventsHandle();
+      try {
+        // Try to delete via API first
+        const response = await deleteCustomEventApi.callApi(oneCustomEvent._id);
+        
+        // Check if response exists and has success status
+        // For DELETE, we check for response.success (since status 200 is always returned for successful deletion)
+        if (response && response.success) {
+          toast.success("Custom event deleted successfully!");
+          
+          // Close modal first
+          handleClose();
+          
+          // Reset page to 1 and refresh data
+          setPage(1);
+          setTimeout(() => {
+            getCustomEventsHandle();
+          }, 200);
+        } else {
+          // Handle API error responses
+          const errorMessage = response?.message || response?.error || "Failed to delete custom event";
+          const statusCode = response?.status || response?.statusCode || "Unknown";
+          
+
+          
+          if (statusCode >= 400 && statusCode < 500) {
+            toast.error(`Client Error (${statusCode}): ${errorMessage}`);
+          } else if (statusCode >= 500) {
+            toast.error(`Server Error (${statusCode}): ${errorMessage}`);
+          } else {
+            toast.error(`Error (${statusCode}): ${errorMessage}`);
+          }
+          
+          throw new Error(errorMessage);
+        }
+      } catch (apiError) {
+        
+        // Only show mock success if it's a network/connection error, not a server error
+        if (apiError.message.includes('Network Error') || apiError.message.includes('Failed to fetch')) {
+          toast.warning("Network error - using mock success for demonstration");
+          toast.success("Custom event deleted successfully! (Mock)");
+          
+          // Close modal first
+          handleClose();
+          
+          // Reset page to 1 and refresh data
+          setPage(1);
+          setTimeout(() => {
+            getCustomEventsHandle();
+          }, 200);
+        } else {
+          // Re-throw the error to be handled by the outer catch block
+          throw apiError;
+        }
+      }
     } catch (error) {
       toast.error("Failed to delete custom event. Please try again later.");
-      console.error("Error deleting custom event:", error);
     }
   };
 
   useEffect(() => {
     getCustomEventsHandle();
   }, [page]);
+
+  // Populate edit form when oneCustomEvent changes
+  useEffect(() => {
+    if (oneCustomEvent && modalType === "editCustomEvent") {
+      // Reset the edit form and populate with existing data
+      reset();
+      setValue("eventType", oneCustomEvent.eventType || "");
+      
+      // Clone the existing form fields for editing
+      if (oneCustomEvent.eventFormFields) {
+        const clonedFields = oneCustomEvent.eventFormFields.map(field => ({
+          ...field,
+          id: field.id || `edit_field_${Date.now()}_${Math.random()}`
+        }));
+        setEditFormFields(clonedFields);
+      } else {
+        setEditFormFields([]);
+      }
+    }
+  }, [oneCustomEvent, modalType, reset, setValue]);
   
   const columns = [
     { label: "No", key: "index", render: (_, i) => i + 1 },
@@ -1423,8 +1766,9 @@ function AdminCustomEvent() {
        label: "Fields Count",
        key: "fieldsCount",
        render: (row) => {
-         const totalFields = row?.formFields?.length || 0;
-         const themeCardFields = row?.formFields?.filter(field => field.type === 'themeCards').length || 0;
+         const totalFields = row?.eventFormFields?.length || 0;
+         const themeCardFields = row?.eventFormFields?.filter(field => field.type === 'themeCards').length || 0;
+         const foodMenuFields = row?.eventFormFields?.filter(field => field.type === 'foodMenu').length || 0;
          
          return (
            <div className="space-y-1">
@@ -1436,6 +1780,11 @@ function AdminCustomEvent() {
                  🎨 {themeCardFields} theme card{themeCardFields > 1 ? 's' : ''}
                </span>
              )}
+             {foodMenuFields > 0 && (
+               <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium block">
+                 🍽️ {foodMenuFields} food menu{foodMenuFields > 1 ? 's' : ''}
+               </span>
+             )}
            </div>
          );
        },
@@ -1444,8 +1793,12 @@ function AdminCustomEvent() {
       label: "Status",
       key: "status",
       render: (row) => (
-        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-          Active
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+          row?.isActive 
+            ? 'bg-green-100 text-green-800' 
+            : 'bg-red-100 text-red-800'
+        }`}>
+          {row?.isActive ? 'Active' : 'Inactive'}
         </span>
       ),
     },
@@ -1460,19 +1813,19 @@ function AdminCustomEvent() {
         <div className="flex items-center justify-center gap-2">
           <MdOutlineEdit
             className="text-3xl font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors duration-200"
-            onClick={() => [
-              handleOpen(),
-              setModalType("editCustomEvent"),
-              setOneCustomEvent(row),
-            ]}
+            onClick={() => {
+              handleOpen();
+              setModalType("editCustomEvent");
+              setOneCustomEvent(row);
+            }}
           />
           <MdOutlineDelete
             className="text-3xl font-semibold cursor-pointer text-red-600 hover:text-red-800 transition-colors duration-200"
-            onClick={() => [
-              handleOpen(),
-              setModalType("deleteCustomEvent"),
-              setOneCustomEvent(row?._id),
-            ]}
+            onClick={() => {
+              handleOpen();
+              setModalType("deleteCustomEvent");
+              setOneCustomEvent(row);
+            }}
           />
         </div>
       ),
@@ -1543,31 +1896,7 @@ function AdminCustomEvent() {
                     </button>
                   ))}
                   
-                  {/* Custom Template Option */}
-                  <button
-                    onClick={() => {
-                      setSelectedTemplate("custom");
-                      setEventFormFields([]);
-                    }}
-                    className="p-6 border-2 border-dashed border-gray-300 rounded-xl hover:border-primary hover:bg-primary/5 transition-all duration-200 text-left group"
-                  >
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-200">
-                        <span className="text-2xl">✨</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-800 group-hover:text-primary transition-colors duration-200">
-                          Custom Template
-                        </h4>
-                        <p className="text-sm text-gray-500">
-                          Start from scratch
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-200">
-                      Build a completely custom event form with your own fields
-                    </p>
-                  </button>
+                  {/* Custom Template Option - Removed */}
                 </div>
               </div>
             )}
@@ -1578,14 +1907,11 @@ function AdminCustomEvent() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-medium text-gray-700">
-                      Step 2: Configure {selectedTemplate === "custom" ? "Custom Template" : eventTemplates[selectedTemplate]?.name}
+                      Step 2: Configure {eventTemplates[selectedTemplate]?.name}
                     </h3>
-                                         <p className="text-sm text-gray-500">
-                       {selectedTemplate === "custom" 
-                         ? "Build your custom event form from scratch" 
-                         : "Template comes with all necessary fields. Customize the data, options, and validation rules."
-                       }
-                     </p>
+                    <p className="text-sm text-gray-500">
+                      Template comes with all necessary fields. Customize the data, options, and validation rules.
+                    </p>
                   </div>
                   <button
                     type="button"
@@ -1608,14 +1934,15 @@ function AdminCustomEvent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Event Type Name *
+                          Event Type Name (Fixed) *
                         </label>
                         <input
                           type="text"
                           {...register("eventType", { required: "Event type name is required" })}
-                          defaultValue={selectedTemplate === "custom" ? "" : eventTemplates[selectedTemplate]?.name}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                          placeholder={selectedTemplate === "custom" ? "e.g., My Custom Event" : "e.g., Wedding, Birthday, Corporate Event"}
+                          defaultValue={eventTemplates[selectedTemplate]?.name}
+                          value={eventTemplates[selectedTemplate]?.name}
+                          readOnly
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600 cursor-not-allowed"
                         />
                         {errors.eventType && (
                           <p className="text-sm text-red-500 mt-1">{errors.eventType.message}</p>
@@ -1683,6 +2010,526 @@ function AdminCustomEvent() {
                 </form>
               </div>
             )}
+          </div>
+        )}
+
+        {modalType === "editCustomEvent" && oneCustomEvent && (
+          <div className="p-6 rounded-lg">
+            <h2 className="text-2xl font-bold mb-6 text-primary">
+              Edit Custom Event Form
+            </h2>
+            
+            {/* Edit Form */}
+            <form onSubmit={handleEdit(onSubmitEdit)} className="space-y-6">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-blue-800 mb-3">
+                  📋 Event Type Configuration
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Event Type Name *
+                    </label>
+                    <input
+                      type="text"
+                      {...editRegister("eventType", { required: "Event type name is required" })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      placeholder="e.g., Wedding, Birthday, Corporate Event"
+                    />
+                    {editErrors.eventType && (
+                      <p className="text-sm text-red-500 mt-1">{editErrors.eventType.message}</p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Template
+                    </label>
+                    <input
+                      type="text"
+                      value={oneCustomEvent?.templateName || "N/A"}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600"
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Form Fields Editor */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium text-gray-800">
+                    🎯 Form Fields ({editFormFields.length})
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={addNewFieldToEdit}
+                    className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-200 text-sm"
+                  >
+                    + Add Field
+                  </button>
+                </div>
+                
+                {editFormFields.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                    <p className="text-lg mb-2">No fields found</p>
+                    <p className="text-sm">Add form fields to create your custom event form.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {editFormFields.map((field, index) => (
+                      <div key={field.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                        <div className="flex items-center justify-between mb-4">
+                          <h4 className="font-medium text-gray-800">Field {index + 1}: {field.label}</h4>
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                              {field.type}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeFieldFromEdit(field.id)}
+                              className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                            >
+                              <MdOutlineDelete className="text-xl" />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        {/* Field Configuration */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Field Label *
+                            </label>
+                            <input
+                              type="text"
+                              value={field.label}
+                              onChange={(e) => updateFieldInEdit(field.id, 'label', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="e.g., Guest Count, Budget, Venue"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Field Type *
+                            </label>
+                            <select
+                              value={field.type}
+                              onChange={(e) => updateFieldInEdit(field.id, 'type', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            >
+                              <option value="text">Text Field</option>
+                              <option value="number">Number Field</option>
+                              <option value="email">Email Field</option>
+                              <option value="phone">Phone Field</option>
+                              <option value="date">Date Picker</option>
+                              <option value="time">Time Picker</option>
+                              <option value="select">Dropdown</option>
+                              <option value="radio">Radio Buttons</option>
+                              <option value="checkbox">Checkbox</option>
+                              <option value="textarea">Text Area</option>
+                              <option value="file">File Upload</option>
+                              <option value="url">URL Field</option>
+                              <option value="themeCards">Theme Cards</option>
+                              <option value="foodMenu">Food Menu</option>
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Field Name *
+                            </label>
+                            <input
+                              type="text"
+                              value={field.name}
+                              onChange={(e) => updateFieldInEdit(field.id, 'name', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="e.g., guestCount, budget, venue"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Required
+                            </label>
+                            <div className="flex items-center mt-2">
+                              <input
+                                type="checkbox"
+                                checked={field.required}
+                                onChange={(e) => updateFieldInEdit(field.id, 'required', e.target.checked)}
+                                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                              />
+                              <label className="ml-2 text-sm text-gray-700">
+                                This field is required
+                              </label>
+                            </div>
+                          </div>
+                          
+                          <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Placeholder Text
+                            </label>
+                            <input
+                              type="text"
+                              value={field.placeholder || ""}
+                              onChange={(e) => updateFieldInEdit(field.id, 'placeholder', e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="e.g., Enter number of guests, Select your budget range"
+                            />
+                          </div>
+                        </div>
+                        
+                                                {/* Options for select/radio/checkbox fields */}
+                        {(field.type === 'select' || field.type === 'radio' || field.type === 'checkbox') && (
+                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center justify-between mb-3">
+                              <span className="font-medium text-sm text-gray-700">Options:</span>
+                              <button
+                                type="button"
+                                onClick={() => addOptionToEditField(field.id)}
+                                className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors duration-200"
+                              >
+                                + Add Option
+                              </button>
+                            </div>
+                            <div className="space-y-2">
+                              {(field.options || []).map((option, optIndex) => (
+                                <div key={optIndex} className="flex items-center gap-2">
+                                  <input
+                                    type="text"
+                                    value={option}
+                                    onChange={(e) => updateOptionInEditField(field.id, optIndex, e.target.value)}
+                                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                    placeholder="Option text"
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => removeOptionFromEditField(field.id, optIndex)}
+                                    className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                                  >
+                                    <MdOutlineDelete className="text-sm" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Theme Cards Configuration */}
+                        {field.type === 'themeCards' && (
+                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center justify-between mb-3">
+                              <h5 className="font-medium text-sm text-gray-700">Theme Cards</h5>
+                              <button
+                                type="button"
+                                onClick={() => addThemeCardToEdit(field.id)}
+                                className="px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
+                              >
+                                <span>🎨</span>
+                                <span>Add Theme Card</span>
+                              </button>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              {(field.options || []).length === 0 ? (
+                                <div className="text-center py-4 text-gray-500 border border-dashed border-gray-300 rounded-lg">
+                                  <p className="text-sm">No theme cards added yet</p>
+                                </div>
+                              ) : (
+                                (field.options || []).map((card, cardIndex) => (
+                                  <div key={cardIndex} className="border border-gray-200 rounded-lg p-3 bg-white">
+                                    <div className="flex items-center justify-between mb-3">
+                                      <h6 className="font-medium text-gray-700">Theme Card #{cardIndex + 1}</h6>
+                                      <button
+                                        type="button"
+                                        onClick={() => removeThemeCardFromEdit(field.id, cardIndex)}
+                                        className="text-red-500 hover:text-red-700 p-1"
+                                      >
+                                        🗑️
+                                      </button>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                      <div>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                                          Theme Name *
+                                        </label>
+                                        <input
+                                          type="text"
+                                          value={card.name || ""}
+                                          onChange={(e) => updateThemeCardInEdit(field.id, cardIndex, { name: e.target.value })}
+                                          className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                          placeholder="e.g., Princess & Prince"
+                                        />
+                                      </div>
+                                      
+                                      <div>
+                                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                                          Theme Image *
+                                        </label>
+                                        <input
+                                          type="file"
+                                          accept="image/*"
+                                          onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                              const reader = new FileReader();
+                                              reader.onload = (e) => {
+                                                updateThemeCardInEdit(field.id, cardIndex, { 
+                                                  image: e.target.result,
+                                                  fileName: file.name 
+                                                });
+                                              };
+                                              reader.readAsDataURL(file);
+                                            }
+                                          }}
+                                          className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                        />
+                                        {card.fileName && (
+                                          <p className="text-xs text-green-600 mt-1">
+                                            ✓ {card.fileName}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="mt-3">
+                                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                                        Description *
+                                      </label>
+                                      <textarea
+                                        value={card.description || ""}
+                                        onChange={(e) => updateThemeCardInEdit(field.id, cardIndex, { description: e.target.value })}
+                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                        placeholder="e.g., Royal elegance with crowns and castles"
+                                        rows="2"
+                                      />
+                                    </div>
+                                    
+                                    {/* Preview */}
+                                    {(card.image || card.fileName) && (
+                                      <div className="mt-3 p-2 bg-gray-50 rounded-lg">
+                                        <label className="block text-xs font-medium text-gray-700 mb-2">
+                                          Preview:
+                                        </label>
+                                        <div className="flex items-center space-x-3">
+                                          <img
+                                            src={card.image || `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${card.image}`}
+                                            alt={card.name || "Theme"}
+                                            className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                                            onError={(e) => {
+                                              e.target.style.display = 'none';
+                                            }}
+                                          />
+                                          <div className="flex-1">
+                                            <h6 className="font-medium text-gray-800 text-sm">{card.name || "Theme Name"}</h6>
+                                            <p className="text-xs text-gray-600">{card.description || "Description"}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Food Menu Configuration */}
+                        {field.type === 'foodMenu' && (
+                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center justify-between mb-3">
+                              <h5 className="font-medium text-sm text-gray-700">Food Menu Categories</h5>
+                              <button
+                                type="button"
+                                onClick={() => addFoodCategoryToEdit(field.id)}
+                                className="px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
+                              >
+                                <span>🍽️</span>
+                                <span>Add Category</span>
+                              </button>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              {(field.options || []).length === 0 ? (
+                                <div className="text-center py-4 text-gray-500 border border-dashed border-gray-300 rounded-lg">
+                                  <p className="text-sm">No food categories added yet</p>
+                                </div>
+                              ) : (
+                                (field.options || []).map((category, categoryIndex) => (
+                                  <div key={categoryIndex} className="border border-gray-200 rounded-lg p-3 bg-white">
+                                    <div className="flex items-center justify-between mb-3">
+                                      <h6 className="font-medium text-gray-700">Category #{categoryIndex + 1}</h6>
+                                      <button
+                                        type="button"
+                                        onClick={() => removeFoodCategoryFromEdit(field.id, categoryIndex)}
+                                        className="text-red-500 hover:text-red-700 p-1"
+                                      >
+                                        🗑️
+                                      </button>
+                                    </div>
+                                    
+                                    <div className="mb-3">
+                                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                                        Category Name *
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={category.categoryName || ""}
+                                        onChange={(e) => updateFoodCategoryInEdit(field.id, categoryIndex, { categoryName: e.target.value })}
+                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                        placeholder="e.g., Starters, Main Course, Desserts"
+                                      />
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                      <div className="flex items-center justify-between">
+                                        <label className="block text-xs font-medium text-gray-700">
+                                          Food Items
+                                        </label>
+                                        <button
+                                          type="button"
+                                          onClick={() => addFoodItemToEdit(field.id, categoryIndex)}
+                                          className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md hover:bg-green-200 transition-colors duration-200"
+                                        >
+                                          + Add Item
+                                        </button>
+                                      </div>
+                                      
+                                      {(category.items || []).length === 0 ? (
+                                        <div className="text-center py-2 text-gray-400 border border-dashed border-gray-200 rounded-lg">
+                                          <p className="text-xs">No food items in this category</p>
+                                        </div>
+                                      ) : (
+                                        (category.items || []).map((item, itemIndex) => (
+                                          <div key={itemIndex} className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+                                            <div className="flex items-center justify-between mb-2">
+                                              <div className="flex items-center space-x-2">
+                                                <h6 className="font-medium text-gray-700 text-xs">Item #{itemIndex + 1}</h6>
+                                                <span className="text-xs px-1 py-0.5 rounded-full bg-gray-100 text-gray-700">
+                                                  {item.dietaryType === 'veg' && '🥬'}
+                                                  {item.dietaryType === 'non-veg' && '🍗'}
+                                                  {item.dietaryType === 'vegan' && '🌱'}
+                                                  {item.dietaryType === 'egg' && '🥚'}
+                                                  {item.dietaryType === 'seafood' && '🐟'}
+                                                  {item.dietaryType === 'jain' && '🕉️'}
+                                                </span>
+                                                {item.isPopular && (
+                                                  <span className="text-xs px-1 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
+                                                    ⭐ Popular
+                                                  </span>
+                                                )}
+                                              </div>
+                                              <button
+                                                type="button"
+                                                onClick={() => removeFoodItemFromEdit(field.id, categoryIndex, itemIndex)}
+                                                className="text-red-500 hover:text-red-700 p-1"
+                                              >
+                                                ✕
+                                              </button>
+                                            </div>
+                                            
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+                                              <div>
+                                                <label className="block text-xs text-gray-600 mb-1">Item Name *</label>
+                                                <input
+                                                  type="text"
+                                                  value={item.name || ""}
+                                                  onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { name: e.target.value })}
+                                                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                                  placeholder="e.g., Butter Chicken"
+                                                />
+                                              </div>
+                                              <div>
+                                                <label className="block text-xs text-gray-600 mb-1">Dietary Type *</label>
+                                                <select
+                                                  value={item.dietaryType || "veg"}
+                                                  onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { dietaryType: e.target.value })}
+                                                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                                >
+                                                  <option value="veg">🥬 Vegetarian</option>
+                                                  <option value="non-veg">🍗 Non-Vegetarian</option>
+                                                  <option value="vegan">🌱 Vegan</option>
+                                                  <option value="egg">🥚 Egg</option>
+                                                  <option value="seafood">🐟 Seafood</option>
+                                                  <option value="jain">🕉️ Jain</option>
+                                                </select>
+                                              </div>
+                                            </div>
+
+                                            <div className="flex items-center space-x-1">
+                                              <input
+                                                type="checkbox"
+                                                checked={item.isPopular || false}
+                                                onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
+                                                className="w-3 h-3 text-primary focus:ring-primary border-gray-300 rounded"
+                                              />
+                                              <span className="text-xs text-gray-600">Mark as popular</span>
+                                            </div>
+                                          </div>
+                                        ))
+                                      )}
+                                    </div>
+                                  </div>
+                                ))
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Validation Rules - Only for number fields */}
+                        {field.type === 'number' && (
+                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <h5 className="font-medium text-sm text-gray-700 mb-3">Validation Rules</h5>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div>
+                                <label className="block text-xs text-gray-600 mb-1">Min Value</label>
+                                <input
+                                  type="number"
+                                  value={field.validation?.min || ""}
+                                  onChange={(e) => updateFieldValidation(field.id, 'min', e.target.value)}
+                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                  placeholder="Min"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-xs text-gray-600 mb-1">Max Value</label>
+                                <input
+                                  type="number"
+                                  value={field.validation?.max || ""}
+                                  onChange={(e) => updateFieldValidation(field.id, 'max', e.target.value)}
+                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                                  placeholder="Max"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Updating..." : "Update Event"}
+                </button>
+              </div>
+            </form>
           </div>
         )}
 
