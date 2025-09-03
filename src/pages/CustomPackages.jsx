@@ -23,6 +23,8 @@ function CustomPackages() {
   // Custom Events API state
   const [customEventNames, setCustomEventNames] = useState([]);
   const [selectedCustomEvent, setSelectedCustomEvent] = useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [loadingEventId, setLoadingEventId] = useState(null);
   const [customEventFormFields, setCustomEventFormFields] = useState([]);
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
   const [isLoadingEventDetails, setIsLoadingEventDetails] = useState(false);
@@ -32,10 +34,12 @@ function CustomPackages() {
   const { callApi: getEventNames } = useServices(commonApis.getPublicCustomEventNames);
   const { callApi: getEventDetails } = useServices(commonApis.getPublicCustomEventById);
 
-  // Steps array - always use custom event flow since we only show API events
+  // Steps array - dynamic based on custom event form fields
   const getSteps = () => {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
-      return ['Event Type', 'Custom Event Form', 'Additional Details'];
+      // Create steps: Event Type + Each Custom Field + Additional Details
+      const customFieldSteps = customEventFormFields.map(field => field.label);
+      return ['Event Type', ...customFieldSteps, 'Additional Details'];
     }
     return ['Event Type', 'Additional Details']; // Simplified flow when no custom event selected
   };
@@ -45,12 +49,16 @@ function CustomPackages() {
   // Step descriptions
   const getStepDescription = (stepNumber) => {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
-      const customDescriptions = {
-        1: 'Choose the type of event you\'re planning',
-        2: 'Fill out the custom event form',
-        3: 'Add final details and requirements'
-      };
-      return customDescriptions[stepNumber] || '';
+      if (stepNumber === 1) {
+        return 'Choose the type of event you\'re planning';
+      } else if (stepNumber === steps.length) {
+        return 'Add final details and requirements';
+      } else {
+        // For custom form field steps
+        const fieldIndex = stepNumber - 2; // -2 because step 1 is event type
+        const field = customEventFormFields[fieldIndex];
+        return field?.description || `Fill out the ${field?.label || 'field'} information`;
+      }
     }
     
     const descriptions = {
@@ -63,12 +71,16 @@ function CustomPackages() {
   // Step titles
   const getStepTitle = () => {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
-      const customTitles = {
-        1: 'Event Type',
-        2: 'Custom Event Form',
-        3: 'Additional Details'
-      };
-      return customTitles[currentStep] || '';
+      if (currentStep === 1) {
+        return 'Event Type';
+      } else if (currentStep === steps.length) {
+        return 'Additional Details';
+      } else {
+        // For custom form field steps
+        const fieldIndex = currentStep - 2; // -2 because step 1 is event type
+        const field = customEventFormFields[fieldIndex];
+        return field?.label || 'Custom Field';
+      }
     }
     
     const titles = {
@@ -85,13 +97,19 @@ function CustomPackages() {
     watch,
     setValue,
     setError,
+    trigger,
   } = useForm();
 
   // Check if form has any data - more comprehensive check
   const formValues = watch();
+  const hasCustomFormData = customEventFormFields.some(field => {
+    const fieldValue = formValues[field.name];
+    return fieldValue && (Array.isArray(fieldValue) ? fieldValue.length > 0 : true);
+  });
+  
   const hasFormData = selectedEventType || selectedAge || selectedTheme || selectedFoodType || selectedCourses.length > 0 || 
     formValues.guestCount || formValues.eventDate || formValues.budgetRange || formValues.specialRequirements || 
-    (formValues.foodItems && formValues.foodItems.length > 0);
+    (formValues.foodItems && formValues.foodItems.length > 0) || hasCustomFormData;
 
   // Debug: Log form data state
   useEffect(() => {
@@ -110,14 +128,23 @@ function CustomPackages() {
   useEffect(() => {
     const fetchCustomEventNames = async () => {
       try {
+        console.log('Starting to fetch custom event names...');
         setIsLoadingEvents(true);
         setCustomEventError(null);
         const response = await getEventNames();
         
+        console.log('Raw API response:', response);
+        console.log('Response success:', response?.success);
+        console.log('Response data:', response?.data);
+        console.log('Events array:', response?.data?.events);
+        
         if (response && response.success) {
           console.log('Custom events API response:', response);
-          setCustomEventNames(response.data?.events || []);
+          const events = response.data?.events || [];
+          console.log('Setting custom event names:', events);
+          setCustomEventNames(events);
         } else {
+          console.log('API call failed or returned unsuccessful response');
           setCustomEventError('Failed to fetch custom events');
         }
       } catch (err) {
@@ -125,6 +152,7 @@ function CustomPackages() {
         setCustomEventError('Error fetching custom events');
       } finally {
         setIsLoadingEvents(false);
+        console.log('Finished loading custom events');
       }
     };
 
@@ -255,26 +283,47 @@ function CustomPackages() {
 
   // Handle custom event selection
   const handleCustomEventSelection = async (eventId) => {
+    // Prevent multiple API calls for the same event
+    if (selectedEventId === eventId && selectedCustomEvent && !isLoadingEventDetails) {
+      console.log('Event already selected, skipping API call');
+      return;
+    }
+    
+    // Prevent multiple API calls if already loading this event
+    if (loadingEventId === eventId) {
+      console.log('Event already loading, skipping API call');
+      return;
+    }
+    
     try {
       setIsLoadingEventDetails(true);
+      setLoadingEventId(eventId); // Set which event is loading
       setCustomEventError(null);
+      setSelectedEventId(eventId); // Set the selected event ID immediately
+      
+      console.log('Fetching event details for:', eventId);
       const response = await getEventDetails(eventId);
       
       if (response && response.success) {
+        console.log('Custom event details response:', response.data);
         setSelectedCustomEvent(response.data);
         setCustomEventFormFields(response.data.eventFormFields || []);
+        console.log('Custom event form fields set:', response.data.eventFormFields || []);
         // Set the event type to the custom event name
         setSelectedEventType(response.data.eventType || response.data.templateName);
         setValue('eventType', response.data.eventType || response.data.templateName);
         clearStepError('eventType');
       } else {
         setCustomEventError('Failed to fetch event details');
+        setSelectedEventId(null); // Reset on error
       }
     } catch (err) {
       console.error('Error fetching event details:', err);
       setCustomEventError('Error fetching event details');
+      setSelectedEventId(null); // Reset on error
     } finally {
       setIsLoadingEventDetails(false);
+      setLoadingEventId(null); // Clear loading state
     }
   };
 
@@ -397,21 +446,44 @@ function CustomPackages() {
       }
     }
     
-    if (currentStep === 2) {
+    // Handle custom event form validation for each field step
+    if (selectedCustomEvent && customEventFormFields.length > 0) {
+      // Check if current step is a custom field step (not step 1 or last step)
+      if (currentStep > 1 && currentStep < steps.length) {
+        const fieldIndex = currentStep - 2; // -2 because step 1 is event type
+        const field = customEventFormFields[fieldIndex];
+        
+        if (field && field.required) {
+          const fieldValue = watch(field.name);
+          if (!fieldValue || (Array.isArray(fieldValue) && fieldValue.length === 0)) {
+            setError(field.name, { 
+              type: 'required', 
+              message: `${field.label} is required` 
+            });
+            return;
+          }
+        }
+      }
+    }
+    
+    // Handle age group validation (only for non-custom event flow)
+    if (!selectedCustomEvent && currentStep === 2) {
       if (!selectedAge) {
         setError('ageGroup', { type: 'required', message: 'Please select an age group to continue' });
         return;
       }
     }
     
-    if (currentStep === 3) {
+    // Handle theme validation (only for non-custom event flow)
+    if (!selectedCustomEvent && currentStep === 3) {
       if (!selectedTheme) {
         setError('theme', { type: 'required', message: 'Please select a theme to continue' });
         return;
       }
     }
     
-    if (currentStep === 4) {
+    // Handle food validation (only for non-custom event flow)
+    if (!selectedCustomEvent && currentStep === 4) {
       if (!selectedFoodType) {
         setError('foodType', { type: 'required', message: 'Please select a food type to continue' });
         return;
@@ -444,10 +516,20 @@ function CustomPackages() {
     // Reset form and navigate to home page
     setCurrentStep(1);
     setSelectedEventType('');
+    setSelectedEventId(null);
+    setLoadingEventId(null);
+    setSelectedCustomEvent(null);
+    setCustomEventFormFields([]);
     setSelectedAge('');
     setSelectedTheme('');
     setSelectedFoodType('');
     setSelectedCourses([]);
+    // Reset form fields
+    setValue('eventType', '');
+    setValue('ageGroup', '');
+    setValue('theme', '');
+    setValue('foodType', '');
+    setValue('courses', []);
     // Navigate to home page
     navigate('/');
   };
@@ -457,13 +539,23 @@ function CustomPackages() {
     // Reset form and navigate to home page
     setCurrentStep(1);
     setSelectedEventType('');
+    setSelectedEventId(null);
+    setLoadingEventId(null);
+    setSelectedCustomEvent(null);
+    setCustomEventFormFields([]);
     setSelectedAge('');
     setSelectedTheme('');
     setSelectedFoodType('');
     setSelectedCourses([]);
+    // Reset form fields
+    setValue('eventType', '');
+    setValue('ageGroup', '');
+    setValue('theme', '');
+    setValue('foodType', '');
+    setValue('courses', []);
     // Navigate to home page
     navigate('/');
-    }
+  };
 
   const cancelAction = () => {
     setShowCloseConfirm(false);
@@ -476,15 +568,27 @@ function CustomPackages() {
     // Reset form and refresh
     setCurrentStep(1);
     setSelectedEventType('');
+    setSelectedEventId(null);
+    setLoadingEventId(null);
+    setSelectedCustomEvent(null);
+    setCustomEventFormFields([]);
     setSelectedAge('');
     setSelectedTheme('');
     setSelectedFoodType('');
     setSelectedCourses([]);
+    // Reset form fields
+    setValue('eventType', '');
+    setValue('ageGroup', '');
+    setValue('theme', '');
+    setValue('foodType', '');
+    setValue('courses', []);
     window.location.reload();
   };
 
   const onSubmit = (data) => {
     console.log('Form Data:', data);
+    console.log('Custom Event Form Fields:', customEventFormFields);
+    console.log('Selected Custom Event:', selectedCustomEvent);
     // Here you'll integrate with your API later
   };
 
@@ -500,6 +604,12 @@ function CustomPackages() {
       setValue('foodType', selectedFoodType);
     } else if (fieldName === 'courses' && selectedCourses.length > 0) {
       setValue('courses', selectedCourses);
+    } else {
+      // For custom form fields, just clear the error by setting the current value
+      const currentValue = watch(fieldName);
+      if (currentValue !== undefined && currentValue !== null) {
+        setValue(fieldName, currentValue);
+      }
     }
   };
 
@@ -520,9 +630,10 @@ function CustomPackages() {
 
       {/* Loading state */}
       {isLoadingEvents && (
-        <div className="text-center py-8">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-          <p className="text-gray-600 mt-2">Loading custom events...</p>
+        <div className="space-y-3">
+          {[1, 2, 3].map((index) => (
+            <EventCardSkeleton key={index} />
+          ))}
         </div>
       )}
 
@@ -536,65 +647,211 @@ function CustomPackages() {
         </div>
       )}
 
+      {/* Debug Information */}
+      <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+        <p className="text-sm text-blue-600">
+          Debug: Loading: {isLoadingEvents ? 'Yes' : 'No'} | 
+          Events Count: {customEventNames.length} | 
+          Error: {customEventError || 'None'}
+        </p>
+      </div>
+
       <div className="space-y-3">
         {/* Custom Events from API */}
         {customEventNames.length > 0 ? (
-          customEventNames.map((customEvent) => (
-            <motion.div
-              key={customEvent._id}
-              whileHover={{ scale: 1.02, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-              className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
-                selectedEventType === (customEvent.eventType || customEvent.templateName)
-                  ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
-                  : 'border-gray-200 hover:border-purple-300 bg-white'
-              }`}
-              onClick={() => handleCustomEventSelection(customEvent._id)}
-            >
-              <div className="flex items-center space-x-4">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                  selectedEventType === (customEvent.eventType || customEvent.templateName)
-                    ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
-                    : 'bg-gray-100 text-gray-400'
-                }`}>
-                  <span className={`text-lg ${
-                    selectedEventType === (customEvent.eventType || customEvent.templateName) ? 'animate-pulse' : ''
-                  }`}>
-                    {selectedEventType === (customEvent.eventType || customEvent.templateName) ? '✓' : '🎉'}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <span className="font-semibold text-gray-800 text-lg">
-                    {customEvent.eventType || customEvent.templateName}
-                  </span>
-                </div>
-                
-                {/* Selection indicator */}
-                {selectedEventType === (customEvent.eventType || customEvent.templateName) && (
-                  <div className="ml-auto">
-                    <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
-                  </div>
+          customEventNames.map((customEvent) => {
+            const isSelected = selectedEventId === customEvent._id;
+            const isLoading = loadingEventId === customEvent._id;
+            
+            return (
+              <AnimatePresence key={customEvent._id} mode="wait">
+                {isLoading ? (
+                  <EventCardSkeleton />
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+                      isSelected
+                        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                        : 'border-gray-200 hover:border-purple-300 bg-white'
+                    }`}
+                    onClick={() => handleCustomEventSelection(customEvent._id)}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                        isSelected
+                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                          : 'bg-gray-100 text-gray-400'
+                      }`}>
+                        <span className={`text-lg ${
+                          isSelected ? 'animate-pulse' : ''
+                        }`}>
+                          {isSelected ? '✓' : '🎉'}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <span className="font-semibold text-gray-800 text-lg">
+                          {customEvent.eventType || customEvent.templateName}
+                        </span>
+                      </div>
+                      
+                      {/* Selection indicator */}
+                      {isSelected && (
+                        <div className="ml-auto">
+                          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
                 )}
-              </div>
-              
-              {/* Loading indicator for event details */}
-              {isLoadingEventDetails && selectedEventType === (customEvent.eventType || customEvent.templateName) && (
-                <div className="mt-3 flex items-center space-x-2 text-purple-600">
-                  <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600"></div>
-                  <span className="text-sm">Loading event details...</span>
-                </div>
-              )}
-            </motion.div>
-          ))
+              </AnimatePresence>
+            );
+          })
         ) : (
           !isLoadingEvents && (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-gray-400">📝</span>
+            <div className="space-y-3">
+              {/* Sample data for testing */}
+              <div className="text-center py-4 mb-4">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-gray-400">📝</span>
+                </div>
+                <p className="text-gray-500 mb-4">No custom event templates available from API</p>
+                <p className="text-sm text-gray-400">Showing sample data for testing:</p>
               </div>
-              <p className="text-gray-500">No custom event templates available</p>
+              
+              {/* Sample Event Cards */}
+              {[
+                { _id: 'sample1', eventType: 'Birthday Party', templateName: 'Birthday Party' },
+                { _id: 'sample2', eventType: 'Wedding', templateName: 'Wedding' },
+                { _id: 'sample3', eventType: 'Corporate Event', templateName: 'Corporate Event' }
+              ].map((sampleEvent) => {
+                const isSelected = selectedEventId === sampleEvent._id;
+                
+                return (
+                  <motion.div
+                    key={sampleEvent._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+                      isSelected
+                        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                        : 'border-gray-200 hover:border-purple-300 bg-white'
+                    }`}
+                    onClick={() => {
+                      // For sample data, just set the selection without API call
+                      setSelectedEventId(sampleEvent._id);
+                      setSelectedEventType(sampleEvent.eventType);
+                      setValue('eventType', sampleEvent.eventType);
+                      clearStepError('eventType');
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                        isSelected
+                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                          : 'bg-gray-100 text-gray-400'
+                      }`}>
+                        <span className={`text-lg ${
+                          isSelected ? 'animate-pulse' : ''
+                        }`}>
+                          {isSelected ? '✓' : '🎉'}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <span className="font-semibold text-gray-800 text-lg">
+                          {sampleEvent.eventType}
+                        </span>
+                        <p className="text-sm text-gray-500">Sample Event (No API data)</p>
+                      </div>
+                      
+                      {/* Selection indicator */}
+                      {isSelected && (
+                        <div className="ml-auto">
+                          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           )
+        )}
+        
+        {/* Always show additional sample data for testing - remove this after API is working */}
+        {customEventNames.length === 0 && !isLoadingEvents && (
+          <div className="space-y-3 mt-6">
+            <div className="text-center py-2 mb-4">
+              <p className="text-sm text-blue-600 font-medium">🔧 Development Mode: Additional sample data</p>
+            </div>
+            
+            {/* Additional Sample Event Cards for testing */}
+            {[
+              { _id: 'dev1', eventType: 'Baby Shower', templateName: 'Baby Shower' },
+              { _id: 'dev2', eventType: 'Anniversary', templateName: 'Anniversary' },
+              { _id: 'dev3', eventType: 'Graduation Party', templateName: 'Graduation Party' }
+            ].map((sampleEvent) => {
+              const isSelected = selectedEventId === sampleEvent._id;
+              
+              return (
+                <motion.div
+                  key={sampleEvent._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+                    isSelected
+                      ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                      : 'border-gray-200 hover:border-purple-300 bg-white'
+                  }`}
+                  onClick={() => {
+                    // For sample data, just set the selection without API call
+                    setSelectedEventId(sampleEvent._id);
+                    setSelectedEventType(sampleEvent.eventType);
+                    setValue('eventType', sampleEvent.eventType);
+                    clearStepError('eventType');
+                  }}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                      isSelected
+                        ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                        : 'bg-gray-100 text-gray-400'
+                    }`}>
+                      <span className={`text-lg ${
+                        isSelected ? 'animate-pulse' : ''
+                      }`}>
+                        {isSelected ? '✓' : '🎉'}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-semibold text-gray-800 text-lg">
+                        {sampleEvent.eventType}
+                      </span>
+                      <p className="text-sm text-gray-500">Sample Event (No API data)</p>
+                    </div>
+                    
+                    {/* Selection indicator */}
+                    {isSelected && (
+                      <div className="ml-auto">
+                        <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         )}
       </div>
 
@@ -1029,7 +1286,308 @@ function CustomPackages() {
     </motion.div>
   );
 
-  // Render custom event form fields
+  // Render individual custom field step
+  const renderCustomFieldStep = (fieldIndex) => {
+    const field = customEventFormFields[fieldIndex];
+    if (!field) return null;
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        className="space-y-6"
+      >
+        <div className="mb-8 text-center">
+          <div className="relative">
+            {/* Decorative background elements */}
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-50"></div>
+            <div className="absolute -top-2 -right-6 w-6 h-6 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full opacity-50"></div>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-50"></div>
+            
+            {/* Main heading */}
+            <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent mb-4 relative z-10">
+              {field.label} {field.required && <span className="text-red-500 animate-pulse">*</span>}
+            </h2>
+            
+            {/* Enhanced description */}
+            <div className="relative">
+              <p className="text-gray-600 text-xl font-medium leading-relaxed max-w-2xl mx-auto">
+                {field.description || `Fill out the ${field.label.toLowerCase()} information`}
+              </p>
+              
+              {/* Decorative line with enhanced styling */}
+              <div className="flex items-center justify-center mt-6 space-x-4">
+                <div className="w-12 h-1 bg-gradient-to-r from-transparent to-purple-400 rounded-full"></div>
+                <div className="w-3 h-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 rounded-full"></div>
+                <div className="w-3 h-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-transparent rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl p-8 border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+          {/* Decorative background pattern */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-50 to-pink-50 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full translate-y-12 -translate-x-12 opacity-50"></div>
+          
+          <div className="relative z-10">
+          {/* Text Input */}
+          {field.type === 'text' && (
+            <div className="relative">
+              <input
+                type="text"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium placeholder-gray-400 bg-white shadow-sm hover:shadow-md"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <span className="text-gray-400 text-xl">✏️</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Number Input */}
+          {field.type === 'number' && (
+            <div className="relative">
+              <input
+                type="number"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium placeholder-gray-400 bg-white shadow-sm hover:shadow-md"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+                min={field.validation?.min || undefined}
+                max={field.validation?.max || undefined}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <span className="text-gray-400 text-xl">🔢</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Date Input */}
+          {field.type === 'date' && (
+            <div className="relative">
+              <input
+                type="date"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium bg-white shadow-sm hover:shadow-md"
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <span className="text-gray-400 text-xl">📅</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Select Dropdown - Styled as Cards */}
+          {field.type === 'select' && (
+            <div className="space-y-3">
+              {field.options?.map((option, optionIndex) => {
+                const optionValue = option.value || option;
+                const optionLabel = option.label || option;
+                const isSelected = watch(field.name) === optionValue;
+                
+                return (
+                  <motion.div
+                    key={optionIndex}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
+                      isSelected
+                        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
+                        : 'border-gray-200 hover:border-purple-300 bg-white'
+                    }`}
+                    onClick={() => {
+                      setValue(field.name, optionValue);
+                      clearStepError(field.name);
+                    }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                        isSelected
+                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
+                          : 'bg-gray-100 text-gray-400'
+                      }`}>
+                        <span className={`text-lg ${
+                          isSelected ? 'animate-pulse' : ''
+                        }`}>
+                          {isSelected ? '✓' : '🎯'}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <span className="font-semibold text-gray-800 text-lg">
+                          {optionLabel}
+                        </span>
+                      </div>
+                      
+                      {/* Selection indicator */}
+                      {isSelected && (
+                        <div className="ml-auto">
+                          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+          
+          {/* Textarea */}
+          {field.type === 'textarea' && (
+            <div className="relative">
+              <textarea
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false 
+                })}
+                rows={4}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium placeholder-gray-400 bg-white shadow-sm hover:shadow-md resize-none"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+              <div className="absolute top-4 right-4">
+                <span className="text-gray-400 text-xl">📝</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Theme Cards */}
+          {field.type === 'themeCards' && (
+            <div className="space-y-4">
+              <p className="text-sm text-gray-600 mb-4">
+                Choose from the available themes for your event:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {field.options?.map((theme, themeIndex) => {
+                  const currentValue = watch(field.name);
+                  const isSelected = currentValue && currentValue === theme.value;
+                  
+                  return (
+                    <ThemeCard
+                      key={themeIndex}
+                      theme={theme}
+                      isSelected={isSelected}
+                      onClick={() => {
+                        setValue(field.name, theme.value);
+                        trigger(field.name);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {/* Food Menu */}
+          {field.type === 'foodMenu' && (
+            <div className="space-y-6">
+              <p className="text-sm text-gray-600 mb-4">
+                Select your preferred food options:
+              </p>
+              <div className="space-y-6">
+                {field.options?.map((category, categoryIndex) => (
+                  <motion.div
+                    key={categoryIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: categoryIndex * 0.1 }}
+                    className="border-2 border-gray-200 rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                  >
+                    <div className="flex items-center space-x-3 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
+                        <span className="text-green-600 text-xl">🍽️</span>
+                      </div>
+                      <h4 className="font-bold text-gray-800 text-xl">{category.name}</h4>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {category.items?.map((item, itemIndex) => {
+                        const isSelected = watch(`${field.name}.${category.name}`)?.includes(item.name);
+                        
+                        return (
+                          <motion.div
+                            key={itemIndex}
+                            whileHover={{ scale: 1.02, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={`border-2 rounded-xl cursor-pointer transition-all duration-300 p-4 ${
+                              isSelected
+                                ? 'border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 shadow-lg'
+                                : 'border-gray-200 hover:border-green-300 bg-white'
+                            }`}
+                            onClick={() => {
+                              const currentValues = watch(`${field.name}.${category.name}`) || [];
+                              const newValues = currentValues.includes(item.name)
+                                ? currentValues.filter(v => v !== item.name)
+                                : [...currentValues, item.name];
+                              setValue(`${field.name}.${category.name}`, newValues);
+                              clearStepError(field.name);
+                            }}
+                          >
+                            <div className="flex items-center space-x-3">
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                                isSelected
+                                  ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-lg scale-110' 
+                                  : 'bg-gray-100 text-gray-400'
+                              }`}>
+                                <span className={`text-lg ${
+                                  isSelected ? 'animate-pulse' : ''
+                                }`}>
+                                  {isSelected ? '✓' : '🍽️'}
+                                </span>
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-semibold text-gray-800">{item.name}</span>
+                                  {item.price && (
+                                    <span className="text-green-600 font-bold">₹{item.price}</span>
+                                  )}
+                                </div>
+                                {item.description && (
+                                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                                )}
+                              </div>
+                              
+                              {/* Selection Indicator */}
+                              {isSelected && (
+                                <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
+                              )}
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Error Message */}
+          {errors[field.name] && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg"
+            >
+              <p className="text-red-600 text-sm flex items-center">
+                <span className="mr-2 text-lg">⚠️</span>
+                {errors[field.name].message}
+              </p>
+            </motion.div>
+          )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
+  // Render custom event form fields (legacy function - keeping for compatibility)
   const renderCustomEventForm = () => (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -1047,51 +1605,61 @@ function CustomPackages() {
 
       <div className="space-y-6">
         {customEventFormFields.map((field, index) => (
-          <div key={field.id || index} className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+          <motion.div
+            key={field.id || index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
+          >
             <label className="block text-sm font-medium text-gray-700 mb-3">
               {field.label} {field.required && <span className="text-red-500">*</span>}
             </label>
             
+            {/* Text Input */}
             {field.type === 'text' && (
               <input
                 type="text"
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
                 placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
               />
             )}
             
+            {/* Number Input */}
             {field.type === 'number' && (
               <input
                 type="number"
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
                 placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
                 min={field.validation?.min || undefined}
                 max={field.validation?.max || undefined}
               />
             )}
             
+            {/* Date Input */}
             {field.type === 'date' && (
               <input
                 type="date"
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
               />
             )}
             
+            {/* Select Dropdown */}
             {field.type === 'select' && (
               <select
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
               >
                 <option value="">Select {field.label.toLowerCase()}</option>
                 {field.options?.map((option, optionIndex) => (
@@ -1102,39 +1670,76 @@ function CustomPackages() {
               </select>
             )}
             
+            {/* Textarea */}
             {field.type === 'textarea' && (
               <textarea
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
                 placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
               />
             )}
             
-            {field.type === 'themeCards' && (
-              <div className="space-y-4">
-                <p className="text-sm text-gray-600">
-                  Theme cards will be displayed here. This is a complex field type that requires special handling.
-                </p>
-                {/* You can expand this to show theme cards if needed */}
-              </div>
-            )}
+    
             
+            {/* Food Menu */}
             {field.type === 'foodMenu' && (
               <div className="space-y-4">
-                <p className="text-sm text-gray-600">
-                  Food menu will be displayed here. This is a complex field type that requires special handling.
+                <p className="text-sm text-gray-600 mb-4">
+                  Select your preferred food options:
                 </p>
-                {/* You can expand this to show food menu if needed */}
+                <div className="space-y-4">
+                  {field.options?.map((category, categoryIndex) => (
+                    <div key={categoryIndex} className="border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                        <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                          <span className="text-purple-600 text-sm">🍽️</span>
+                        </span>
+                        <span>{category.name}</span>
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {category.items?.map((item, itemIndex) => (
+                          <label key={itemIndex} className="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-gray-50 transition-colors duration-200">
+                            <input
+                              type="checkbox"
+                              {...register(`${field.name}.${category.name}`)}
+                              value={item.name}
+                              className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                            />
+                            <div className="flex-1">
+                              <span className="text-gray-700 font-medium">{item.name}</span>
+                              {item.description && (
+                                <p className="text-xs text-gray-500">{item.description}</p>
+                              )}
+                              {item.price && (
+                                <p className="text-xs text-purple-600 font-medium">₹{item.price}</p>
+                              )}
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             
+            {/* Error Message */}
             {errors[field.name] && (
-              <p className="text-red-500 text-sm mt-2">{errors[field.name].message}</p>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg"
+              >
+                <p className="text-red-600 text-sm flex items-center">
+                  <span className="mr-2 text-lg">⚠️</span>
+                  {errors[field.name].message}
+                </p>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
     </motion.div>
@@ -1221,17 +1826,16 @@ function CustomPackages() {
   );
 
   const renderStepContent = () => {
-    // Handle custom event flow
+    // Handle custom event flow with dynamic steps
     if (selectedCustomEvent && customEventFormFields.length > 0) {
-      switch (currentStep) {
-        case 1:
-          return renderStep1();
-        case 2:
-          return renderCustomEventForm();
-        case 3:
-          return renderStep5(); // Additional details
-        default:
-          return renderStep1();
+      if (currentStep === 1) {
+        return renderStep1(); // Event Type selection
+      } else if (currentStep === steps.length) {
+        return renderStep5(); // Additional details (last step)
+      } else {
+        // Render individual custom field step
+        const fieldIndex = currentStep - 2; // -2 because step 1 is event type
+        return renderCustomFieldStep(fieldIndex);
       }
     }
     
@@ -1257,6 +1861,37 @@ function CustomPackages() {
       <path d="M50 10C60 20 70 30 80 40C70 50 60 60 50 70C40 60 30 50 20 40C30 30 40 20 50 10Z" />
       <path d="M50 20C55 25 60 30 65 35C60 40 55 45 50 50C45 45 40 40 35 35C40 30 45 25 50 20Z" />
     </svg>
+  );
+
+  // Skeleton Loader Component for Event Cards
+  const EventCardSkeleton = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="p-6 border-2 border-gray-200 rounded-2xl bg-white shadow-sm"
+    >
+      <div className="flex items-center space-x-4">
+        {/* Skeleton icon */}
+        <div className="w-12 h-12 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl animate-pulse"></div>
+        
+        {/* Skeleton text */}
+        <div className="flex-1">
+          <div className="h-6 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg animate-pulse mb-2"></div>
+          <div className="h-4 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg animate-pulse w-3/4"></div>
+        </div>
+        
+        {/* Skeleton selection indicator */}
+        <div className="w-3 h-3 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full animate-pulse"></div>
+      </div>
+      
+      {/* Skeleton loading text */}
+      <div className="mt-3 flex items-center space-x-2">
+        <div className="w-4 h-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full animate-pulse"></div>
+        <div className="h-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg animate-pulse w-32"></div>
+      </div>
+    </motion.div>
   );
 
   // Confirmation Modal Component
@@ -1527,7 +2162,7 @@ function CustomPackages() {
                   <span className="text-white text-xl font-bold">E</span>
                 </div>
                 <span className="text-3xl font-bold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
-                  Evaga
+                  Eevagga
                 </span>
               </div>
             </div>
@@ -1634,7 +2269,7 @@ function CustomPackages() {
             {/* Enhanced Progress Header */}
             <div className="mb-8">
               <div className="flex items-center space-x-3 mb-3">
-                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Step {currentStep}/5</span>
+                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Step {currentStep}/{steps.length}</span>
                 <span className="text-xl font-semibold bg-gradient-to-r from-purple-800 via-pink-800 to-blue-800 bg-clip-text text-transparent">
                   {getStepTitle()}
                 </span>
