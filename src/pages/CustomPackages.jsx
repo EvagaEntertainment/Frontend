@@ -5,6 +5,145 @@ import { useNavigate } from 'react-router-dom';
 import useServices from '../hooks/useServices';
 import commonApis from '../services/commonApis';
 
+// Utility functions for text normalization
+const normalizeDietaryType = (type) => {
+  if (!type) return '';
+  const normalized = type.toLowerCase().trim();
+  const dietaryMap = {
+    'veg': 'veg',
+    'vegetarian': 'veg',
+    'veggie': 'veg',
+    'non-veg': 'non-veg',
+    'nonveg': 'non-veg',
+    'non vegetarian': 'non-veg',
+    'nonvegetarian': 'non-veg',
+    'vegan': 'vegan',
+    'egg': 'egg',
+    'eggetarian': 'egg',
+    'seafood': 'seafood',
+    'sea food': 'seafood',
+    'jain': 'jain',
+    'jain vegetarian': 'jain'
+  };
+  return dietaryMap[normalized] || normalized;
+};
+
+const normalizeCourseName = (course) => {
+  if (!course) return '';
+  const normalized = course.toLowerCase().trim();
+  const courseMap = {
+    'starter': 'starters',
+    'starters': 'starters',
+    'appetizer': 'starters',
+    'appetizers': 'starters',
+    'main course': 'main course',
+    'maincourse': 'main course',
+    'main': 'main course',
+    'mains': 'main course',
+    'dessert': 'desserts',
+    'desserts': 'desserts',
+    'sweet': 'desserts',
+    'sweets': 'desserts'
+  };
+  return courseMap[normalized] || normalized;
+};
+
+const getDisplayName = (value, type) => {
+  if (type === 'dietary') {
+    const displayMap = {
+      'veg': 'Vegetarian',
+      'non-veg': 'Non-Vegetarian',
+      'vegan': 'Vegan',
+      'egg': 'Egg',
+      'seafood': 'Seafood',
+      'jain': 'Jain'
+    };
+    return displayMap[value] || value.charAt(0).toUpperCase() + value.slice(1);
+  }
+  return value;
+};
+
+// Success Modal Component
+const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
+  if (!isOpen) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full -translate-y-10 translate-x-10 opacity-60"></div>
+        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full translate-y-8 -translate-x-8 opacity-60"></div>
+        
+        <div className="relative z-10 text-center">
+          {/* Success Icon */}
+          <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="text-white text-3xl"
+            >
+              ✓
+            </motion.div>
+          </div>
+          
+          {/* Title */}
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-2xl font-bold text-gray-800 mb-4"
+          >
+            {title}
+          </motion.h3>
+          
+          {/* Message */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-gray-600 mb-8 leading-relaxed"
+          >
+            {message}
+          </motion.p>
+          
+          {/* Success Button */}
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            onClick={onClose}
+            className="w-full px-8 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {buttonText}
+          </motion.button>
+          
+          {/* Decorative elements */}
+          <div className="flex justify-center space-x-2 mt-6">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 function CustomPackages() {
   const navigate = useNavigate();
   
@@ -18,6 +157,8 @@ function CustomPackages() {
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [showRefreshConfirm, setShowRefreshConfirm] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
   // Custom Events API state
@@ -37,11 +178,11 @@ function CustomPackages() {
   // Steps array - dynamic based on custom event form fields
   const getSteps = () => {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
-      // Create steps: Event Type + Each Custom Field + Additional Details
+      // Create steps: Event Type + Each Custom Field
       const customFieldSteps = customEventFormFields.map(field => field.label);
-      return ['Event Type', ...customFieldSteps, 'Additional Details'];
+      return ['Event Type', ...customFieldSteps];
     }
-    return ['Event Type', 'Additional Details']; // Simplified flow when no custom event selected
+    return ['Event Type']; // Simplified flow when no custom event selected
   };
   
   const steps = getSteps();
@@ -51,8 +192,6 @@ function CustomPackages() {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
       if (stepNumber === 1) {
         return 'Choose the type of event you\'re planning';
-      } else if (stepNumber === steps.length) {
-        return 'Add final details and requirements';
       } else {
         // For custom form field steps
         const fieldIndex = stepNumber - 2; // -2 because step 1 is event type
@@ -62,8 +201,7 @@ function CustomPackages() {
     }
     
     const descriptions = {
-      1: 'Choose the type of event you\'re planning',
-      2: 'Add final details and requirements'
+      1: 'Choose the type of event you\'re planning'
     };
     return descriptions[stepNumber] || '';
   };
@@ -73,8 +211,6 @@ function CustomPackages() {
     if (selectedCustomEvent && customEventFormFields.length > 0) {
       if (currentStep === 1) {
         return 'Event Type';
-      } else if (currentStep === steps.length) {
-        return 'Additional Details';
       } else {
         // For custom form field steps
         const fieldIndex = currentStep - 2; // -2 because step 1 is event type
@@ -84,8 +220,7 @@ function CustomPackages() {
     }
     
     const titles = {
-      1: 'Event Type',
-      2: 'Additional Details'
+      1: 'Event Type'
     };
     return titles[currentStep] || '';
   };
@@ -499,6 +634,13 @@ function CustomPackages() {
     }
   };
 
+  const previousStep = () => {
+    // Only go back if we're not on the first step
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
 
 
   const handleClose = () => {
@@ -563,6 +705,29 @@ function CustomPackages() {
     setShowRefreshConfirm(false);
   };
 
+  const handleSuccessClose = () => {
+    setShowSuccessPopup(false);
+    // Reset form and navigate to home page
+    setCurrentStep(1);
+    setSelectedEventType('');
+    setSelectedEventId(null);
+    setLoadingEventId(null);
+    setSelectedCustomEvent(null);
+    setCustomEventFormFields([]);
+    setSelectedAge('');
+    setSelectedTheme('');
+    setSelectedFoodType('');
+    setSelectedCourses([]);
+    // Reset form fields
+    setValue('eventType', '');
+    setValue('ageGroup', '');
+    setValue('theme', '');
+    setValue('foodType', '');
+    setValue('courses', []);
+    // Navigate to home page
+    navigate('/');
+  };
+
   const confirmRefresh = () => {
     setShowRefreshConfirm(false);
     // Reset form and refresh
@@ -585,11 +750,38 @@ function CustomPackages() {
     window.location.reload();
   };
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-    console.log('Custom Event Form Fields:', customEventFormFields);
-    console.log('Selected Custom Event:', selectedCustomEvent);
-    // Here you'll integrate with your API later
+  const onSubmit = async (data) => {
+    try {
+      setIsSubmitting(true);
+      
+      // Prepare form data with event ID
+      const formData = {
+        ...data,
+        eventId: selectedEventId, // Include the selected event ID
+        eventType: selectedEventType,
+        customEventDetails: selectedCustomEvent,
+        submittedAt: new Date().toISOString()
+      };
+      
+      console.log('Form Data with Event ID:', formData);
+      console.log('Custom Event Form Fields:', customEventFormFields);
+      console.log('Selected Custom Event:', selectedCustomEvent);
+      
+      // Simulate API call (replace with actual API integration)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Show success popup
+      setShowSuccessPopup(true);
+      
+      // Here you'll integrate with your actual API later
+      // Example: await submitCustomEventRequest(formData);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle error (show error message, etc.)
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const clearStepError = (fieldName) => {
@@ -1370,7 +1562,7 @@ function CustomPackages() {
             </div>
           )}
           
-          {/* Date Input */}
+          {/* Date Input with Calendar Picker */}
           {field.type === 'date' && (
             <div className="relative">
               <input
@@ -1378,9 +1570,29 @@ function CustomPackages() {
                 {...register(field.name, { 
                   required: field.required ? `${field.label} is required` : false 
                 })}
-                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium bg-white shadow-sm hover:shadow-md"
+                className="w-full px-6 py-4 pr-12 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium bg-white shadow-sm hover:shadow-md cursor-pointer"
+                onClick={(e) => {
+                  // Try to show the calendar picker with fallback
+                  if (e.target.showPicker && typeof e.target.showPicker === 'function') {
+                    try {
+                      e.target.showPicker();
+                    } catch (error) {
+                      console.log('showPicker not supported, using focus fallback');
+                    }
+                  }
+                }}
+                onFocus={(e) => {
+                  // Try to show the calendar picker when focused
+                  if (e.target.showPicker && typeof e.target.showPicker === 'function') {
+                    try {
+                      e.target.showPicker();
+                    } catch (error) {
+                      console.log('showPicker not supported, using focus fallback');
+                    }
+                  }
+                }}
               />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                 <span className="text-gray-400 text-xl">📅</span>
               </div>
             </div>
@@ -1440,6 +1652,48 @@ function CustomPackages() {
             </div>
           )}
           
+          {/* Email Input */}
+          {field.type === 'email' && (
+            <div className="relative">
+              <input
+                type="email"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false,
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Please enter a valid email address"
+                  }
+                })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium placeholder-gray-400 bg-white shadow-sm hover:shadow-md"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <span className="text-gray-400 text-xl">📧</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Phone Input */}
+          {field.type === 'phone' && (
+            <div className="relative">
+              <input
+                type="tel"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false,
+                  pattern: {
+                    value: /^[\+]?[1-9][\d]{0,15}$/,
+                    message: "Please enter a valid phone number"
+                  }
+                })}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-300 text-lg font-medium placeholder-gray-400 bg-white shadow-sm hover:shadow-md"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <span className="text-gray-400 text-xl">📱</span>
+              </div>
+            </div>
+          )}
+          
           {/* Textarea */}
           {field.type === 'textarea' && (
             <div className="relative">
@@ -1466,15 +1720,17 @@ function CustomPackages() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {field.options?.map((theme, themeIndex) => {
                   const currentValue = watch(field.name);
-                  const isSelected = currentValue && currentValue === theme.value;
+                  const themeValue = theme.value || theme.name || themeIndex;
+                  const isSelected = currentValue && currentValue === themeValue;
                   
                   return (
                     <ThemeCard
-                      key={themeIndex}
+                      key={theme.value || theme.name || themeIndex}
                       theme={theme}
                       isSelected={isSelected}
                       onClick={() => {
-                        setValue(field.name, theme.value);
+                        const themeValue = theme.value || theme.name || themeIndex;
+                        setValue(field.name, themeValue);
                         trigger(field.name);
                       }}
                     />
@@ -1484,86 +1740,265 @@ function CustomPackages() {
             </div>
           )}
           
-          {/* Food Menu */}
+          {/* Food Menu - Dynamic API Data */}
           {field.type === 'foodMenu' && (
-            <div className="space-y-6">
-              <p className="text-sm text-gray-600 mb-4">
-                Select your preferred food options:
-              </p>
-              <div className="space-y-6">
-                {field.options?.map((category, categoryIndex) => (
+            <div className="space-y-8">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">Food & Beverage Menu <span className="text-red-500">*</span></h2>
+                <p className="text-gray-600">Create your food menu with categories and items</p>
+              </div>
+
+              <div className="space-y-8">
+                {/* Step 1: Dietary Type Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Step 1: Select Dietary Type <span className="text-red-500">*</span>
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {['veg', 'non-veg', 'vegan', 'egg', 'seafood', 'jain'].map((dietaryType) => {
+                      const currentDietaryType = watch(`${field.name}.dietaryType`);
+                      const normalizedCurrent = normalizeDietaryType(currentDietaryType);
+                      const normalizedType = normalizeDietaryType(dietaryType);
+                      const isSelected = normalizedCurrent === normalizedType;
+                      
+                      return (
+                        <motion.div
+                          key={dietaryType}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                            isSelected
+                              ? 'border-purple-500 bg-purple-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                          onClick={() => {
+                            setValue(`${field.name}.dietaryType`, dietaryType);
+                            // Clear courses and food items when dietary type changes
+                            setValue(`${field.name}.courses`, []);
+                            setValue(`${field.name}.foodItems`, {});
+                            clearStepError(field.name);
+                          }}
+                        >
+                          <div className="flex flex-col items-center space-y-2">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                              isSelected ? 'bg-purple-100' : 'bg-gray-100'
+                            }`}>
+                              <span className={`text-lg ${
+                                isSelected ? 'text-purple-600' : 'text-gray-400'
+                              }`}>
+                                {isSelected ? '✓' : '🍽️'}
+                              </span>
+                            </div>
+                            <span className="font-medium text-gray-800 text-sm text-center">
+                              {getDisplayName(dietaryType, 'dietary')}
+                            </span>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Step 2: Course Selection - Only shown after dietary type is selected */}
+                {watch(`${field.name}.dietaryType`) && (
                   <motion.div
-                    key={categoryIndex}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: categoryIndex * 0.1 }}
-                    className="border-2 border-gray-200 rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                    transition={{ delay: 0.2 }}
+                    className="border-t pt-6"
                   >
-                    <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
-                        <span className="text-green-600 text-xl">🍽️</span>
-                      </div>
-                      <h4 className="font-bold text-gray-800 text-xl">{category.name}</h4>
-                    </div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Step 2: Select Courses <span className="text-red-500">*</span>
+                    </label>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Based on your {watch(`${field.name}.dietaryType`)} preference, select one or more courses you'd like:
+                    </p>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {category.items?.map((item, itemIndex) => {
-                        const isSelected = watch(`${field.name}.${category.name}`)?.includes(item.name);
+                    {/* Selected Courses Summary */}
+                    {watch(`${field.name}.courses`)?.length > 0 && (
+                      <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="text-green-600">✓</span>
+                          <span className="text-sm font-medium text-green-800">Selected Courses:</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {watch(`${field.name}.courses`)?.map((course) => (
+                            <span key={course} className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full border border-green-300">
+                              {course}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      {['Starters', 'Main Course', 'Desserts'].map((course) => {
+                        const selectedCourses = watch(`${field.name}.courses`) || [];
+                        const normalizedSelected = selectedCourses.map(c => normalizeCourseName(c));
+                        const normalizedCourse = normalizeCourseName(course);
+                        const isSelected = normalizedSelected.includes(normalizedCourse);
                         
                         return (
                           <motion.div
-                            key={itemIndex}
-                            whileHover={{ scale: 1.02, y: -2 }}
+                            key={course}
+                            whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`border-2 rounded-xl cursor-pointer transition-all duration-300 p-4 ${
+                            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
                               isSelected
-                                ? 'border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 shadow-lg'
-                                : 'border-gray-200 hover:border-green-300 bg-white'
+                                ? 'border-green-500 bg-green-50'
+                                : 'border-gray-200 hover:border-gray-300'
                             }`}
                             onClick={() => {
-                              const currentValues = watch(`${field.name}.${category.name}`) || [];
-                              const newValues = currentValues.includes(item.name)
-                                ? currentValues.filter(v => v !== item.name)
-                                : [...currentValues, item.name];
-                              setValue(`${field.name}.${category.name}`, newValues);
+                              const currentCourses = watch(`${field.name}.courses`) || [];
+                              const normalizedCurrent = currentCourses.map(c => normalizeCourseName(c));
+                              const normalizedCourse = normalizeCourseName(course);
+                              const newCourses = normalizedCurrent.includes(normalizedCourse)
+                                ? currentCourses.filter(c => normalizeCourseName(c) !== normalizedCourse)
+                                : [...currentCourses, course];
+                              setValue(`${field.name}.courses`, newCourses);
                               clearStepError(field.name);
                             }}
                           >
-                            <div className="flex items-center space-x-3">
-                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                                isSelected
-                                  ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-lg scale-110' 
-                                  : 'bg-gray-100 text-gray-400'
+                            <div className="flex flex-col items-center space-y-2">
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                                isSelected ? 'bg-green-100' : 'bg-gray-100'
                               }`}>
                                 <span className={`text-lg ${
-                                  isSelected ? 'animate-pulse' : ''
+                                  isSelected ? 'text-green-600' : 'text-gray-400'
                                 }`}>
-                                  {isSelected ? '✓' : '🍽️'}
+                                  {isSelected ? '✓' : '🥘'}
                                 </span>
                               </div>
-                              <div className="flex-1">
-                                <div className="flex items-center justify-between">
-                                  <span className="font-semibold text-gray-800">{item.name}</span>
-                                  {item.price && (
-                                    <span className="text-green-600 font-bold">₹{item.price}</span>
-                                  )}
-                                </div>
-                                {item.description && (
-                                  <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                                )}
-                              </div>
-                              
-                              {/* Selection Indicator */}
-                              {isSelected && (
-                                <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
-                              )}
+                              <span className="font-medium text-gray-800 text-sm text-center">{course}</span>
                             </div>
                           </motion.div>
                         );
                       })}
                     </div>
+                    
+                    {/* Help Text */}
+                    <p className="text-xs text-gray-500 mt-3">
+                      💡 You can select multiple courses. Click on a course to select/deselect it.
+                    </p>
                   </motion.div>
-                ))}
+                )}
+
+                {/* Step 3: Food Items Selection - Only shown after course is selected */}
+                {watch(`${field.name}.dietaryType`) && watch(`${field.name}.courses`)?.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="border-t pt-6"
+                  >
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Step 3: Select Food Items (Optional)
+                    </label>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Choose specific food items for your selected courses: <span className="font-medium text-purple-600">
+                        {watch(`${field.name}.courses`)?.map(c => c.toLowerCase()).join(', ')}
+                      </span>
+                    </p>
+                    
+                    {/* Course-specific Food Items */}
+                    {watch(`${field.name}.courses`)?.map((course) => {
+                      // Find items for this course from the API data using normalized matching
+                      const normalizedCourse = normalizeCourseName(course);
+                      const courseData = field.options?.find(option => 
+                        normalizeCourseName(option.categoryName) === normalizedCourse
+                      );
+                      const foodItems = courseData?.items || [];
+                      
+                      return (
+                        <div key={course} className="mb-6 border border-gray-200 rounded-lg p-4">
+                          <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                            <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                              <span className="text-purple-600 text-sm">🥘</span>
+                            </span>
+                            <span>{course}</span>
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {foodItems.length > 0 ? 
+                              foodItems.map((item, itemIndex) => (
+                                <label key={itemIndex} className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 border border-gray-100">
+                                  <input
+                                    type="checkbox"
+                                    {...register(`${field.name}.foodItems.${course}`)}
+                                    value={item.name}
+                                    className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                                  />
+                                  <div className="flex-1">
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-gray-700 font-medium">{item.name}</span>
+                                      {item.price && (
+                                        <span className="text-purple-600 font-bold text-sm">₹{item.price}</span>
+                                      )}
+                                    </div>
+                                    {item.description && (
+                                      <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                                    )}
+                                    <div className="flex items-center space-x-2 mt-1">
+                                      {item.dietaryType && (
+                                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                          {item.dietaryType}
+                                        </span>
+                                      )}
+                                      {item.spiceLevel && (
+                                        <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                                          {item.spiceLevel} spice
+                                        </span>
+                                      )}
+                                      {item.isPopular === "true" && (
+                                        <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                                          Popular
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </label>
+                              )) : 
+                              <p className="text-gray-500 text-sm col-span-2">No specific items available for {course}</p>
+                            }
+                          </div>
+                        </div>
+                      );
+                    })}
+                    
+                    {/* Help Text */}
+                    <p className="text-xs text-gray-500 mt-3">
+                      💡 Select the specific food items you'd like for each course. This helps us customize your menu better.
+                    </p>
+                  </motion.div>
+                )}
+
+                {/* Progress Indicator */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      watch(`${field.name}.dietaryType`) ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-600'
+                    }`}>
+                      {watch(`${field.name}.dietaryType`) ? '✓' : '1'}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-gray-700">Dietary Type</div>
+                      <div className="text-xs text-gray-500">
+                        {watch(`${field.name}.dietaryType`) ? getDisplayName(watch(`${field.name}.dietaryType`), 'dietary') : 'Not selected yet'}
+                      </div>
+                    </div>
+                    
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      watch(`${field.name}.courses`)?.length > 0 ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-600'
+                    }`}>
+                      {watch(`${field.name}.courses`)?.length > 0 ? '✓' : '2'}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-gray-700">Courses</div>
+                      <div className="text-xs text-gray-500">
+                        {watch(`${field.name}.courses`)?.length > 0 ? watch(`${field.name}.courses`).join(', ') : 'Not selected yet'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -1642,15 +2077,41 @@ function CustomPackages() {
               />
             )}
             
-            {/* Date Input */}
+            {/* Date Input with Calendar Picker */}
             {field.type === 'date' && (
-              <input
-                type="date"
-                {...register(field.name, { 
-                  required: field.required ? `${field.label} is required` : false 
-                })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
-              />
+              <div className="relative">
+                <input
+                  type="date"
+                  {...register(field.name, { 
+                    required: field.required ? `${field.label} is required` : false 
+                  })}
+                  className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200 cursor-pointer"
+                  onClick={(e) => {
+                    // Try to show the calendar picker with fallback
+                    if (e.target.showPicker && typeof e.target.showPicker === 'function') {
+                      try {
+                        e.target.showPicker();
+                      } catch (error) {
+                        console.log('showPicker not supported, using focus fallback');
+                      }
+                    }
+                  }}
+                  onFocus={(e) => {
+                    // Try to show the calendar picker when focused
+                    if (e.target.showPicker && typeof e.target.showPicker === 'function') {
+                      try {
+                        e.target.showPicker();
+                      } catch (error) {
+                        console.log('showPicker not supported, using focus fallback');
+                      }
+                    }
+                  }}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span className="text-gray-400 text-lg">📅</span>
+                </div>
+                
+              </div>
             )}
             
             {/* Select Dropdown */}
@@ -1668,6 +2129,38 @@ function CustomPackages() {
                   </option>
                 ))}
               </select>
+            )}
+            
+            {/* Email Input */}
+            {field.type === 'email' && (
+              <input
+                type="email"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false,
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Please enter a valid email address"
+                  }
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
+            )}
+            
+            {/* Phone Input */}
+            {field.type === 'phone' && (
+              <input
+                type="tel"
+                {...register(field.name, { 
+                  required: field.required ? `${field.label} is required` : false,
+                  pattern: {
+                    value: /^[\+]?[1-9][\d]{0,15}$/,
+                    message: "Please enter a valid phone number"
+                  }
+                })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all duration-200"
+                placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              />
             )}
             
             {/* Textarea */}
@@ -1745,93 +2238,12 @@ function CustomPackages() {
     </motion.div>
   );
 
-  const renderStep5 = () => (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
-    >
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Additional Details</h2>
-        <p className="text-gray-600">Help us understand your requirements better</p>
-      </div>
-
-      <div className="space-y-6">
-        {/* Guest Count */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Expected Number of Guests
-          </label>
-          <input
-            type="number"
-            {...register('guestCount', { required: 'Guest count is required' })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Enter number of guests"
-          />
-          {errors.guestCount && (
-            <p className="text-red-500 text-sm mt-1">{errors.guestCount.message}</p>
-          )}
-        </div>
-
-        {/* Event Date */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Preferred Event Date
-          </label>
-          <input
-            type="date"
-            {...register('eventDate', { required: 'Event date is required' })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          />
-          {errors.eventDate && (
-            <p className="text-red-500 text-sm mt-1">{errors.eventDate.message}</p>
-          )}
-        </div>
-
-        {/* Budget Range */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Budget Range
-          </label>
-          <select
-            {...register('budgetRange', { required: 'Budget range is required' })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          >
-            <option value="">Select budget range</option>
-            <option value="5000-10000">₹5,000 - ₹10,000</option>
-            <option value="10000-20000">₹10,000 - ₹20,000</option>
-            <option value="20000-50000">₹20,000 - ₹50,000</option>
-            <option value="50000+">₹50,000+</option>
-          </select>
-          {errors.budgetRange && (
-            <p className="text-red-500 text-sm mt-1">{errors.budgetRange.message}</p>
-          )}
-        </div>
-
-        {/* Special Requirements */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Special Requirements (Optional)
-          </label>
-          <textarea
-            {...register('specialRequirements')}
-            rows="4"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Any special requests or requirements..."
-          />
-        </div>
-      </div>
-    </motion.div>
-  );
 
   const renderStepContent = () => {
     // Handle custom event flow with dynamic steps
     if (selectedCustomEvent && customEventFormFields.length > 0) {
       if (currentStep === 1) {
         return renderStep1(); // Event Type selection
-      } else if (currentStep === steps.length) {
-        return renderStep5(); // Additional details (last step)
       } else {
         // Render individual custom field step
         const fieldIndex = currentStep - 2; // -2 because step 1 is event type
@@ -1843,8 +2255,6 @@ function CustomPackages() {
     switch (currentStep) {
       case 1:
         return renderStep1();
-      case 2:
-        return renderStep5(); // Additional details
       default:
         return renderStep1();
     }
@@ -2298,10 +2708,15 @@ function CustomPackages() {
               <div className="flex justify-between pt-8">
                 <motion.button
                   type="button"
-                  onClick={handleBackNavigation}
-                  className="px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 rounded-xl font-medium hover:from-gray-300 hover:to-gray-400 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  onClick={previousStep}
+                  disabled={currentStep === 1}
+                  className={`px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced ${
+                    currentStep === 1
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
+                      : 'bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 hover:from-gray-300 hover:to-gray-400'
+                  }`}
+                  whileHover={currentStep === 1 ? {} : { scale: 1.02 }}
+                  whileTap={currentStep === 1 ? {} : { scale: 0.98 }}
                 >
                   ← Back
                 </motion.button>
@@ -2319,11 +2734,23 @@ function CustomPackages() {
                 ) : (
                   <motion.button
                     type="submit"
-                    className="px-10 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmitting}
+                    className={`px-10 py-4 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced ${
+                      isSubmitting
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700'
+                    }`}
+                    whileHover={isSubmitting ? {} : { scale: 1.02 }}
+                    whileTap={isSubmitting ? {} : { scale: 0.98 }}
                   >
-                    ✨ Submit Package Request
+                    {isSubmitting ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Submitting...</span>
+                      </div>
+                    ) : (
+                      '✨ Submit Package Request'
+                    )}
                   </motion.button>
                 )}
               </div>
@@ -2361,6 +2788,15 @@ function CustomPackages() {
         message="Are you sure you want to refresh this page? This will reset your form and any progress you've made."
         confirmText="Yes, Refresh"
         cancelText="Stay Here"
+      />
+
+      {/* Success Popup Modal */}
+      <SuccessModal
+        isOpen={showSuccessPopup}
+        onClose={handleSuccessClose}
+        title="Request Submitted Successfully!"
+        message="Your response has been saved. We will contact you soon with more details about your custom event package."
+        buttonText="Great! Take me home"
       />
     </div>
   );
@@ -2753,9 +3189,14 @@ const NavigationButtons = ({
     <motion.button
       type="button"
       onClick={onBack}
-      className="px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 rounded-xl font-medium hover:from-gray-300 hover:to-gray-400 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced"
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      disabled={currentStep === 1}
+      className={`px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 btn-enhanced ${
+        currentStep === 1
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
+          : 'bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 hover:from-gray-300 hover:to-gray-400'
+      }`}
+      whileHover={currentStep === 1 ? {} : { scale: 1.02 }}
+      whileTap={currentStep === 1 ? {} : { scale: 0.98 }}
     >
       ← Back
     </motion.button>

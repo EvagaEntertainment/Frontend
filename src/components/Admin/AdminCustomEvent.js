@@ -81,6 +81,26 @@ function AdminCustomEvent() {
           validation: { min: "", max: "", pattern: "" }
         },
         {
+          id: "mobileNumber",
+          name: "mobileNumber",
+          label: "Mobile Number",
+          type: "phone",
+          required: true,
+          placeholder: "Enter your mobile number",
+          options: [],
+          validation: { min: "", max: "", pattern: "" }
+        },
+        {
+          id: "email",
+          name: "email",
+          label: "Email Address",
+          type: "email",
+          required: true,
+          placeholder: "Enter your email address",
+          options: [],
+          validation: { min: "", max: "", pattern: "" }
+        },
+        {
           id: "themeCards",
           name: "themeCards",
           label: "Theme Cards",
@@ -358,6 +378,7 @@ function AdminCustomEvent() {
   // API hooks for custom events
   const getCustomEventsApi = useServices(customEventsApi.getCustomEvents);
   const createCustomEventApi = useServices(customEventsApi.createCustomEvent);
+  const updateCustomEventApi = useServices(customEventsApi.updateCustomEvent);
   const deleteCustomEventApi = useServices(customEventsApi.deleteCustomEvent);
   
   const getCustomEventsHandle = async () => {
@@ -712,8 +733,23 @@ function AdminCustomEvent() {
     );
   };
 
-  const renderFormFieldBuilder = (field) => {
+  const renderFormFieldBuilder = (field, isEditMode = false) => {
     const { id, name, label, type, required, placeholder, options, validation } = field;
+    
+    // Use edit functions if in edit mode, otherwise use create functions
+    const updateField = isEditMode ? updateFieldInEdit : updateFormField;
+    const addOption = isEditMode ? addOptionToEditField : addOptionToField;
+    const updateOption = isEditMode ? updateOptionInEditField : updateOptionInField;
+    const removeOption = isEditMode ? removeOptionFromEditField : removeOptionFromField;
+    const addThemeCardFunc = isEditMode ? addThemeCardToEdit : addThemeCard;
+    const updateThemeCardFunc = isEditMode ? updateThemeCardInEdit : updateThemeCard;
+    const removeThemeCardFunc = isEditMode ? removeThemeCardFromEdit : removeThemeCard;
+    const addFoodCategoryFunc = isEditMode ? addFoodCategoryToEdit : addFoodCategory;
+    const updateFoodCategoryFunc = isEditMode ? updateFoodCategoryInEdit : updateFoodCategory;
+    const removeFoodCategoryFunc = isEditMode ? removeFoodCategoryFromEdit : removeFoodCategory;
+    const addFoodItemFunc = isEditMode ? addFoodItemToEdit : addFoodItem;
+    const updateFoodItemFunc = isEditMode ? updateFoodItemInEdit : updateFoodItem;
+    const removeFoodItemFunc = isEditMode ? removeFoodItemFromEdit : removeFoodItem;
     
   return (
       <div key={id} className="border border-gray-200 rounded-lg p-4 space-y-4 bg-gray-50">
@@ -957,7 +993,7 @@ function AdminCustomEvent() {
                </label>
                <button
                  type="button"
-                 onClick={() => addFoodCategory(id)}
+                 onClick={() => addFoodCategoryFunc(id)}
                  className="px-4 py-2 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
                >
                  <span>🍽️</span>
@@ -978,7 +1014,7 @@ function AdminCustomEvent() {
                        <h5 className="font-medium text-gray-800">Food Category #{categoryIndex + 1}</h5>
                        <button
                          type="button"
-                         onClick={() => removeFoodCategory(id, categoryIndex)}
+                         onClick={() => removeFoodCategoryFunc(id, categoryIndex)}
                          className="text-red-500 hover:text-red-700 p-2"
                        >
                          🗑️
@@ -993,7 +1029,7 @@ function AdminCustomEvent() {
                        <input
                          type="text"
                          value={category.categoryName}
-                         onChange={(e) => updateFoodCategory(id, categoryIndex, { categoryName: e.target.value })}
+                         onChange={(e) => updateFoodCategoryFunc(id, categoryIndex, { categoryName: e.target.value })}
                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                          placeholder="e.g., Starters, Main Course, Desserts"
                        />
@@ -1007,7 +1043,7 @@ function AdminCustomEvent() {
                          </label>
                          <button
                            type="button"
-                           onClick={() => addFoodItem(id, categoryIndex)}
+                           onClick={() => addFoodItemFunc(id, categoryIndex)}
                            className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-md hover:bg-green-200 transition-colors duration-200 flex items-center space-x-2"
                          >
                            <span>➕</span>
@@ -1044,7 +1080,7 @@ function AdminCustomEvent() {
                                  </div>
                                  <button
                                    type="button"
-                                   onClick={() => removeFoodItem(id, categoryIndex, itemIndex)}
+                                   onClick={() => removeFoodItemFunc(id, categoryIndex, itemIndex)}
                                    className="text-red-500 hover:text-red-700 p-1"
                                  >
                                    ✕
@@ -1060,7 +1096,7 @@ function AdminCustomEvent() {
                                    <input
                                      type="text"
                                      value={item.name}
-                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { name: e.target.value })}
+                                     onChange={(e) => updateFoodItemFunc(id, categoryIndex, itemIndex, { name: e.target.value })}
                                      className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                      placeholder="e.g., Butter Chicken"
                                    />
@@ -1073,7 +1109,7 @@ function AdminCustomEvent() {
                                    </label>
                                    <select
                                      value={item.dietaryType}
-                                     onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { dietaryType: e.target.value })}
+                                     onChange={(e) => updateFoodItemFunc(id, categoryIndex, itemIndex, { dietaryType: e.target.value })}
                                      className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                    >
                                      <option value="veg">🥬 Vegetarian</option>
@@ -1091,7 +1127,7 @@ function AdminCustomEvent() {
                                  <input
                                    type="checkbox"
                                    checked={item.isPopular}
-                                   onChange={(e) => updateFoodItem(id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
+                                   onChange={(e) => updateFoodItemFunc(id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
                                    className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
                                  />
                                  <span className="text-xs text-gray-600">Mark as popular</span>
@@ -1117,7 +1153,7 @@ function AdminCustomEvent() {
               </label>
               <button
                 type="button"
-                onClick={() => addThemeCard(id)}
+                onClick={() => addThemeCardFunc(id)}
                 className="px-4 py-2 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
               >
                 <span>🎨</span>
@@ -1138,7 +1174,7 @@ function AdminCustomEvent() {
                     <h5 className="font-medium text-gray-800">Theme Card #{index + 1}</h5>
                     <button
                       type="button"
-                      onClick={() => removeThemeCard(id, index)}
+                      onClick={() => removeThemeCardFunc(id, index)}
                       className="text-red-500 hover:text-red-700 p-2"
                     >
                       🗑️
@@ -1154,7 +1190,7 @@ function AdminCustomEvent() {
                       <input
                         type="text"
                         value={card.name}
-                        onChange={(e) => updateThemeCard(id, index, { name: e.target.value })}
+                        onChange={(e) => updateThemeCardFunc(id, index, { name: e.target.value })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="e.g., Princess & Prince"
                       />
@@ -1176,7 +1212,7 @@ function AdminCustomEvent() {
                               // In production, you'd upload to server and get URL
                               const reader = new FileReader();
                               reader.onload = (e) => {
-                                updateThemeCard(id, index, { 
+                                updateThemeCardFunc(id, index, { 
                                   image: e.target.result,
                                   fileName: file.name 
                                 });
@@ -1202,7 +1238,7 @@ function AdminCustomEvent() {
                     </label>
                     <textarea
                       value={card.description}
-                      onChange={(e) => updateThemeCard(id, index, { description: e.target.value })}
+                                              onChange={(e) => updateThemeCardFunc(id, index, { description: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       placeholder="e.g., Royal elegance with crowns and castles"
                       rows="2"
@@ -1611,10 +1647,10 @@ function AdminCustomEvent() {
       
       try {
         // Try to update via API first
-        const response = await createCustomEventApi.callApi(formBuilderData); // Using create for now, should be updateCustomEventApi
+        const response = await updateCustomEventApi.callApi(oneCustomEvent._id, formBuilderData);
         
         // Check if response exists and has success status
-        // For UPDATE, we check for response.success (since status 200/201 is always returned for successful updates)
+        // For UPDATE, we check for response.success (since status 200 is returned for successful updates)
         if (response && response.success) {
           toast.success("Custom event form updated successfully!");
           setModalType(null);
@@ -2095,417 +2131,8 @@ function AdminCustomEvent() {
                           </div>
                         </div>
                         
-                        {/* Field Configuration */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Field Label *
-                            </label>
-                            <input
-                              type="text"
-                              value={field.label}
-                              onChange={(e) => updateFieldInEdit(field.id, 'label', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                              placeholder="e.g., Guest Count, Budget, Venue"
-                            />
-                          </div>
-                          
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Field Type *
-                            </label>
-                            <select
-                              value={field.type}
-                              onChange={(e) => updateFieldInEdit(field.id, 'type', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                            >
-                              <option value="text">Text Field</option>
-                              <option value="number">Number Field</option>
-                              <option value="email">Email Field</option>
-                              <option value="phone">Phone Field</option>
-                              <option value="date">Date Picker</option>
-                              <option value="time">Time Picker</option>
-                              <option value="select">Dropdown</option>
-                              <option value="radio">Radio Buttons</option>
-                              <option value="checkbox">Checkbox</option>
-                              <option value="textarea">Text Area</option>
-                              <option value="file">File Upload</option>
-                              <option value="url">URL Field</option>
-                              <option value="themeCards">Theme Cards</option>
-                              <option value="foodMenu">Food Menu</option>
-                            </select>
-                          </div>
-                          
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Field Name *
-                            </label>
-                            <input
-                              type="text"
-                              value={field.name}
-                              onChange={(e) => updateFieldInEdit(field.id, 'name', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                              placeholder="e.g., guestCount, budget, venue"
-                            />
-                          </div>
-                          
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Required
-                            </label>
-                            <div className="flex items-center mt-2">
-                              <input
-                                type="checkbox"
-                                checked={field.required}
-                                onChange={(e) => updateFieldInEdit(field.id, 'required', e.target.checked)}
-                                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                              />
-                              <label className="ml-2 text-sm text-gray-700">
-                                This field is required
-                              </label>
-                            </div>
-                          </div>
-                          
-                          <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Placeholder Text
-                            </label>
-                            <input
-                              type="text"
-                              value={field.placeholder || ""}
-                              onChange={(e) => updateFieldInEdit(field.id, 'placeholder', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                              placeholder="e.g., Enter number of guests, Select your budget range"
-                            />
-                          </div>
-                        </div>
-                        
-                                                {/* Options for select/radio/checkbox fields */}
-                        {(field.type === 'select' || field.type === 'radio' || field.type === 'checkbox') && (
-                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                            <div className="flex items-center justify-between mb-3">
-                              <span className="font-medium text-sm text-gray-700">Options:</span>
-                              <button
-                                type="button"
-                                onClick={() => addOptionToEditField(field.id)}
-                                className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors duration-200"
-                              >
-                                + Add Option
-                              </button>
-                            </div>
-                            <div className="space-y-2">
-                              {(field.options || []).map((option, optIndex) => (
-                                <div key={optIndex} className="flex items-center gap-2">
-                                  <input
-                                    type="text"
-                                    value={option}
-                                    onChange={(e) => updateOptionInEditField(field.id, optIndex, e.target.value)}
-                                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                    placeholder="Option text"
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => removeOptionFromEditField(field.id, optIndex)}
-                                    className="text-red-600 hover:text-red-800 transition-colors duration-200"
-                                  >
-                                    <MdOutlineDelete className="text-sm" />
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Theme Cards Configuration */}
-                        {field.type === 'themeCards' && (
-                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                            <div className="flex items-center justify-between mb-3">
-                              <h5 className="font-medium text-sm text-gray-700">Theme Cards</h5>
-                              <button
-                                type="button"
-                                onClick={() => addThemeCardToEdit(field.id)}
-                                className="px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
-                              >
-                                <span>🎨</span>
-                                <span>Add Theme Card</span>
-                              </button>
-                            </div>
-                            
-                            <div className="space-y-3">
-                              {(field.options || []).length === 0 ? (
-                                <div className="text-center py-4 text-gray-500 border border-dashed border-gray-300 rounded-lg">
-                                  <p className="text-sm">No theme cards added yet</p>
-                                </div>
-                              ) : (
-                                (field.options || []).map((card, cardIndex) => (
-                                  <div key={cardIndex} className="border border-gray-200 rounded-lg p-3 bg-white">
-                                    <div className="flex items-center justify-between mb-3">
-                                      <h6 className="font-medium text-gray-700">Theme Card #{cardIndex + 1}</h6>
-                                      <button
-                                        type="button"
-                                        onClick={() => removeThemeCardFromEdit(field.id, cardIndex)}
-                                        className="text-red-500 hover:text-red-700 p-1"
-                                      >
-                                        🗑️
-                                      </button>
-                                    </div>
-                                    
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                      <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">
-                                          Theme Name *
-                                        </label>
-                                        <input
-                                          type="text"
-                                          value={card.name || ""}
-                                          onChange={(e) => updateThemeCardInEdit(field.id, cardIndex, { name: e.target.value })}
-                                          className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                          placeholder="e.g., Princess & Prince"
-                                        />
-                                      </div>
-                                      
-                                      <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">
-                                          Theme Image *
-                                        </label>
-                                        <input
-                                          type="file"
-                                          accept="image/*"
-                                          onChange={(e) => {
-                                            const file = e.target.files[0];
-                                            if (file) {
-                                              const reader = new FileReader();
-                                              reader.onload = (e) => {
-                                                updateThemeCardInEdit(field.id, cardIndex, { 
-                                                  image: e.target.result,
-                                                  fileName: file.name 
-                                                });
-                                              };
-                                              reader.readAsDataURL(file);
-                                            }
-                                          }}
-                                          className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                        />
-                                        {card.fileName && (
-                                          <p className="text-xs text-green-600 mt-1">
-                                            ✓ {card.fileName}
-                                          </p>
-                                        )}
-                                      </div>
-                                    </div>
-                                    
-                                    <div className="mt-3">
-                                      <label className="block text-xs font-medium text-gray-700 mb-1">
-                                        Description *
-                                      </label>
-                                      <textarea
-                                        value={card.description || ""}
-                                        onChange={(e) => updateThemeCardInEdit(field.id, cardIndex, { description: e.target.value })}
-                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                        placeholder="e.g., Royal elegance with crowns and castles"
-                                        rows="2"
-                                      />
-                                    </div>
-                                    
-                                    {/* Preview */}
-                                    {(card.image || card.fileName) && (
-                                      <div className="mt-3 p-2 bg-gray-50 rounded-lg">
-                                        <label className="block text-xs font-medium text-gray-700 mb-2">
-                                          Preview:
-                                        </label>
-                                        <div className="flex items-center space-x-3">
-                                          <img
-                                            src={card.image || `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${card.image}`}
-                                            alt={card.name || "Theme"}
-                                            className="w-12 h-12 object-cover rounded-lg border border-gray-200"
-                                            onError={(e) => {
-                                              e.target.style.display = 'none';
-                                            }}
-                                          />
-                                          <div className="flex-1">
-                                            <h6 className="font-medium text-gray-800 text-sm">{card.name || "Theme Name"}</h6>
-                                            <p className="text-xs text-gray-600">{card.description || "Description"}</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                ))
-                              )}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Food Menu Configuration */}
-                        {field.type === 'foodMenu' && (
-                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                            <div className="flex items-center justify-between mb-3">
-                              <h5 className="font-medium text-sm text-gray-700">Food Menu Categories</h5>
-                              <button
-                                type="button"
-                                onClick={() => addFoodCategoryToEdit(field.id)}
-                                className="px-3 py-1 bg-primary text-white text-sm rounded-md hover:bg-primary-dark transition-colors duration-200 flex items-center space-x-2"
-                              >
-                                <span>🍽️</span>
-                                <span>Add Category</span>
-                              </button>
-                            </div>
-                            
-                            <div className="space-y-3">
-                              {(field.options || []).length === 0 ? (
-                                <div className="text-center py-4 text-gray-500 border border-dashed border-gray-300 rounded-lg">
-                                  <p className="text-sm">No food categories added yet</p>
-                                </div>
-                              ) : (
-                                (field.options || []).map((category, categoryIndex) => (
-                                  <div key={categoryIndex} className="border border-gray-200 rounded-lg p-3 bg-white">
-                                    <div className="flex items-center justify-between mb-3">
-                                      <h6 className="font-medium text-gray-700">Category #{categoryIndex + 1}</h6>
-                                      <button
-                                        type="button"
-                                        onClick={() => removeFoodCategoryFromEdit(field.id, categoryIndex)}
-                                        className="text-red-500 hover:text-red-700 p-1"
-                                      >
-                                        🗑️
-                                      </button>
-                                    </div>
-                                    
-                                    <div className="mb-3">
-                                      <label className="block text-xs font-medium text-gray-700 mb-1">
-                                        Category Name *
-                                      </label>
-                                      <input
-                                        type="text"
-                                        value={category.categoryName || ""}
-                                        onChange={(e) => updateFoodCategoryInEdit(field.id, categoryIndex, { categoryName: e.target.value })}
-                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                        placeholder="e.g., Starters, Main Course, Desserts"
-                                      />
-                                    </div>
-                                    
-                                    <div className="space-y-2">
-                                      <div className="flex items-center justify-between">
-                                        <label className="block text-xs font-medium text-gray-700">
-                                          Food Items
-                                        </label>
-                                        <button
-                                          type="button"
-                                          onClick={() => addFoodItemToEdit(field.id, categoryIndex)}
-                                          className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md hover:bg-green-200 transition-colors duration-200"
-                                        >
-                                          + Add Item
-                                        </button>
-                                      </div>
-                                      
-                                      {(category.items || []).length === 0 ? (
-                                        <div className="text-center py-2 text-gray-400 border border-dashed border-gray-200 rounded-lg">
-                                          <p className="text-xs">No food items in this category</p>
-                                        </div>
-                                      ) : (
-                                        (category.items || []).map((item, itemIndex) => (
-                                          <div key={itemIndex} className="border border-gray-200 rounded-lg p-2 bg-gray-50">
-                                            <div className="flex items-center justify-between mb-2">
-                                              <div className="flex items-center space-x-2">
-                                                <h6 className="font-medium text-gray-700 text-xs">Item #{itemIndex + 1}</h6>
-                                                <span className="text-xs px-1 py-0.5 rounded-full bg-gray-100 text-gray-700">
-                                                  {item.dietaryType === 'veg' && '🥬'}
-                                                  {item.dietaryType === 'non-veg' && '🍗'}
-                                                  {item.dietaryType === 'vegan' && '🌱'}
-                                                  {item.dietaryType === 'egg' && '🥚'}
-                                                  {item.dietaryType === 'seafood' && '🐟'}
-                                                  {item.dietaryType === 'jain' && '🕉️'}
-                                                </span>
-                                                {item.isPopular && (
-                                                  <span className="text-xs px-1 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
-                                                    ⭐ Popular
-                                                  </span>
-                                                )}
-                                              </div>
-                                              <button
-                                                type="button"
-                                                onClick={() => removeFoodItemFromEdit(field.id, categoryIndex, itemIndex)}
-                                                className="text-red-500 hover:text-red-700 p-1"
-                                              >
-                                                ✕
-                                              </button>
-                                            </div>
-                                            
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
-                                              <div>
-                                                <label className="block text-xs text-gray-600 mb-1">Item Name *</label>
-                                                <input
-                                                  type="text"
-                                                  value={item.name || ""}
-                                                  onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { name: e.target.value })}
-                                                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                                  placeholder="e.g., Butter Chicken"
-                                                />
-                                              </div>
-                                              <div>
-                                                <label className="block text-xs text-gray-600 mb-1">Dietary Type *</label>
-                                                <select
-                                                  value={item.dietaryType || "veg"}
-                                                  onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { dietaryType: e.target.value })}
-                                                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-                                                >
-                                                  <option value="veg">🥬 Vegetarian</option>
-                                                  <option value="non-veg">🍗 Non-Vegetarian</option>
-                                                  <option value="vegan">🌱 Vegan</option>
-                                                  <option value="egg">🥚 Egg</option>
-                                                  <option value="seafood">🐟 Seafood</option>
-                                                  <option value="jain">🕉️ Jain</option>
-                                                </select>
-                                              </div>
-                                            </div>
-
-                                            <div className="flex items-center space-x-1">
-                                              <input
-                                                type="checkbox"
-                                                checked={item.isPopular || false}
-                                                onChange={(e) => updateFoodItemInEdit(field.id, categoryIndex, itemIndex, { isPopular: e.target.checked })}
-                                                className="w-3 h-3 text-primary focus:ring-primary border-gray-300 rounded"
-                                              />
-                                              <span className="text-xs text-gray-600">Mark as popular</span>
-                                            </div>
-                                          </div>
-                                        ))
-                                      )}
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Validation Rules - Only for number fields */}
-                        {field.type === 'number' && (
-                          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                            <h5 className="font-medium text-sm text-gray-700 mb-3">Validation Rules</h5>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                              <div>
-                                <label className="block text-xs text-gray-600 mb-1">Min Value</label>
-                                <input
-                                  type="number"
-                                  value={field.validation?.min || ""}
-                                  onChange={(e) => updateFieldValidation(field.id, 'min', e.target.value)}
-                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                  placeholder="Min"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-xs text-gray-600 mb-1">Max Value</label>
-                                <input
-                                  type="number"
-                                  value={field.validation?.max || ""}
-                                  onChange={(e) => updateFieldValidation(field.id, 'max', e.target.value)}
-                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                                  placeholder="Max"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                        {/* Use the comprehensive field builder for editing */}
+                        {renderFormFieldBuilder(field, true)}
                       </div>
                     ))}
                   </div>
