@@ -54,4 +54,5 @@ export const internalRoutes = {
   privacyAndPolicy: "/privacy-policy",
   feedbackForm: "/feedback-form",
   customerService: "/customer-service",
+  customPackages: "/custom-packages",
 };

@@ -39,3 +39,282 @@
  .ql-editor  .ql-blank .ql-clipboard .ql-tooltip .ql-hidden{
   background-color: #7575751a !important;
 }
+
+/* Essential Animations for Enhanced CustomPackages Page */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes selection-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes success-bounce {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes progress-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Enhanced card shadows */
+.card-shadow-enhanced {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(139, 92, 246, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-shadow-enhanced:hover {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(139, 92, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Enhanced form elements */
+.form-input-enhanced {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #8b5cf6, #ec4899, #3b82f6) border-box;
+}
+
+.form-input-enhanced:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+/* Enhanced form validation */
+.form-error-enhanced {
+  animation: error-shake 0.5s ease-in-out;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Success state animations */
+.success-state {
+  animation: success-bounce 0.6s ease-out;
+}
+
+/* Theme card enhancements */
+.theme-card-enhanced {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-card-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.theme-card-enhanced:hover::after {
+  left: 100%;
+}
+
+.theme-card-enhanced:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Selection indicator animations */
+.selection-indicator {
+  animation: selection-pulse 2s ease-in-out infinite;
+}
+
+/* Progress bar enhancements */
+.progress-enhanced {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #3b82f6);
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s ease-in-out infinite;
+}
+
+/* Enhanced feature cards */
+.feature-card-magical {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+  backdrop-filter: blur(15px);
+  position: relative;
+}
+
+.feature-card-magical:hover {
+  transform: translateY(-6px) scale(1.02);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(139, 92, 246, 0.1);
+}
+
+.feature-card-magical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.8s ease;
+}
+
+.feature-card-magical:hover::before {
+  left: 100%;
+}
+
+/* Scroll Arrow Animations */
+.scroll-arrow-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.scroll-arrow-pulse {
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.scroll-arrow-glow {
+  animation: scroll-glow 3s ease-in-out infinite;
+}
+
+@keyframes scroll-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
+  }
+}
+
+/* Enhanced scroll arrow container */
+.scroll-arrow-container {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-arrow-container::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  background: linear-gradient(45deg, #8b5cf6, #ec4899, #3b82f6);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.scroll-arrow-container:hover::before {
+  opacity: 0.2;
+}
+
+.scroll-arrow-container:hover {
+  transform: translateY(-2px);
+}

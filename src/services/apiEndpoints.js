@@ -131,6 +131,26 @@ const apiEndpoints = {
     getGallery: "galleryRoute",
     getGalleryForUser: "galleryRoute/gallery",
     deleteGallery: (galleryId) =>`galleryRoute/${galleryId}`,
+    // Custom Events endpoints
+    getCustomEvents: "customEvents",
+    getCustomEventById: (id) => `customEvents/${id}`,
+    getCustomEventsByType: (eventType) => `customEvents/type/${eventType}`,
+    createCustomEvent: "customEvents",
+    updateCustomEvent: (id) => `customEvents/${id}`,
+    toggleActiveStatus: (id) => `customEvents/${id}/toggle-active`,
+    deleteCustomEvent: (id) => `customEvents/${id}`,
+    getCustomEventStats: "customEvents/stats",
+    getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
+    validateFormData: "customEvents/validate",
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+      `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
+    // Public custom events endpoints
+    getPublicCustomEvents: "customEvents/public",
+    getPublicCustomEventsByType: (eventType) => `customEvents/public/type/${eventType}`,
+    getPublicCustomEventNames: "customEvents/public/events/names",
+    getPublicCustomEventById: (id) => `customEvents/public/events/${id}`,
+    // Custom event submissions
+    submitCustomEventForm: "customEventSubmissions/submit",
   },
   admin: {
     register: "admin/registerAdmin",
@@ -204,6 +224,27 @@ const apiEndpoints = {
     getAllErrorLogs: `logerror/logs`,
     getOneError: (id) => `logerror/getOneError/${id}`,
     getAllBookingCta: `bookingCTA/admin/bookings`,
+    // Custom Events Admin endpoints
+    getCustomEvents: "customEvents",
+    getCustomEventById: (id) => `customEvents/${id}`,
+    getCustomEventsByType: (eventType) => `customEvents/type/${eventType}`,
+    createCustomEvent: "customEvents",
+    updateCustomEvent: (id) => `customEvents/${id}`,
+    toggleActiveStatus: (id) => `customEvents/${id}/toggle-active`,
+    deleteCustomEvent: (id) => `customEvents/${id}`,
+    getCustomEventStats: "customEvents/stats",
+    getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
+    validateFormData: "customEvents/validate",
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+      `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
+    // Custom event submissions admin endpoints
+    getAllCustomEventSubmissions: "customEventSubmissions",
+    getCustomEventSubmissionById: (id) => `customEventSubmissions/${id}`,
+    updateCustomEventSubmissionStatus: (id) => `customEventSubmissions/${id}/status`,
+    deleteCustomEventSubmission: (id) => `customEventSubmissions/${id}`,
+    getCustomEventSubmissionsByStatus: (status) => `customEventSubmissions/status/${status}`,
+    getCustomEventSubmissionStats: "customEventSubmissions/stats/overview",
+    getCustomEventSubmissionsNeedingAttention: "customEventSubmissions/admin/needing-attention",
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

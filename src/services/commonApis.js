@@ -57,6 +57,38 @@ const commonApis = {
   getGallery: (queryParams) => apiService.get(apiEndpoints.common.getGallery,queryParams),
   getGalleryForUser: (queryParams) => apiService.get(apiEndpoints.common.getGalleryForUser,queryParams),
   deleteGallery: (galleryId) => apiService.delete(apiEndpoints.common.deleteGallery(galleryId)),
+  // Custom Events APIs
+  getCustomEvents: (queryParams) => apiService.get(apiEndpoints.common.getCustomEvents, queryParams),
+  getCustomEventById: (id) => apiService.get(apiEndpoints.common.getCustomEventById(id)),
+  getCustomEventsByType: (eventType, queryParams) => apiService.get(apiEndpoints.common.getCustomEventsByType(eventType), queryParams),
+  createCustomEvent: (formData) => apiService.post(apiEndpoints.common.createCustomEvent, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+  updateCustomEvent: (id, formData) => apiService.put(apiEndpoints.common.updateCustomEvent(id), formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+  toggleActiveStatus: (id) => apiService.patch(apiEndpoints.common.toggleActiveStatus(id)),
+  deleteCustomEvent: (id) => apiService.delete(apiEndpoints.common.deleteCustomEvent(id)),
+  getCustomEventStats: () => apiService.get(apiEndpoints.common.getCustomEventStats),
+  getThemeCardImages: (id) => apiService.get(apiEndpoints.common.getThemeCardImages(id)),
+  validateFormData: (formData) => apiService.post(apiEndpoints.common.validateFormData, formData),
+  updateThemeCardImage: (templateId, fieldIndex, optionIndex, formData) => 
+    apiService.put(apiEndpoints.common.updateThemeCardImage(templateId, fieldIndex, optionIndex), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  // Public Custom Events APIs
+  getPublicCustomEvents: (queryParams) => apiService.get(apiEndpoints.common.getPublicCustomEvents, queryParams),
+  getPublicCustomEventsByType: (eventType, queryParams) => apiService.get(apiEndpoints.common.getPublicCustomEventsByType(eventType), queryParams),
+  getPublicCustomEventNames: () => apiService.get(apiEndpoints.common.getPublicCustomEventNames),
+  getPublicCustomEventById: (id) => apiService.get(apiEndpoints.common.getPublicCustomEventById(id)),
+  // Custom Event Submissions
+  submitCustomEventForm: (formData) => apiService.post(apiEndpoints.common.submitCustomEventForm, formData),
 };
 
 export default commonApis;

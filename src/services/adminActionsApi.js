@@ -184,6 +184,46 @@ const adminActionsApi = {
     apiService.get(apiEndpoints.adminActions.getOneError(id)),
   getAllBookingCta: (queryParams) =>
     apiService.get(apiEndpoints.adminActions.getAllBookingCta,queryParams),
+  // Custom Events Admin APIs
+  getCustomEvents: (queryParams) => apiService.get(apiEndpoints.adminActions.getCustomEvents, queryParams),
+  getCustomEventById: (id) => apiService.get(apiEndpoints.adminActions.getCustomEventById(id)),
+  getCustomEventsByType: (eventType, queryParams) => apiService.get(apiEndpoints.adminActions.getCustomEventsByType(eventType), queryParams),
+  createCustomEvent: (formData) => apiService.post(apiEndpoints.adminActions.createCustomEvent, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+  updateCustomEvent: (id, formData) => apiService.put(apiEndpoints.adminActions.updateCustomEvent(id), formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+  toggleActiveStatus: (id) => apiService.patch(apiEndpoints.adminActions.toggleActiveStatus(id)),
+  deleteCustomEvent: (id) => apiService.delete(apiEndpoints.adminActions.deleteCustomEvent(id)),
+  getCustomEventStats: () => apiService.get(apiEndpoints.adminActions.getCustomEventStats),
+  getThemeCardImages: (id) => apiService.get(apiEndpoints.adminActions.getThemeCardImages(id)),
+  validateFormData: (formData) => apiService.post(apiEndpoints.adminActions.validateFormData, formData),
+  updateThemeCardImage: (templateId, fieldIndex, optionIndex, formData) => 
+    apiService.put(apiEndpoints.adminActions.updateThemeCardImage(templateId, fieldIndex, optionIndex), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  // Custom Event Submissions Admin APIs
+  getAllCustomEventSubmissions: (queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getAllCustomEventSubmissions, queryParams),
+  getCustomEventSubmissionById: (id) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionById(id)),
+  updateCustomEventSubmissionStatus: (id, formData) => 
+    apiService.patch(apiEndpoints.adminActions.updateCustomEventSubmissionStatus(id), formData),
+  deleteCustomEventSubmission: (id) => 
+    apiService.delete(apiEndpoints.adminActions.deleteCustomEventSubmission(id)),
+  getCustomEventSubmissionsByStatus: (status, queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionsByStatus(status), queryParams),
+  getCustomEventSubmissionStats: () => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionStats),
+  getCustomEventSubmissionsNeedingAttention: (queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionsNeedingAttention, queryParams),
 };
 
 export default adminActionsApi;
