@@ -87,6 +87,8 @@ const commonApis = {
   getPublicCustomEventsByType: (eventType, queryParams) => apiService.get(apiEndpoints.common.getPublicCustomEventsByType(eventType), queryParams),
   getPublicCustomEventNames: () => apiService.get(apiEndpoints.common.getPublicCustomEventNames),
   getPublicCustomEventById: (id) => apiService.get(apiEndpoints.common.getPublicCustomEventById(id)),
+  // Custom Event Submissions
+  submitCustomEventForm: (formData) => apiService.post(apiEndpoints.common.submitCustomEventForm, formData),
 };
 
 export default commonApis;

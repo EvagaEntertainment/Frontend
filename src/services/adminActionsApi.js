@@ -209,6 +209,21 @@ const adminActionsApi = {
         "Content-Type": "multipart/form-data",
       },
     }),
+  // Custom Event Submissions Admin APIs
+  getAllCustomEventSubmissions: (queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getAllCustomEventSubmissions, queryParams),
+  getCustomEventSubmissionById: (id) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionById(id)),
+  updateCustomEventSubmissionStatus: (id, formData) => 
+    apiService.patch(apiEndpoints.adminActions.updateCustomEventSubmissionStatus(id), formData),
+  deleteCustomEventSubmission: (id) => 
+    apiService.delete(apiEndpoints.adminActions.deleteCustomEventSubmission(id)),
+  getCustomEventSubmissionsByStatus: (status, queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionsByStatus(status), queryParams),
+  getCustomEventSubmissionStats: () => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionStats),
+  getCustomEventSubmissionsNeedingAttention: (queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionsNeedingAttention, queryParams),
 };
 
 export default adminActionsApi;

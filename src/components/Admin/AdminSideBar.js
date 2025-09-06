@@ -183,6 +183,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
         },
         { id: "Feedback", label: "Feedback Form", icon: <FaWpforms /> },
         { id: "BookingCTA", label: "Booking CTA", icon: <TbBrandBooking  /> },
+        { id: "AdminCustomEventSubmissions", label: "Event Submissions", icon: <FaWpforms /> },
       ],
     },
     { id: "Admin Users", label: "Roles", icon: <FaUserShield /> },

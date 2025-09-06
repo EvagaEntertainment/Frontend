@@ -149,6 +149,8 @@ const apiEndpoints = {
     getPublicCustomEventsByType: (eventType) => `customEvents/public/type/${eventType}`,
     getPublicCustomEventNames: "customEvents/public/events/names",
     getPublicCustomEventById: (id) => `customEvents/public/events/${id}`,
+    // Custom event submissions
+    submitCustomEventForm: "customEventSubmissions/submit",
   },
   admin: {
     register: "admin/registerAdmin",
@@ -235,6 +237,14 @@ const apiEndpoints = {
     validateFormData: "customEvents/validate",
     updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
       `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
+    // Custom event submissions admin endpoints
+    getAllCustomEventSubmissions: "customEventSubmissions",
+    getCustomEventSubmissionById: (id) => `customEventSubmissions/${id}`,
+    updateCustomEventSubmissionStatus: (id) => `customEventSubmissions/${id}/status`,
+    deleteCustomEventSubmission: (id) => `customEventSubmissions/${id}`,
+    getCustomEventSubmissionsByStatus: (status) => `customEventSubmissions/status/${status}`,
+    getCustomEventSubmissionStats: "customEventSubmissions/stats/overview",
+    getCustomEventSubmissionsNeedingAttention: "customEventSubmissions/admin/needing-attention",
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

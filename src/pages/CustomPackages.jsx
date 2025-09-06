@@ -63,8 +63,8 @@ const getDisplayName = (value, type) => {
   return value;
 };
 
-// Success Modal Component
-const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
+// Success/Error Modal Component
+const SuccessModal = ({ isOpen, onClose, isSuccess, title, message, buttonText }) => {
   if (!isOpen) return null;
 
   return (
@@ -83,19 +83,31 @@ const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full -translate-y-10 translate-x-10 opacity-60"></div>
-        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full translate-y-8 -translate-x-8 opacity-60"></div>
+        <div className={`absolute top-0 right-0 w-20 h-20 rounded-full -translate-y-10 translate-x-10 opacity-60 ${
+          isSuccess 
+            ? 'bg-gradient-to-br from-green-100 to-emerald-100' 
+            : 'bg-gradient-to-br from-red-100 to-pink-100'
+        }`}></div>
+        <div className={`absolute bottom-0 left-0 w-16 h-16 rounded-full translate-y-8 -translate-x-8 opacity-60 ${
+          isSuccess 
+            ? 'bg-gradient-to-br from-green-100 to-emerald-100' 
+            : 'bg-gradient-to-br from-red-100 to-pink-100'
+        }`}></div>
         
         <div className="relative z-10 text-center">
-          {/* Success Icon */}
-          <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+          {/* Icon */}
+          <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg ${
+            isSuccess 
+              ? 'bg-gradient-to-br from-green-500 to-emerald-500' 
+              : 'bg-gradient-to-br from-red-500 to-pink-500'
+          }`}>
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
               className="text-white text-3xl"
             >
-              ✓
+              {isSuccess ? '✓' : '⚠️'}
             </motion.div>
           </div>
           
@@ -104,7 +116,9 @@ const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-2xl font-bold text-gray-800 mb-4"
+            className={`text-2xl font-bold mb-4 ${
+              isSuccess ? 'text-gray-800' : 'text-red-800'
+            }`}
           >
             {title}
           </motion.h3>
@@ -114,18 +128,24 @@ const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-gray-600 mb-8 leading-relaxed"
+            className={`mb-8 leading-relaxed ${
+              isSuccess ? 'text-gray-600' : 'text-red-600'
+            }`}
           >
             {message}
           </motion.p>
           
-          {/* Success Button */}
+          {/* Button */}
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
             onClick={onClose}
-            className="w-full px-8 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+            className={`w-full px-8 py-4 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+              isSuccess 
+                ? 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700'
+                : 'bg-gradient-to-r from-red-600 via-pink-600 to-rose-600 hover:from-red-700 hover:via-pink-700 hover:to-rose-700'
+            }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -134,9 +154,15 @@ const SuccessModal = ({ isOpen, onClose, title, message, buttonText }) => {
           
           {/* Decorative elements */}
           <div className="flex justify-center space-x-2 mt-6">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${
+              isSuccess ? 'bg-green-400' : 'bg-red-400'
+            }`}></div>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${
+              isSuccess ? 'bg-emerald-400' : 'bg-pink-400'
+            }`} style={{animationDelay: '0.2s'}}></div>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${
+              isSuccess ? 'bg-teal-400' : 'bg-rose-400'
+            }`} style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
       </motion.div>
@@ -159,6 +185,8 @@ function CustomPackages() {
   const [showRefreshConfirm, setShowRefreshConfirm] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
 
   // Custom Events API state
@@ -174,6 +202,7 @@ function CustomPackages() {
   // API hooks
   const { callApi: getEventNames } = useServices(commonApis.getPublicCustomEventNames);
   const { callApi: getEventDetails } = useServices(commonApis.getPublicCustomEventById);
+  const { callApi: submitCustomEventForm } = useServices(commonApis.submitCustomEventForm);
 
   // Steps array - dynamic based on custom event form fields
   const getSteps = () => {
@@ -182,7 +211,8 @@ function CustomPackages() {
       const customFieldSteps = customEventFormFields.map(field => field.label);
       return ['Event Type', ...customFieldSteps];
     }
-    return ['Event Type']; // Simplified flow when no custom event selected
+    // When no custom event selected, we need at least 2 steps to show Next button
+    return ['Event Type', 'Additional Details']; // This ensures Next button shows
   };
   
   const steps = getSteps();
@@ -201,7 +231,8 @@ function CustomPackages() {
     }
     
     const descriptions = {
-      1: 'Choose the type of event you\'re planning'
+      1: 'Choose the type of event you\'re planning',
+      2: 'Please select a custom event to continue with the form'
     };
     return descriptions[stepNumber] || '';
   };
@@ -220,7 +251,8 @@ function CustomPackages() {
     }
     
     const titles = {
-      1: 'Event Type'
+      1: 'Event Type',
+      2: 'Select Event'
     };
     return titles[currentStep] || '';
   };
@@ -246,48 +278,25 @@ function CustomPackages() {
     formValues.guestCount || formValues.eventDate || formValues.budgetRange || formValues.specialRequirements || 
     (formValues.foodItems && formValues.foodItems.length > 0) || hasCustomFormData;
 
-  // Debug: Log form data state
-  useEffect(() => {
-    console.log('Form data state:', {
-      selectedEventType,
-      selectedAge,
-      selectedTheme,
-      selectedFoodType,
-      selectedCourses,
-      formValues,
-      hasFormData
-    });
-  }, [selectedEventType, selectedAge, selectedTheme, selectedFoodType, selectedCourses, hasFormData, formValues]);
 
   // Fetch custom event names on component mount
   useEffect(() => {
     const fetchCustomEventNames = async () => {
       try {
-        console.log('Starting to fetch custom event names...');
         setIsLoadingEvents(true);
         setCustomEventError(null);
         const response = await getEventNames();
         
-        console.log('Raw API response:', response);
-        console.log('Response success:', response?.success);
-        console.log('Response data:', response?.data);
-        console.log('Events array:', response?.data?.events);
-        
         if (response && response.success) {
-          console.log('Custom events API response:', response);
           const events = response.data?.events || [];
-          console.log('Setting custom event names:', events);
           setCustomEventNames(events);
         } else {
-          console.log('API call failed or returned unsuccessful response');
           setCustomEventError('Failed to fetch custom events');
         }
       } catch (err) {
-        console.error('Error fetching custom event names:', err);
         setCustomEventError('Error fetching custom events');
       } finally {
         setIsLoadingEvents(false);
-        console.log('Finished loading custom events');
       }
     };
 
@@ -314,12 +323,10 @@ function CustomPackages() {
   useEffect(() => {
     // Store the current URL
     const currentUrl = window.location.href;
-    console.log('Setting up navigation protection for URL:', currentUrl);
     
     // Function to check if URL changed (indicating navigation)
     const checkNavigation = () => {
       if (window.location.href !== currentUrl) {
-        console.log('Navigation detected! URL changed from', currentUrl, 'to', window.location.href);
         // URL changed, show navigation confirmation
         setShowBackConfirm(true);
         // Reset URL to prevent actual navigation
@@ -332,7 +339,6 @@ function CustomPackages() {
 
     // Enhanced beforeunload handler
     const handleBeforeUnload = (e) => {
-      console.log('Beforeunload event triggered');
       // Set flag for refresh detection
       sessionStorage.setItem('showRefreshModal', 'true');
       
@@ -344,7 +350,6 @@ function CustomPackages() {
 
     // Enhanced popstate handler
     const handlePopState = (e) => {
-      console.log('Popstate event triggered');
       e.preventDefault();
       setShowBackConfirm(true);
       // Push current state back
@@ -420,13 +425,11 @@ function CustomPackages() {
   const handleCustomEventSelection = async (eventId) => {
     // Prevent multiple API calls for the same event
     if (selectedEventId === eventId && selectedCustomEvent && !isLoadingEventDetails) {
-      console.log('Event already selected, skipping API call');
       return;
     }
     
     // Prevent multiple API calls if already loading this event
     if (loadingEventId === eventId) {
-      console.log('Event already loading, skipping API call');
       return;
     }
     
@@ -436,14 +439,11 @@ function CustomPackages() {
       setCustomEventError(null);
       setSelectedEventId(eventId); // Set the selected event ID immediately
       
-      console.log('Fetching event details for:', eventId);
       const response = await getEventDetails(eventId);
       
       if (response && response.success) {
-        console.log('Custom event details response:', response.data);
         setSelectedCustomEvent(response.data);
         setCustomEventFormFields(response.data.eventFormFields || []);
-        console.log('Custom event form fields set:', response.data.eventFormFields || []);
         // Set the event type to the custom event name
         setSelectedEventType(response.data.eventType || response.data.templateName);
         setValue('eventType', response.data.eventType || response.data.templateName);
@@ -453,7 +453,6 @@ function CustomPackages() {
         setSelectedEventId(null); // Reset on error
       }
     } catch (err) {
-      console.error('Error fetching event details:', err);
       setCustomEventError('Error fetching event details');
       setSelectedEventId(null); // Reset on error
     } finally {
@@ -707,25 +706,32 @@ function CustomPackages() {
 
   const handleSuccessClose = () => {
     setShowSuccessPopup(false);
-    // Reset form and navigate to home page
-    setCurrentStep(1);
-    setSelectedEventType('');
-    setSelectedEventId(null);
-    setLoadingEventId(null);
-    setSelectedCustomEvent(null);
-    setCustomEventFormFields([]);
-    setSelectedAge('');
-    setSelectedTheme('');
-    setSelectedFoodType('');
-    setSelectedCourses([]);
-    // Reset form fields
-    setValue('eventType', '');
-    setValue('ageGroup', '');
-    setValue('theme', '');
-    setValue('foodType', '');
-    setValue('courses', []);
-    // Navigate to home page
-    navigate('/');
+    setSubmissionError(null);
+    setSubmissionSuccess(false);
+    
+    // Only reset form and navigate if submission was successful
+    if (submissionSuccess) {
+      // Reset form and navigate to home page
+      setCurrentStep(1);
+      setSelectedEventType('');
+      setSelectedEventId(null);
+      setLoadingEventId(null);
+      setSelectedCustomEvent(null);
+      setCustomEventFormFields([]);
+      setSelectedAge('');
+      setSelectedTheme('');
+      setSelectedFoodType('');
+      setSelectedCourses([]);
+      // Reset form fields
+      setValue('eventType', '');
+      setValue('ageGroup', '');
+      setValue('theme', '');
+      setValue('foodType', '');
+      setValue('courses', []);
+      // Navigate to home page
+      navigate('/');
+    }
+    // If submission failed, just close the modal and let user try again
   };
 
   const confirmRefresh = () => {
@@ -753,32 +759,50 @@ function CustomPackages() {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
+      setSubmissionError(null);
+      setSubmissionSuccess(false);
       
-      // Prepare form data with event ID
-      const formData = {
-        ...data,
-        eventId: selectedEventId, // Include the selected event ID
-        eventType: selectedEventType,
-        customEventDetails: selectedCustomEvent,
-        submittedAt: new Date().toISOString()
+      // Validate that we have a custom event ID
+      if (!selectedEventId) {
+        throw new Error('No custom event selected. Please select an event type first.');
+      }
+      
+      // Prepare form data for API submission
+      // Backend only expects customEventId and formData
+      const submissionData = {
+        customEventId: selectedEventId, // Required: The custom event template ID
+        formData: data // Required: The actual form responses
       };
       
-      console.log('Form Data with Event ID:', formData);
-      console.log('Custom Event Form Fields:', customEventFormFields);
-      console.log('Selected Custom Event:', selectedCustomEvent);
+      // Call the actual API using the useServices hook
+      const response = await submitCustomEventForm(submissionData);
       
-      // Simulate API call (replace with actual API integration)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Show success popup
+      // Set success state and show popup
+      setSubmissionSuccess(true);
       setShowSuccessPopup(true);
       
-      // Here you'll integrate with your actual API later
-      // Example: await submitCustomEventRequest(formData);
-      
     } catch (error) {
-      console.error('Error submitting form:', error);
-      // Handle error (show error message, etc.)
+      // Handle different types of errors
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      
+      if (error.response) {
+        // Server responded with error status
+        errorMessage = error.response.data?.message || 'Failed to submit form. Please try again.';
+      } else if (error.request) {
+        // Network error
+        errorMessage = 'Network error. Please check your connection and try again.';
+      } else {
+        // Other error
+        errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+      }
+      
+      // Set error state
+      setSubmissionError(errorMessage);
+      setSubmissionSuccess(false);
+      
+      // Show error popup instead of success
+      setShowSuccessPopup(true);
+      
     } finally {
       setIsSubmitting(false);
     }
@@ -839,14 +863,6 @@ function CustomPackages() {
         </div>
       )}
 
-      {/* Debug Information */}
-      <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-        <p className="text-sm text-blue-600">
-          Debug: Loading: {isLoadingEvents ? 'Yes' : 'No'} | 
-          Events Count: {customEventNames.length} | 
-          Error: {customEventError || 'None'}
-        </p>
-      </div>
 
       <div className="space-y-3">
         {/* Custom Events from API */}
@@ -906,144 +922,14 @@ function CustomPackages() {
           })
         ) : (
           !isLoadingEvents && (
-            <div className="space-y-3">
-              {/* Sample data for testing */}
-              <div className="text-center py-4 mb-4">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-gray-400">📝</span>
-                </div>
-                <p className="text-gray-500 mb-4">No custom event templates available from API</p>
-                <p className="text-sm text-gray-400">Showing sample data for testing:</p>
+            <div className="text-center py-12">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-gray-400">📝</span>
               </div>
-              
-              {/* Sample Event Cards */}
-              {[
-                { _id: 'sample1', eventType: 'Birthday Party', templateName: 'Birthday Party' },
-                { _id: 'sample2', eventType: 'Wedding', templateName: 'Wedding' },
-                { _id: 'sample3', eventType: 'Corporate Event', templateName: 'Corporate Event' }
-              ].map((sampleEvent) => {
-                const isSelected = selectedEventId === sampleEvent._id;
-                
-                return (
-                  <motion.div
-                    key={sampleEvent._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    whileHover={{ scale: 1.02, y: -4 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
-                      isSelected
-                        ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
-                        : 'border-gray-200 hover:border-purple-300 bg-white'
-                    }`}
-                    onClick={() => {
-                      // For sample data, just set the selection without API call
-                      setSelectedEventId(sampleEvent._id);
-                      setSelectedEventType(sampleEvent.eventType);
-                      setValue('eventType', sampleEvent.eventType);
-                      clearStepError('eventType');
-                    }}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                        isSelected
-                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
-                          : 'bg-gray-100 text-gray-400'
-                      }`}>
-                        <span className={`text-lg ${
-                          isSelected ? 'animate-pulse' : ''
-                        }`}>
-                          {isSelected ? '✓' : '🎉'}
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <span className="font-semibold text-gray-800 text-lg">
-                          {sampleEvent.eventType}
-                        </span>
-                        <p className="text-sm text-gray-500">Sample Event (No API data)</p>
-                      </div>
-                      
-                      {/* Selection indicator */}
-                      {isSelected && (
-                        <div className="ml-auto">
-                          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                );
-              })}
+              <p className="text-gray-500 mb-4">No custom event templates available</p>
+              <p className="text-sm text-gray-400">Please try again later or contact support</p>
             </div>
           )
-        )}
-        
-        {/* Always show additional sample data for testing - remove this after API is working */}
-        {customEventNames.length === 0 && !isLoadingEvents && (
-          <div className="space-y-3 mt-6">
-            <div className="text-center py-2 mb-4">
-              <p className="text-sm text-blue-600 font-medium">🔧 Development Mode: Additional sample data</p>
-            </div>
-            
-            {/* Additional Sample Event Cards for testing */}
-            {[
-              { _id: 'dev1', eventType: 'Baby Shower', templateName: 'Baby Shower' },
-              { _id: 'dev2', eventType: 'Anniversary', templateName: 'Anniversary' },
-              { _id: 'dev3', eventType: 'Graduation Party', templateName: 'Graduation Party' }
-            ].map((sampleEvent) => {
-              const isSelected = selectedEventId === sampleEvent._id;
-              
-              return (
-                <motion.div
-                  key={sampleEvent._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 hover-lift card-shadow-enhanced ${
-                    isSelected
-                      ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-pink-50 shadow-purple-200'
-                      : 'border-gray-200 hover:border-purple-300 bg-white'
-                  }`}
-                  onClick={() => {
-                    // For sample data, just set the selection without API call
-                    setSelectedEventId(sampleEvent._id);
-                    setSelectedEventType(sampleEvent.eventType);
-                    setValue('eventType', sampleEvent.eventType);
-                    clearStepError('eventType');
-                  }}
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                      isSelected
-                        ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg scale-110' 
-                        : 'bg-gray-100 text-gray-400'
-                    }`}>
-                      <span className={`text-lg ${
-                        isSelected ? 'animate-pulse' : ''
-                      }`}>
-                        {isSelected ? '✓' : '🎉'}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <span className="font-semibold text-gray-800 text-lg">
-                        {sampleEvent.eventType}
-                      </span>
-                      <p className="text-sm text-gray-500">Sample Event (No API data)</p>
-                    </div>
-                    
-                    {/* Selection indicator */}
-                    {isSelected && (
-                      <div className="ml-auto">
-                        <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full selection-indicator"></div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
         )}
       </div>
 
@@ -1577,7 +1463,7 @@ function CustomPackages() {
                     try {
                       e.target.showPicker();
                     } catch (error) {
-                      console.log('showPicker not supported, using focus fallback');
+                      // showPicker not supported, using focus fallback
                     }
                   }
                 }}
@@ -1587,7 +1473,7 @@ function CustomPackages() {
                     try {
                       e.target.showPicker();
                     } catch (error) {
-                      console.log('showPicker not supported, using focus fallback');
+                      // showPicker not supported, using focus fallback
                     }
                   }
                 }}
@@ -1907,7 +1793,16 @@ function CustomPackages() {
                       const courseData = field.options?.find(option => 
                         normalizeCourseName(option.categoryName) === normalizedCourse
                       );
-                      const foodItems = courseData?.items || [];
+                      const allFoodItems = courseData?.items || [];
+                      
+                      // Filter food items by selected dietary type
+                      const selectedDietaryType = watch(`${field.name}.dietaryType`);
+                      const normalizedSelectedDietary = normalizeDietaryType(selectedDietaryType);
+                      
+                      const filteredFoodItems = allFoodItems.filter(item => {
+                        const itemDietaryType = normalizeDietaryType(item.dietaryType);
+                        return itemDietaryType === normalizedSelectedDietary;
+                      });
                       
                       return (
                         <div key={course} className="mb-6 border border-gray-200 rounded-lg p-4">
@@ -1916,10 +1811,13 @@ function CustomPackages() {
                               <span className="text-purple-600 text-sm">🥘</span>
                             </span>
                             <span>{course}</span>
+                            <span className="text-sm text-gray-500">
+                              ({filteredFoodItems.length} {normalizedSelectedDietary} items)
+                            </span>
                           </h4>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {foodItems.length > 0 ? 
-                              foodItems.map((item, itemIndex) => (
+                            {filteredFoodItems.length > 0 ? 
+                              filteredFoodItems.map((item, itemIndex) => (
                                 <label key={itemIndex} className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 border border-gray-100">
                                   <input
                                     type="checkbox"
@@ -1930,19 +1828,11 @@ function CustomPackages() {
                                   <div className="flex-1">
                                     <div className="flex items-center justify-between">
                                       <span className="text-gray-700 font-medium">{item.name}</span>
-                                      {item.price && (
-                                        <span className="text-purple-600 font-bold text-sm">₹{item.price}</span>
-                                      )}
                                     </div>
                                     {item.description && (
                                       <p className="text-xs text-gray-500 mt-1">{item.description}</p>
                                     )}
                                     <div className="flex items-center space-x-2 mt-1">
-                                      {item.dietaryType && (
-                                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                          {item.dietaryType}
-                                        </span>
-                                      )}
                                       {item.spiceLevel && (
                                         <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
                                           {item.spiceLevel} spice
@@ -1957,7 +1847,9 @@ function CustomPackages() {
                                   </div>
                                 </label>
                               )) : 
-                              <p className="text-gray-500 text-sm col-span-2">No specific items available for {course}</p>
+                              <p className="text-gray-500 text-sm col-span-2">
+                                No {normalizedSelectedDietary} items available for {course}
+                              </p>
                             }
                           </div>
                         </div>
@@ -1966,7 +1858,7 @@ function CustomPackages() {
                     
                     {/* Help Text */}
                     <p className="text-xs text-gray-500 mt-3">
-                      💡 Select the specific food items you'd like for each course. This helps us customize your menu better.
+                      💡 Select the specific food items you'd like for each course. Only {watch(`${field.name}.dietaryType`) ? getDisplayName(watch(`${field.name}.dietaryType`), 'dietary') : 'dietary'} items are shown based on your selection.
                     </p>
                   </motion.div>
                 )}
@@ -2092,7 +1984,7 @@ function CustomPackages() {
                       try {
                         e.target.showPicker();
                       } catch (error) {
-                        console.log('showPicker not supported, using focus fallback');
+                        // showPicker not supported, using focus fallback
                       }
                     }
                   }}
@@ -2102,7 +1994,7 @@ function CustomPackages() {
                       try {
                         e.target.showPicker();
                       } catch (error) {
-                        console.log('showPicker not supported, using focus fallback');
+                        // showPicker not supported, using focus fallback
                       }
                     }
                   }}
@@ -2255,6 +2147,31 @@ function CustomPackages() {
     switch (currentStep) {
       case 1:
         return renderStep1();
+      case 2:
+        // Show message to select an event
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <div className="text-center py-12">
+              <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-4xl">🎯</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">Select an Event Type</h2>
+              <p className="text-gray-600 text-lg mb-6">
+                Please go back and select a custom event type to continue with the form.
+              </p>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 max-w-md mx-auto">
+                <p className="text-yellow-800 text-sm">
+                  💡 Choose from the available custom event templates to access personalized form fields.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        );
       default:
         return renderStep1();
     }
@@ -2662,17 +2579,6 @@ function CustomPackages() {
 
         {/* Enhanced Right Column - Form */}
         <div className="w-full lg:w-3/5 p-8 relative">
-          {/* Enhanced Debug Section */}
-          <div className="flex justify-end mb-8">
-            <div className="flex items-center space-x-4">
-              {/* Enhanced debug indicator */}
-              {hasFormData && (
-                <div className="px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 text-xs rounded-full border border-yellow-300 shadow-sm">
-                  ✨ Form has data
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Enhanced Form Container */}
           <div className="max-w-2xl">
@@ -2699,7 +2605,7 @@ function CustomPackages() {
             </div>
 
             {/* Enhanced Form Content */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
               <AnimatePresence mode="wait">
                 {renderStepContent()}
               </AnimatePresence>
@@ -2725,23 +2631,29 @@ function CustomPackages() {
                   <motion.button
                     type="button"
                     onClick={nextStep}
-                    className="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white rounded-xl font-medium hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={!selectedEventType} // Disable if no event selected
+                    className={`px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced ${
+                      !selectedEventType
+                        ? 'bg-gray-400 cursor-not-allowed opacity-50'
+                        : 'bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700'
+                    }`}
+                    whileHover={!selectedEventType ? {} : { scale: 1.02 }}
+                    whileTap={!selectedEventType ? {} : { scale: 0.98 }}
                   >
                     Next →
                   </motion.button>
                 ) : (
                   <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
+                    type="button"
+                    onClick={handleSubmit(onSubmit)}
+                    disabled={isSubmitting || !selectedEventType} // Disable if no event selected
                     className={`px-10 py-4 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced ${
-                      isSubmitting
-                        ? 'bg-gray-400 cursor-not-allowed'
+                      isSubmitting || !selectedEventType
+                        ? 'bg-gray-400 cursor-not-allowed opacity-50'
                         : 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700'
                     }`}
-                    whileHover={isSubmitting ? {} : { scale: 1.02 }}
-                    whileTap={isSubmitting ? {} : { scale: 0.98 }}
+                    whileHover={isSubmitting || !selectedEventType ? {} : { scale: 1.02 }}
+                    whileTap={isSubmitting || !selectedEventType ? {} : { scale: 0.98 }}
                   >
                     {isSubmitting ? (
                       <div className="flex items-center space-x-2">
@@ -2790,13 +2702,17 @@ function CustomPackages() {
         cancelText="Stay Here"
       />
 
-      {/* Success Popup Modal */}
+      {/* Success/Error Popup Modal */}
       <SuccessModal
         isOpen={showSuccessPopup}
         onClose={handleSuccessClose}
-        title="Request Submitted Successfully!"
-        message="Your response has been saved. We will contact you soon with more details about your custom event package."
-        buttonText="Great! Take me home"
+        isSuccess={submissionSuccess}
+        title={submissionSuccess ? "Request Submitted Successfully!" : "Submission Failed"}
+        message={submissionSuccess 
+          ? "Your response has been saved. We will contact you soon with more details about your custom event package."
+          : submissionError || "An unexpected error occurred. Please try again."
+        }
+        buttonText={submissionSuccess ? "Great! Take me home" : "Try Again"}
       />
     </div>
   );
@@ -3213,7 +3129,7 @@ const NavigationButtons = ({
       </motion.button>
     ) : (
       <motion.button
-        type="submit"
+        type="button"
         onClick={onSubmit}
         className="px-10 py-4 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 btn-enhanced"
         whileHover={{ scale: 1.02 }}
