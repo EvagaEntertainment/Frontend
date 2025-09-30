@@ -34,72 +34,131 @@ const BookingForm = () => {
   const navigate = useNavigate();
   const bookingCtaApi = useServices(commonApis.bookingCta);
 
-  const onSubmit = async (data) => {
-    try {
-      setLoading(true);
+const onSubmit = async (data) => {
+  try {
+    setLoading(true);
 
-      // 1. Prepare FormData for your original API
-      const formdata = new FormData();
-      formdata.append("name", data.name);
-      formdata.append("phone", data.phone);
-      formdata.append("email", data.email);
-      formdata.append("eventType", data.eventType);
-      formdata.append("eventLocation", data.eventLocation);
-      formdata.append("eventMonth", data.eventMonth);
-      formdata.append("pageCatgeory", category ?? "");
-      if (data.sku) {
-        formdata.append("sku", data.sku);
-      }
-      // formdata.append(
-      //   "preferredDate",
-      //   new Date(data.preferredDate).toISOString()
-      // );
-
-      const storedUtms = sessionStorage.getItem("utmParams");
-      const utmParams = storedUtms
-        ? JSON.parse(storedUtms)
-        : {
-            utm_source: null,
-            utm_medium: null,
-            utm_campaign: null,
-            utm_term: null,
-            utm_content: null,
-          };
-
-      // 3. Call your original API
-      const response = await bookingCtaApi.callApi(formdata);
-
-      // 4. Prepare Make.com payload (with UTM)
-      const webhookPayload = {
-        ...data,
-        interestedDate: data?.eventMonth,
-        submittedAt: new Date().toISOString(),
-        device: navigator.userAgent,
-        utm_params: utmParams,
-      };
-
-      // 5. Send to Make.com (using fetch instead of axios to avoid CORS issues)
-      const makeResponse = await fetch(
-        "https://hook.us2.make.com/kuo3ufmp7udaos5gcsk7fvnvcgyw2b3k",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(webhookPayload),
-        }
-      );
-
-      if (!makeResponse.ok) throw new Error("Make webhook failed");
-
-      if (response.success) {
-        navigate("/thank-you");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error(error?.message || "Submission failed");
-    } finally {
-      setLoading(false);
+    // 1. Prepare FormData for your original API
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("phone", data.phone);
+    formdata.append("email", data.email);
+    formdata.append("eventType", data.eventType);
+    formdata.append("eventLocation", data.eventLocation);
+    formdata.append("eventMonth", data.eventMonth);
+    formdata.append("pageCatgeory", category ?? "");
+    if (data.sku) {
+      formdata.append("sku", data.sku);
     }
-  };
+
+    // 2. Get UTM parameters from sessionStorage
+    const storedUtms = sessionStorage.getItem("utmParams");
+    const utmParams = storedUtms
+      ? JSON.parse(storedUtms)
+      : {
+          utm_source: null,
+          utm_medium: null,
+          utm_campaign: null,
+          utm_term: null,
+          utm_content: null,
+        };
+
+    // 3. Call your original API
+    const response = await bookingCtaApi.callApi(formdata);
+
+    // 4. Prepare LeadSquared payload
+    const leadSquaredPayload = [
+      {
+        "Attribute": "FirstName",
+        "Value": data.name
+      },
+      {
+        "Attribute": "EmailAddress",
+        "Value": data.email
+      },
+      {
+        "Attribute": "Phone",
+        "Value": data.phone
+      },
+      {
+        "Attribute": "mx_Event_Type",
+        "Value": data.eventType
+      },
+      {
+        "Attribute": "mx_event_location",
+        "Value": data.eventLocation
+      },
+      {
+        "Attribute": "mx_Event_Month",
+        "Value": data.eventMonth
+      },
+      {
+        "Attribute": "Source",
+        "Value": "Website"
+      },
+      {
+        "Attribute": "mx_UTM_Source",
+        "Value": utmParams.utm_source || ""
+      },
+      {
+        "Attribute": "mx_UTM_Campaign",
+        "Value": utmParams.utm_campaign || ""
+      },
+      {
+        "Attribute": "mx_UTM_Medium",
+        "Value": utmParams.utm_medium || ""
+      }
+    ];
+
+    // 5. Send to LeadSquared API (using headers method - recommended)
+    const leadSquaredResponse = await fetch(
+      'https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Capture',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-LSQ-AccessKey': 'u$r1fbb549aa49dc319b4fbb20a9bd43cb3', 
+          'x-LSQ-SecretKey': '24554c552dac6a85f4fb1944016f9ee2a9f21d42' 
+        },
+        body: JSON.stringify(leadSquaredPayload)
+      }
+    );
+
+    if (!leadSquaredResponse.ok) {
+      throw new Error('LeadSquared API failed');
+    }
+
+    // 6. Prepare Make.com payload (with UTM)
+    const webhookPayload = {
+      ...data,
+      interestedDate: data?.eventMonth,
+      submittedAt: new Date().toISOString(),
+      device: navigator.userAgent,
+      utm_params: utmParams,
+    };
+
+    // 7. Send to Make.com
+    const makeResponse = await fetch(
+      "https://hook.us2.make.com/kuo3ufmp7udaos5gcsk7fvnvcgyw2b3k",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(webhookPayload),
+      }
+    );
+
+    if (!makeResponse.ok) throw new Error("Make webhook failed");
+
+    if (response.success) {
+      navigate("/thank-you");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error(error?.message || "Submission failed");
+  } finally {
+    setLoading(false);
+  }
+};
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
