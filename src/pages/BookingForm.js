@@ -23,8 +23,6 @@ const BookingForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm({
     defaultValues: {
       sku: sku || "",
@@ -109,7 +107,7 @@ const BookingForm = () => {
           Value: utmParams.utm_medium || "",
         },
       ];
-
+      console.log("submitting leadSquaredResponse");
       // 5. Send to LeadSquared API (using headers method - recommended)
       const leadSquaredResponse = await fetch(
         "https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Capture",

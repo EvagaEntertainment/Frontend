@@ -21,10 +21,12 @@ function Wishlist() {
     const response = await wishlist.callApi(userId);
     dispatch(addWishlist(response?.wishlist));
   };
+  
   useEffect(() => {
     if (auth?.isAuthenticated && auth?.role === "user") {
       handleGetWishList(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isAuthenticated, auth.role, userId]);
   if (!auth?.isAuthenticated || auth?.role !== "user") {
     return (
