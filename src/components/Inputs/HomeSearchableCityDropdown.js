@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import SearchableInput from "./SearchableInput";
+// import SearchableInput from "./SearchableInput";
 import { CiLocationOn } from "react-icons/ci";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import useFetchCities from "../../hooks/useFetchCities";
+// import { MdKeyboardArrowDown } from "react-icons/md";
+// import useFetchCities from "../../hooks/useFetchCities";
 import Cookies from "js-cookie";
 
 function HomeSearchableCityDropdown() {
   // const { data: cities, isLoading, error } = useFetchCities([]);
   const [selectedCity, setSelectedCity] = useState("");
+console.log(selectedCity);
 
   useEffect(() => {
     const storedCity = Cookies.get("selectedCity");
@@ -16,10 +17,10 @@ function HomeSearchableCityDropdown() {
     }
   }, []);
 
-  const handleCityChange = (city) => {
-    setSelectedCity(city.name);
-    Cookies.set("selectedCity", city.name);
-  };
+  // const handleCityChange = (city) => {
+  //   setSelectedCity(city.name);
+  //   Cookies.set("selectedCity", city.name);
+  // };
 
   return (
     <div className="w-[200px] h-[45px] flex justify-start bg-gray-100 gap-2 items-center rounded-md text-primary cursor-pointer">

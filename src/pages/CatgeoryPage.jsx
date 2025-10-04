@@ -33,6 +33,7 @@ function CatgeoryPage() {
 
   useEffect(() => {
     if (category) categoryWissPackageApiHandle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   // Skeleton loader state

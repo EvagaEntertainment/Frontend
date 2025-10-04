@@ -1,6 +1,5 @@
 import React from "react";
 import BookingForm from "../../pages/BookingForm";
-import bg from "../../assets/background.webp";
 function BookingSection() {
   return (
     <section
