@@ -3,7 +3,9 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm use 18
+        # Install Node 20 and then switch to it
+        - nvm install 20
+        - nvm use 20
         - node -v
         # Clean up conflicting dependencies
         - yarn remove @typescript-eslint/eslint-plugin || true
@@ -15,11 +17,8 @@ frontend:
     build:
       commands:
         # Build with maximum memory allocation and optimizations
-        - NODE_OPTIONS=--max-old-space-size=8192
-          GENERATE_SOURCEMAP=false
-          INLINE_RUNTIME_CHUNK=false
-          yarn build
-          
+        - NODE_OPTIONS=--max-old-space-size=8192 GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false yarn build
+        
   artifacts:
     baseDirectory: build
     files:
