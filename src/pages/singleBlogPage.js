@@ -17,6 +17,7 @@ function SingleBlogPage() {
     if (blogId) {
       getOneBlogApiHandle();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogId]);
   return (
     <Box

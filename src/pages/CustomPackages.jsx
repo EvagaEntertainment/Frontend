@@ -1637,7 +1637,7 @@ function CustomPackages() {
                       ? `${field.label} is required`
                       : false,
                     pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                       message: "Please enter a valid email address",
                     },
                   })}
@@ -1662,7 +1662,7 @@ function CustomPackages() {
                       ? `${field.label} is required`
                       : false,
                     pattern: {
-                      value: /^[\+]?[1-9][\d]{0,15}$/,
+                      value: /^[+]?[1-9]\d{0,14}$/,
                       message: "Please enter a valid phone number",
                     },
                   })}
