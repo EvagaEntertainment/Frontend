@@ -154,6 +154,7 @@ const apiEndpoints = {
     // Testimonial endpoints
     createTestimonial: "testimonials/create-testimonial",
     getAllTestimonials: "testimonials/get-all-testimonials",
+    getAllTestimonialsForUser: "testimonials/get-all-testimonials-for-user",
     getOneTestimonial: (id) => `testimonials/get-one-testimonial/${id}`,
     updateTestimonial: (id) => `testimonials/update-testimonial/${id}`,
     deleteTestimonial: (id) => `testimonials/delete-testimonial/${id}`,

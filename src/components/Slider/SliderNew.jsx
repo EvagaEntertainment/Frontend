@@ -7,7 +7,7 @@ import { fetchUserBanner } from "../../context/redux/slices/bannerSlice.js";
 function SliderNew() {
   const dispatch = useDispatch();
   const {
-    banner: { userBanner, loading },
+    banner: { userBanner, status },
   } = useSelector((state) => ({
     banner: state.banner,
   }));
@@ -51,7 +51,7 @@ function SliderNew() {
         }
       `}</style>
 
-      {loading ? (
+      {status === "loading" || !userBanner || userBanner.length === 0 ? (
         <AliceCarousel
           mouseTracking
           responsive={responsive}
