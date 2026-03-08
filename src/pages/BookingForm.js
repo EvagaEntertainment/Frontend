@@ -54,12 +54,12 @@ const BookingForm = () => {
       const utmParams = storedUtms
         ? JSON.parse(storedUtms)
         : {
-            utm_source: null,
-            utm_medium: null,
-            utm_campaign: null,
-            utm_term: null,
-            utm_content: null,
-          };
+          utm_source: null,
+          utm_medium: null,
+          utm_campaign: null,
+          utm_term: null,
+          utm_content: null,
+        };
 
       // 3. Call your original API
       const response = await bookingCtaApi.callApi(formdata);
@@ -327,19 +327,16 @@ const BookingForm = () => {
                   },
                 }}
               >
-                <MenuItem value="Bangalore">Bangalore </MenuItem>
-                <MenuItem value="Delhi">Delhi </MenuItem>
-                <MenuItem value="Lucknow">Lucknow</MenuItem>
-                <MenuItem value="Agra">Agra</MenuItem>
-                <MenuItem value="Goa">Goa</MenuItem>
-                <MenuItem value="Jaipur">Jaipur</MenuItem>
-                <MenuItem value="Udaipur">Udaipur </MenuItem>
-                <MenuItem value="Phuket">Phuket </MenuItem>
-                <MenuItem value="Oman">Oman </MenuItem>
-                <MenuItem value="Srilanka">Srilanka </MenuItem>
-                <MenuItem value="Dubai">Dubai </MenuItem>
-                <MenuItem value="Bharain">Bharain </MenuItem>
-                <MenuItem value="Others">Others</MenuItem>
+                <MenuItem value="Bangalore">Bangalore</MenuItem>
+                <MenuItem value="Hyderabad" disabled>
+                  Hyderabad <span className="text-gray-400 text-xs ml-2">(coming soon)</span>
+                </MenuItem>
+                <MenuItem value="Delhi" disabled>
+                  Delhi <span className="text-gray-400 text-xs ml-2">(coming soon)</span>
+                </MenuItem>
+                <MenuItem value="Mumbai" disabled>
+                  Mumbai <span className="text-gray-400 text-xs ml-2">(coming soon)</span>
+                </MenuItem>
               </Select>
             </FormControl>
           </motion.div>
@@ -394,10 +391,10 @@ const BookingForm = () => {
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
                 "&:hover": !loading
                   ? {
-                      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.2)",
-                      background:
-                        "linear-gradient(45deg, #F9D703 30%, #FFD700 90%)",
-                    }
+                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.2)",
+                    background:
+                      "linear-gradient(45deg, #F9D703 30%, #FFD700 90%)",
+                  }
                   : {},
                 "&.Mui-disabled": {
                   background:

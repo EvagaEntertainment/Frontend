@@ -98,6 +98,8 @@ const commonApis = {
     }),
   getAllTestimonials: (queryParams) =>
     apiService.get(apiEndpoints.common.getAllTestimonials, queryParams),
+  getAllTestimonialsForUser: () =>
+    apiService.get(apiEndpoints.common.getAllTestimonialsForUser),
   getOneTestimonial: (id) =>
     apiService.get(apiEndpoints.common.getOneTestimonial(id)),
   updateTestimonial: (id, formData) =>
