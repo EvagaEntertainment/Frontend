@@ -23,60 +23,67 @@ const AboutUs = () => {
       type: "image",
       src: aboutBanner?.topBanner?.BannerUrl,
       preview: aboutBanner?.topBanner?.bannerPreview,
-      alt: "Event Operations",
+      alt: "About Eevagga",
     },
     {
-      title: "Curating Unforgettable Moments, Effortlessly",
       content:
-        "At Eevagga, we believe that every celebration — be it a wedding, birthday, baby shower, college fest, or corporate milestone — deserves to be flawlessly executed and deeply memorable.",
+        "At Eevagga, we believe birthdays deserve more than decorations and cakes — they deserve beautifully crafted experiences.",
       subcontent:
-        "We are a full-stack, tech-enabled event experience platform, proudly built by Evaga Entertainment Pvt. Ltd., with a mission to redefine how India celebrates. With visually stunning event packages and flexible standalone services, Eevagga empowers you to book stress-free, high-impact events — with complete clarity, convenience, and creative control.",
+        "Birthdays mark some of life’s most meaningful moments: a child’s first celebration, milestone years, surprise parties for loved ones, and gatherings that bring people together. These occasions deserve thoughtful planning, elegant aesthetics, and seamless execution.",
     },
-
     {
       content:
-        "From cozy home gatherings to large-scale brand activations, we manage every detail — planning, décor, logistics, on-ground execution, and more — under one powerful roof. No middlemen. No surprises. Just consistently exceptional results.",
+        "Eevagga was created to make premium birthday celebrations effortless, memorable, and accessible.",
+      subcontent:
+        "We are building a modern celebration platform where families can discover ideas, plan meaningful birthday experiences, explore thoughtful gifts, and find premium celebration products — all designed to make every birthday truly special.",
+    },
+    {
+      content:
+        "Because when birthdays are celebrated well, they become memories that last a lifetime.",
     },
     {
       type: "image",
       src: aboutBanner?.bottomBanner?.BannerUrl, // Second image after the paragraph
       preview: aboutBanner?.bottomBanner?.bannerPreview,
-      alt: "Our Services",
+      alt: "Premium Birthday Celebrations",
     },
     {
-      title: "What We Offer",
+      title: "Our Story",
+      content:
+        "Eevagga began with a simple observation. Planning birthdays in India is often fragmented and stressful. Families typically juggle multiple vendors — decorators, photographers, entertainers, cake shops, and gift stores — with little clarity on quality, pricing, or reliability.",
+      subcontent:
+        "We saw an opportunity to change this. By bringing together event expertise, curated experiences, and thoughtfully designed celebration products, Eevagga simplifies the entire birthday planning journey. Our goal is simple: to help people celebrate life’s most meaningful moments without the chaos of traditional event planning.",
+    },
+    {
+      title: "Built by Event Professionals",
+      content:
+        "Eevagga is not just another marketplace or listing platform. It is built by professionals who actively design and execute birthday celebrations.",
+      subcontent:
+        "Our real-world experience in décor, event logistics, and celebration design allows us to curate solutions that truly work — from elegant birthday setups to thoughtfully designed celebration kits that make at-home celebrations just as special. Every service and product offered by Eevagga is shaped by the insights we gain from real celebrations and real customer experiences.",
+    },
+    {
+      title: "Our Philosophy",
+      content:
+        "At Eevagga, every celebration is guided by three core principles:",
       list: [
-        "Curated Event Packages: Ready-to-book décor and themes for weddings, birthdays, baby showers, and more",
-        "Custom Services: From stage décor to audio-visual setups, book only what you need",
-        "Institutional & Corporate Events: From college fests to corporate conferences and celebrations, we bring the scale, creativity, and professionalism to deliver impactful experiences.",
-        "On-Ground Teams: Trained professionals across cities ensuring timely, high-quality execution",
-        "Tech-Driven Efficiency: Visual catalogs, seamless bookings, smart CRM, and real-time coordination",
+        "Thoughtful Design: Beautiful aesthetics and curated details that elevate every birthday celebration.",
+        "Seamless Execution: Reliable planning and professional coordination that ensures everything runs effortlessly.",
+        "Meaningful Memories: Celebrations designed not just for the day, but for the memories they create long after.",
       ],
     },
     {
       title: "Our Mission",
       content:
-        "To make premium event experiences accessible, organized, and visually transparent — while uplifting India’s ecosystem of local vendors, artists, and professionals.",
+        "To make premium birthday celebrations effortless, inspiring, and unforgettable for families across India.",
+      subcontent:
+        "By combining curated experiences, celebration products, and trusted event expertise, we aim to transform how birthdays are planned and celebrated.",
     },
     {
-      title: "The Eevagga Flywheel",
-      numberedList: [
-        "One great event → Content & Referrals",
-        "Repeat Bookings → Brand Loyalty",
-        "Growth → That’s the Eevagga advantage",
-        "A flywheel of celebration, powered by trust, tech, and talent.",
-      ],
-    },
-    {
-      title: "Who We Serve",
-      list: [
-        "Couples dreaming of perfect weddings",
-        "Families planning milestone occasions",
-        "Colleges, schools & institutions",
-        "Startups, brands & enterprises looking to create impact",
-      ],
-      ending:
-        "Whether you’re celebrating love, legacy, launch, or life itself — Eevagga by Evaga Entertainment Pvt. Ltd. is your trusted partner in turning moments into magic.",
+      title: "Our Vision",
+      content:
+        "We are building Eevagga to become India’s most trusted birthday celebration brand — a platform where people can discover ideas, plan celebrations, and find everything they need to create memorable birthday experiences.",
+      subcontent:
+        "Because every birthday deserves to be celebrated beautifully.",
     },
   ];
 
@@ -96,10 +103,10 @@ const AboutUs = () => {
           className="text-3xl md:text-4xl font-bold mb-4"
           style={{ color: "#6A1B9A" }}
         >
-          Welcome to Eevagga
+          About Eevagga
         </h1>
         <p className="text-xl md:text-2xl text-gray-600">
-          Where Every Event Becomes an Experience
+          India’s Premium Birthday Celebration Brand
         </p>
       </motion.div>
 
@@ -219,10 +226,7 @@ const AboutUs = () => {
             className="text-xl md:text-2xl font-semibold mb-4"
             style={{ color: "#6A1B9A" }}
           >
-            Explore. Customize. Book. Celebrate.
-          </p>
-          <p className="text-lg md:text-xl text-gray-600">
-            Welcome to Eevagga — Where Every Event Becomes an Experience.
+            Celebrate Better. Celebrate with Eevagga.
           </p>
         </div>
       </motion.div>

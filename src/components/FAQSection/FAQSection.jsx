@@ -6,54 +6,64 @@ const FAQSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(-1);
   const faqData = [
     {
-      question: "What types of events does Eevagga cater to?",
+      question: "What is Eevagga?",
       answer:
-        "We specialize in a wide range of events including weddings, birthdays, baby showers, school and college functions, corporate events and more. Whether you want a full event package or standalone services, we have you covered.",
+        "Eevagga is a premium birthday celebration platform designed to make planning birthdays simple, beautiful, and stress-free.\nFrom curated birthday decorations and full-service event planning to thoughtfully designed celebration products and gifts, Eevagga brings everything needed for a memorable birthday into one place.",
     },
     {
-      question: "Can I customize my event package?",
+      question: "What types of birthday celebrations does Eevagga organize?",
       answer:
-        "Yes! You can choose from ready-made event packages or build your own by selecting standalone services that suit your specific needs and budget.",
+        "Eevagga specializes in a wide range of birthday celebrations, including:\n• Kids birthday parties\n• Milestone birthdays\n• Surprise birthday setups\n• Home birthday decorations\n• Venue birthday celebrations\n• Themed birthday parties\nOur team focuses on creating premium and thoughtfully designed birthday experiences tailored to your celebration.",
     },
     {
-      question: "How do I book an event with Eevagga?",
+      question: "Can I book a complete birthday celebration through Eevagga?",
       answer:
-        "Booking is easy! You can explore our services online, select your preferred package or individual services, and book directly through our platform. Our team will then get in touch to assist you further.",
+        "Yes.\nWith Eevagga Birthdays, you can book end-to-end birthday planning, including:\n• décor and theme setup\n• photography and videography\n• entertainment and activities\n• stage and event setup\n• catering coordination\n• on-ground event management\nOur team ensures every detail is professionally handled so you can enjoy the celebration.",
     },
     {
-      question: "Do you provide services across India?",
+      question: "Does Eevagga offer custom birthday themes?",
       answer:
-        "Currently, we primarily serve major cities and metro areas and few foreign countries with plans to expand. Please check availability for your location during the booking process.",
+        "Absolutely.\nWe offer both curated themes and custom-designed birthday setups. If you have a specific concept, color palette, or theme in mind, our team can design a celebration experience around it.",
     },
     {
-      question: "Are your vendors and service providers verified?",
+      question: "What is the Eevagga Gift Studio?",
       answer:
-        "Absolutely. All our vendors and partners go through a rigorous verification process to ensure quality, reliability, and professionalism.",
+        "The Eevagga Gift Studio offers curated birthday gifts and personalized hampers designed to make celebrations more meaningful.\nFrom thoughtful gift boxes to customized birthday keepsakes, we help customers discover unique gifting options for every celebration.",
     },
     {
-      question: "What if I need help planning my event?",
+      question: "What are Eevagga Celebration Products?",
       answer:
-        "Our expert event planners are available to guide you through every step, from conceptualization to execution, making the entire process seamless and stress-free.",
+        "Eevagga Celebration Products are premium DIY birthday decoration kits and celebration products designed by event professionals.\nThese products allow anyone to create beautiful birthday setups at home with ease.\nThey are also available through our website and online marketplaces such as Amazon and Flipkart.",
     },
     {
-      question: "Can I get a quote before booking?",
+      question: "Do you only operate in Bangalore?",
       answer:
-        "Yes, detailed quotes are provided upfront based on your selected services or package, ensuring transparency with no hidden costs.",
+        "Currently, most of our event services are available in Bangalore, while our celebration products can be delivered across India through online platforms.\nAs Eevagga grows, we plan to expand our celebration services to more cities.",
     },
     {
-      question: "What is your cancellation and refund policy?",
+      question: "What is the Eevagga Experience Centre?",
       answer:
-        "Our cancellation and refund policies vary depending on the services booked. Please refer to the specific terms during booking or contact our support team for assistance.",
+        "The Eevagga Experience Centre is a physical space where customers can explore birthday themes, see décor concepts in person, and plan their celebrations with expert guidance.\nIt allows customers to experience celebration ideas before booking their event.",
     },
     {
-      question: "Do you offer last-minute bookings?",
+      question: "How far in advance should I book a birthday celebration?",
       answer:
-        "We understand that plans can change suddenly; we try to accommodate last-minute bookings whenever possible. Contact us directly to check availability.",
+        "We recommend booking your celebration at least 22 days in advance to ensure the best availability for themes, venues, and services.\nFor larger or customized birthday events, earlier booking is always beneficial.",
     },
     {
-      question: "How can I contact Eevagga for support or queries?",
+      question: "Can Eevagga help with small home birthday setups?",
       answer:
-        "You can reach us via the contact form on our website, email, or phone. Our dedicated support team is ready to assist you promptly.",
+        "Yes.\nEevagga offers solutions for both intimate home celebrations and large birthday events.\nFrom simple decoration setups to complete birthday planning, we can tailor the experience to your needs.",
+    },
+    {
+      question: "Do you offer last-minute birthday setups?",
+      answer:
+        "Depending on availability, our team can assist with last-minute birthday decoration setups or celebration products.\nYou can contact our team directly to explore available options.",
+    },
+    {
+      question: "How can I book a birthday celebration with Eevagga?",
+      answer:
+        "You can book through:\n• the Eevagga website\n• contacting our team directly\nOur team will guide you through themes, packages, and customization options to help you plan the perfect birthday celebration.",
     },
   ];
 
