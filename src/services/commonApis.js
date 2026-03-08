@@ -2,7 +2,7 @@ import apiService from "./apiService";
 import apiEndpoints from "./apiEndpoints";
 
 const commonApis = {
-  getAllBanner: () => apiService.get(apiEndpoints.common.getAllBanner()),
+  getAllBanner: (queryParams) => apiService.get(apiEndpoints.common.getAllBanner(), queryParams),
   getUserBanner: () => apiService.get(apiEndpoints.common.getUserBanner()),
   getVendorBanner: () => apiService.get(apiEndpoints.common.getVendorBanner()),
   getAbout2banner: () => apiService.get(apiEndpoints.common.getAbout2banner()),
@@ -25,7 +25,7 @@ const commonApis = {
   Getallquery: (role) => apiService.get(apiEndpoints.common.getallquery(role)),
   GetOneQueries: (queryId) =>
     apiService.get(apiEndpoints.common.getOneQueries(queryId)),
-  getAllBlogs: () => apiService.get(apiEndpoints.common.getAllBlogs),
+  getAllBlogs: (queryParams) => apiService.get(apiEndpoints.common.getAllBlogs, queryParams),
   getOneBlog: (blogId) =>
     apiService.get(apiEndpoints.common.getOneBlog(blogId)),
   getAllPublishedUrls: () =>
@@ -50,12 +50,12 @@ const commonApis = {
     apiService.get(apiEndpoints.common.categoryViewAllPackage, queryParams),
   createGallery: (formdata) =>
     apiService.post(apiEndpoints.common.createGallery, formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }),
-  getGallery: (queryParams) => apiService.get(apiEndpoints.common.getGallery,queryParams),
-  getGalleryForUser: (queryParams) => apiService.get(apiEndpoints.common.getGalleryForUser,queryParams),
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  getGallery: (queryParams) => apiService.get(apiEndpoints.common.getGallery, queryParams),
+  getGalleryForUser: (queryParams) => apiService.get(apiEndpoints.common.getGalleryForUser, queryParams),
   deleteGallery: (galleryId) => apiService.delete(apiEndpoints.common.deleteGallery(galleryId)),
   // Custom Events APIs
   getCustomEvents: (queryParams) => apiService.get(apiEndpoints.common.getCustomEvents, queryParams),
@@ -76,7 +76,7 @@ const commonApis = {
   getCustomEventStats: () => apiService.get(apiEndpoints.common.getCustomEventStats),
   getThemeCardImages: (id) => apiService.get(apiEndpoints.common.getThemeCardImages(id)),
   validateFormData: (formData) => apiService.post(apiEndpoints.common.validateFormData, formData),
-  updateThemeCardImage: (templateId, fieldIndex, optionIndex, formData) => 
+  updateThemeCardImage: (templateId, fieldIndex, optionIndex, formData) =>
     apiService.put(apiEndpoints.common.updateThemeCardImage(templateId, fieldIndex, optionIndex), formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -89,6 +89,25 @@ const commonApis = {
   getPublicCustomEventById: (id) => apiService.get(apiEndpoints.common.getPublicCustomEventById(id)),
   // Custom Event Submissions
   submitCustomEventForm: (formData) => apiService.post(apiEndpoints.common.submitCustomEventForm, formData),
+  // Testimonial APIs
+  createTestimonial: (formData) =>
+    apiService.post(apiEndpoints.common.createTestimonial, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  getAllTestimonials: (queryParams) =>
+    apiService.get(apiEndpoints.common.getAllTestimonials, queryParams),
+  getOneTestimonial: (id) =>
+    apiService.get(apiEndpoints.common.getOneTestimonial(id)),
+  updateTestimonial: (id, formData) =>
+    apiService.post(apiEndpoints.common.updateTestimonial(id), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  deleteTestimonial: (id) =>
+    apiService.delete(apiEndpoints.common.deleteTestimonial(id)),
 };
 
 export default commonApis;

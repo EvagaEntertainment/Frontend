@@ -52,6 +52,7 @@ const VendorEditService = lazy(() =>
   import("./pages/Vendor/VendorEditService")
 );
 const AdminLoginPage = lazy(() => import("./pages/Admin/AdminLoginPage"));
+const AdminForgotPassword = lazy(() => import("./pages/Admin/AdminForgotPassword"));
 const AdminDashboard = lazy(() => import("./pages/Admin/AdminDashboard"));
 const SearchResultPage = lazy(() => import("./pages/SearchResultPage "));
 const UserSignupPage = lazy(() => import("./pages/User/UserSignupPage"));
@@ -112,6 +113,7 @@ const AppContent = () => {
     internalRoutes.vendorEditservice,
     internalRoutes.adminSignup,
     internalRoutes.adminLogin,
+    internalRoutes.adminForgotPassword,
     internalRoutes.adminDashboard,
     internalRoutes.vendorForgotPassword,
     internalRoutes.vendorLogin,
@@ -126,6 +128,7 @@ const AppContent = () => {
     internalRoutes.vendorSignup,
     internalRoutes.vendorForgotPassword,
     internalRoutes.userForgotPassword,
+    internalRoutes.adminForgotPassword,
     internalRoutes.adminDashboard,
     internalRoutes.interest,
     internalRoutes.vendorDashboard,
@@ -141,6 +144,7 @@ const AppContent = () => {
   const noWhatsappPaths = [
     internalRoutes.adminSignup,
     internalRoutes.adminLogin,
+    internalRoutes.adminForgotPassword,
     internalRoutes.adminDashboard,
     internalRoutes.interest,
   ];
@@ -230,6 +234,14 @@ const AppContent = () => {
               </Suspense>
             }
             path={internalRoutes.adminLogin}
+          />
+          <Route
+            element={
+              <Suspense fallback={<Loader />}>
+                <AdminForgotPassword />
+              </Suspense>
+            }
+            path={internalRoutes.adminForgotPassword}
           />
           <Route
             element={

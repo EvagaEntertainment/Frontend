@@ -6,7 +6,7 @@ import AdminSideBar from "../../components/Admin/AdminSideBar";
 import VendorTable from "../../components/Admin/VendorTable";
 import { useAuth } from "../../context/AuthContext";
 import { fetchAdminDetails } from "../../context/redux/slices/adminSlice";
-import AdminDocumentsVerification from "../../components/Admin/AdminVendorDocumentsVerification";
+// import AdminDocumentsVerification from "../../components/Admin/AdminVendorDocumentsVerification";
 import AdminVendorProfileViewer from "../../components/Admin/AdminVendorProfileViewer";
 import VendorserviceTable from "../../components/Admin/VendorserviceTable";
 import UserTable from "../../components/Admin/UserTable";
@@ -48,6 +48,7 @@ import BookingCTA from "../../components/Admin/BookingCTA";
 import Gallery from "../../components/Admin/gallery";
 import AdminCustomEvent from "../../components/Admin/AdminCustomEvent";
 import AdminCustomEventSubmissions from "../../components/Admin/AdminCustomEventSubmissions";
+import AdminTestimonial from "../../components/Admin/AdminTestimonial";
 const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
@@ -328,6 +329,7 @@ const AdminDashboard = () => {
         {selectedMenu === "Gallery" && <Gallery />}
         {selectedMenu === "AdminCustomEvent" && <AdminCustomEvent />}
         {selectedMenu === "AdminCustomEventSubmissions" && <AdminCustomEventSubmissions />}
+        {selectedMenu === "Testimonial" && <AdminTestimonial />}
       </div>
       <ReusableModal open={open} onClose={handleClose} width={"50%"}>
         <div className="max-w-ld mx-auto  p-6 bg-white rounded-lg ">

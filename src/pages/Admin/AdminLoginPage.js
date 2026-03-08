@@ -1,6 +1,6 @@
 import formfields from "../../utils/formFields";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 // import adminApi from "../../services/adminApi";
 import { loginReducer } from "../../context/redux/slices/authSlice";
 import { internalRoutes } from "../../utils/internalRoutes";
@@ -70,6 +70,12 @@ function AdminLoginPage() {
             stages={formfields.adminLogin}
             handleFormSubmit={handleFormSubmit}
           />
+          <div className=" flex gap-2 font-semibold">
+            <h5>Forgot Password?</h5>
+            <Link to={internalRoutes.adminForgotPassword}>
+              <button className=" btn-transparent ">Reset Password!</button>
+            </Link>
+          </div>
         </AuthBox>
       </div>
     </div>

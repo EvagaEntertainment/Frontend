@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import TableComponet from "../../utils/TableComponet";
+import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineDelete } from "react-icons/md";
 import ReusableModal from "../Modal/Modal";
@@ -10,11 +10,15 @@ import useServices from "../../hooks/useServices";
 import adminActionsApi from "../../services/adminActionsApi";
 import EditForm from "./EditBannerFrom";
 import DeleteForm from "./DeleteForm";
+import commonApis from "../../services/commonApis";
 
 function BannerTable() {
   const [page, setPage] = useState(1);
   const [oneBannerData, setOneBannerData] = useState();
   const [bannerId, setBannerId] = useState(null);
+  const [banners, setBanners] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const getAllBannersApi = useServices(commonApis.getAllBanner);
   const { banner } = useSelector((state) => state.banner);
   const addBanner = useServices(adminActionsApi.addBanner);
   const getOneBanner = useServices(adminActionsApi.getOneBanner);
@@ -50,6 +54,7 @@ function BannerTable() {
     const response = await addBanner.callApi(formData);
     handleClose();
     dispatch(fetchBanner());
+    fetchBannersFn();
   };
   const getOneBannerHandle = useCallback(async (bannerId) => {
     const response = await getOneBanner.callApi(bannerId);
@@ -75,17 +80,26 @@ function BannerTable() {
 
     handleClose();
     dispatch(fetchBanner());
+    fetchBannersFn();
   };
   const deleteBannerHandle = async () => {
     const response = await deleteOneBanner.callApi(bannerId);
 
     handleClose();
     dispatch(fetchBanner());
+    fetchBannersFn();
     setBannerId(null);
   };
 
+  const fetchBannersFn = useCallback(async () => {
+    const queryParams = { page: page || 1 };
+    const response = await getAllBannersApi.callApi(queryParams);
+    setBanners(response ? response.banners : []);
+    setTotalPages(response ? response.totalPages : 1);
+  }, [page]);
+
   const columns = [
-    { label: "No", key: "index", render: (_, i) => i + 1 },
+    { label: "No", key: "index", render: (_, i) => (page - 1) * 10 + i + 1 },
     {
       label: "Banner",
       key: "BannerUrl",
@@ -131,14 +145,8 @@ function BannerTable() {
   ];
 
   useEffect(() => {
-    if (
-      !hasFetched &&
-      (!banner || (Array.isArray(banner) && banner.length === 0))
-    ) {
-      dispatch(fetchBanner());
-      setHasFetched(true);
-    }
-  }, [banner, dispatch, hasFetched]);
+    fetchBannersFn();
+  }, [page]);
 
   return (
     <div>
@@ -148,12 +156,13 @@ function BannerTable() {
       >
         Add Banner
       </button>
-      <TableComponet
+      <TableComponetWithApi
         columns={columns}
-        data={banner}
+        data={banners}
         page={page}
         itemsPerPage={10}
         onPageChange={handlePageChange}
+        totalPages={totalPages}
       />
       <ReusableModal
         open={open}
@@ -162,10 +171,10 @@ function BannerTable() {
           modalType === "addBanner"
             ? "Add Banner"
             : modalType === "editBanner"
-            ? "Edit Banner"
-            : modalType === "deleteBanner"
-            ? "Delete Banner"
-            : "Default Title"
+              ? "Edit Banner"
+              : modalType === "deleteBanner"
+                ? "Delete Banner"
+                : "Default Title"
         }
         width={"50%"}
       >

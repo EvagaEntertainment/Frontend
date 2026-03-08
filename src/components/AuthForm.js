@@ -8,6 +8,7 @@ import useFetchCities from "../hooks/useFetchCities";
 import categoryApi from "../services/categoryServices";
 import { sendOtp, verifyOtp } from "../sendOtpUsingFirebase";
 import vendorApi from "../services/vendorApi";
+import adminApi from "../services/adminApi";
 import Cookies from "js-cookie";
 import userApi from "../services/userApi";
 import { useAuth } from "../context/AuthContext";
@@ -33,8 +34,10 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
   const { loading, error, callApi } = useServices(categoryApi.getCategories);
   const sendVendorOtp = useServices(vendorApi.forgortVendorpasswords);
   const sendUserOtp = useServices(userApi.sendUserOtp);
+  const sendAdminOtp = useServices(adminApi.forgotPassword);
   const verifyVendorOtp = useServices(vendorApi.verifyVendorOtp);
   const verifyUserOtp = useServices(userApi.verifyUserOtp);
+  const verifyAdminOtp = useServices(adminApi.verifyAdminOtp);
   const currentFields = stages[currentStage]?.fields;
   const password = watch("password");
   const { login } = useAuth();
@@ -126,7 +129,8 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
       // Special case: Forgot password flow or flows requiring OTP
       if (
         formType === "vendorForgotPassword" ||
-        formType === "userForgotPassword"
+        formType === "userForgotPassword" ||
+        formType === "adminForgotPassword"
       ) {
         if (hasIdentifier) {
           console.log("Forgot password flow - Sending OTP");
@@ -182,8 +186,8 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
         hasOtp
           ? "Error handling OTP step:"
           : hasIdentifier
-          ? "Error sending OTP:"
-          : "Error handling form submission:",
+            ? "Error sending OTP:"
+            : "Error handling form submission:",
         error
       );
     }
@@ -227,6 +231,12 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
           value: (formData) => formData.email || formData.identifier,
           apiCall: sendVendorOtp,
           successMessage: "OTP sent successfully to the vendor's email!",
+        },
+        admin: {
+          identifierKey: "identifier",
+          value: (formData) => formData.email || formData.identifier,
+          apiCall: sendAdminOtp,
+          successMessage: "OTP sent successfully to the admin's email!",
         },
       };
 
@@ -292,6 +302,7 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
       const apiConfig = {
         vendor: verifyVendorOtp,
         user: verifyUserOtp,
+        admin: verifyAdminOtp,
       };
 
       const apiCall = apiConfig[role];
@@ -309,7 +320,7 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
 
         if (response.token && response.role && response.userId) {
           // Normal OTP verification flow
-          if (role === "vendor" || role === "user") {
+          if (role === "vendor" || role === "user" || role === "admin") {
             console.log(
               "Forgot password OTP verified. Redirecting to reset password..."
             );
@@ -326,7 +337,7 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
     }
   };
 
-  const handlechangePasswords = async () => {};
+  const handlechangePasswords = async () => { };
 
   useEffect(() => {
     console.log(currentStage, "from useeffect", stages[currentStage]);
@@ -407,11 +418,10 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
         <div id="recaptcha-container"></div>
         {otpSentResponse && <p className="text-green-500">{otpSentResponse}</p>}
         <div
-          className={` ${
-            currentFields?.length > 3
+          className={` ${currentFields?.length > 3
               ? "grid grid-cols-1 md:grid-cols-2 gap-2"
               : "space-y-6"
-          } `}
+            } `}
         >
           {currentFields?.map((field) => (
             <div
@@ -451,12 +461,11 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
 
           <button
             type="submit"
-            className={`w-full py-2 ${
-              currentFields.some((field) => field.type === "otp") &&
-              !isOtpVerified
+            className={`w-full py-2 ${currentFields.some((field) => field.type === "otp") &&
+                !isOtpVerified
                 ? "bg-gray-100 text-gray-400 border-2"
                 : "bg-primary text-white hover:bg-accent"
-            } font-bold rounded-md`}
+              } font-bold rounded-md`}
             disabled={
               currentFields.some((field) => field.type === "otp") &&
               !isOtpVerified

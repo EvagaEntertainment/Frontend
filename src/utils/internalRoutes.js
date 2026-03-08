@@ -22,6 +22,7 @@ export const internalRoutes = {
   userForgotPassword: "/user/forgot-password",
   adminSignup: "/admin/signup",
   adminLogin: "/admin/login",
+  adminForgotPassword: "/admin/forgot-password",
   adminDashboard: "/admin/dashboard",
 
   vendorSignup: "/vendor/signup",

@@ -12,21 +12,13 @@ function SliderNew() {
     banner: state.banner,
   }));
 
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     if (!userBanner || userBanner.length === 0) {
       dispatch(fetchUserBanner());
     }
   }, [dispatch, userBanner]);
 
-  useEffect(() => {
-    // Simulate loading delay for skeleton
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   const responsive = {
     0: { items: 1 },
@@ -59,7 +51,7 @@ function SliderNew() {
         }
       `}</style>
 
-      {isLoading || loading ? (
+      {loading ? (
         <AliceCarousel
           mouseTracking
           responsive={responsive}
@@ -82,10 +74,10 @@ function SliderNew() {
           paddingLeft={0}
         >
           {userBanner?.map((item) => (
-            <BannerNew 
-              key={item.id} 
-              image={item?.BannerUrl} 
-              preview={item?.bannerPreview} 
+            <BannerNew
+              key={item.id}
+              image={item?.BannerUrl}
+              preview={item?.bannerPreview}
             />
           ))}
         </AliceCarousel>

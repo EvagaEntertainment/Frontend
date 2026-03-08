@@ -130,7 +130,7 @@ const apiEndpoints = {
     createGallery: "galleryRoute/add-gallery",
     getGallery: "galleryRoute",
     getGalleryForUser: "galleryRoute/gallery",
-    deleteGallery: (galleryId) =>`galleryRoute/${galleryId}`,
+    deleteGallery: (galleryId) => `galleryRoute/${galleryId}`,
     // Custom Events endpoints
     getCustomEvents: "customEvents",
     getCustomEventById: (id) => `customEvents/${id}`,
@@ -142,7 +142,7 @@ const apiEndpoints = {
     getCustomEventStats: "customEvents/stats",
     getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
     validateFormData: "customEvents/validate",
-    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) =>
       `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
     // Public custom events endpoints
     getPublicCustomEvents: "customEvents/public",
@@ -151,6 +151,12 @@ const apiEndpoints = {
     getPublicCustomEventById: (id) => `customEvents/public/events/${id}`,
     // Custom event submissions
     submitCustomEventForm: "customEventSubmissions/submit",
+    // Testimonial endpoints
+    createTestimonial: "testimonials/create-testimonial",
+    getAllTestimonials: "testimonials/get-all-testimonials",
+    getOneTestimonial: (id) => `testimonials/get-one-testimonial/${id}`,
+    updateTestimonial: (id) => `testimonials/update-testimonial/${id}`,
+    deleteTestimonial: (id) => `testimonials/delete-testimonial/${id}`,
   },
   admin: {
     register: "admin/registerAdmin",
@@ -163,6 +169,9 @@ const apiEndpoints = {
     logout: (userId) => `admin/logoutAdmin/${userId}`,
     getAllAdmin: `admin/getAllAdmin`,
     getTotalUser: "user/get-all-user",
+    adminForgotPassword: `admin/forgot-password`,
+    adminVerifyOtp: `admin/verify-One-time-password`,
+    adminChangePassword: (adminId) => `admin/set-new-password/${adminId}`,
   },
   adminActions: {
     getAllVendorsWithProfileStatusAndService:
@@ -235,7 +244,7 @@ const apiEndpoints = {
     getCustomEventStats: "customEvents/stats",
     getThemeCardImages: (id) => `customEvents/${id}/theme-cards`,
     validateFormData: "customEvents/validate",
-    updateThemeCardImage: (templateId, fieldIndex, optionIndex) => 
+    updateThemeCardImage: (templateId, fieldIndex, optionIndex) =>
       `customEvents/${templateId}/theme-card/${fieldIndex}/${optionIndex}/image`,
     // Custom event submissions admin endpoints
     getAllCustomEventSubmissions: "customEventSubmissions",
