@@ -17,7 +17,6 @@ import { useAuth } from "../../context/AuthContext";
 import { BiMessageAltError, BiSolidCalendarEvent } from "react-icons/bi";
 import {
   FaChevronDown,
-  FaChevronUp,
   FaFirstOrder,
   FaFirstOrderAlt,
   FaRegImage,
@@ -30,11 +29,45 @@ import {
   MdBorderClear,
   MdEventNote,
   MdOutlineFeed,
+  MdRateReview,
 } from "react-icons/md";
-import { LuGalleryThumbnails, LuMailQuestion } from "react-icons/lu";
-import { IoArrowBackSharp } from "react-icons/io5";
+import { LuGalleryThumbnails } from "react-icons/lu";
+// import { IoArrowBackSharp } from "react-icons/io5";
 import { IoMdArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
+
+const dropdownVariants = {
+  hidden: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+      opacity: { duration: 0.2, ease: "easeOut" },
+    },
+  },
+  visible: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      height: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+      opacity: { duration: 0.25, delay: 0.05, ease: "easeIn" },
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: i * 0.04,
+      duration: 0.25,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  }),
+  exit: { opacity: 0, x: -8, transition: { duration: 0.15 } },
+};
 
 const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
   const { logout, auth } = useAuth();
@@ -79,8 +112,8 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       icon: <FaRegMoneyBillAlt />,
       children: [
         { id: "Banner", label: "Banner", icon: <FaRegImage /> },
-        { id: "Gallery", label: "Gallery", icon: <LuGalleryThumbnails  /> },
-        { id: "AdminCustomEvent", label: "Custom Event", icon: <BiSolidCalendarEvent  /> },
+        { id: "Gallery", label: "Gallery", icon: <LuGalleryThumbnails /> },
+        { id: "AdminCustomEvent", label: "Custom Event", icon: <BiSolidCalendarEvent /> },
         { id: "Coupons", label: "Coupons", icon: <RiCoupon3Line /> },
         {
           id: "Fee Breakdown by Category",
@@ -91,6 +124,11 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           id: "Gst by Category",
           label: "GST by Category",
           icon: <MdAttachMoney />,
+        },
+        {
+          id: "Testimonial",
+          label: "Testimonial",
+          icon: <MdRateReview />,
         },
       ],
     },
@@ -182,7 +220,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           icon: <FaFirstOrder />,
         },
         { id: "Feedback", label: "Feedback Form", icon: <FaWpforms /> },
-        { id: "BookingCTA", label: "Booking CTA", icon: <TbBrandBooking  /> },
+        { id: "BookingCTA", label: "Booking CTA", icon: <TbBrandBooking /> },
         { id: "AdminCustomEventSubmissions", label: "Event Submissions", icon: <FaWpforms /> },
       ],
     },
@@ -193,21 +231,21 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
   const filterMenuItems = (role, permissions) => {
     const parsedPermissions =
       typeof permissions === "string" ? JSON.parse(permissions) : permissions;
-  
+
     return menuItems.filter((item) => {
       // Always exclude "Home" for sub_admin unless explicitly allowed
       if (role === "sub_admin" && item.id === "Home") {
         return false;
       }
-  
+
       if (role === "admin") {
         return true; // Show all items for admin
       }
-  
+
       if (role === "sub_admin" && parsedPermissions.includes("superadmin")) {
         return true; // Show all items for sub_admin with superadmin permission
       }
-  
+
       if (role === "sub_admin") {
         if (parsedPermissions.includes("ContentModerator")) {
           return (
@@ -228,103 +266,167 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           return item.id === "Orders";
         }
       }
-  
-      return false; 
+
+      return false;
     });
   };
 
   const filteredMenuItems = filterMenuItems(details?.role, details?.permissions);
 
   return (
-    <div
-      className={`bg-primary text-white sticky top-0 ${
-        isCollapsed ? "w-20" : "min-w-64"
-      } h-full min-h-[100vh] flex flex-col transition-width duration-300`}
+    <motion.div
+      className="bg-primary text-white sticky top-0 h-full min-h-[100vh] flex flex-col overflow-hidden"
+      animate={{ width: isCollapsed ? 80 : 256 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >
-      <div className="py-6 text-center pl-2 text-xl font-bold border-b border-purple-500">
+      <div className="py-6 text-center pl-2 text-xl font-bold border-b border-purple-500/40">
         <img className="w-[40px] mx-auto" src={MainLogo} alt="Evaga" />
       </div>
-      <button
-        className="flex items-center justify-center p-4 hover:bg-purple-600 focus:outline-none"
+
+      <motion.button
+        className="flex items-center justify-center p-4 focus:outline-none"
         onClick={() => setIsCollapsed(!isCollapsed)}
+        whileHover={{ backgroundColor: "rgba(147, 51, 234, 0.5)" }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.2 }}
       >
-        {isCollapsed ? <IoMdArrowForward /> : <IoArrowBackSharp />}
-      </button>
+        <motion.span
+          animate={{ rotate: isCollapsed ? 0 : 180 }}
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        >
+          <IoMdArrowForward />
+        </motion.span>
+      </motion.button>
 
       {/* Menu Items */}
-      <nav className="flex flex-col flex-grow" ref={dropdownRef}>
+      <nav
+        className="flex flex-col flex-grow overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-purple-500/30"
+        ref={dropdownRef}
+      >
         {filteredMenuItems.map((item) =>
           item.children ? (
             <div className="w-full" key={item.id}>
-              <button
-                className={`w-full flex items-center justify-between px-6 py-4 text-left font-medium hover:bg-purple-600 focus:outline-none ${
-                  selectedMenu === item.id || openDropdown === item.id
-                    ? "bg-purple-600"
-                    : ""
-                }`}
+              <motion.button
+                className={`w-full flex items-center justify-between px-6 py-3.5 text-left font-medium focus:outline-none ${selectedMenu === item.id || openDropdown === item.id
+                  ? "bg-purple-600/80"
+                  : ""
+                  }`}
                 onClick={() => handleDropdownToggle(item.id)}
+                whileHover={{ backgroundColor: "rgba(147, 51, 234, 0.5)" }}
+                transition={{ duration: 0.2 }}
               >
-                <div className="flex items-center">
-                  <span className="mr-3 text-lg">{item.icon}</span>
-                  {!isCollapsed && item.label}
+                <div className="flex items-center whitespace-nowrap">
+                  <span className="mr-3 text-lg flex-shrink-0">{item.icon}</span>
+                  <AnimatePresence>
+                    {!isCollapsed && (
+                      <motion.span
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: "auto" }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden text-sm"
+                      >
+                        {item.label}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </div>
                 {!isCollapsed && (
-                  <span className="ml-auto">
-                    {openDropdown === item.id ? (
-                      <FaChevronUp />
-                    ) : (
-                      <FaChevronDown />
-                    )}
-                  </span>
+                  <motion.span
+                    className="ml-auto flex-shrink-0"
+                    animate={{ rotate: openDropdown === item.id ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    <FaChevronDown size={12} />
+                  </motion.span>
                 )}
-              </button>
-              <AnimatePresence>
+              </motion.button>
+
+              <AnimatePresence initial={false}>
                 {openDropdown === item.id && (
                   <motion.div
-                    className="flex flex-col"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    className="flex flex-col overflow-hidden bg-purple-900/30"
+                    variants={dropdownVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
                   >
-                    {item.children.map((child) => (
-                      <button
+                    {item.children.map((child, i) => (
+                      <motion.button
                         key={child.id}
-                        className={`ml-2 my-1 flex items-center px-6 py-4 text-left font-medium hover:bg-purple-600 focus:outline-none ${
-                          selectedMenu === child.id ? "bg-purple-600" : ""
-                        }`}
+                        custom={i}
+                        variants={childVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className={`flex items-center pl-10 pr-6 py-3 text-left text-sm font-medium focus:outline-none whitespace-nowrap ${selectedMenu === child.id
+                          ? "bg-purple-600/80 border-l-2 border-white"
+                          : "border-l-2 border-transparent"
+                          }`}
                         onClick={() => onMenuSelect(child.id)}
+                        whileHover={{
+                          backgroundColor: "rgba(147, 51, 234, 0.5)",
+                          paddingLeft: 44,
+                        }}
+                        transition={{ duration: 0.2 }}
                       >
-                        <span className="mr-3 text-lg">{child.icon}</span>
-                        {!isCollapsed && child.label}
-                      </button>
+                        <span className="mr-3 text-base flex-shrink-0">{child.icon}</span>
+                        <AnimatePresence>
+                          {!isCollapsed && (
+                            <motion.span
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.15 }}
+                            >
+                              {child.label}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </motion.button>
                     ))}
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           ) : (
-            <button
+            <motion.button
               key={item.id}
-              className={`flex items-center px-6 py-4 text-left font-medium hover:bg-purple-600 focus:outline-none ${
-                selectedMenu === item.id ? "bg-purple-600" : ""
-              }`}
+              className={`flex items-center px-6 py-3.5 text-left font-medium focus:outline-none whitespace-nowrap ${selectedMenu === item.id ? "bg-purple-600/80" : ""
+                }`}
               onClick={() => onMenuSelect(item.id)}
+              whileHover={{ backgroundColor: "rgba(147, 51, 234, 0.5)" }}
+              transition={{ duration: 0.2 }}
             >
-              <span className="mr-3 text-lg">{item.icon}</span>
-              {!isCollapsed && item.label}
-            </button>
+              <span className="mr-3 text-lg flex-shrink-0">{item.icon}</span>
+              <AnimatePresence>
+                {!isCollapsed && (
+                  <motion.span
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: "auto" }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden text-sm"
+                  >
+                    {item.label}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
           )
         )}
       </nav>
 
       {/* Logout */}
-      <div className="border-t border-purple-500">
-        <button
-          className="w-full flex items-center px-6 py-4 text-left text-white hover:bg-purple-600 focus:outline-none"
+      <div className="border-t border-purple-500/40">
+        <motion.button
+          className="w-full flex items-center px-6 py-4 text-left text-white focus:outline-none"
           onClick={logout}
+          whileHover={{ backgroundColor: "rgba(147, 51, 234, 0.5)" }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.2 }}
         >
-          <span className="mr-3 text-lg">
+          <span className="mr-3 text-lg flex-shrink-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -338,10 +440,22 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
               />
             </svg>
           </span>
-          {!isCollapsed && "Log out"}
-        </button>
+          <AnimatePresence>
+            {!isCollapsed && (
+              <motion.span
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                Log out
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

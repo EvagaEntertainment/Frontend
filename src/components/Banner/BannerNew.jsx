@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-function BannerNew({ image, height, category }) {
+function BannerNew({ image, height, category, preview }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -72,16 +72,24 @@ function BannerNew({ image, height, category }) {
       variants={containerVariants}
     >
       {/* Background Image with Skeleton */}
-      <motion.div className="absolute inset-0 overflow-hidden">
+      <motion.div className="absolute inset-0 overflow-hidden bg-gray-200">
         {!imageLoaded && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+          preview ? (
+            <img
+              src={preview}
+              alt="Banner Preview"
+              className="absolute inset-0 w-full h-full object-cover min-w-full min-h-full blur-md"
+              style={{ aspectRatio: "16 / 9" }}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+          )
         )}
         <img
           src={process.env.REACT_APP_API_Aws_Image_BASE_URL + image}
           alt="Banner"
-          className={`absolute inset-0 w-full h-full object-cover min-w-full min-h-full ${
-            !imageLoaded ? 'opacity-0' : 'opacity-100'
-          }`}
+          className={`absolute inset-0 w-full h-full object-cover min-w-full min-h-full transition-opacity duration-700 ease-in-out ${!imageLoaded ? 'opacity-0' : 'opacity-100'
+            }`}
           loading="lazy"
           onLoad={() => setImageLoaded(true)}
           style={{ aspectRatio: "16 / 9" }}

@@ -15,6 +15,24 @@ const adminApi = {
     apiService.delete(apiEndpoints.admin.deleteProfile(userId)),
   logout: (userId) => apiService.post(apiEndpoints.admin.logout(userId)),
   getAllAdmin: () => apiService.get(apiEndpoints.admin.getAllAdmin),
+  forgotPassword: (formData) =>
+    apiService.post(apiEndpoints.admin.adminForgotPassword, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  verifyAdminOtp: (formData) =>
+    apiService.post(apiEndpoints.admin.adminVerifyOtp, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  changeAdminPassword: (adminId, formData) =>
+    apiService.post(apiEndpoints.admin.adminChangePassword(adminId), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
 };
 
 export default adminApi;
