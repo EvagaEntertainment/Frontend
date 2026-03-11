@@ -275,7 +275,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
 
   return (
     <motion.div
-      className="bg-primary text-white sticky top-0 h-full min-h-[100vh] flex flex-col overflow-hidden"
+      className="bg-primary text-white sticky top-0 h-full min-h-[100vh] flex flex-col overflow-hidden flex-shrink-0"
       animate={{ width: isCollapsed ? 80 : 256 }}
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >

@@ -190,7 +190,7 @@ const AdminDashboard = () => {
         selectedMenu={selectedMenu}
         onMenuSelect={handleMenuSelect}
       />
-      <div className="flex flex-col flex-grow p-6">
+      <div className="flex flex-col flex-grow p-6 min-w-0 overflow-x-auto">
         <div className="flex justify-between items-center mb-6 sticky top-0 bg-white py-2 px-2 z-40">
           {/* Search Input */}
           <div className="relative">
