@@ -62,7 +62,7 @@ const CategoryNewCard = ({ imageUrl, title, text, link, disabled }) => {
           
           {/* Title Area */}
           <div className="flex justify-between items-end gap-3 mb-2">
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg relative line-clamp-2 leading-tight">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg relative leading-tight">
               {title}
             </h3>
             
@@ -78,7 +78,7 @@ const CategoryNewCard = ({ imageUrl, title, text, link, disabled }) => {
 
           {/* Descriptive Text Wrapper */}
           <div className="relative w-full max-w-[95%]">
-             <p className="text-gray-200/90 font-medium leading-relaxed text-sm sm:text-base line-clamp-2 drop-shadow-md transform-gpu transition-all duration-700 ease-out opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 delay-100">
+             <p className="text-gray-200/90 font-medium leading-relaxed text-sm sm:text-base drop-shadow-md transform-gpu transition-all duration-700 ease-out opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 delay-100">
                {text}
              </p>
           </div>
