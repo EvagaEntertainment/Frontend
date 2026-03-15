@@ -1,5 +1,5 @@
 // utils/motion.js
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 export const staggerContainer = (staggerChildren = 0.1, delayChildren = 0.1) => ({
   hidden: {},

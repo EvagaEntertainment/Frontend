@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMail, FiPhone, FiX } from "react-icons/fi";
+import { FiPhone, FiX } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa6";
 
 const StickyAd = () => {
@@ -96,7 +96,7 @@ const StickyAd = () => {
                     animate="visible"
                     className="text-2xl font-medium text-gray-900 whitespace-nowrap relative"
                   >
-                  Too Much to Plan?
+                    Too Much to Plan?
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -117,7 +117,7 @@ const StickyAd = () => {
                   }}
                   className="text-gray-500 text-sm"
                 >
-                 We handle the details — you enjoy the moment.
+                  We handle the details — you enjoy the moment.
                 </motion.p>
 
                 {/* Bouncing buttons */}
@@ -127,8 +127,8 @@ const StickyAd = () => {
                     initial="hidden"
                     animate="visible"
                     whileHover={{ y: -3 }}
-                    href="https://wa.me/918050279101" 
-                    target="_blank" 
+                    href="https://wa.me/918050279101"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 bg-gradient-to-br from-[#075E54] via-[#128C7E] to-[#25D366] text-white px-6 py-3.5 rounded-xl font-medium"
                   >

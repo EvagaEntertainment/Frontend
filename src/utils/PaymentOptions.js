@@ -20,10 +20,10 @@ const PaymentOptions = ({ cart, setNumberOfPart }) => {
   };
 
   // Calculate the total price of the cart
-  const cartTotal = cart?.items?.reduce(
-    (total, item) => total + item.totalPrice,
-    0
-  );
+  // const cartTotal = cart?.items?.reduce(
+  //   (total, item) => total + item.totalPrice,
+  //   0
+  // );
 
   // Find the earliest service date in the cart
   const earliestDate = cart?.items?.reduce((earliest, item) => {
@@ -41,7 +41,7 @@ const PaymentOptions = ({ cart, setNumberOfPart }) => {
       setNumberOfPart(1); // Set default only for the initial load
     }
   }, [setNumberOfPart]);
-  
+
 
   // Handle radio button change
   const handleOptionChange = (option) => {
@@ -61,7 +61,7 @@ const PaymentOptions = ({ cart, setNumberOfPart }) => {
         paymentOptions.map((option, index) => (
           <label
             key={index}
-            style={{  margin: "5px 0" }}
+            style={{ margin: "5px 0" }}
             className="text-sm flex items-center justify-center text-textGray"
           >
             <input

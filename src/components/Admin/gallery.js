@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
-import adminActionsApi from "../../services/adminActionsApi";
+// import adminActionsApi from "../../services/adminActionsApi";
 import { formatDateTime } from "../../utils/formatDateTime";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import DeleteForm from "./DeleteForm";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import ReusableModal from "../Modal/Modal";
 import { useForm } from "react-hook-form";
 import commonApis from "../../services/commonApis";
@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 function Gallery() {
   const [allGallery, setAllGallery] = useState();
   const [page, setPage] = useState(1);
-  const [allErrorLogs, setAllErrorLogs] = useState([]);
+  // const [allErrorLogs, setAllErrorLogs] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [oneGallery, setOneGallery] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -211,9 +211,8 @@ function Gallery() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 ${
-                  isSubmitting ? "opacity-75 cursor-not-allowed" : ""
-                }`}
+                className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 ${isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+                  }`}
               >
                 {isSubmitting ? (
                   <>
