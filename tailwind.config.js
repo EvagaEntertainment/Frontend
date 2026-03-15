@@ -24,6 +24,10 @@ module.exports = {
         textYellow: "#FFE500",
         hoverYellow: "#CBAB00",
       },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif'],
+      },
     },
     fontSize: {
       esm: "0.6rem",

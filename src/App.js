@@ -83,6 +83,11 @@ const Blog = lazy(() => import("./pages/Blog"));
 const SingleBlogPage = lazy(() => import("./pages/singleBlogPage"));
 const InterestSelection = lazy(() => import("./pages/InterestSelection"));
 const BookingForm = lazy(() => import("./pages/BookingForm.js"));
+const GiftStudio = lazy(() => import("./pages/GiftStudio.jsx"));
+const CelebrationProduct = lazy(() => import("./pages/CelebrationProduct.jsx"));
+const GiftStudioCategoryPage = lazy(() => import("./pages/GiftStudioCategoryPage.jsx"));
+const SinglePageV1 = lazy(() => import("./pages/SinglePageV1.jsx"));
+
 // const OurService = lazy(() => import("./pages/OurService.jsx"));
 const AppContent = () => {
   const { auth } = useAuth();
@@ -608,6 +613,46 @@ const AppContent = () => {
             element={
               <Suspense fallback={<Loader />}>
                 <ThankYou />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.giftStudio}
+            element={
+              <Suspense fallback={<Loader />}>
+                <GiftStudio />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.giftStudioCategory}
+            element={
+              <Suspense fallback={<Loader />}>
+                <GiftStudioCategoryPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.giftStudioProduct}
+            element={
+              <Suspense fallback={<Loader />}>
+                <SinglePageV1 />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.celebrationProduct}
+            element={
+              <Suspense fallback={<Loader />}>
+                <CelebrationProduct />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.celebrationProductDetail}
+            element={
+              <Suspense fallback={<Loader />}>
+                <SinglePageV1 />
               </Suspense>
             }
           />

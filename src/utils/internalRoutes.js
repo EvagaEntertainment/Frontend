@@ -56,4 +56,10 @@ export const internalRoutes = {
   feedbackForm: "/feedback-form",
   customerService: "/customer-service",
   customPackages: "/custom-packages",
+  giftStudio: "/gift-studio",
+  giftStudioCategory: "/gift-studio/:categoryName",
+  giftStudioProduct: "/gift-studio/:categoryName/:productId",
+  celebrationProduct: "/celebration-product",
+  celebrationProductDetail: "/celebration/:productId",
 };
+
