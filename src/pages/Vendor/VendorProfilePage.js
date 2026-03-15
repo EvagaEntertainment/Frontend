@@ -21,9 +21,9 @@ import { internalRoutes } from "../../utils/internalRoutes";
 const VendorProfile = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.vendor);
-  const { categories, subCategories, status, error } = useSelector(
-    (state) => state.category
-  );
+  // const { categories, subCategories, status, error } = useSelector(
+  //   (state) => state.category
+  // );
   const userId = Cookies.get("userId");
   const [open, setOpen] = useState(false);
 
@@ -56,7 +56,7 @@ const VendorProfile = () => {
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          setCanResend(true); 
+          setCanResend(true);
           return 0;
         }
         return prev - 1;
@@ -114,7 +114,7 @@ const VendorProfile = () => {
     setCanResend(false);
     setTimer(60);
   };
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const updateProfileService = useServices(vendorApi.updateProfile);
   const updateBankDetailsService = useServices(vendorApi.updateBankDetails);
   const updateBusinessService = useServices(vendorApi.updateBusiness);
@@ -133,13 +133,13 @@ const VendorProfile = () => {
       dispatch(fetchCategories());
     }
   }, []);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (profile) {
       setVendorDetails(profile.vendor);
     }
   }, [profile]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleOpenModal = (sectionName, section) => {
     setActiveSection({ name: sectionName, fields: section.fields });
     setOpenModal(true);
@@ -679,11 +679,10 @@ const VendorProfile = () => {
           <button
             onClick={handleResendOtp}
             disabled={!canResend}
-            className={`px-6 py-2 rounded-lg focus:outline-none ${
-              canResend
+            className={`px-6 py-2 rounded-lg focus:outline-none ${canResend
                 ? "bg-primary text-white hover:bg-primary"
                 : "bg-gray-300 text-gray-500"
-            }`}
+              }`}
           >
             {canResend ? "Resend OTP" : `Resend in ${timer}s`}
           </button>

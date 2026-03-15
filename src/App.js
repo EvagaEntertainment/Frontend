@@ -85,6 +85,7 @@ const InterestSelection = lazy(() => import("./pages/InterestSelection"));
 const BookingForm = lazy(() => import("./pages/BookingForm.js"));
 const GiftStudio = lazy(() => import("./pages/GiftStudio.jsx"));
 const CelebrationProduct = lazy(() => import("./pages/CelebrationProduct.jsx"));
+const BirthdayPackages = lazy(() => import("./pages/BirthdayPackages.jsx"));
 const GiftStudioCategoryPage = lazy(() => import("./pages/GiftStudioCategoryPage.jsx"));
 const SinglePageV1 = lazy(() => import("./pages/SinglePageV1.jsx"));
 
@@ -653,6 +654,14 @@ const AppContent = () => {
             element={
               <Suspense fallback={<Loader />}>
                 <SinglePageV1 />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.birthdayPackages}
+            element={
+              <Suspense fallback={<Loader />}>
+                <BirthdayPackages />
               </Suspense>
             }
           />

@@ -28,6 +28,7 @@ function UserOrderDetailPage() {
       getOneUserOrderByOrderIdApiHandle(orderId, itemId);
     }
   }, [orderId, itemId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return (
     <div className="w-full flex items-center  justify-center flex-col gap-3 mt-4 mb-4">
       <div className="w-11/12 flex items-center justify-center flex-col gap-2 border-b-2 pb-4">

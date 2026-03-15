@@ -61,5 +61,6 @@ export const internalRoutes = {
   giftStudioProduct: "/gift-studio/:categoryName/:productId",
   celebrationProduct: "/celebration-product",
   celebrationProductDetail: "/celebration/:productId",
+  birthdayPackages: "/birthday-packages",
 };
 
