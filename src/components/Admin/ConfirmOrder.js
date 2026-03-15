@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import TableComponet from "../../utils/TableComponet";
+// import TableComponet from "../../utils/TableComponet";
 import { MdOutlineDelete } from "react-icons/md";
-import { CiEdit, CiViewBoard } from "react-icons/ci";
+import { CiViewBoard } from "react-icons/ci";
 import { formatDate } from "../../utils/formatDate";
 import useServices from "../../hooks/useServices";
 import orderApis from "../../services/orderApis";
@@ -82,7 +82,7 @@ function ConfirmOrder({ term }) {
   };
   useEffect(() => {
     getAllNewOrderHandle();
-  },[page, debounce]);
+  }, [page, debounce]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -108,9 +108,9 @@ function ConfirmOrder({ term }) {
       render: (row) =>
         formatCurrency(
           row?.totalPrice +
-            row?.gstAmount +
-            row?.platformFee +
-            row?.platformGstAmount
+          row?.gstAmount +
+          row?.platformFee +
+          row?.platformGstAmount
         ),
     },
     {
@@ -142,11 +142,11 @@ function ConfirmOrder({ term }) {
           /> */}
           <MdOutlineDelete
             className="text-3xl font-semibold cursor-pointer text-textGray"
-            // onClick={() => [
-            //   handleOpen(),
-            //   setModalType("deleteGst"),
-            //   //   setCouponId(row?._id),
-            // ]}
+          // onClick={() => [
+          //   handleOpen(),
+          //   setModalType("deleteGst"),
+          //   //   setCouponId(row?._id),
+          // ]}
           />
         </div>
       ),

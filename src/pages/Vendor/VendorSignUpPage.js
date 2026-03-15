@@ -7,7 +7,7 @@ import formfields from "../../utils/formFields";
 import SignUpLeftImg from "../../assets/LoginSigupImgs/SignUpLeftImg.png";
 import useServices from "../../hooks/useServices";
 import { useAuth } from "../../context/AuthContext";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import notificationService from "../../utils/notificationService";
 
 function VendorSignUpPage() {
@@ -21,7 +21,7 @@ function VendorSignUpPage() {
 
   const handleFormSubmit = async (data) => {
     try {
-      const response = await registerApi(data); 
+      const response = await registerApi(data);
       console.log("Registration successful:", response);
       notificationService.success(registerSuccess);
 

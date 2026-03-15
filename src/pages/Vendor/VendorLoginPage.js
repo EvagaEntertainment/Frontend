@@ -1,4 +1,4 @@
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
@@ -12,7 +12,7 @@ import { loginReducer } from "../../context/redux/slices/authSlice";
 import LoginLeftImg from "../../assets/LoginSigupImgs/LoginLeftImg.png";
 
 function VendorLoginPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { login } = useAuth();
   const {
@@ -70,7 +70,7 @@ function VendorLoginPage() {
             stages={formfields.vendorLogin}
             handleFormSubmit={handleFormSubmit}
             formType="vendorLogin"
-             role="vendor"
+            role="vendor"
           />
 
           <div className=" flex gap-2 font-semibold">

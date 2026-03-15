@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import TableComponet from "../../utils/TableComponet";
+// import TableComponet from "../../utils/TableComponet";
 import { MdOutlineDelete } from "react-icons/md";
-import { CiEdit, CiViewBoard } from "react-icons/ci";
+import { CiViewBoard } from "react-icons/ci";
 import { formatDate } from "../../utils/formatDate";
 import useServices from "../../hooks/useServices";
 import orderApis from "../../services/orderApis";
@@ -12,7 +12,7 @@ import DateRangePicker from "../../utils/DateRangePicker";
 import useDebounce from "../../utils/useDebounce";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 const gatewayFeeRate = 0.02;
-function CompletedOrder({term}) {
+function CompletedOrder({ term }) {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [allOrder, setAllOrder] = useState([]);
@@ -54,20 +54,20 @@ function CompletedOrder({term}) {
     setOneOrder(response?.order);
     console.log(response);
   };
-  const downloadOrdersCSVApiHandle = async(fromDate, toDate) => {
+  const downloadOrdersCSVApiHandle = async (fromDate, toDate) => {
     const queryParams = {
       fromDate: fromDate || "",
       toDate: toDate || "",
     };
     try {
-      const response =await downloadOrdersCSVApi.callApi("completed", queryParams);
+      const response = await downloadOrdersCSVApi.callApi("completed", queryParams);
 
       if (response && response) {
         const blob = new Blob([response], { type: "text/csv" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "completedOrder.csv"; 
+        a.download = "completedOrder.csv";
         a.click();
         window.URL.revokeObjectURL(url);
       } else {
@@ -106,9 +106,9 @@ function CompletedOrder({term}) {
       render: (row) =>
         formatCurrency(
           row?.totalPrice +
-            row?.gstAmount +
-            row?.platformFee +
-            row?.platformGstAmount
+          row?.gstAmount +
+          row?.platformFee +
+          row?.platformGstAmount
         ),
     },
     {
@@ -140,11 +140,11 @@ function CompletedOrder({term}) {
                   /> */}
           <MdOutlineDelete
             className="text-3xl font-semibold cursor-pointer text-textGray"
-            // onClick={() => [
-            //   handleOpen(),
-            //   setModalType("deleteGst"),
-            //   //   setCouponId(row?._id),
-            // ]}
+          // onClick={() => [
+          //   handleOpen(),
+          //   setModalType("deleteGst"),
+          //   //   setCouponId(row?._id),
+          // ]}
           />
         </div>
       ),
@@ -153,7 +153,7 @@ function CompletedOrder({term}) {
 
   return (
     <div>
-        <button
+      <button
         onClick={() => [handleOpenModal(), setModalType("download")]}
         className="float-right btn-primary w-fit px-2 mb-2"
       >
@@ -174,7 +174,7 @@ function CompletedOrder({term}) {
       >
         {modalType === "viewOrder" && (
           <>
-               <div className="w-full mx-auto p-6 bg-white ">
+            <div className="w-full mx-auto p-6 bg-white ">
               <h2 className="text-2xl font-bold mb-4 text-primary">
                 Order Details
               </h2>
@@ -307,7 +307,7 @@ function CompletedOrder({term}) {
             />
           </>
         )}
-            {modalType === "download" && (
+        {modalType === "download" && (
           <div className="w-full flex items-center justify-center">
             <DateRangePicker onSearch={downloadOrdersCSVApiHandle} />
           </div>

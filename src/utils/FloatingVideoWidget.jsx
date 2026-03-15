@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes, FaExpand, FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { FaTimes, FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 const FloatingVideoWidget = () => {
   const [isDismissed, setIsDismissed] = useState(false);
@@ -8,7 +8,7 @@ const FloatingVideoWidget = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
-  
+
   const videoRef = useRef(null);
   const expandedVideoRef = useRef(null);
 
@@ -69,7 +69,7 @@ const FloatingVideoWidget = () => {
             initial={{ opacity: 0, scale: 0.5, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
             exit={{ opacity: 0, scale: 0.5, y: 50 }}
-            transition={{ 
+            transition={{
               y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
               scale: { type: "spring", stiffness: 300, damping: 25 },
               opacity: { duration: 0.4 }
@@ -78,7 +78,7 @@ const FloatingVideoWidget = () => {
             style={{ bottom: "105px", right: "30px" }}
           >
             {/* Tooltip that slides out (only visible occasionally or on hover of the container) */}
-            <motion.div 
+            <motion.div
               className="absolute right-[calc(100%+20px)] top-[20%] bg-white text-[#1a1a2e] px-4 py-2.5 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.12)] whitespace-nowrap text-[13px] font-bold flex items-center gap-2 pointer-events-none origin-right border border-gray-100/50"
               initial={{ opacity: 0, x: 20, scale: 0.8 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -109,7 +109,7 @@ const FloatingVideoWidget = () => {
                 playsInline
                 onTimeUpdate={handleTimeUpdate}
               />
-              
+
               {/* Audio Wave animated indicator */}
               <div className="absolute bottom-4 left-0 right-0 flex justify-center items-end gap-1 pointer-events-none z-10 transition-opacity duration-300 group-hover:opacity-0">
                 <div className="w-[3px] bg-white rounded-full animate-[bounce_1s_infinite] h-2"></div>
@@ -165,10 +165,10 @@ const FloatingVideoWidget = () => {
                 onTimeUpdate={handleTimeUpdate}
                 onClick={() => setIsPlaying(!isPlaying)}
               />
-              
+
               {/* Master Controls Overlay - High end glassmorphism */}
               <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                
+
                 {/* Top Header Bar */}
                 <div className="w-full p-6 sm:p-8 flex justify-between items-start bg-gradient-to-b from-black/80 to-transparent pointer-events-auto">
                   <div className="flex items-center gap-4">
@@ -191,7 +191,7 @@ const FloatingVideoWidget = () => {
                 {/* Bottom Controls Bar */}
                 <div className="w-full p-6 sm:p-8 flex flex-col justify-end bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-auto">
                   <div className="flex justify-between items-center gap-4 sm:gap-6 backdrop-blur-sm bg-black/20 p-4 rounded-2xl border border-white/10">
-                    
+
                     {/* Play/Pause */}
                     <button
                       onClick={() => setIsPlaying(!isPlaying)}
@@ -199,13 +199,13 @@ const FloatingVideoWidget = () => {
                     >
                       {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} className="ml-1" />}
                     </button>
-                    
+
                     {/* Smooth Progress Bar */}
                     <div className="flex-grow h-2 bg-white/10 rounded-full overflow-hidden relative">
-                       <div 
-                         className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#7e22ce] via-[#c026d3] to-[#fbcfe8] transition-all duration-150 ease-linear rounded-full"
-                         style={{ width: `${progress}%` }}
-                       ></div>
+                      <div
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#7e22ce] via-[#c026d3] to-[#fbcfe8] transition-all duration-150 ease-linear rounded-full"
+                        style={{ width: `${progress}%` }}
+                      ></div>
                     </div>
 
                     {/* Mute/Unmute */}
@@ -215,7 +215,7 @@ const FloatingVideoWidget = () => {
                     >
                       {isMuted ? <FaVolumeMute size={20} /> : <FaVolumeUp size={20} />}
                     </button>
-                    
+
                   </div>
                 </div>
 

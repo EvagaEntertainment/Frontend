@@ -1,9 +1,17 @@
 export const regexList = {
   phone: /^[0-9]{10}$/,
-  email: /[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-  emailAndPhone: /^(([\w-.]+@([\w-]+\.)+[\w-]{2,4})|(\d{10}))$/,
-  url: /^(https?:\/\/)?([\da-z.-]+\.[a-z.]{2,6})([\/\w.-]*)*(\?[^\s]*)?\/?$/,
+
+  // removed unnecessary \. inside []
+  email: /[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/,
+
+  emailAndPhone:
+    /^(([\w.-]+@([\w-]+\.)+[\w-]{2,4})|(\d{10}))$/,
+
+  // cleaned up unnecessary escapes
+  url: /^(https?:\/\/)?([\da-z.-]+\.[a-z.]{2,6})([/\w.-]*)*(\?[^\s]*)?\/?$/,
+
   pinCode: /^[1-9][0-9]{5}$/,
+
   password:
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
 };
