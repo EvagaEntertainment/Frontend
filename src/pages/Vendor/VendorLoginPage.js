@@ -3,7 +3,7 @@ import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useServices from "../../hooks/useServices";
 import vendorApi from "../../services/vendorApi";
 import { useAuth } from "../../context/AuthContext";

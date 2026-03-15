@@ -14,8 +14,8 @@ const orderApis = {
     apiService.post(apiEndpoints.order.validateOrder, formdata),
   getPaymentDetailsByOrderId: (orderId) =>
     apiService.post(apiEndpoints.order.getpaymentdetailsbyuserid(orderId)),
-  getPaymentDetailsByOrderId: (orderId) =>
-    apiService.post(apiEndpoints.order.getpaymentdetailsbyuserid(orderId)),
+  // getPaymentDetailsByOrderId: (orderId) =>
+  //   apiService.post(apiEndpoints.order.getpaymentdetailsbyuserid(orderId)),
   getAllNewOrder: (queryParams) =>
     apiService.get(apiEndpoints.order.getallneworder, queryParams),
   getAllCancelledOrder: (queryParams) =>

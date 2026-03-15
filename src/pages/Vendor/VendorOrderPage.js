@@ -4,7 +4,7 @@ import useServices from "../../hooks/useServices";
 import orderApis from "../../services/orderApis";
 import Cookies from "js-cookie";
 import ReusableModal from "../../components/Modal/Modal";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+// import { AiOutlineCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 import "./VerifyOtpModal.css";
 import axios from "axios";
@@ -63,13 +63,13 @@ export default function VendorOrderPage() {
     orderApis.StartUserOrderbyorderId
   );
   const EndUserorderbyorderIdApi = useServices(orderApis.EndUserorderbyorderId);
-  const VerifyStartServicebyorderIdApi = useServices(
-    orderApis.VerifyStartServicebyorderId
-  );
+  // const VerifyStartServicebyorderIdApi = useServices(
+  //   orderApis.VerifyStartServicebyorderId
+  // );
   const getvendoractiveordersApi = useServices(orderApis.getvendoractiveorders);
-  const verifyEndServiceOrderIdApi = useServices(
-    orderApis.verifyEndServiceOrderId
-  );
+  // const verifyEndServiceOrderIdApi = useServices(
+  //   orderApis.verifyEndServiceOrderId
+  // );
   const CancelOrderApi = useServices(orderApis.CancelOrder);
   const getNewOrderByVendorIdApiHandle = useCallback(async () => {
     try {
@@ -79,6 +79,7 @@ export default function VendorOrderPage() {
       console.error("Error fetching new orders:", error);
       setAllOrders([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const getConfirmedOrderByVendorIdApiHandle = useCallback(async () => {
     try {
@@ -88,6 +89,7 @@ export default function VendorOrderPage() {
       console.error("Error fetching new orders:", error);
       setAllOrders([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const getvendoractiveordersApiHandle = useCallback(async () => {
     try {
@@ -97,6 +99,7 @@ export default function VendorOrderPage() {
       console.error("Error fetching new orders:", error);
       setAllOrders([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const getAllCompletedOrdersApiHandle = useCallback(async () => {
     try {
@@ -106,6 +109,7 @@ export default function VendorOrderPage() {
       console.error("Error fetching new orders:", error);
       setAllOrders([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const getAllCancelledOrdersApihandle = useCallback(async () => {
     try {
@@ -115,6 +119,7 @@ export default function VendorOrderPage() {
       console.error("Error fetching new orders:", error);
       setAllOrders([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const AcceptUserOrderbyorderIdApihandle = async (orderId, id) => {
     const response = await AcceptUserOrderbyorderIdApi.callApi(orderId, id);
@@ -216,7 +221,6 @@ export default function VendorOrderPage() {
       setError("Something went wrong. Please try again.");
     }
   };
-
   useEffect(() => {
     if (activeState === "New Order") {
       getNewOrderByVendorIdApiHandle();
@@ -233,19 +237,20 @@ export default function VendorOrderPage() {
     if (activeState === "Cancelled order") {
       getAllCancelledOrdersApihandle();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeState, getNewOrderByVendorIdApiHandle]);
 
   return (
     <div className="flex items-center justify-center flex-col w-full gap-2">
 
       <div className="w-11/12 flex items-center justify-center flex-col gap-4 mt-4">
-      <span className="flex items-start justify-start w-full ">
-        <BackButton />
-      </span>
+        <span className="flex items-start justify-start w-full ">
+          <BackButton />
+        </span>
         <span className="w-full border-b-2 border-[#75757566] flex items-center justify-start gap-6 pb-1">
           <h6
             className={
-              activeState == "New Order"
+              activeState === "New Order"
                 ? "text-primary cursor-pointer font-semibold"
                 : "text-textSecondary cursor-pointer font-medium"
             }
@@ -255,7 +260,7 @@ export default function VendorOrderPage() {
           </h6>{" "}
           <h6
             className={
-              activeState == "Confirmed Order"
+              activeState === "Confirmed Order"
                 ? "text-primary cursor-pointer font-semibold"
                 : "text-textSecondary cursor-pointer font-medium"
             }
@@ -265,7 +270,7 @@ export default function VendorOrderPage() {
           </h6>{" "}
           <h6
             className={
-              activeState == "Ongoing Order"
+              activeState === "Ongoing Order"
                 ? "text-primary cursor-pointer font-semibold"
                 : "text-textSecondary cursor-pointer font-medium"
             }
@@ -275,7 +280,7 @@ export default function VendorOrderPage() {
           </h6>
           <h6
             className={
-              activeState == "Completed order"
+              activeState === "Completed order"
                 ? "text-primary cursor-pointer font-semibold"
                 : "text-textSecondary cursor-pointer font-medium"
             }
@@ -285,7 +290,7 @@ export default function VendorOrderPage() {
           </h6>{" "}
           <h6
             className={
-              activeState == "Cancelled order"
+              activeState === "Cancelled order"
                 ? "text-primary cursor-pointer font-semibold"
                 : "text-textSecondary cursor-pointer font-medium"
             }
@@ -353,8 +358,8 @@ export default function VendorOrderPage() {
                       onClick={() =>
                         navigate(
                           internalRoutes?.vendorOrderDeatil +
-                            `/${item?.orderId}` +
-                            `/${item?._id}`
+                          `/${item?.orderId}` +
+                          `/${item?._id}`
                         )
                       }
                     >
@@ -436,8 +441,8 @@ export default function VendorOrderPage() {
                       onClick={() =>
                         navigate(
                           internalRoutes?.vendorOrderDeatil +
-                            `/${item?.orderId}` +
-                            `/${item?._id}`
+                          `/${item?.orderId}` +
+                          `/${item?._id}`
                         )
                       }
                     >
@@ -536,38 +541,38 @@ export default function VendorOrderPage() {
                   userName={item?.userProfile?.name}
                   phone={item?.userProfile?.phoneNumber}
                   email={item?.userProfile?.email}
-                  // buttons={[
-                  //   item?.otp && new Date(item?.otpExpiry) > new Date() ? (
-                  //     <button
-                  //       key="verify"
-                  //       className="btn-primary px-2"
-                  //       onClick={() => [
-                  //         handleOpenModal(item?.otp),
-                  //         setModalType("verifyendorder"),
-                  //         setOrderIdAndItemId({
-                  //           ...orderIdAndItemId,
-                  //           orderId: item?.orderId,
-                  //           id: item?._id,
-                  //         }),
-                  //       ]}
-                  //     >
-                  //       Verify OTP
-                  //     </button>
-                  //   ) : (
-                  //     <button
-                  //       key="start"
-                  //       className="btn-primary px-2"
-                  //       onClick={() =>
-                  //         EndUserorderbyorderIdApiHandle(
-                  //           item?.orderId,
-                  //           item?._id
-                  //         )
-                  //       }
-                  //     >
-                  //       End Service
-                  //     </button>
-                  //   ),
-                  // ]}
+                // buttons={[
+                //   item?.otp && new Date(item?.otpExpiry) > new Date() ? (
+                //     <button
+                //       key="verify"
+                //       className="btn-primary px-2"
+                //       onClick={() => [
+                //         handleOpenModal(item?.otp),
+                //         setModalType("verifyendorder"),
+                //         setOrderIdAndItemId({
+                //           ...orderIdAndItemId,
+                //           orderId: item?.orderId,
+                //           id: item?._id,
+                //         }),
+                //       ]}
+                //     >
+                //       Verify OTP
+                //     </button>
+                //   ) : (
+                //     <button
+                //       key="start"
+                //       className="btn-primary px-2"
+                //       onClick={() =>
+                //         EndUserorderbyorderIdApiHandle(
+                //           item?.orderId,
+                //           item?._id
+                //         )
+                //       }
+                //     >
+                //       End Service
+                //     </button>
+                //   ),
+                // ]}
                 />
               );
             })}
@@ -598,38 +603,38 @@ export default function VendorOrderPage() {
                   userName={item?.userProfile?.name}
                   phone={item?.userProfile?.phoneNumber}
                   email={item?.userProfile?.email}
-                  // buttons={[
-                  //   item?.otp && new Date(item?.otpExpiry) > new Date() ? (
-                  //     <button
-                  //       key="verify"
-                  //       className="btn-primary px-2"
-                  //       onClick={() => [
-                  //         handleOpenModal(item?.otp),
-                  //         setModalType("verifyendorder"),
-                  //         setOrderIdAndItemId({
-                  //           ...orderIdAndItemId,
-                  //           orderId: item?.orderId,
-                  //           id: item?._id,
-                  //         }),
-                  //       ]}
-                  //     >
-                  //       Verify OTP
-                  //     </button>
-                  //   ) : (
-                  //     <button
-                  //       key="start"
-                  //       className="btn-primary px-2"
-                  //       onClick={() =>
-                  //         EndUserorderbyorderIdApiHandle(
-                  //           item?.orderId,
-                  //           item?._id
-                  //         )
-                  //       }
-                  //     >
-                  //       End Service
-                  //     </button>
-                  //   ),
-                  // ]}
+                // buttons={[
+                //   item?.otp && new Date(item?.otpExpiry) > new Date() ? (
+                //     <button
+                //       key="verify"
+                //       className="btn-primary px-2"
+                //       onClick={() => [
+                //         handleOpenModal(item?.otp),
+                //         setModalType("verifyendorder"),
+                //         setOrderIdAndItemId({
+                //           ...orderIdAndItemId,
+                //           orderId: item?.orderId,
+                //           id: item?._id,
+                //         }),
+                //       ]}
+                //     >
+                //       Verify OTP
+                //     </button>
+                //   ) : (
+                //     <button
+                //       key="start"
+                //       className="btn-primary px-2"
+                //       onClick={() =>
+                //         EndUserorderbyorderIdApiHandle(
+                //           item?.orderId,
+                //           item?._id
+                //         )
+                //       }
+                //     >
+                //       End Service
+                //     </button>
+                //   ),
+                // ]}
                 />
               );
             })}

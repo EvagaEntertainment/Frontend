@@ -40,7 +40,7 @@ const userApi = {
   Wishlist: (userId) => apiService.get(apiEndpoints.user.wishlist(userId)),
   toggleWishlist: (userId, formData) =>
     apiService.post(apiEndpoints.user.toggelewishlist(userId), formData),
-  getTotalUser: (queryParams) => apiService.get(apiEndpoints.admin.getTotalUser,queryParams),
+  getTotalUser: (queryParams) => apiService.get(apiEndpoints.admin.getTotalUser, queryParams),
   getUserProfile: (userId) =>
     apiService.get(apiEndpoints.user.getUserprofile(userId)),
   addUserAdress: (userId, formData) =>
@@ -65,8 +65,8 @@ const userApi = {
     apiService.post(apiEndpoints.user.removeFromCart(userId, packageId)),
   GetRecentViewpackage: (userId) =>
     apiService.get(apiEndpoints.user.getRecentViewpackage(userId)),
-  GetRecentViewpackage: (userId) =>
-    apiService.get(apiEndpoints.user.getRecentViewpackage(userId)),
+  // GetRecentViewpackage: (userId) =>
+  //   apiService.get(apiEndpoints.user.getRecentViewpackage(userId)),
   AddRecentView: (formdata) =>
     apiService.post(apiEndpoints.user.addRecentView, formdata),
   SuggestSimilarServices: (formdata) =>
