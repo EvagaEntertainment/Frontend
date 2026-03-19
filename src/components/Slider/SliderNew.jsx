@@ -27,9 +27,9 @@ function SliderNew() {
 
   // Skeleton loader item
   const skeletonItem = (
-    <div className="relative w-full min-h-[85dvh] overflow-hidden">
+    <div className="relative w-full h-[60dvh] md:h-[85dvh] overflow-hidden">
       <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
-      <div className="relative z-10 container mx-auto px-6 h-full min-h-[80dvh] flex flex-col justify-end pb-[10%]">
+      <div className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-end pb-[10%] pt-20">
         <div className="text-center space-y-8">
           <div className="h-16 w-3/4 mx-auto bg-gray-300 rounded animate-pulse"></div>
           <div className="h-12 w-48 mx-auto bg-gray-300 rounded animate-pulse"></div>

@@ -12,14 +12,16 @@ export const footerMenuItems = {
     // { label: "Popular Searches", path: internalRoutes.popularSearches },
   ],
   midMenu: [
-    { label: "Eevagga Community", path: internalRoutes.evagaCommunity },
-    { label: "Become a Vendor", path: internalRoutes.vendorSignup },
-    { label: "Vendor Login", path: internalRoutes.vendorLogin },
+    // { label: "Eevagga Community", path: internalRoutes.evagaCommunity },
+    // { label: "Become a Vendor", path: internalRoutes.vendorSignup },
+    // { label: "Vendor Login", path: internalRoutes.vendorLogin },
+    { label: "Cancellation Policy", path: internalRoutes.cancellationPolicy },
+    { label: "Feedback Form", path: internalRoutes.feedbackForm },
     { label: "Terms and Condition", path: internalRoutes.TermsAndConditions },
     { label: "Privacy Policy", path: internalRoutes.privacyAndPolicy },
   ],
   rightMenu: [
-    { label: "Cancellation Policy", path: internalRoutes.cancellationPolicy },
-    { label: "Feedback Form", path: internalRoutes.feedbackForm },
+    // { label: "Cancellation Policy", path: internalRoutes.cancellationPolicy },
+    // { label: "Feedback Form", path: internalRoutes.feedbackForm },
   ],
 };

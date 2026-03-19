@@ -211,7 +211,7 @@ function Footer() {
               </li>
             ))}
           </ul>
-          <ul className="space-y-4">
+          {/* <ul className="space-y-4">
             {footerMenuItems.rightMenu.map((item, index) => (
               <li key={index}>
                 <Link to={item.path || "#"} className="hover:text-highlight">
@@ -219,7 +219,7 @@ function Footer() {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
 
         <div className=" col-span-2">
