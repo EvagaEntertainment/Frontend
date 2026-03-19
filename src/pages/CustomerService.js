@@ -26,54 +26,79 @@ function CustomerService() {
 
   const faqData = [
     {
-      question: "What types of events does Eevagga cater to?",
-      answer:
-        "We specialize in a wide range of events including weddings, birthdays, baby showers, school and college functions, corporate events and more. Whether you want a full event package or standalone services, we have you covered.",
+      category: "Orders & Bookings",
+      items: [
+        {
+          question: "How do I book a birthday celebration with Eevagga?",
+          answer:
+            "You can explore our website and submit a booking request, or connect with our team directly. We’ll guide you through themes, customization, and final planning.",
+        },
+        {
+          question: "Can I modify my booking after confirmation?",
+          answer:
+            "Yes, certain changes can be accommodated based on timelines and availability. We recommend informing our team as early as possible for smooth coordination.",
+        },
+        {
+          question: "Do you take last-minute bookings?",
+          answer:
+            "We try our best to accommodate urgent requests. Availability depends on the type of setup and resources required.",
+        },
+      ],
     },
     {
-      question: "Can I customize my event package?",
-      answer:
-        "Yes! You can choose from ready-made event packages or build your own by selecting standalone services that suit your specific needs and budget.",
+      category: "Delivery & Products",
+      items: [
+        {
+          question: "How long does it take to deliver Eevagga products?",
+          answer:
+            "Delivery timelines vary based on your location and the product ordered. Standard delivery timelines will be shared during checkout.",
+        },
+        {
+          question: "Do you offer same-day delivery?",
+          answer:
+            "Selected products and decoration kits may be available for quick or same-day delivery in certain locations.",
+        },
+        {
+          question: "Can I track my order?",
+          answer:
+            "Yes, once your order is confirmed, you will receive tracking details (where applicable).",
+        },
+      ],
     },
     {
-      question: "How do I book an event with Eevagga?",
-      answer:
-        "Booking is easy! You can explore our services online, select your preferred package or individual services, and book directly through our platform. Our team will then get in touch to assist you further.",
+      category: "Returns & Refunds",
+      items: [
+        {
+          question: "Can I cancel or reschedule my booking?",
+          answer:
+            "Cancellations and rescheduling are subject to timelines and booking terms. Our team will guide you based on your specific case.",
+        },
+        {
+          question: "Do you offer refunds on products?",
+          answer:
+            "Refunds are applicable in case of damaged or incorrect items. Please contact our support team within the specified time after delivery.",
+        },
+        {
+          question: "What if there is an issue with my order or setup?",
+          answer:
+            "We take quality seriously. If something isn’t right, our team will work quickly to resolve it and ensure your experience meets Eevagga standards.",
+        },
+      ],
     },
     {
-      question: "Do you provide services across India?",
-      answer:
-        "Currently, we primarily serve major cities and metro areas and few foreign countries with plans to expand. Please check availability for your location during the booking process.",
-    },
-    {
-      question: "Are your vendors and service providers verified?",
-      answer:
-        "Absolutely. All our vendors and partners go through a rigorous verification process to ensure quality, reliability, and professionalism.",
-    },
-    {
-      question: "What if I need help planning my event?",
-      answer:
-        "Our expert event planners are available to guide you through every step, from conceptualization to execution, making the entire process seamless and stress-free.",
-    },
-    {
-      question: "Can I get a quote before booking?",
-      answer:
-        "Yes, detailed quotes are provided upfront based on your selected services or package, ensuring transparency with no hidden costs.",
-    },
-    {
-      question: "What is your cancellation and refund policy?",
-      answer:
-        "Our cancellation and refund policies vary depending on the services booked. Please refer to the specific terms during booking or contact our support team for assistance.",
-    },
-    {
-      question: "Do you offer last-minute bookings?",
-      answer:
-        "We understand that plans can change suddenly; we try to accommodate last-minute bookings whenever possible. Contact us directly to check availability.",
-    },
-    {
-      question: "How can I contact Eevagga for support or queries?",
-      answer:
-        "You can reach us via the contact form on our website, email, or phone. Our dedicated support team is ready to assist you promptly.",
+      category: "Customization & Services",
+      items: [
+        {
+          question: "Can I request a fully customized birthday theme?",
+          answer:
+            "Yes. We specialize in creating custom birthday experiences tailored to your preferences, theme, and budget.",
+        },
+        {
+          question: "Do you help with small home celebrations as well?",
+          answer:
+            "Absolutely. We cater to both intimate home setups and large-scale birthday events.",
+        },
+      ],
     },
   ];
 
@@ -88,7 +113,7 @@ function CustomerService() {
           redirectPath: location.pathname + (location.search || ""),
         })
       );
-  
+
       navigate(
         `${internalRoutes.userLogin}?redirect=${encodeURIComponent(
           location.pathname + (location.search || "")
@@ -96,16 +121,16 @@ function CustomerService() {
       );
       return;
     }
-  
+
     try {
       const formData = new FormData();
       formData.append("userId", userId);
       formData.append("role", "User");
       formData.append("subject", data?.subject);
       formData.append("query", data?.query);
-  
+
       const response = await CreateQueryApi.callApi(formData);
-  
+
       if (response) {
         toast.success("Query Submitted successfully!");
       } else {
@@ -115,18 +140,18 @@ function CustomerService() {
       toast.error("An error occurred. Please try again later.");
     }
   };
-  
+
   useEffect(() => {
     const pendingQuery = localStorage.getItem("pendingQuery");
-  
+
     if (userId && pendingQuery) {
       const queryData = JSON.parse(pendingQuery);
-  
+
       // Add a submission flag to prevent multiple submissions
       if (!queryData.submitted) {
         queryData.submitted = true; // Mark as submitted
         localStorage.setItem("pendingQuery", JSON.stringify(queryData));
-  
+
         // Automatically submit the stored query
         (async () => {
           try {
@@ -135,9 +160,9 @@ function CustomerService() {
             formData.append("role", "User");
             formData.append("subject", queryData.subject);
             formData.append("query", queryData.query);
-  
+
             const response = await CreateQueryApi.callApi(formData);
-  
+
             if (response) {
               toast.success("Query Submitted successfully!");
               localStorage.removeItem("pendingQuery"); // Clear localStorage after successful submission
@@ -151,14 +176,15 @@ function CustomerService() {
         })();
       }
     }
-  }, [userId]); 
+  }, [userId]);
 
   return (
-    <div className="flex flex-col md:flex-row items-start justify-between gap-5 px-5 py-5 md:px-[2%] md:py-[2%] w-full">
-      <div className="flex-[0.28] flex flex-col gap-2">
-        <h3 className="text-primary text-xl font-semibold">Eevagga Support</h3>
-        <hr />
-        {/* <p
+    <>
+      <div className="flex flex-col md:flex-row items-start justify-between gap-5 px-5 py-5 md:px-[2%] md:py-[2%] w-full">
+        <div className="flex-[0.28] flex flex-col gap-2">
+          <h3 className="text-primary text-xl font-semibold">Eevagga Support</h3>
+          <hr />
+          {/* <p
           className={
             activeTab === "orderRelQry"
               ? "text-primary cursor-pointer font-medium"
@@ -168,75 +194,111 @@ function CustomerService() {
         >
           Order Related Query
         </p>{" "} */}
-        <p
-          className={"text-textGray cursor-pointer font-medium"}
-          // onClick={() => setActiveTab("orderRelQry")}
-        >
-          <Link
-            to={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
-            target="_blank"
+          <p
+            className={"text-textGray cursor-pointer font-medium"}
+            // onClick={() => setActiveTab("orderRelQry")}
           >
-            Whatsapp Support
-          </Link>
-        </p>{" "}
-        <p
-          className={"text-textGray cursor-pointer font-medium"}
-          onClick={() => window.open(gmailLink, "_blank")}
-        >
-          Email Support
-        </p>{" "}
-        <p
-          className={"text-textGray cursor-pointer font-medium"}
-          onClick={() => (window.location.href = "tel:+918296157611")}
-        >
-          Click To Call
-        </p>
-        <p
-          className={
-            activeTab === "nonOrderRelQry"
-              ? "text-primary cursor-pointer font-medium"
-              : "text-textGray cursor-pointer font-medium"
-          }
-          onClick={() => setActiveTab("nonOrderRelQry")}
-        >
-          Send Your Query
-        </p>
-        <p
-          className={
-            activeTab === "faq"
-              ? "text-primary cursor-pointer font-medium"
-              : "text-textGray cursor-pointer font-medium"
-          }
-          onClick={() => setActiveTab("faq")}
-        >
-          Frequently Asked Questions(FAQs)
-        </p>
-        <p className={"text-textGray cursor-pointer font-medium"}>
-          Call Us : +91 82961 57611
-        </p>{" "}
-        <p className={"text-textGray cursor-pointer font-medium"}>
-          Email Us : info@evagaentertainment.com
-        </p>
-        <hr />
+            <Link
+              to={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
+              target="_blank"
+            >
+              Whatsapp Support
+            </Link>
+          </p>{" "}
+          <p
+            className={"text-textGray cursor-pointer font-medium"}
+            onClick={() => window.open(gmailLink, "_blank")}
+          >
+            Email Support
+          </p>{" "}
+          <p
+            className={"text-textGray cursor-pointer font-medium"}
+            onClick={() => (window.location.href = "tel:+918296157611")}
+          >
+            Click To Call
+          </p>
+          <p
+            className={
+              activeTab === "nonOrderRelQry"
+                ? "text-primary cursor-pointer font-medium"
+                : "text-textGray cursor-pointer font-medium"
+            }
+            onClick={() => setActiveTab("nonOrderRelQry")}
+          >
+            Send Your Query
+          </p>
+          <p
+            className={
+              activeTab === "faq"
+                ? "text-primary cursor-pointer font-medium"
+                : "text-textGray cursor-pointer font-medium"
+            }
+            onClick={() => setActiveTab("faq")}
+          >
+            Frequently Asked Questions(FAQs)
+          </p>
+          <p className={"text-textGray cursor-pointer font-medium"}>
+            Call Us : +91 82961 57611
+          </p>{" "}
+          <p className={"text-textGray cursor-pointer font-medium"}>
+            Email Us : info@evagaentertainment.com
+          </p>
+          <hr />
+        </div>
+        <div className=" flex-1 md:flex-[0.67] w-full">
+          {activeTab === "nonOrderRelQry" && (
+            <NonOrderRelatedQuery saveForm={CreateQueryApiHandle} />
+          )}
+          {activeTab === "faq" && (
+            <div className="flex flex-col gap-6">
+              {/* <div className="flex flex-col gap-2">
+              <h1 className="text-3xl font-bold text-primary">Customer Support</h1>
+              <p className="text-textGray text-lg">
+                We’re here to make your celebration experience seamless from start to finish.
+                If you need any assistance, our team is always ready to help.
+              </p>
+            </div> */}
+
+              <div className="mt-4">
+                <h2 className="text-xl font-semibold text-primary mb-6 border-b pb-2">
+                  Frequently Asked Support Questions
+                </h2>
+
+                {faqData.map((category, catIndex) => (
+                  <div key={catIndex} className="mb-8">
+                    <h3 className="text-lg font-bold text-primary mb-4 bg-gray-50 p-2 rounded">
+                      {category.category}
+                    </h3>
+                    <div className="flex flex-col gap-2">
+                      {category.items.map((item, index) => {
+                        const panelId = `panel-${catIndex}-${index}`;
+                        return (
+                          <AccordionCard
+                            key={panelId}
+                            title={item.question}
+                            summary={item.answer}
+                            isExpanded={expanded === panelId}
+                            onToggle={handleChange(panelId)}
+                            panelId={panelId}
+                            sn={index + 1}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-      <div className=" flex-1 md:flex-[0.67] w-full">
-        {activeTab === "nonOrderRelQry" && (
-          <NonOrderRelatedQuery saveForm={CreateQueryApiHandle} />
-        )}
-        {activeTab === "faq" &&
-          faqData?.map((item, index) => (
-            <AccordionCard
-              key={index}
-              title={item.question}
-              summary={item.answer}
-              isExpanded={expanded === index}
-              onToggle={handleChange(index)}
-              panelId={index}
-              sn={index + 1}
-            />
-          ))}
-      </div>
-    </div>
+      {activeTab === "faq" && (
+        <p className="mt-5 mb-10 text-xl font-medium text-primary text-center italic border-t pt-8 leading-relaxed max-w-4xl mx-auto px-5">
+          At Eevagga, we don’t just plan celebrations — we ensure every
+          experience is smooth, thoughtful, and memorable.
+        </p>
+      )}
+    </>
   );
 }
 
