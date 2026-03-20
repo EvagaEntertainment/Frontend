@@ -37,16 +37,11 @@ function BannerNew({ image, height, category, preview }) {
   };
 
   const containerVariants = {
-    hidden: { scale: 1.1, opacity: 0 },
+    hidden: { opacity: 0 },
     visible: {
-      scale: 1,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
-        mass: 0.5,
-        duration: 1.2,
+        duration: 0.8,
       },
     },
   };
@@ -72,7 +67,7 @@ function BannerNew({ image, height, category, preview }) {
   return (
     <motion.div
       ref={bannerRef}
-      className="banner-container relative w-full h-[60dvh] md:h-[85dvh] overflow-hidden"
+      className="banner-container relative w-full h-[50dvh] sm:h-[65dvh] md:h-[85dvh] overflow-hidden"
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
       variants={containerVariants}
@@ -98,7 +93,7 @@ function BannerNew({ image, height, category, preview }) {
           loading="lazy"
           onLoad={() => setImageLoaded(true)}
         />
-        <div className="absolute inset-0 bg-black/45 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </motion.div>
  
       {/* Content Container */}
