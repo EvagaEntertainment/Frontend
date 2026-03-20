@@ -15,7 +15,7 @@ const HeroSection = () => {
       dispatch(fetchOurServicesBanner());
     }
   }, [dispatch, ourServicesBanner]);
-console.log(ourServicesBanner);
+  console.log(ourServicesBanner);
 
   return (
     <section className="relative w-full min-h-[80dvh] overflow-hidden">
@@ -26,10 +26,9 @@ console.log(ourServicesBanner);
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: `url(${
-            process.env.REACT_APP_API_Aws_Image_BASE_URL +
+          backgroundImage: `url(${process.env.REACT_APP_API_Aws_Image_BASE_URL +
             ourServicesBanner?.[0]?.BannerUrl
-          })`,
+            })`,
         }}
       />
 
@@ -49,16 +48,16 @@ console.log(ourServicesBanner);
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
               whileHover={{ scale: 1.02 }}
             >
-              Weddings. Birthdays. Corporate Events.
+              Premium Birthday Celebrations, Designed to Be Unforgettable
             </motion.h1>
-            <motion.p
+            {/* <motion.p
               className="text-xl md:text-2xl text-white mb-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
               Whatever you're planning, we make it effortless and unforgettable.
-            </motion.p>
+            </motion.p> */}
           </div>
         </motion.div>
 
