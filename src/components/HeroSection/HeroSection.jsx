@@ -45,7 +45,7 @@ const HeroSection = () => {
         >
           <div className="max-w-lg mx-auto lg:ml-0">
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold tracking-tight text-white mb-4"
               whileHover={{ scale: 1.02 }}
             >
               Premium Birthday Celebrations, Designed to Be Unforgettable
