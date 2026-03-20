@@ -32,7 +32,7 @@ export default function HeroSection() {
           }}
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold text-white mb-4"
+            className="text-4xl md:text-6xl font-outfit font-bold tracking-tight text-white mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}

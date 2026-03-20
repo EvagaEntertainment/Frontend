@@ -24,6 +24,10 @@ module.exports = {
         textYellow: "#FFE500",
         hoverYellow: "#CBAB00",
       },
+      fontFamily: {
+        outfit: ["Outfit", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
     },
     fontSize: {
       esm: "0.6rem",
