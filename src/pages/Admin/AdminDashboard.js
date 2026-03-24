@@ -23,6 +23,7 @@ import GstTable from "../../components/Admin/GstTable";
 import WaitlistTable from "../../components/Admin/waitlistTable";
 import FeedbackTable from "../../components/Admin/FeedbackTable";
 import NewOrdertable from "../../components/Admin/NewOrdertable";
+import NewOrderLeadsquare from "../../components/Admin/NewOrderLeadsquare";
 import ConfirmOrder from "../../components/Admin/ConfirmOrder";
 import OngoingOrder from "../../components/Admin/OngoingOrder";
 import CompletedOrder from "../../components/Admin/CompletedOrder";
@@ -307,6 +308,7 @@ const AdminDashboard = () => {
         {selectedMenu === "Feedback" && <FeedbackTable />}
         {selectedMenu === "Waitlist" && <WaitlistTable term={term} />}
         {selectedMenu === "New Orders" && <NewOrdertable term={term} />}
+        {selectedMenu === "New Order Leadsquare" && <NewOrderLeadsquare />}
         {selectedMenu === "Confirmed Orders" && <ConfirmOrder term={term} />}
         {selectedMenu === "Ongoing Orders" && <OngoingOrder term={term} />}
         {selectedMenu === "Completed Orders" && <CompletedOrder term={term} />}

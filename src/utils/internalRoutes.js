@@ -56,4 +56,5 @@ export const internalRoutes = {
   feedbackForm: "/feedback-form",
   customerService: "/customer-service",
   customPackages: "/custom-packages",
+  trackOrder: "/track-order",
 };
