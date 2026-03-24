@@ -83,6 +83,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const SingleBlogPage = lazy(() => import("./pages/singleBlogPage"));
 const InterestSelection = lazy(() => import("./pages/InterestSelection"));
 const BookingForm = lazy(() => import("./pages/BookingForm.js"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder.js"));
 // const OurService = lazy(() => import("./pages/OurService.jsx"));
 const AppContent = () => {
   const { auth } = useAuth();
@@ -308,6 +309,14 @@ const AppContent = () => {
               // </Suspense>
             }
             path={internalRoutes.home}
+          />
+          <Route
+            element={
+              <Suspense fallback={<Loader />}>
+                <TrackOrder />
+              </Suspense>
+            }
+            path={internalRoutes.trackOrder}
           />
           <Route
             element={

@@ -314,6 +314,12 @@ const apiEndpoints = {
       `order/getOneOrderDetail/${OrderId}/${itemId}`,
     downloadOrdersCSV: (orderStatus) =>
       `order/downloadOrdersCSV/${orderStatus}`,
+    syncLeads: "syncLeads/sync-leads",
+    getAllSyncLeads: "syncLeads/get-all",
+    getOneSyncLead: (id) => `syncLeads/get-one/${id}`,
+    updateOneSyncLead: (id) => `syncLeads/update-one/${id}`,
+    deleteOneSyncLead: (id) => `syncLeads/delete-one/${id}`,
+    trackSyncLead: "syncLeads/track",
   },
 };
 

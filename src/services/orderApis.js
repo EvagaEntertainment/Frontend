@@ -102,6 +102,12 @@ const orderApis = {
       apiEndpoints.order.downloadOrdersCSV(orderStatus),
       queryParams
     ),
+  syncLeads: () => apiService.post(apiEndpoints.order.syncLeads),
+  getAllSyncLeads: (queryParams) => apiService.get(apiEndpoints.order.getAllSyncLeads, queryParams),
+  getOneSyncLead: (id) => apiService.get(apiEndpoints.order.getOneSyncLead(id)),
+  updateOneSyncLead: (id, data) => apiService.put(apiEndpoints.order.updateOneSyncLead(id), data),
+  deleteOneSyncLead: (id) => apiService.delete(apiEndpoints.order.deleteOneSyncLead(id)),
+  trackSyncLead: (data) => apiService.post(apiEndpoints.order.trackSyncLead, data),
 };
 
 export default orderApis;
