@@ -1,8 +1,22 @@
 import React from 'react'
 import { motion } from 'framer-motion';
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 function Careers() {
   return (
-    <div
+    <>
+      <Helmet>
+        <title>Careers | Join the Eevagga Team</title>
+        <meta
+          name="description"
+          content="Explore career opportunities at Eevagga. Join us in building India's premium birthday celebration brand."
+        />
+        <meta name="keywords" content="careers, jobs, Eevagga hiring, event planning jobs" />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
+      <div
     className="flex items-center justify-center min-h-screen"
     style={{
       background: 'linear-gradient(to right, #6A1B9A, #4A0072)',
@@ -82,6 +96,7 @@ function Careers() {
       </motion.div>
     </motion.div>
   </div>
+    </>
   )
 }
 

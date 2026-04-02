@@ -7,6 +7,8 @@ import commonApis from "../services/commonApis";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { internalRoutes } from "../utils/internalRoutes";
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 function CustomerService() {
   const [activeTab, setActiveTab] = useState("faq");
   const [expanded, setExpanded] = useState(null);
@@ -180,6 +182,17 @@ function CustomerService() {
 
   return (
     <>
+      <Helmet>
+        <title>Customer Service & FAQ | Eevagga Support</title>
+        <meta
+          name="description"
+          content="Get help with your Eevagga booking. Find answers to frequently asked questions or contact our support team."
+        />
+        <meta name="keywords" content="customer service, Eevagga support, FAQ, help" />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 px-5 py-5 md:px-[2%] md:py-[2%] w-full">
         <div className="flex-[0.28] flex flex-col gap-2">
           <h3 className="text-primary text-xl font-semibold">Eevagga Support</h3>

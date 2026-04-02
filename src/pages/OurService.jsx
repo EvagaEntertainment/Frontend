@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 import HeroSection from "../components/HeroSection/HeroSection";
 import FAQSection from "../components/FAQSection/FAQSection";
 import OurWorkSection from "../components/OurWorkSection/OurWorkSection";
@@ -30,6 +31,7 @@ function OurService() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+      <Breadcrumbs />
       <div>
       <HeroSection />
       <ServicesSection/>

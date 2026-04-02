@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 function RefundAndCancellation() {
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -15,7 +17,19 @@ function RefundAndCancellation() {
     },
   };
   return (
-    <motion.div
+    <>
+      <Helmet>
+        <title>Refund & Cancellation Policy | Eevagga</title>
+        <meta
+          name="description"
+          content="Review Eevagga's refund and cancellation policies to ensure a fair and transparent event planning experience."
+        />
+        <meta name="keywords" content="refund policy, cancellation policy, Eevagga terms" />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
+      <motion.div
       className="lg:max-w-[70%] mx-auto p-6"
       initial="hidden"
       animate="visible"
@@ -247,6 +261,7 @@ function RefundAndCancellation() {
         </section>
       </div>
     </motion.div>
+    </>
   );
 }
 
