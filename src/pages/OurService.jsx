@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import HeroSection from "../components/HeroSection/HeroSection";
 import FAQSection from "../components/FAQSection/FAQSection";
 import OurWorkSection from "../components/OurWorkSection/OurWorkSection";
@@ -9,7 +10,27 @@ import OurServiceCta from "../components/OurServiceCta/OurServiceCta";
 
 function OurService() {
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Professional Birthday Services | Eevagga</title>
+        <meta
+          name="description"
+          content="Explore our professional birthday celebration services. From stunning decorations to expert entertainment, we bring your dream celebration to life."
+        />
+        <meta
+          name="keywords"
+          content="birthday decorations, event management, birthday themes, professional party planning, Eevagga services, party entertainment"
+        />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Professional Birthday Services | Eevagga" />
+        <meta
+          property="og:description"
+          content="Explore our professional birthday celebration services. From stunning decorations to expert entertainment, we bring your dream celebration to life."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <div>
       <HeroSection />
       <ServicesSection/>
       <WhyChooseUs />
@@ -18,6 +39,7 @@ function OurService() {
        <OurServiceCta/>
       <FAQSection />
     </div>
+    </>
   );
 }
 

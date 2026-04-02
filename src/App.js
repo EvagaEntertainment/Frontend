@@ -4,6 +4,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { internalRoutes } from "./utils/internalRoutes";
@@ -84,6 +85,7 @@ const SingleBlogPage = lazy(() => import("./pages/singleBlogPage"));
 const InterestSelection = lazy(() => import("./pages/InterestSelection"));
 const BookingForm = lazy(() => import("./pages/BookingForm.js"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder.js"));
+const NotFound = lazy(() => import("./pages/NotFound.js"));
 // const OurService = lazy(() => import("./pages/OurService.jsx"));
 const AppContent = () => {
   const { auth } = useAuth();
@@ -91,6 +93,7 @@ const AppContent = () => {
   const location = useLocation();
   const userId = Cookies.get("userId");
   const { allWishlist } = useSelector((state) => state.wishlist);
+  const canonicalUrl = `${window.location.origin}${location.pathname}`;
   const noNavbarPaths = [
     internalRoutes.vendorDashboard,
     internalRoutes.vendorProfile,
@@ -207,6 +210,12 @@ const AppContent = () => {
   }, [location.search]);
   return (
     <>
+      <Helmet>
+        <html lang="en" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
       {noNavbarPaths.includes(location.pathname) && <DynamicNav />}
       {!noNewNavbarPaths.includes(location.pathname) && <Navbar />}
 
@@ -620,6 +629,14 @@ const AppContent = () => {
               </Suspense>
             }
           />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<Loader />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
         </Routes>
         {!noFooterPaths.includes(location.pathname) && <Footer />}
       </GlobalEventHandlers>
@@ -635,14 +652,16 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <AuthProvider>
-        <ErrorProvider>
-          <ErrorHandler />
-          <AppContent />
-        </ErrorProvider>
-      </AuthProvider>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AuthProvider>
+          <ErrorProvider>
+            <ErrorHandler />
+            <AppContent />
+          </ErrorProvider>
+        </AuthProvider>
+      </Router>
+    </HelmetProvider>
   );
 }
 

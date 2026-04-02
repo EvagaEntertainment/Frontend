@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "../utils/motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -88,12 +89,32 @@ const AboutUs = () => {
   ];
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="show"
-      variants={staggerContainer()}
-      className="max-w-4xl mx-auto px-4 py-12"
-    >
+    <>
+      <Helmet>
+        <title>About Eevagga | India's Premium Birthday Celebration Brand</title>
+        <meta
+          name="description"
+          content="Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible."
+        />
+        <meta
+          name="keywords"
+          content="birthday celebrations, premium birthdays, party planning, Eevagga story, birthday experiences India, birthday planners"
+        />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="About Eevagga | India's Premium Birthday Celebration Brand" />
+        <meta
+          property="og:description"
+          content="Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={staggerContainer()}
+        className="max-w-4xl mx-auto px-4 py-12"
+      >
       {/* Hero Section */}
       <motion.div
         variants={fadeIn("up", "tween", 0.1, 0.6)}
@@ -231,6 +252,7 @@ const AboutUs = () => {
         </div>
       </motion.div>
     </motion.div>
+    </>
   );
 };
 
