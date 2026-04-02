@@ -6,6 +6,7 @@
     "@cashfreepayments/cashfree-js": "^1.0.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^5.2.2",
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
     "@reduxjs/toolkit": "^2.3.0",
@@ -45,7 +46,8 @@
     "react-zoom-pan-pinch": "^3.6.1",
     "redux": "^5.0.1",
     "swiper": "^11.2.8",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zod": "^4.3.6"
   },
   "scripts": {
     "start": "react-scripts start",

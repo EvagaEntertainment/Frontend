@@ -133,6 +133,16 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       ],
     },
     {
+      id: "Catalog Management",
+      label: "Catalog Management",
+      icon: <FaBorderAll />,
+      children: [
+        { id: "Categories", label: "Categories", icon: <FaBorderAll /> },
+        { id: "Attributes", label: "Attributes (Filters)", icon: <FaClipboardList /> },
+        { id: "Products", label: "Products", icon: <TbBrandBooking /> },
+      ],
+    },
+    {
       id: "Orders",
       label: "Orders",
       icon: <FaRegMoneyBillAlt />,
