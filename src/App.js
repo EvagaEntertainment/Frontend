@@ -236,6 +236,47 @@ const AppContent = () => {
         {!noWhatsappPaths.includes(location.pathname) && <WhatsAppButton />}{" "}
         {!noWhatsappPaths.includes(location.pathname) && <StickyAd />}
         <GoToTop />
+        <Helmet>
+          <script type="application/ld+json">
+            {`
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Eevagga",
+                "alternateName": "Evaga Entertainment Pvt Ltd",
+                "url": "https://www.eevagga.com/",
+                "logo": "https://www.eevagga.com/logo.png",
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+91-8296157611",
+                  "contactType": "customer service",
+                  "areaServed": "IN",
+                  "availableLanguage": "en"
+                },
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Prestige Atlanta, 1A Koramangala",
+                  "addressLocality": "Bangalore",
+                  "addressRegion": "Karnataka",
+                  "postalCode": "560038",
+                  "addressCountry": "IN"
+                },
+                "sameAs": [
+                  "https://www.instagram.com/eevagga/",
+                  "https://www.facebook.com/eevaggaofficial",
+                  "https://twitter.com/eevagga"
+                ],
+                "speakable": {
+                  "@type": "SpeakableSpecification",
+                  "xpath": [
+                    "/html/head/title",
+                    "/html/head/meta[@name='description']/@content"
+                  ]
+                }
+              }
+            `}
+          </script>
+        </Helmet>
         <Routes>
           <Route
             element={
