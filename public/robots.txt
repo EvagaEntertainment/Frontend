@@ -1,3 +1,24 @@
-# https://www.robotstxt.org/robotstxt.html
+# Crawlers allowed paths
 User-agent: *
-Disallow:
+Allow: /
+Allow: /about-us
+Allow: /careers
+Allow: /blogs
+Allow: /press-releases
+Allow: /cancellation-policy
+Allow: /terms-and-condition
+Allow: /privacy-policy
+Allow: /feedback-form
+Allow: /customer-service
+Allow: /services
+
+# Disallowed sections
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /user/
+Disallow: /checkout/
+Disallow: /search
+Disallow: /select-your-interest
+
+# Sitemap URL
+Sitemap: https://www.eevagga.com/sitemap.xml
