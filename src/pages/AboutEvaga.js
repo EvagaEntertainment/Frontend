@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "../utils/motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -109,6 +110,7 @@ const AboutUs = () => {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+      <Breadcrumbs />
       <motion.div
         initial="hidden"
         animate="show"

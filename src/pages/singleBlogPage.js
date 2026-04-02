@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 function SingleBlogPage() {
   const { blogId } = useParams();
@@ -20,7 +22,15 @@ function SingleBlogPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogId]);
   return (
-    <Box
+    <>
+      <Helmet>
+        <title>{blog?.title ? `${blog.title} | Eevagga Blog` : "Blog | Eevagga"}</title>
+        <meta name="description" content={blog?.summary || "Read the latest celebration insights from Eevagga."} />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
+      <Box
       sx={{
         maxWidth: "1000px",
         margin: "auto",
@@ -126,6 +136,7 @@ function SingleBlogPage() {
         className="text-textGray"
       />
     </Box>
+    </>
   );
 }
 

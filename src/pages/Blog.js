@@ -4,6 +4,9 @@ import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { Pagination, Stack } from "@mui/material";
 
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
+
 function Blog() {
   const [allBlog, setAllBlog] = useState([]);
   const [page, setPage] = useState(1);
@@ -35,7 +38,19 @@ function Blog() {
   }, [page]);
 
   return (
-    <div className="min-h-[50vh] px-[3%] py-[3%] ">
+    <>
+      <Helmet>
+        <title>Blogs | Eevagga Celebration Insights</title>
+        <meta
+          name="description"
+          content="Tips, stories, and inspiration for your next birthday celebration. Read the latest from Eevagga's experts."
+        />
+        <meta name="keywords" content="birthday blogs, party tips, Eevagga blog, celebration ideas" />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
+      <div className="min-h-[50vh] px-[3%] py-[3%] ">
       <h2 className="text-primary font-semibold text-2xl">All Blogs</h2>
       <div className="my-4 flex items-center justify-start flex-wrap gap-4 w-full">
         {allBlog?.length > 0 ? (
@@ -60,6 +75,7 @@ function Blog() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

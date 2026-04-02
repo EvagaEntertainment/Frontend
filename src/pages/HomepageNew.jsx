@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async'
+import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs'
 import SliderNew from '../components/Slider/SliderNew'
 import NewCatgeories from '../components/NewCatgeories/HowItWorks'
 import HowItWorks from '../components/HowItWorks/HowItWorks'
@@ -31,6 +32,7 @@ function HomepageNew() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
+      <Breadcrumbs />
       <div className="flex flex-col ">
         <SliderNew/>
         <NewCatgeories/>

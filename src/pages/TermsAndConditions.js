@@ -381,6 +381,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 function TermsAndConditions() {
   const containerVariants = {
@@ -398,7 +400,19 @@ function TermsAndConditions() {
   };
 
   return (
-    <motion.div
+    <>
+      <Helmet>
+        <title>Terms & Conditions | Eevagga</title>
+        <meta
+          name="description"
+          content="Read our terms and conditions to understand your rights and responsibilities when using the Eevagga platform."
+        />
+        <meta name="keywords" content="terms and conditions, Eevagga terms, legal" />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <Breadcrumbs />
+      <motion.div
       className="lg:max-w-[70%] mx-auto p-6"
       initial="hidden"
       animate="visible"
@@ -540,6 +554,7 @@ function TermsAndConditions() {
         </section>
       </div>
     </motion.div>
+    </>
   );
 }
 
