@@ -8,6 +8,7 @@ import {
   FaRegMoneyBillAlt,
   FaBorderAll,
   FaRegNewspaper,
+  FaQrcode,
 } from "react-icons/fa";
 import { TfiWrite } from "react-icons/tfi";
 import { RiCoupon3Line } from "react-icons/ri";
@@ -129,6 +130,11 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           id: "Testimonial",
           label: "Testimonial",
           icon: <MdRateReview />,
+        },
+        {
+          id: "GenerateQR",
+          label: "Generate QR",
+          icon: <FaQrcode />,
         },
       ],
     },

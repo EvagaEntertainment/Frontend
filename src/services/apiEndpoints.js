@@ -255,6 +255,12 @@ const apiEndpoints = {
     getCustomEventSubmissionsByStatus: (status) => `customEventSubmissions/status/${status}`,
     getCustomEventSubmissionStats: "customEventSubmissions/stats/overview",
     getCustomEventSubmissionsNeedingAttention: "customEventSubmissions/admin/needing-attention",
+    // QR Codes Admin endpoints
+    getAllQRs: "qr/get-all",
+    getOneQR: (id) => `qr/get-one/${id}`,
+    createQR: "qr/create",
+    updateQR: (id) => `qr/update/${id}`,
+    deleteQR: (id) => `qr/delete/${id}`,
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

@@ -224,6 +224,17 @@ const adminActionsApi = {
     apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionStats),
   getCustomEventSubmissionsNeedingAttention: (queryParams) => 
     apiService.get(apiEndpoints.adminActions.getCustomEventSubmissionsNeedingAttention, queryParams),
+  // QR Codes Admin APIs
+  getAllQRs: (queryParams) => 
+    apiService.get(apiEndpoints.adminActions.getAllQRs, queryParams),
+  getOneQR: (id) => 
+    apiService.get(apiEndpoints.adminActions.getOneQR(id)),
+  createQR: (formData) => 
+    apiService.post(apiEndpoints.adminActions.createQR, formData),
+  updateQR: (id, formData) => 
+    apiService.put(apiEndpoints.adminActions.updateQR(id), formData),
+  deleteQR: (id) => 
+    apiService.delete(apiEndpoints.adminActions.deleteQR(id)),
 };
 
 export default adminActionsApi;
