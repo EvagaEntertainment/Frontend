@@ -105,7 +105,7 @@ function BannerTable() {
       key: "BannerUrl",
       render: (row) => (
         <img
-          src={process.env.REACT_APP_API_Aws_Image_BASE_URL + row.BannerUrl}
+          src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + row.BannerUrl}
           alt="Banner"
           className="h-[5rem] object-cover rounded"
         />

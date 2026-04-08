@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -7,7 +8,8 @@ import { setSearchTerm } from "../../context/redux/slices/userSearchSlice";
 import useDebounce from "../../utils/useDebounce";
 import useServices from "../../hooks/useServices";
 import packageApis from "../../services/packageApis";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { CiSearch } from "react-icons/ci";
 
 function HomeSearchBar({ cities, value, onChange }) {
@@ -71,7 +73,7 @@ function HomeSearchBar({ cities, value, onChange }) {
   };
   const allCategoriesOption = { _id: "all", name: "All" };
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const handleSearch = useCallback(
     (bypassSearchTermCheck = true) => {
@@ -81,7 +83,7 @@ function HomeSearchBar({ cities, value, onChange }) {
           category: selectedCategoryId ? selectedCategoryId : "all",
         }).toString();
 
-        navigate(`/search?${query}`);
+        router.push(`/search?${query}`);
       }
     },
     [searchTerm, selectedCategoryId, navigate]

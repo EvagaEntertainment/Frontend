@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import BlogCard from "../components/Cards/BlogCard";
 import useServices from "../hooks/useServices";

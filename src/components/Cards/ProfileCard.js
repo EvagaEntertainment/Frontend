@@ -1,6 +1,8 @@
+'use client';
 import React from "react";
 import image from "../../assets/Temporary Images/image.png";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 function ProfileCard({
   profilePic,
@@ -8,7 +10,7 @@ function ProfileCard({
   Category,
   profilePerccentage,
 }) {
-  const history = useNavigate();
+  const router = useRouter();
   return (
     <div className="flex items-center justify-center flex-col gap-2 w-full h-full px-4">
       <div className="w-full flex items-center justify-start mb-4">
@@ -16,7 +18,7 @@ function ProfileCard({
           <img
             src={
               profilePic
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + profilePic
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + profilePic
                 : image
             }
             alt="GH Catering Logo"
@@ -35,7 +37,7 @@ function ProfileCard({
         {Number(profilePerccentage) < 100 ? (
           <p
             className="text-lg font-normal text-primary underline  underline-offset-1 cursor-pointer"
-            onClick={() => history(internalRoutes.vendorProfile)}
+            onClick={() => router.push(internalRoutes.vendorProfile)}
           >
             {" "}
             Complete your Registration
@@ -43,7 +45,7 @@ function ProfileCard({
         ) : (
           <p
             className="text-lg font-normal text-primary cursor-pointer"
-            onClick={() => history(internalRoutes.vendorProfile)}
+            onClick={() => router.push(internalRoutes.vendorProfile)}
           >
             Registration is completed
           </p>

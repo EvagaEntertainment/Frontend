@@ -1,3 +1,4 @@
+'use client';
 import {
   Button,
   Card,
@@ -6,11 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 
 function BlogCard({ blog }) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <Card
@@ -29,7 +31,7 @@ function BlogCard({ blog }) {
       <CardMedia
         component="img"
         height="200"
-        image={process.env.REACT_APP_API_Aws_Image_BASE_URL + blog?.coverImage}
+        image={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + blog?.coverImage}
         alt={blog?.title}
         sx={{
           objectFit: "cover",
@@ -99,7 +101,7 @@ function BlogCard({ blog }) {
             },
           }}
           onClick={() =>
-            navigate(`${internalRoutes?.singleBlog + "/" + blog?._id}`)
+            router.push(`${internalRoutes?.singleBlog + "/" + blog?._id}`)
           }
         >
           Read More

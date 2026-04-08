@@ -1,5 +1,7 @@
+'use client';
 import { motion } from "framer-motion";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
+
 import ProductCardV2 from "../components/Cards/ProductCardV2";
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
@@ -8,7 +10,7 @@ import CustomPagination from "../utils/CustomPagination";
 import SkeletonProductCardV2 from "../components/Cards/SkeletonProductCardV2";
 import { internalRoutes } from "../utils/internalRoutes";
 const ViewAllPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { category } = useParams();
   const [searchParams] = useSearchParams();
   const categoryId = searchParams.get("categoryId");
@@ -148,7 +150,7 @@ console.log(error);
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: "#4A0072" }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate(-1)}
+            onClick={() => router.push(-1)}
             className="px-4 py-2 rounded-lg text-white text-sm font-medium bg-[#6A1B9A]"
           >
             Go Back
@@ -177,7 +179,7 @@ console.log(error);
                     : product.serviceDetails?.values?.ProductImage);
 
                 const processedImageUrl = imageUrl?.startsWith("service/")
-                  ? `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${imageUrl}`
+                  ? `${process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL}${imageUrl}`
                   : imageUrl;
 
                 // Parse price to number
@@ -213,7 +215,7 @@ console.log(error);
                     }
                     price={price}
                     imageUrl={processedImageUrl}
-                    onClick={() => navigate(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}?category=${category}`)}
+                    onClick={() => router.push(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}?category=${category}`)}
                   />
                 );
               })}

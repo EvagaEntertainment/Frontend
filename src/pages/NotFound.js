@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 import { motion, useSpring, useMotionValue } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
@@ -114,8 +115,7 @@ const NotFound = () => {
               whileTap={{ scale: 0.98 }}
               className="inline-block"
             >
-              <Link
-                to="/"
+              <Link href="/"
                 className="flex items-center gap-4 px-12 py-5 rounded-full bg-[#6A1B9A] text-white font-bold tracking-wide transition-all duration-300 shadow-[0_20px_40px_-10px_rgba(106,27,154,0.3)] hover:shadow-[0_20px_60px_-10px_rgba(106,27,154,0.5)]"
               >
                 <span>Take me Home</span>

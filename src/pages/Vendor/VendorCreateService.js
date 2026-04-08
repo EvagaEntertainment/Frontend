@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import SearchableCategoryAndSubcategoryDropdown from "../../components/Inputs/SearchableCategoryAndSubcategoryDropdown";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +9,8 @@ import { toast } from "react-toastify";
 import DynamicForm from "../../components/Forms/DynamicForm";
 import Cookies from "js-cookie";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { Box, Modal } from "@mui/material";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 function VendorCreateService() {
@@ -43,7 +45,7 @@ function VendorCreateService() {
     useState(false);
 
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const router = useRouter();
   const CHUNK_SIZE = 5 * 1024 * 1024;
 
   const uploadChunk = async (formData, chunkIndex) => {
@@ -348,7 +350,7 @@ function VendorCreateService() {
 
       const response = await addNewService.callApi(userId, formData);
       toast.success(response?.message);
-      history("/vendor/dashboard");
+      router.push("/vendor/dashboard");
       setLoading(false);
     } catch (error) {
       setLoading(false);

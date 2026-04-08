@@ -1,6 +1,8 @@
+'use client';
 import React, { useEffect } from "react";
 import successImage from "../assets/Temporary Images/badge-check 1.png";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
 function OrderSucessPage() {
@@ -27,7 +29,7 @@ function OrderSucessPage() {
   return (
     <div className="w-full min-h-[50vh] flex items-center justify-center flex-col gap-2">
       <img
-        src={successImage}
+        src={successImage?.src || successImage}
         alt="success"
         className="object-contain h-[3rem]"
       />

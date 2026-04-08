@@ -65,8 +65,6 @@ const userApi = {
     apiService.post(apiEndpoints.user.removeFromCart(userId, packageId)),
   GetRecentViewpackage: (userId) =>
     apiService.get(apiEndpoints.user.getRecentViewpackage(userId)),
-  GetRecentViewpackage: (userId) =>
-    apiService.get(apiEndpoints.user.getRecentViewpackage(userId)),
   AddRecentView: (formdata) =>
     apiService.post(apiEndpoints.user.addRecentView, formdata),
   SuggestSimilarServices: (formdata) =>

@@ -48,7 +48,7 @@ function RecentlyViewedCard({
     <div className="w-[250px] h-auto border rounded-lg bg-white overflow-hidden flex-shrink-0 cursor-pointer">
     <div className="w-full h-[180px]" onClick={onClick}>
       <img
-        src={popularimage}
+        src={popularimage?.src || popularimage}
         alt={title}
         className="w-full h-full object-cover rounded-t-md"
         style={{

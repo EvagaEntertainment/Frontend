@@ -8,7 +8,7 @@ function CouponCard() {
     <h2 className="text-xl font-semibold text-primary mb-4">Coupons</h2>
     <div className="flex items-center mb-6">
       <img
-        src={Tag}
+        src={Tag?.src || Tag}
         alt="tag1"
       />
       <input
@@ -20,7 +20,7 @@ function CouponCard() {
         style = {{marginLeft: "4rem",}}
       >
         <img
-          src={Add}
+          src={Add?.src || Add}
           alt="Add"
         />
       </button>
@@ -50,7 +50,7 @@ function CouponCard() {
         <span>₹2000.00</span>
       </div>
       <div className="text-normal flex justify-between mb-2">
-        <span className="flex text-normal"><span className="font-medium">GST & other Charges</span><img src={CommentInfo} className="h-4 mt-1 ml-1"/></span>
+        <span className="flex text-normal"><span className="font-medium">GST & other Charges</span><img src={CommentInfo?.src || CommentInfo} className="h-4 mt-1 ml-1"/></span>
         <span>₹2,358.00</span>
       </div>
     </div>

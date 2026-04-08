@@ -1,12 +1,14 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone } from "react-icons/fa";
-import { NavLink, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import logo from "../../assets/Temporary Images/Eevagga_yellow.webp";
 import { internalRoutes } from "../../utils/internalRoutes";
 
 function Navbar() {
-  const location = useLocation();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const navLinks = [
@@ -25,6 +27,7 @@ function Navbar() {
     }
     setIsOpen((prev) => !prev);
   };
+  
   const menuVariants = {
     open: {
       opacity: 1,
@@ -54,48 +57,50 @@ function Navbar() {
       transition: { duration: 0.2 },
     },
   };
+  
   const handleAnimationComplete = () => {
     if (!isOpen) {
       setMenuVisible(false);
     }
   };
+  
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   return (
     <nav className="bg-[#6A1B9A] w-full z-50 border-b border-[#FFE500]/20">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <motion.a
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center"
-          href={internalRoutes.home}
-        >
-          <img
-            src={
-              process.env.REACT_APP_API_Aws_Image_BASE_URL +
-              "gallery/1749377446139_Eevagga_yellow.webp"
-            }
-            alt="Evaga Logo"
-            className="h-10 md:h-10 object-contain"
-          />
-        </motion.a>
+        <Link href={internalRoutes.home} passHref legacyBehavior>
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center"
+          >
+            <img
+              src={
+                process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
+                "gallery/1749377446139_Eevagga_yellow.webp"
+              }
+              alt="Evaga Logo"
+              className="h-10 md:h-10 object-contain"
+            />
+          </motion.a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-10">
-          {navLinks.map((link) => (
-            <NavLink
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path;
+            return (
+            <Link
               key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `relative text-sm font-medium ${
-                  isActive ? "text-[#FFE500]" : "text-white"
-                }`
-              }
+              href={link.path}
+              className={`relative text-sm font-medium ${
+                isActive ? "text-[#FFE500]" : "text-white"
+              }`}
             >
-              {({ isActive }) => (
                 <motion.span
                   className="inline-block"
                   variants={linkVariants}
@@ -107,6 +112,7 @@ function Navbar() {
                     <motion.span
                       layoutId="activeIndicator"
                       className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#FFE500] text-sm"
+                      initial={false}
                       transition={{
                         type: "spring",
                         stiffness: 300,
@@ -115,9 +121,8 @@ function Navbar() {
                     />
                   )}
                 </motion.span>
-              )}
-            </NavLink>
-          ))}
+            </Link>
+          )})}
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -131,7 +136,6 @@ function Navbar() {
         </motion.button>
 
         {/* Mobile Menu */}
-
         <AnimatePresence>
           {menuVisible && (
             <>
@@ -142,7 +146,7 @@ function Navbar() {
                 exit={{ opacity: 0 }}
                 className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
                 onClick={toggleMenu}
-                style={{ pointerEvents: isOpen ? "auto" : "none" }} // Crucial fix
+                style={{ pointerEvents: isOpen ? "auto" : "none" }}
               />
 
               {/* Mobile menu panel */}
@@ -151,7 +155,7 @@ function Navbar() {
                 animate={isOpen ? "open" : "closed"}
                 exit="closed"
                 variants={menuVariants}
-                onAnimationComplete={handleAnimationComplete} // Handle visibility
+                onAnimationComplete={handleAnimationComplete}
                 className="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-sm bg-[#6A1B9A] shadow-2xl z-50 flex flex-col"
               >
                 {/* Close button at top */}
@@ -168,20 +172,19 @@ function Navbar() {
 
                 {/* Menu items with scroll */}
                 <div className="flex-grow overflow-y-auto p-6 space-y-6">
-                  {navLinks.map((link) => (
-                    <NavLink
+                  {navLinks.map((link) => {
+                    const isActive = pathname === link.path;
+                    return (
+                    <Link
                       key={link.name}
-                      to={link.path}
-                      className={({ isActive }) =>
-                        `flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
-                          isActive
-                            ? "text-[#FFE500] bg-[#FFE500]/20"
-                            : "text-white hover:bg-[#FFE500]/20"
-                        }`
-                      }
+                      href={link.path}
+                      className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
+                        isActive
+                          ? "text-[#FFE500] bg-[#FFE500]/20"
+                          : "text-white hover:bg-[#FFE500]/20"
+                      }`}
                       onClick={toggleMenu}
                     >
-                      {({ isActive }) => (
                         <motion.div
                           className="flex items-center w-full"
                           variants={linkVariants}
@@ -194,6 +197,7 @@ function Navbar() {
                             <motion.span
                               layoutId="mobileActiveIndicator"
                               className="ml-2 w-2.5 h-2.5 rounded-full bg-[#FFE500]"
+                              initial={false}
                               transition={{
                                 type: "spring",
                                 stiffness: 300,
@@ -202,9 +206,8 @@ function Navbar() {
                             />
                           )}
                         </motion.div>
-                      )}
-                    </NavLink>
-                  ))}
+                    </Link>
+                  )})}
                 </div>
               </motion.div>
             </>

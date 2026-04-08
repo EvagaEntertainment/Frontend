@@ -1,8 +1,9 @@
 // src/context/AuthContext.js
+'use client';
 import Cookies from "js-cookie";
 import { createContext, useContext, useState, useEffect } from "react";
 import { internalRoutes } from "../utils/internalRoutes";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { loginReducer, logoutReducer } from "./redux/slices/authSlice";
 import vendorApi from "../services/vendorApi";
@@ -13,8 +14,9 @@ import adminApi from "../services/adminApi";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
 
   const [auth, setAuth] = useState({
@@ -71,15 +73,14 @@ export const AuthProvider = ({ children }) => {
     notificationService.success("Welcome to Eevagga!");
   
     // Check if a redirect URL is provided
-    const params = new URLSearchParams(location.search);
-    const redirectPath = params.get("redirect");
+    const redirectPath = searchParams ? searchParams.get("redirect") : null;
   
     // Redirect to the respective page or dashboard
     if (redirectPath) {
-      navigate(redirectPath);
+      router.push(redirectPath);
     } else {
       const dashboardRoute = getDashboardRoute(role);
-      navigate(dashboardRoute);
+      router.push(dashboardRoute);
     }
   };
   
@@ -111,7 +112,7 @@ export const AuthProvider = ({ children }) => {
       // Dispatch logout action to Redux store
       dispatch(logoutReducer());
 
-      navigate(internalRoutes.home);
+      router.push(internalRoutes.home);
       notificationService.success("Logged out successfully");
     } catch (error) {
       console.log("Logout failed:", error);
@@ -137,17 +138,19 @@ export const AuthProvider = ({ children }) => {
 
     // Redirect authenticated users trying to access login/signup to their dashboard
     if (auth.isAuthenticated) {
-      const currentPath = location.pathname;
+      const currentPath = pathname || "";
       if (
         currentPath.includes("login") ||
         currentPath.includes("signup") ||
         currentPath === internalRoutes.home
       ) {
         const dashboardRoute = getDashboardRoute(auth.role);
-        navigate(dashboardRoute);
+        if (currentPath !== dashboardRoute) {
+          router.push(dashboardRoute);
+        }
       }
     }
-  }, [auth.isAuthenticated, auth.role, location.pathname, navigate]);
+  }, [auth.isAuthenticated, auth.role, pathname, router]);
 
   return (
     <AuthContext.Provider value={{ auth, login, logout }}>

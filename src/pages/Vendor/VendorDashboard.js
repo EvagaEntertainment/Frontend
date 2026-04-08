@@ -1,3 +1,4 @@
+'use client';
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,13 +24,14 @@ import axios from "axios";
 import useServices from "../../hooks/useServices";
 import vendorApi from "../../services/vendorApi";
 import { extractDates } from "../../utils/extractDates";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import TermsModal from "../../components/Modal/TermsModal ";
 
 const VendorDashboard = () => {
   const userId = Cookies.get("userId");
-  const nevigate = useNavigate();
+  const nevigate = useRouter();
   const currentDate = new Date();
   const [activeMonth, setActiveMonth] = useState(currentDate.getMonth() + 1);
   const [activeYear, setActiveYear] = useState(currentDate.getFullYear());
@@ -196,7 +198,7 @@ const VendorDashboard = () => {
                   <ServiceCard
                     key={item?._id || item?.title}
                     image={
-                      process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                      process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                       (coverImage || productImage)
                     }
                     title={

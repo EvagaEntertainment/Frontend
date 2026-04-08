@@ -1,9 +1,11 @@
+'use client';
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
+
 import ReactGA from "react-ga4";
 
 const usePageTracking = () => {
-  const location = useLocation();
+  const location = usePathname();
 
   useEffect(() => {
     ReactGA.send({ hitType: "pageview", page: location.pathname });

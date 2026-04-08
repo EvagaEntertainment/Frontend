@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { TbTruckDelivery, TbConfetti } from "react-icons/tb";
@@ -5,7 +6,8 @@ import { FiArrowRight } from "react-icons/fi";
 import { BsStars } from "react-icons/bs";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
 

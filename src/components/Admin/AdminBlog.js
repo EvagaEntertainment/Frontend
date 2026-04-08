@@ -4,7 +4,8 @@ import { MdOutlineDelete } from "react-icons/md";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import ReusableModal from "../Modal/Modal";
 import { useForm } from "react-hook-form";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import useServices from "../../hooks/useServices";
 import adminActionsApi from "../../services/adminActionsApi";
 import { toast } from "react-toastify";
@@ -391,7 +392,7 @@ function AdminBlog() {
                   src={
                     image
                       ? URL?.createObjectURL(image)
-                      : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${blogImage}`
+                      : `${process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL}${blogImage}`
                   }
                   alt="Preview"
                   className=" h-[15rem] object-cover mb-4"

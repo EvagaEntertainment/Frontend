@@ -25,10 +25,10 @@ function CheckOutCard({
        className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
        onClick={() => removefromcartHandle()}
      >
-       <img src={CrossButton} alt="Close" className="w-6 h-6" />
+       <img src={CrossButton?.src || CrossButton} alt="Close" className="w-6 h-6" />
      </button>
      <img
-       src={image}
+       src={image?.src || image}
        alt={title}
        className="object-cover rounded-lg  w-full h-[10rem] md:w-[12rem] md:h-[10rem]"
        // style={{

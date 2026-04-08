@@ -1,10 +1,12 @@
+'use client';
 import React from "react";
 import ServiceImage from "../../assets/Temporary Images/image.png";
 import TruncateText from "../TruncateText/TruncateText";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import formatCurrency from "../../utils/formatCurrency";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 function ServiceCard({
   title,
   image,
@@ -18,7 +20,7 @@ function ServiceCard({
   subCategory,
   serviceId,
 }) {
-  const history = useNavigate();
+  const router = useRouter();
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4 border-borderSecondary border-2 rounded-md rounded-l-lg">
       <img
@@ -44,7 +46,7 @@ function ServiceCard({
           <button
             className="border-2  rounded-full p-1 border-textGray"
             onClick={() =>
-              history(`${internalRoutes.vendorEditservice}/${serviceId}`)
+              router.push(`${internalRoutes.vendorEditservice}/${serviceId}`)
             }
           >
             <MdOutlineModeEditOutline className="text-textGray text-lg" />

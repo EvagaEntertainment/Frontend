@@ -1,31 +1,31 @@
-// src/components/ErrorHandler.jsx
-import React from "react";
+'use client';
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useError } from "../../context/ErrorContext";
 import ErrorModal from "./ErrorModal";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const ErrorHandler = () => {
   const { error, clearError } = useError();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   const handleRedirectHome = () => {
     clearError();
-    navigate("/");
+    router.push("/");
   };
 
-  return (
-    <>
-      {error &&
-        ReactDOM.createPortal(
-          <ErrorModal
-            errorMessage={error}
-            onClose={clearError}
-            onRedirectHome={handleRedirectHome}
-          />,
-          document.getElementById("error-modal")
-        )}
-    </>
+  if (!mounted || !error) return null;
+
+  return ReactDOM.createPortal(
+    <ErrorModal
+      errorMessage={error}
+      onClose={clearError}
+      onRedirectHome={handleRedirectHome}
+    />,
+    document.getElementById("error-modal") || document.body
   );
 };
 

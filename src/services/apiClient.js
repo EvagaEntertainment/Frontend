@@ -7,7 +7,7 @@ import { showLoader, hideLoader } from "../context/redux/slices/loaderSlice";
 axios.defaults.withCredentials = true;
 
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 0,
   headers: {
     "Content-Type": "application/json",

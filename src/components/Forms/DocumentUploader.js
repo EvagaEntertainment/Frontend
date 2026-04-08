@@ -14,7 +14,7 @@ const DocumentUploader = ({ formfields, vendorDetails, onUpload,vendorId }) => {
 
   const documentUploadService = useServices(vendorApi.uploadDocuments);
 
-  const documentsBaseUrl = process.env.REACT_APP_IMAGES_BASE_URL;
+  const documentsBaseUrl = process.env.NEXT_PUBLIC_IMAGES_BASE_URL;
 
   // Function to map through formfields and vendorDetails to merge documents
   const mergedDocuments = formfields.map((field) => {

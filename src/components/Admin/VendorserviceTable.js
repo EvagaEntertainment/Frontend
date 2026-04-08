@@ -161,7 +161,7 @@ function VendorserviceTable({
                   {value.photos.map((photo, index) => (
                     <img
                       key={index}
-                      src={process.env.REACT_APP_API_Aws_Image_BASE_URL + photo}
+                      src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + photo}
                       alt={`Portfolio Photo ${index + 1}`}
                       style={{
                         height: "15rem",
@@ -184,7 +184,7 @@ function VendorserviceTable({
                     <video
                       key={index}
                       controls
-                      src={process.env.REACT_APP_API_Aws_Image_BASE_URL + video}
+                      src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + video}
                       style={{ width: "15rem", margin: "10px 0" }}
                       loading="lazy"
                     >
@@ -216,7 +216,7 @@ function VendorserviceTable({
               <li key={index}>
                 {imageKeys?.includes(key) && typeof item === "string" ? (
                   <img
-                    src={process.env.REACT_APP_API_Aws_Image_BASE_URL + item}
+                    src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + item}
                     alt={`${key} ${index + 1}`}
                     style={{
                       height: "15rem",
@@ -228,7 +228,7 @@ function VendorserviceTable({
                 ) : videoKeys?.includes(key) && typeof item === "string" ? (
                   <video
                     controls
-                    src={process.env.REACT_APP_API_Aws_Image_BASE_URL + item}
+                    src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + item}
                     alt={`${key} ${index + 1}`}
                     style={{ width: "15rem", margin: "10px 0" }}
                     loading="lazy"
@@ -284,7 +284,7 @@ function VendorserviceTable({
 
     return imageKeys?.includes(key) ? (
       <img
-        src={process.env.REACT_APP_API_Aws_Image_BASE_URL + value}
+        src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + value}
         alt={key}
         style={{ height: "15rem", margin: "10px 0", objectFit: "contain" }}
         loading="lazy"
@@ -292,7 +292,7 @@ function VendorserviceTable({
     ) : videoKeys.includes(key) ? (
       <video
         controls
-        src={process.env.REACT_APP_API_Aws_Image_BASE_URL + value}
+        src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + value}
         alt={key}
         style={{ width: "15rem", margin: "10px 0" }}
       />

@@ -111,7 +111,7 @@ const RealStories = () => {
                   <div className="relative h-64 overflow-hidden">
                     <LazyLoadImage
                       src={
-                        process.env.REACT_APP_API_Aws_Image_BASE_URL + story.image
+                        process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + story.image
                       }
                       alt={story.title}
                       decoding="async"

@@ -5,7 +5,7 @@ function useFetchCities(initialData) {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const apiKey = process.env.REACT_APP_FETCH_CITIES_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_FETCH_CITIES_API_KEY;
 
   useEffect(() => {
     setIsLoading(true);

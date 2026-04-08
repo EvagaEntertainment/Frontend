@@ -1,12 +1,14 @@
+'use client';
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 const BackButton = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleGoBack = () => {
-    navigate(-1);
+    router.push(-1);
   };
 
   return (

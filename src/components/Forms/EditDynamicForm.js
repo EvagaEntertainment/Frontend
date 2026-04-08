@@ -3,7 +3,8 @@ import { ImCancelCircle } from "react-icons/im";
 import { FaArrowTurnUp, FaIndianRupeeSign, FaRupeeSign } from "react-icons/fa6";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import SeasonsSelector from "../Inputs/SeasonsSelector";
 import FoodMenuForm from "./FoodMenuForm";
@@ -22,9 +23,9 @@ const EditDynamicForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const [foodMenu, setFoodMenu] = useState([]);
   const totalNumberOfPhotoAllowed =
-    process.env.REACT_APP_API_Number_of_Images_allowed || 30;
+    process.env.NEXT_PUBLIC_API_Number_of_Images_allowed || 30;
   const totalNumberOfvideeAllowed =
-    process.env.REACT_APP_API_VIDEO_BASE_URL || 10;
+    process.env.NEXT_PUBLIC_API_VIDEO_BASE_URL || 10;
   const editorStyle = {
     backgroundColor: "#7575751a",
   };
@@ -1680,7 +1681,7 @@ const EditDynamicForm = ({
                     {formValues[`${field.key}`] && (
                       <img
                         src={
-                          process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                          process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                           formValues[`${field.key}`]
                         }
                         alt="Selected"
@@ -1744,7 +1745,7 @@ const EditDynamicForm = ({
                     <img
                       src={
                         typeof formValues[`${field.key}`] === "string"
-                          ? process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                          ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                             formValues[`${field.key}`]
                           : URL?.createObjectURL(formValues[`${field.key}`])
                       }
@@ -1819,7 +1820,7 @@ const EditDynamicForm = ({
                           <img
                             src={
                               typeof item === "string"
-                                ? process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                                   item
                                 : item instanceof File || item instanceof Blob
                                 ? URL.createObjectURL(item)
@@ -1909,7 +1910,7 @@ const EditDynamicForm = ({
                                   src={
                                     typeof photo === "string"
                                       ? process.env
-                                          .REACT_APP_API_Aws_Image_BASE_URL +
+                                          .NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                                         photo
                                       : URL?.createObjectURL(photo)
                                   }
@@ -1994,7 +1995,7 @@ const EditDynamicForm = ({
                                     src={
                                       typeof video === "string"
                                         ? process.env
-                                            .REACT_APP_API_Aws_Image_BASE_URL +
+                                            .NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                                           video
                                         : URL?.createObjectURL(video)
                                     }

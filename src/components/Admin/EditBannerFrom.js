@@ -77,7 +77,7 @@ const EditForm = memo(({ onSubmit, existingData }) => {
           src={
             image
               ? URL.createObjectURL(image)
-              : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${existingData.BannerUrl}`
+              : `${process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL}${existingData.BannerUrl}`
           }
           alt="Preview"
           className="w-full h-32 object-contain mb-4"

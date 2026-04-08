@@ -78,7 +78,7 @@ function ProductDisplayCard({
   return (
     <div className=" w-full h-auto lg:h-[350px] xl:h-[250px] p-2 lg:p-0 border rounded-lg shadow-sm flex flex-col md:flex-row gap-4 cursor-pointer overflow-hidden">
       <img
-        src={image}
+        src={image?.src || image}
         alt={title}
         className=" w-full lg:w-[30%] h-[13rem] lg:h-[15rem] rounded-lg object-fit aspect-w-16 aspect-h-9"
         onClick={onClick}

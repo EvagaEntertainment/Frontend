@@ -1,6 +1,8 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { IoReceiptOutline } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { useParams } from "next/navigation";
+
 import useServices from "../../hooks/useServices";
 import orderApis from "../../services/orderApis";
 import { formatDate } from "../../utils/formatDate";

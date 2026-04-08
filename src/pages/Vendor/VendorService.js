@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 import AccordionCard from "../../components/Cards/AccordionCard";
 import NonOrderRelatedQuery from "../../components/Cards/NonOrderRelatedQuery";
 import useServices from "../../hooks/useServices";
@@ -124,8 +125,7 @@ function VendorService() {
             className={"text-textGray cursor-pointer font-medium"}
             // onClick={() => setActiveTab("orderRelQry")}
           >
-            <Link
-              to={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
+            <Link href={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
               target="_blank"
             >
               Whatsapp Support

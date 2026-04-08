@@ -1,3 +1,4 @@
+'use client';
 import ForgotPasswordLeftImg from "../../assets/LoginSigupImgs/ForgotPasswordLeftImg.png";
 import React, { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
@@ -7,11 +8,13 @@ import AuthForm from "../../components/AuthForm";
 import notificationService from "../../utils/notificationService";
 import AuthBox from "../../components/AuthBox";
 import { useAuth } from "../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import Cookies from "js-cookie";
 function VendorForgotPasswordPage() {
-  const hsitory = useNavigate();
+  const hsitory = useRouter();
   const vendorNewPassword = useServices(vendorApi.changeVendorPassword);
   const [countdown, setCountdown] = useState(5);
   const [isPasswordResetSuccess, setIsPasswordResetSuccess] = useState(false);
@@ -93,7 +96,7 @@ function VendorForgotPasswordPage() {
       <div className=" w-full md:w-[50%] h-full flex justify-center items-center bg-highlight">
         <img
           className="w-full md:w-auto md:h-full object-contain "
-          src={ForgotPasswordLeftImg}
+          src={ForgotPasswordLeftImg?.src || ForgotPasswordLeftImg}
           alt="Forgot Password"
         />
       </div>
@@ -144,7 +147,7 @@ function VendorForgotPasswordPage() {
 
           <div className="flex gap-2 font-semibold">
             <h5>Remembered your password?</h5>
-            <Link to={internalRoutes.vendorLogin}>
+            <Link href={internalRoutes.vendorLogin}>
               <button className="btn-transparent">Sign In</button>
             </Link>
           </div>

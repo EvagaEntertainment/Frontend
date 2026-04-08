@@ -47,7 +47,7 @@ function WishlistCard({
       <div className="w-full border rounded-lg bg-white overflow-hidden">
         <div className="w-full h-[247px]" onClick={onClick}>
           <img
-            src={popularimage}
+            src={popularimage?.src || popularimage}
             alt={title}
             className="w-full h-full rounded-t-md "
           />

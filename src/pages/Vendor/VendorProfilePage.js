@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVendorProfile } from "../../context/redux/slices/vendorSlice";
@@ -16,7 +17,8 @@ import SearchableCategoryAndSubcategoryDropdown from "../../components/Inputs/Se
 import TermsModal from "../../components/Modal/TermsModal ";
 import ReusableModal from "../../components/Modal/Modal";
 import BackButton from "../../utils/globalBackButton";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 const VendorProfile = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ const VendorProfile = () => {
   const handleCloseReuseableModal = () => {
     setOpenReuseableModal(false);
   };
-  const imagesBaseUrl = process.env.REACT_APP_API_Aws_Image_BASE_URL;
+  const imagesBaseUrl = process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL;
 
   const [vendorDetails, setVendorDetails] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -114,7 +116,7 @@ const VendorProfile = () => {
     setCanResend(false);
     setTimer(60);
   };
-  const navigate=useNavigate()
+  const router = useRouter()
   const updateProfileService = useServices(vendorApi.updateProfile);
   const updateBankDetailsService = useServices(vendorApi.updateBankDetails);
   const updateBusinessService = useServices(vendorApi.updateBusiness);
@@ -227,7 +229,7 @@ const VendorProfile = () => {
   const handleUpdateProfilePicture = async (data) => {
     try {
       const userId = Cookies.get("userId");
-      // const baseUrl = process.env.REACT_APP_API_BASE_URL;
+      // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
       const profilePic = data.profilePicture[0];
       console.log("imageFile:", profilePic);
       const formData = new FormData();
@@ -600,7 +602,7 @@ const VendorProfile = () => {
           <div className="w-full flex items-center justify-center">
             <button
               className="btn-primary px-2 w-fit"
-              onClick={() => navigate(internalRoutes.vendorCreateservice)}
+              onClick={() => router.push(internalRoutes.vendorCreateservice)}
             >
               Add Service
             </button>

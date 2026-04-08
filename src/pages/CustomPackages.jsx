@@ -1,7 +1,9 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 
@@ -192,7 +194,7 @@ const SuccessModal = ({
 };
 
 function CustomPackages() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Form data
   const [currentStep, setCurrentStep] = useState(1);
@@ -724,7 +726,7 @@ function CustomPackages() {
     setValue("foodType", "");
     setValue("courses", []);
     // Navigate to home page
-    navigate("/");
+    router.push("/");
   };
 
   const confirmBack = () => {
@@ -747,7 +749,7 @@ function CustomPackages() {
     setValue("foodType", "");
     setValue("courses", []);
     // Navigate to home page
-    navigate("/");
+    router.push("/");
   };
 
   const cancelAction = () => {
@@ -781,7 +783,7 @@ function CustomPackages() {
       setValue("foodType", "");
       setValue("courses", []);
       // Navigate to home page
-      navigate("/");
+      router.push("/");
     }
     // If submission failed, just close the modal and let user try again
   };

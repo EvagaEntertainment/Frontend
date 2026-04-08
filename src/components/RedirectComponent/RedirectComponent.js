@@ -1,12 +1,14 @@
+'use client';
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 const RedirectComponent = ({url, children }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (url) {
-      navigate(url);
+      router.push(url);
     }
   }, [url, navigate]); 
   return<>{children}</>;

@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useEffect, useState } from "react";
 import OrderVenderCard from "../../components/Cards/OrderVenderCard";
 import useServices from "../../hooks/useServices";
@@ -8,7 +9,8 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 import "./VerifyOtpModal.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import BackButton from "../../utils/globalBackButton";
 export default function VendorOrderPage() {
@@ -17,7 +19,7 @@ export default function VendorOrderPage() {
   const [activeState, setActivestate] = useState("New Order");
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("cancelOrder");
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -159,7 +161,7 @@ export default function VendorOrderPage() {
     try {
       // Make the API request
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}vendorOrder/verifyEndService/${orderId}/${id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}vendorOrder/verifyEndService/${orderId}/${id}`,
         formData,
         {
           headers: {
@@ -195,7 +197,7 @@ export default function VendorOrderPage() {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}vendorOrder/verifyStartService/${orderId}/${id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}vendorOrder/verifyStartService/${orderId}/${id}`,
         formData,
         {
           headers: {
@@ -306,7 +308,7 @@ export default function VendorOrderPage() {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -351,7 +353,7 @@ export default function VendorOrderPage() {
                       key="view"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.vendorOrderDeatil +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -378,7 +380,7 @@ export default function VendorOrderPage() {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -434,7 +436,7 @@ export default function VendorOrderPage() {
                       key="view"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.vendorOrderDeatil +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -461,7 +463,7 @@ export default function VendorOrderPage() {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -523,7 +525,7 @@ export default function VendorOrderPage() {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -585,7 +587,7 @@ export default function VendorOrderPage() {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (

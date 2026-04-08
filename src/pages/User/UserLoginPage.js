@@ -1,9 +1,12 @@
+'use client';
 import { FcGoogle } from "react-icons/fc";
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { Link } from "react-router-dom";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import userLogin from "../../assets/LoginSigupImgs/LoginLeftImg.png";
 import userApi from "../../services/userApi";
 import useServices from "../../hooks/useServices";
@@ -31,7 +34,7 @@ function UserLoginPage() {
   const handleGoogleLogin = async (token) => {
     console.log("Token received:", token);
     const response = await fetch(
-      `${process.env.REACT_APP_API_BASE_URL + "user/auth/google"}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL + "user/auth/google"}`,
       {
         method: "POST",
         headers: {
@@ -47,7 +50,7 @@ function UserLoginPage() {
     <div className=" w-full md:h-[100vh] flex flex-col-reverse pt-10 md:pt-0 md:flex-row justify-center items-center">
       <div className=" flex-1 flex items-center justify-center w-[90%]">
         <img
-          src={userLogin}
+          src={userLogin?.src || userLogin}
           alt="user login"
           className="w-[80%] md:w-[80%] md:h-full object-contain p-4"
         />
@@ -70,13 +73,13 @@ function UserLoginPage() {
           />
           <div className=" flex gap-2 font-semibold">
             <h5>Forgot your password?</h5>
-            <Link to={internalRoutes.userForgotPassword}>
+            <Link href={internalRoutes.userForgotPassword || "#"}>
               <button className=" btn-transparent ">Reset it here</button>
             </Link>
           </div>
           <div className=" flex gap-2 font-semibold">
             <h5>New to Eevagga?</h5>
-            <Link to={internalRoutes.userSignup}>
+            <Link href={internalRoutes.userSignup || "#"}>
               <button className=" btn-transparent ">Create an account</button>
             </Link>
           </div>

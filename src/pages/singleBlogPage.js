@@ -1,6 +1,8 @@
+'use client';
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { Helmet } from "react-helmet-async";
@@ -9,7 +11,7 @@ import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 function SingleBlogPage() {
   const { blogId } = useParams();
   const [blog, setBlog] = useState();
-  const navigate = useNavigate();
+  const router = useRouter();
   const getOneBlogApi = useServices(commonApis.getOneBlog);
   const getOneBlogApiHandle = async () => {
     const response = await getOneBlogApi.callApi(blogId);
@@ -43,7 +45,7 @@ function SingleBlogPage() {
     >
       <Button
         variant="text"
-        onClick={() => navigate(-1)}
+        onClick={() => router.push(-1)}
         sx={{
           mb: 3,
           textTransform: "none",
@@ -100,7 +102,7 @@ function SingleBlogPage() {
         <Box
           component="img"
           src={`${
-            process.env.REACT_APP_API_Aws_Image_BASE_URL + blog?.coverImage
+            process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + blog?.coverImage
           }`}
           alt={blog?.title}
           sx={{

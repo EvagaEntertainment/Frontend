@@ -1,8 +1,10 @@
+'use client';
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import Cookies from "js-cookie";
 function CategoryDisplayCard({ image, text, onClick, catId }) {
-  const history = useNavigate();
+  const router = useRouter();
   const handleSearch = (categoryId, categoryName) => {
     const query = new URLSearchParams({
       q: "",
@@ -10,7 +12,7 @@ function CategoryDisplayCard({ image, text, onClick, catId }) {
     }).toString();
     Cookies.set("selectedCategoryId", categoryId, { expires: 1 });
     Cookies.set("selectedCategory", categoryName, { expires: 1 });
-    history(`/search?${query}`);
+    router.push(`/search?${query}`);
   };
   return (
     <div
@@ -19,7 +21,7 @@ function CategoryDisplayCard({ image, text, onClick, catId }) {
     >
       <div className="w-full rounded-lg flex items-center justify-center aspect-[4/3]">
         <img
-          src={image && process.env.REACT_APP_API_Aws_Image_BASE_URL + image}
+          src={image && process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + image}
           alt="Category"
           className="w-[70%] h-auto object-contain"
           width="800" // Add approximate intrinsic width

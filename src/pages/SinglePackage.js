@@ -1,8 +1,10 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import AddorBuyCard from "../components/Cards/AddorBuyCard";
 import ServiceDetailCard from "../components/Cards/ServiceDetailCard";
 import ImageNavigationCard from "../components/Cards/ImageNavigationCard";
-import { useParams } from "react-router-dom";
+import { useParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import packageApis from "../services/packageApis";
 import { motion } from "framer-motion";

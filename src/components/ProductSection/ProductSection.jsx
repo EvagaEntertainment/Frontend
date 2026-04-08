@@ -1,6 +1,8 @@
+'use client';
 import { motion } from "framer-motion";
 import ProductCardV2 from "../Cards/ProductCardV2";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 
 const ProductSection = ({
@@ -10,7 +12,7 @@ const ProductSection = ({
   categoryId,
   category,
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <section
@@ -34,7 +36,7 @@ const ProductSection = ({
               whileTap={{ scale: 0.97 }}
               className="absolute underline top-0 right-0 text-sm font-medium text-primary hover:text-primary-dark flex items-center gap-1"
               onClick={() =>
-                navigate(
+                router.push(
                   `${internalRoutes.viewAllPage}/${category}?categoryId=${categoryId}`
                 )
               }
@@ -53,14 +55,14 @@ const ProductSection = ({
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                onClick={() => navigate(`${internalRoutes.SinglePackage}/${card.id}/${card.packageId}?category=${title}`)}
+                onClick={() => router.push(`${internalRoutes.SinglePackage}/${card.id}/${card.packageId}?category=${title}`)}
                 className="cursor-pointer"
               >
                 <ProductCardV2
                   title={card.title}
                   price={Number(card.price)}
                   imageUrl={card.imageUrl}
-                  onClick={() => navigate(`${internalRoutes.SinglePackage}/${card.id}/${card.packageId}?category=${title}`)}
+                  onClick={() => router.push(`${internalRoutes.SinglePackage}/${card.id}/${card.packageId}?category=${title}`)}
                 />
               </motion.div>
             ))}

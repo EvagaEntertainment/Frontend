@@ -227,7 +227,7 @@ export default function OurWorkSection() {
             {[...allGallery, ...allGallery].map((item, index) => {
               const galleryIndex = index % allGallery.length;
               const galleryItem = allGallery[galleryIndex];
-              const imageUrl = process.env.REACT_APP_API_Aws_Image_BASE_URL + galleryItem?.originalImage;
+              const imageUrl = process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + galleryItem?.originalImage;
               const isLoaded = loadedImages[imageUrl];
 
               return (
@@ -239,7 +239,7 @@ export default function OurWorkSection() {
                     <div className="absolute inset-0 bg-purple-300 animate-pulse rounded-xl"></div>
                   )}
                   <img
-                    src={imageUrl}
+                    src={imageUrl?.src || imageUrl}
                     alt={`Gallery ${galleryIndex + 1}`}
                     className={`h-full w-full object-cover ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
                     loading="lazy"
@@ -272,7 +272,7 @@ export default function OurWorkSection() {
               .map((item, index) => {
                 const originalIndex = allGallery.length - 1 - (index % allGallery.length);
                 const galleryItem = allGallery[originalIndex];
-                const imageUrl = process.env.REACT_APP_API_Aws_Image_BASE_URL + galleryItem?.originalImage;
+                const imageUrl = process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + galleryItem?.originalImage;
                 const isLoaded = loadedImages[imageUrl];
 
                 return (
@@ -284,7 +284,7 @@ export default function OurWorkSection() {
                       <div className="absolute inset-0 bg-purple-300 animate-pulse rounded-xl"></div>
                     )}
                     <img
-                      src={imageUrl}
+                      src={imageUrl?.src || imageUrl}
                       alt={`Gallery ${originalIndex + 1}`}
                       className={`h-full w-full object-cover ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
                       loading="lazy"

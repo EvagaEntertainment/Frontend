@@ -1,5 +1,7 @@
+'use client';
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import packageApis from "../services/packageApis";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,12 +14,12 @@ function SinglePackageNew() {
   const { serviceId, packageId } = useParams();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-  const navigate = useNavigate();
+  const router = useRouter();
   const [singlePageData, setSinglePageData] = useState();
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(0);
   const getAllPackages = useServices(packageApis.getOnePackage);
-  const imageBaseUrl = process.env.REACT_APP_API_Aws_Image_BASE_URL;
+  const imageBaseUrl = process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL;
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -142,7 +144,7 @@ function SinglePackageNew() {
                         {isVideo(url) ? (
                           <>
                             <video
-                              src={url}
+                              src={url?.src || url}
                               className="h-16 object-contain"
                               muted
                               loop
@@ -161,7 +163,7 @@ function SinglePackageNew() {
                           </>
                         ) : (
                           <img
-                            src={url}
+                            src={url?.src || url}
                             alt={`Thumbnail ${index + 1}`}
                             className="h-16 object-contain"
                           />
@@ -325,7 +327,7 @@ function SinglePackageNew() {
                 whileTap={{ scale: 0.98 }}
                 className="bg-[#6A1B9A] hover:bg-[#7B2CBF] text-white px-6 py-2.5 rounded-lg font-medium"
                 onClick={() =>
-                  navigate(
+                  router.push(
                     `${internalRoutes?.bookingForm}?sku=${singlePageData?.services?.[0]?.sku}&category=${category}`
                   )
                 }
@@ -393,7 +395,7 @@ function SinglePackageNew() {
               "Price not available"
             }
             imageUrl={product.serviceDetails?.values?.images?.[0] || "/placeholder-product.jpg"}
-            onClick={() => navigate(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}`)}
+            onClick={() => router.push(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}`)}
           />
         ))}
       </div>
@@ -458,7 +460,7 @@ function SinglePackageNew() {
               "Price not available"
             }
             imageUrl={product.serviceDetails?.values?.images?.[0] || "/placeholder-product.jpg"}
-            onClick={() => navigate(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}`)}
+            onClick={() => router.push(`${internalRoutes.SinglePackage}/${product?._id}/${product?.serviceDetails?._id}`)}
           />
         ))}
       </div>

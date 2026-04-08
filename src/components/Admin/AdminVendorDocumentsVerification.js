@@ -35,7 +35,7 @@ function AdminVendorDocumentsVerification({ documents, onDocumentVerified }) {
 
   console.log("selecetedDocument:", selectedDocument);
 
-  const imagesBaseUrl = process.env.REACT_APP_API_Image_BASE_URL;
+  const imagesBaseUrl = process.env.NEXT_PUBLIC_API_Image_BASE_URL;
 
   const openModal = (doc) => {
     setSelectedDocument(doc);

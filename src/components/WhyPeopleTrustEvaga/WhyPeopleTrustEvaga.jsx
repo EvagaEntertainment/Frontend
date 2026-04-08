@@ -47,7 +47,7 @@ const WhyPeopleTrustEvaga = () => {
       >
         <LazyLoadImage
           src={
-            process.env.REACT_APP_API_Aws_Image_BASE_URL +
+            process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
             "gallery/1749378340906_WhyPeopleTrustEvaga.webp"
           }
           alt="Trust Background"

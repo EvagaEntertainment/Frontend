@@ -24,3 +24,15 @@ yarn-debug.log*
 yarn-error.log*
 
 calendar-452010-bb6c9bbc15ce.json
+
+# Next.js Server & Build Output
+/.next/
+.next
+/out/
+.turbo
+
+# Vercel
+.vercel
+
+# Debug logs
+*.log

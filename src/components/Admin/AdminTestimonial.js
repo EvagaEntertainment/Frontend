@@ -81,7 +81,7 @@ function AdminTestimonial() {
             setImagePreview(
                 data.image.startsWith("http")
                     ? data.image
-                    : process.env.REACT_APP_API_Aws_Image_BASE_URL + data.image
+                    : process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + data.image
             );
         }
         setModalType("editTestimonial");
@@ -138,7 +138,7 @@ function AdminTestimonial() {
                         src={
                             row.image.startsWith("http")
                                 ? row.image
-                                : process.env.REACT_APP_API_Aws_Image_BASE_URL + row.image
+                                : process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + row.image
                         }
                         alt={row.name}
                         className="h-[3rem] w-[3rem] object-cover rounded-full mx-auto"
@@ -249,7 +249,7 @@ function AdminTestimonial() {
                                 />
                                 {imagePreview && (
                                     <img
-                                        src={imagePreview}
+                                        src={imagePreview?.src || imagePreview}
                                         alt="Preview"
                                         className="mt-2 h-20 w-20 object-cover rounded-full border border-gray-300"
                                     />

@@ -1,10 +1,12 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import OrderVenderCard from "../components/Cards/OrderVenderCard";
 import orderApis from "../services/orderApis";
 import useServices from "../hooks/useServices";
 import Cookies from "js-cookie";
 import { internalRoutes } from "../utils/internalRoutes";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 export const OrderPage = (props) => {
   const [activeState, setActivestate] = useState("New Orders");
   const [allOrder, setAllOrder] = useState([]);
@@ -22,7 +24,7 @@ export const OrderPage = (props) => {
     orderApis.getcancelledorderbyuserid
   );
   const userId = Cookies.get("userId");
-  const navigate = useNavigate();
+  const router = useRouter();
   const getOrderByUserIdApiHandle = async () => {
     const response = await getOrderByUserIdApi.callApi(userId);
     setAllOrder(response ? response?.orders : []);
@@ -134,7 +136,7 @@ export const OrderPage = (props) => {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -152,7 +154,7 @@ export const OrderPage = (props) => {
                       key="verify"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.orderDetail +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -179,7 +181,7 @@ export const OrderPage = (props) => {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -197,7 +199,7 @@ export const OrderPage = (props) => {
                       key="verify"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.orderDetail +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -224,7 +226,7 @@ export const OrderPage = (props) => {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -242,7 +244,7 @@ export const OrderPage = (props) => {
                       key="verify"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.orderDetail +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -269,7 +271,7 @@ export const OrderPage = (props) => {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -287,7 +289,7 @@ export const OrderPage = (props) => {
                       key="verify"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.orderDetail +
                             `/${item?.orderId}` +
                             `/${item?._id}`
@@ -314,7 +316,7 @@ export const OrderPage = (props) => {
                   : item.packageDetails?.ProductImage);
 
               const popularimage = imageUrl?.startsWith("service/")
-                ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                 : imageUrl;
 
               return (
@@ -332,7 +334,7 @@ export const OrderPage = (props) => {
                       key="verify"
                       className="btn-primary px-2"
                       onClick={() =>
-                        navigate(
+                        router.push(
                           internalRoutes?.orderDetail +
                             `/${item?.orderId}` +
                             `/${item?._id}`

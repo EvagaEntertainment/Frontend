@@ -1,9 +1,12 @@
+'use client';
 import { FcGoogle } from "react-icons/fc";
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { Link, useNavigate } from "react-router-dom";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import useServices from "../../hooks/useServices";
 import vendorApi from "../../services/vendorApi";
 import { useAuth } from "../../context/AuthContext";
@@ -12,7 +15,7 @@ import { loginReducer } from "../../context/redux/slices/authSlice";
 import LoginLeftImg from "../../assets/LoginSigupImgs/LoginLeftImg.png";
 
 function VendorLoginPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { login } = useAuth();
   const {
@@ -35,7 +38,7 @@ function VendorLoginPage() {
         };
         dispatch(loginReducer(payload));
 
-        // navigate(internalRoutes.vendorDashboard);
+        // router.push(internalRoutes.vendorDashboard);
       }
     } catch (error) {
       console.log("Login Failed:", error.response?.data || error.message);
@@ -46,7 +49,7 @@ function VendorLoginPage() {
       <div className=" w-full md:w-[50%] h-full flex justify-center items-center bg-highlight">
         <img
           className="w-full md:w-auto md:h-full object-contain "
-          src={LoginLeftImg}
+          src={LoginLeftImg?.src || LoginLeftImg}
           alt="Login"
         />
       </div>
@@ -75,7 +78,7 @@ function VendorLoginPage() {
 
           <div className=" flex gap-2 font-semibold">
             <h5>Don't have an account?</h5>
-            <Link to={internalRoutes.vendorSignup}>
+            <Link href={internalRoutes.vendorSignup || "#"}>
               <button className=" btn-transparent ">Sign Up</button>
             </Link>
           </div>
@@ -91,7 +94,7 @@ function VendorLoginPage() {
             </div>
             <div className=" flex gap-2 font-semibold">
               <h5>Forgot Password?</h5>
-              <Link to={internalRoutes.vendorForgotPassword}>
+              <Link href={internalRoutes.vendorForgotPassword || "#"}>
                 <button className=" btn-transparent ">Reset Password!</button>
               </Link>
             </div>

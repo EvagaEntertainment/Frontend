@@ -281,7 +281,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >
       <div className="py-6 text-center pl-2 text-xl font-bold border-b border-purple-500/40">
-        <img className="w-[40px] mx-auto" src={MainLogo} alt="Evaga" />
+        <img className="w-[40px] mx-auto" src={MainLogo?.src || MainLogo} alt="Evaga" />
       </div>
 
       <motion.button

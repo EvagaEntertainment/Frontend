@@ -70,7 +70,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
             <div key={index} className=" w-[80px] cursor-pointer">
               {isImage(url) ? (
                 <img
-                  src={process.env.REACT_APP_API_Aws_Image_BASE_URL + url}
+                  src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + url}
                   style={{ maxWidth: "unset" }}
                   alt={`Thumbnail ${index + 1}`}
                    decoding="async"
@@ -83,7 +83,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
                   onClick={() => [onMediaClick(url), setIsModalOpen(true)]}
                 >
                   <img
-                    src={videoThumbnil}
+                    src={videoThumbnil?.src || videoThumbnil}
                     alt="Video Placeholder"
                     className="w-full h-full object-cover rounded-md"
                   />
@@ -97,7 +97,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
         {isImage(selectedUrl) ? (
           <div className="group relative w-full aspect-[4/5] h-full flex items-center justify-center">
             <img
-              src={process.env.REACT_APP_API_Aws_Image_BASE_URL + selectedUrl}
+              src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + selectedUrl}
               alt="Selected Media"
                decoding="async"
               className="w-[300px] md:w-[350px] lg:w-[450px] h-auto object-cover rounded-lg cursor-pointer aspect-[4/5]"
@@ -107,7 +107,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
         ) : (
           <ModernVideoPlayer
             selectedUrl={
-              process.env.REACT_APP_API_Aws_Image_BASE_URL + selectedUrl
+              process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + selectedUrl
             }
             
           />
@@ -133,7 +133,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
               {isImage(mediaUrls[currentIndex]) ? (
                 <img
                   src={
-                    process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                    process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                     mediaUrls[currentIndex]
                   }
                   alt="Zoomed Media"
@@ -143,7 +143,7 @@ function ImageNavigationCard({ mediaUrls, selectedUrl, onMediaClick }) {
               ) : (
                 <ModernVideoPlayer
                   selectedUrl={
-                    process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                    process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                     mediaUrls[currentIndex]
                   }
                 />

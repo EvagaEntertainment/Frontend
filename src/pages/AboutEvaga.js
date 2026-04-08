@@ -1,3 +1,4 @@
+'use client';
 import { Helmet } from "react-helmet-async";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 import { motion } from "framer-motion";
@@ -150,7 +151,7 @@ const AboutUs = () => {
               >
                 <LazyLoadImage
                   src={
-                    process.env.REACT_APP_API_Aws_Image_BASE_URL + section.src
+                    process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + section.src
                   }
                   alt={section.alt}
                   className="w-full h-auto object-cover aspect-video"

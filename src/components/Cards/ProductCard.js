@@ -50,7 +50,7 @@ function ProductCard({
       <div className="w-full h-[180px]" onClick={onClick}>
         {popularimage ? (
           <img
-            src={popularimage}
+            src={popularimage?.src || popularimage}
             alt={title}
             className="w-full h-full object-cover rounded-t-md"
             style={{

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
@@ -55,7 +56,7 @@ function UserSignupPage() {
     <div className=" w-full md:min-h-[100vh] flex flex-col-reverse pt-10 md:pt-0 md:flex-row justify-center items-center">
       <div className=" flex-1 flex items-center justify-center w-[90%]">
         <img
-          src={userSignUp}
+          src={userSignUp?.src || userSignUp}
           alt="user login"
           className="w-[80%] md:w-[80%] md:h-full object-contain p-4"
         />
@@ -76,7 +77,7 @@ function UserSignupPage() {
 
           <div className=" flex gap-2 font-semibold">
             <h5>Already have an account?</h5>
-            <Link to={internalRoutes.userLogin}>
+            <Link href={internalRoutes.userLogin}>
               <button className=" btn-transparent ">Sign In</button>
             </Link>
           </div>

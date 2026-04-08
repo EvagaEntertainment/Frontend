@@ -1,7 +1,8 @@
+'use client';
 import { companyDetails } from "../../utils/companyDetails";
 import CopyrightYear from "../../utils/CopyrightYear";
 import { footerMenuItems } from "../../utils/footerMenuList";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 function Footer() {
   const backToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -38,7 +39,7 @@ function Footer() {
             <ul className="space-y-4">
               {footerMenuItems.leftMenu.map((item, index) => (
                 <li key={index}>
-                  <Link to={item.path || "#"} className=" text-sm">
+                  <Link href={item.path || "#"} className=" text-sm">
                     {item.label}
                   </Link>
                 </li>
@@ -103,7 +104,7 @@ function Footer() {
             <ul className="space-y-4">
               {footerMenuItems.midMenu.map((item, index) => (
                 <li key={index}>
-                  <Link to={item.path || "#"} className="hover:text-highlight">
+                  <Link href={item.path || "#"} className="hover:text-highlight">
                     {item.label}
                   </Link>
                 </li>
@@ -115,7 +116,7 @@ function Footer() {
             <ul className="space-y-4">
               {footerMenuItems.rightMenu.map((item, index) => (
                 <li key={index}>
-                  <Link to={item.path || "#"} className="hover:text-highlight">
+                  <Link href={item.path || "#"} className="hover:text-highlight">
                     {item.label}
                   </Link>
                 </li>
@@ -192,7 +193,7 @@ function Footer() {
             <ul className="space-y-4">
               {footerMenuItems.leftMenu.map((item, index) => (
                 <li key={index}>
-                  <Link to={item.path || "#"} className=" text-sm">
+                  <Link href={item.path || "#"} className=" text-sm">
                     {item.label}
                   </Link>
                 </li>
@@ -205,7 +206,7 @@ function Footer() {
           <ul className="space-y-4">
             {footerMenuItems.midMenu.map((item, index) => (
               <li key={index}>
-                <Link to={item.path || "#"} className="hover:text-highlight">
+                <Link href={item.path || "#"} className="hover:text-highlight">
                   {item.label}
                 </Link>
               </li>
@@ -214,7 +215,7 @@ function Footer() {
           {/* <ul className="space-y-4">
             {footerMenuItems.rightMenu.map((item, index) => (
               <li key={index}>
-                <Link to={item.path || "#"} className="hover:text-highlight">
+                <Link href={item.path || "#"} className="hover:text-highlight">
                   {item.label}
                 </Link>
               </li>

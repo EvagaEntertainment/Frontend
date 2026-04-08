@@ -34,13 +34,13 @@ const ExpertSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {/* <img
-            src={expertImage}
+            src={expertImage?.src || expertImage}
             alt="Expert consultation"
             className="w-full h-full object-cover"
           /> */}
           <LazyLoadImage
             src={
-              process.env.REACT_APP_API_Aws_Image_BASE_URL +
+              process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
               "gallery/1749379563749_expertpurchased.jpg"
             }
             alt={"expert"}

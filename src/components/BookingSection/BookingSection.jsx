@@ -13,7 +13,7 @@ function BookingSection() {
           className="w-full h-full bg-cover bg-center opacity-10"
           style={{
             backgroundImage: `url("${
-              process.env.REACT_APP_API_Aws_Image_BASE_URL +
+              process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
               "gallery/1749486436429_background.webp"
             }")`,
           }}

@@ -144,7 +144,7 @@ function ServiceDetailCard({
           <h3 className="text-normal font-semibold ">{companyName}</h3>
         </div>
         <div className="flex flex-col items-center justify-center gap-1">
-          <img src={Year} alt="share" className="object-contain h-[1.5rem]" />
+          <img src={Year?.src || Year} alt="share" className="object-contain h-[1.5rem]" />
           <p className="text-sm text-textGray font-medium">
             {experience} Years
           </p>
@@ -278,7 +278,7 @@ function ServiceDetailCard({
 })}
       <div className="flex gap-4 items-start justify-start">
         <span className="bg-textLightGray p-2 rounded-[50%]">
-          <img src={terms} alt="event" className="object-contain h-[1.5rem]" />
+          <img src={terms?.src || terms} alt="event" className="object-contain h-[1.5rem]" />
         </span>
         <div className="w-full text-textGray">
           <h3 className="text-normal font-meduim text-primary">

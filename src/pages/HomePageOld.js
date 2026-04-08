@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserBanner } from "../context/redux/slices/bannerSlice";
@@ -9,7 +10,8 @@ import packageApis from "../services/packageApis";
 import useServices from "../hooks/useServices";
 import { addPackage, setLoading } from "../context/redux/slices/packageSlice";
 import HorizontalScroll from "../utils/HorizontalScroll";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../utils/internalRoutes";
 import { Link } from "react-alice-carousel";
 import { motion } from "framer-motion";
@@ -36,7 +38,7 @@ function Home() {
   const GetRecentViewpackageApi = useServices(userApi.GetRecentViewpackage);
   const SuggestSimilarServicesApi = useServices(userApi.SuggestSimilarServices);
   const { allWishlist } = useSelector((state) => state.wishlist);
-  const history = useNavigate();
+  const router = useRouter();
   const userId = Cookies.get("userId");
   const { auth } = useAuth();
   const [recentView, setRecentView] = useState([]);
@@ -73,7 +75,7 @@ function Home() {
       console.log(true);
     } else {
       console.log(false);
-      history(internalRoutes.interest);
+      router.push(internalRoutes.interest);
     }
   };
   useEffect(() => {
@@ -174,7 +176,7 @@ function Home() {
                       : service.serviceDetails?.values?.ProductImage);
 
                   const popularimage = imageUrl?.startsWith("service/")
-                    ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                    ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                     : imageUrl;
                   const sizeAndDimension =
                     service.serviceDetails?.values?.["SizeAndDimension"] || [];
@@ -219,7 +221,7 @@ function Home() {
                       serviceId={service?._id}
                       packageId={service?.serviceDetails?._id}
                       onClick={() =>
-                        history(
+                        router.push(
                           `${internalRoutes.SinglePackage}/${service?._id}/${service?.serviceDetails?._id}`
                         )
                       }
@@ -253,7 +255,7 @@ function Home() {
                     : service?.ProductImage);
 
                 const popularimage = imageUrl?.startsWith("service/")
-                  ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                  ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                   : imageUrl;
 
                 return (
@@ -282,7 +284,7 @@ function Home() {
                     serviceId={service?.serviceId}
                     packageId={service?.packageId}
                     onClick={() =>
-                      history(
+                      router.push(
                         `${internalRoutes.SinglePackage}/${service?.serviceId}/${service?.packageId}`
                       )
                     }

@@ -1,9 +1,11 @@
+'use client';
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 export default function ErrorView({ error }) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   if (!error) {
     return (
@@ -17,7 +19,7 @@ export default function ErrorView({ error }) {
       <h1 className="text-6xl mb-4">Oops! Something went wrong.</h1>
       <p className="text-xl mb-8">{error}</p>
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => router.push(-1)}
         className="px-6 py-3 text-white bg-accent hover:bg-purpleSecondary transition duration-300 rounded-lg"
       >
         Go Back

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import FeedbackForm from '../components/Forms/FeedbackForm'
 import { Helmet } from "react-helmet-async";

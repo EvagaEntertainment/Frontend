@@ -1,7 +1,8 @@
+'use client';
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   TextField,
   Select,
@@ -16,9 +17,9 @@ import commonApis from "../services/commonApis";
 import { toast } from "react-toastify";
 import { generateMonthOptions } from "../utils/generateMonthOptions";
 const BookingForm = () => {
-  const [searchParams] = useSearchParams();
-  const category = searchParams.get("category");
-  const sku = searchParams.get("sku");
+  const searchParams = useSearchParams();
+  const category = searchParams ? searchParams.get("category") : null;
+  const sku = searchParams ? searchParams.get("sku") : null;
   const {
     register,
     handleSubmit,
@@ -29,7 +30,7 @@ const BookingForm = () => {
     },
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const bookingCtaApi = useServices(commonApis.bookingCta);
 
   const onSubmit = async (data) => {
@@ -149,7 +150,7 @@ const BookingForm = () => {
       if (!makeResponse.ok) throw new Error("Make webhook failed");
 
       if (response.success) {
-        navigate("/thank-you");
+        router.push("/thank-you");
       }
     } catch (error) {
       console.error("Error:", error);

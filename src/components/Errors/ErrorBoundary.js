@@ -14,7 +14,7 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     this.setState({ error, errorInfo });
 
-    axios.post(`${process.env.REACT_APP_API_BASE_URL}/logerror/log-error`, {
+    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/logerror/log-error`, {
       error: error.toString(),
       errorInfo: errorInfo?.componentStack,
     });

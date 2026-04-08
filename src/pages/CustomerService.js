@@ -1,6 +1,9 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import AccordionCard from "../components/Cards/AccordionCard";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
 import NonOrderRelatedQuery from "../components/Cards/NonOrderRelatedQuery";
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
@@ -13,8 +16,8 @@ function CustomerService() {
   const [activeTab, setActiveTab] = useState("faq");
   const [expanded, setExpanded] = useState(null);
   const userId = Cookies.get("userId");
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = usePathname();
+  const router = useRouter();
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
   };
@@ -116,7 +119,7 @@ function CustomerService() {
         })
       );
 
-      navigate(
+      router.push(
         `${internalRoutes.userLogin}?redirect=${encodeURIComponent(
           location.pathname + (location.search || "")
         )}`
@@ -168,7 +171,7 @@ function CustomerService() {
             if (response) {
               toast.success("Query Submitted successfully!");
               localStorage.removeItem("pendingQuery"); // Clear localStorage after successful submission
-              navigate(queryData.redirectPath || "/");
+              router.push(queryData.redirectPath || "/");
             } else {
               toast.error("Failed to create query. Please try again later.");
             }
@@ -211,8 +214,7 @@ function CustomerService() {
             className={"text-textGray cursor-pointer font-medium"}
             // onClick={() => setActiveTab("orderRelQry")}
           >
-            <Link
-              to={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
+            <Link href={"https://whatsapp.com/channel/0029VaWXX585fM5adzGAzC1C"}
               target="_blank"
             >
               Whatsapp Support

@@ -77,7 +77,7 @@ function BannerNew({ image, height, category, preview }) {
         {!imageLoaded && (
           preview ? (
             <img
-              src={preview}
+              src={preview?.src || preview}
               alt="Banner Preview"
               className="absolute inset-0 w-full h-full object-cover blur-md"
             />
@@ -86,7 +86,7 @@ function BannerNew({ image, height, category, preview }) {
           )
         )}
         <img
-          src={process.env.REACT_APP_API_Aws_Image_BASE_URL + image}
+          src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + image}
           alt="Banner"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${!imageLoaded ? 'opacity-0' : 'opacity-100'
             }`}

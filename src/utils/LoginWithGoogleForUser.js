@@ -8,7 +8,7 @@ const LoginWithGoogleForUser = ({ userGoogleLogin }) => {
   const { login } = useAuth();
 
   React.useEffect(() => {
-    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
     if (!clientId) {
       console.error("Google Client ID is missing!");
@@ -39,7 +39,7 @@ const LoginWithGoogleForUser = ({ userGoogleLogin }) => {
   const handleGoogleLogin = async (token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL + "user/auth/google"}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL + "user/auth/google"}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

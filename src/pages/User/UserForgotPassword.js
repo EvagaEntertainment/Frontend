@@ -1,16 +1,19 @@
+'use client';
 import { FcGoogle } from "react-icons/fc";
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import userLogin from "../../assets/LoginSigupImgs/userforgotpassword.png";
 import userApi from "../../services/userApi";
 import useServices from "../../hooks/useServices";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 function UserForgotPassword() {
-    const hsitory = useNavigate();
+    const hsitory = useRouter();
   const userNewPassword = useServices(userApi.resetpassword);
   const [countdown, setCountdown] = useState(5);
   const [isPasswordResetSuccess, setIsPasswordResetSuccess] = useState(false);
@@ -44,7 +47,7 @@ function UserForgotPassword() {
     <div className=" w-full md:h-[100vh] flex flex-col-reverse pt-10 md:pt-0 md:flex-row justify-center items-center">
       <div className=" flex-1 flex items-center justify-center w-[90%]">
         <img
-          src={userLogin}
+          src={userLogin?.src || userLogin}
           alt="user login"
           className="w-[80%] md:w-[80%] md:h-full object-contain p-4"
         />
@@ -74,13 +77,13 @@ function UserForgotPassword() {
           />
           <div className=" flex gap-2 font-semibold">
             <h5>Forgot Password?</h5>
-            <Link to={internalRoutes.userForgotPassword}>
+            <Link href={internalRoutes.userForgotPassword}>
               <button className=" btn-transparent ">Reset Password!</button>
             </Link>
           </div>
           <div className=" flex gap-2 font-semibold">
             <h5>Don't have an account?</h5>
-            <Link to={internalRoutes.userSignup}>
+            <Link href={internalRoutes.userSignup}>
               <button className=" btn-transparent ">Sign Up</button>
             </Link>
           </div>

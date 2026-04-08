@@ -1,3 +1,4 @@
+'use client';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import BannerNew from "../Banner/BannerNew";
@@ -6,11 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserBanner } from "../../context/redux/slices/bannerSlice.js";
 function SliderNew() {
   const dispatch = useDispatch();
-  const {
-    banner: { userBanner, status },
-  } = useSelector((state) => ({
-    banner: state.banner,
-  }));
+  const { userBanner, status } = useSelector((state) => state.banner);
 
   useEffect(() => {
     if (!userBanner || userBanner.length === 0) {

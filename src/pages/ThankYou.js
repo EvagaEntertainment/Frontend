@@ -1,8 +1,10 @@
+'use client';
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 const ThankYou = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <motion.div
@@ -42,7 +44,7 @@ const ThankYou = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate("/")}
+          onClick={() => router.push("/")}
           className="bg-gradient-to-r from-[#FFD700] to-[#CBAB00] hover:from-[#F9D703] hover:to-[#FFD700] text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
         >
           Return Home

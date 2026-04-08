@@ -1,9 +1,6 @@
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+'use client';
+import { usePathname } from "next/navigation";
+
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -28,11 +25,11 @@ import StickyAd from "./utils/StickyAd.js";
 import Navbar from "./components/navbar/Navbar.jsx";
 import AboutEvaga from "./pages/AboutEvaga";
 import OurService from "./pages/OurService.jsx";
-import Home from "./pages/HomepageNew.jsx";
+import Home from "./pages/HomePage.jsx";
 import CategoryPage from "./pages/CatgeoryPage.jsx";
 import ViewAllPage from "./pages/ViewAllPage.jsx";
 import CustomPackages from "./pages/CustomPackages.jsx";
-// const Home = lazy(() => import("./pages/HomepageNew.jsx"));
+// const Home = lazy(() => import("./pages/HomePage.jsx"));
 const SinglePackage = lazy(() => import("./pages/SinglePackageNew.jsx"));
 const UserLoginPage = lazy(() => import("./pages/User/UserLoginPage"));
 const VendorDashboard = lazy(() => import("./pages/Vendor/VendorDashboard"));
@@ -90,7 +87,7 @@ const NotFound = lazy(() => import("./pages/NotFound.js"));
 const AppContent = () => {
   const { auth } = useAuth();
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = usePathname();
   const userId = Cookies.get("userId");
   const { allWishlist } = useSelector((state) => state.wishlist);
   const canonicalUrl = `${window.location.origin}${location.pathname}`;
@@ -687,8 +684,8 @@ const AppContent = () => {
 
 function App() {
   useEffect(() => {
-    if (process.env.REACT_APP_Server === "production") {
-      ReactGA.initialize(process.env.REACT_APP_GA_MEASUREMENT_ID);
+    if (process.env.NEXT_PUBLIC_Server === "production") {
+      ReactGA.initialize(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
     }
   }, []);
 

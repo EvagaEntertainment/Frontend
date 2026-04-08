@@ -1,3 +1,4 @@
+'use client';
 import React, {
   useCallback,
   useEffect,
@@ -15,7 +16,8 @@ import session from "../../assets/Temporary Images/stopwatch 1.png";
 import order from "../../assets/Temporary Images/order.png";
 import pkg from "../../assets/Temporary Images/package.png";
 import formatCurrency from "../../utils/formatCurrency";
-import { useLocation, useNavigate } from "react-router-dom";
+import { usePathname, useRouter } from "next/navigation";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
@@ -33,8 +35,8 @@ function AddorBuyCard({
   serviceId,
   vendorId,
 }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const location = usePathname();
   const { auth } = useAuth();
   const [pincode, setPincode] = useState("");
   const calendarRef = useRef(null);
@@ -359,7 +361,7 @@ function AddorBuyCard({
         })
       );
       const currentPath = `${location.pathname}${location.search || ""}`;
-      navigate(
+      router.push(
         `${internalRoutes.userLogin}?redirect=${encodeURIComponent(
           currentPath
         )}`
@@ -546,7 +548,7 @@ function AddorBuyCard({
           <div className=" text-primary text-xl font-semibold pt-2 flex items-center justify-center gap-1">
             <span className="bg-textLightGray rounded-[50%] p-2">
               <img
-                src={locationImg}
+                src={locationImg?.src || locationImg}
                 alt="recommended"
                 className="h-[1.5rem] object-fit"
               />
@@ -754,7 +756,7 @@ function AddorBuyCard({
           ) : (
             <button
               className="btn-primary"
-              onClick={() => navigate(internalRoutes.checkout)}
+              onClick={() => router.push(internalRoutes.checkout)}
               disabled={!isServiceable ? true : false}
             >
               Go to Cart
@@ -768,7 +770,7 @@ function AddorBuyCard({
                 const success = await handleAddTocart();
                 if (!success) return;
               }
-              navigate(internalRoutes.checkout);
+              router.push(internalRoutes.checkout);
             }}
             disabled={!isServiceable ? true : false}
           >

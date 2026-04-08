@@ -34,7 +34,7 @@ export const ShareButton = ({ url, title }) => {
   return (
     <div className="relative" ref={containerRef}>
       <button onClick={toggleShareOptions} className=" text-white py-2 px-4 ">
-        <img src={share} alt="share" className="object-contain h-[2rem]" />
+        <img src={share?.src || share} alt="share" className="object-contain h-[2rem]" />
         <p className="text-sm text-textGray font-medium">Share</p>
       </button>
 

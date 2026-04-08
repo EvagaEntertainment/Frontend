@@ -1,6 +1,8 @@
+'use client';
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { motion } from "framer-motion";
 import { internalRoutes } from "../utils/internalRoutes";
 import CheckoutSummary from "../components/Cards/CheckoutSummary";
@@ -30,7 +32,7 @@ import BackButton from "../utils/globalBackButton";
 import commonApis from "../services/commonApis";
 function CheckOut() {
   const { auth } = useAuth();
-  const history = useNavigate();
+  const router = useRouter();
   const { cart } = useSelector((state) => state.cart);
   const [allCoupon, setAllCoupon] = useState([]);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
@@ -281,7 +283,7 @@ function CheckOut() {
 
       const formdata = new FormData();
       formdata.append("numberOfPart", numofParts);
-      const url = `${process.env.REACT_APP_API_BASE_URL}createorder/create-order/${userId}/${numofParts}`;
+      const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}createorder/create-order/${userId}/${numofParts}`;
 
       const response = await axios.post(url, formdata, {
         headers: {
@@ -297,7 +299,7 @@ function CheckOut() {
       }
 
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: amount,
         currency: currency || "INR",
         name: "Evaga Entertainment",
@@ -331,7 +333,7 @@ function CheckOut() {
           ondismiss: () => {
             console.warn("Payment modal closed by user");
             axios.post(
-              `${process.env.REACT_APP_API_BASE_URL}createorder/update-order`,
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}createorder/update-order`,
               {
                 orderId: order_id,
                 status: "CANCELLED",
@@ -482,7 +484,7 @@ function CheckOut() {
         </p>
         <button
           className="btn-primary w-fit px-4"
-          onClick={() => history(internalRoutes.userLogin)}
+          onClick={() => router.push(internalRoutes.userLogin)}
         >
           Login
         </button>
@@ -567,7 +569,7 @@ function CheckOut() {
                       : item?.packageDetails?.ProductImage);
 
                   const popularimage = imageUrl?.startsWith("service/")
-                    ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                    ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                     : imageUrl;
                   return (
                     <CheckOutCard
@@ -603,7 +605,7 @@ function CheckOut() {
                           : service?.ProductImage);
 
                       const popularimage = imageUrl?.startsWith("service/")
-                        ? process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                        ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                           imageUrl
                         : imageUrl;
 
@@ -633,7 +635,7 @@ function CheckOut() {
                           serviceId={service?.serviceId}
                           packageId={service?.packageId}
                           onClick={() =>
-                            history(
+                            router.push(
                               `${internalRoutes.SinglePackage}/${service?.serviceId}/${service?.packageId}`
                             )
                           }
@@ -1318,7 +1320,7 @@ function CheckOut() {
         {modalType === "applyCoupon" && (
           <div>
             <div className="flex items-center justify-start gap-4 mb-6">
-              <img src={Tag} alt="tag1" />
+              <img src={Tag?.src || Tag} alt="tag1" />
               <input
                 type="text"
                 placeholder="Enter Coupon code"

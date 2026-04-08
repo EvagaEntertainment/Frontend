@@ -26,7 +26,7 @@ const HeroSection = () => {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{
-          backgroundImage: `url(${process.env.REACT_APP_API_Aws_Image_BASE_URL +
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
             ourServicesBanner?.[0]?.BannerUrl
             })`,
         }}

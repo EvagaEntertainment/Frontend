@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import CheckoutSummary from "../components/Cards/CheckoutSummary";
 import { internalRoutes } from "../utils/internalRoutes";
@@ -6,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
 import userApi from "../services/userApi";
@@ -16,7 +18,7 @@ function PaymentPage() {
   const dispatch = useDispatch();
   const userId = Cookies.get("userId");
   const [userData, setUserData] = useState();
-  const history = useNavigate();
+  const router = useRouter();
   const { cart } = useSelector((state) => state.cart);
   useEffect(() => {
     if (userId && (!cart || cart.length === 0)) {
@@ -116,7 +118,7 @@ function PaymentPage() {
       }
 
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: amount,
         currency: currency || "INR",
         name: "Evaga Entertainment ",
@@ -164,7 +166,7 @@ function PaymentPage() {
         </p>
         <button
           className="btn-primary w-fit px-4"
-          onClick={() => history(internalRoutes.userLogin)}
+          onClick={() => router.push(internalRoutes.userLogin)}
         >
           Login
         </button>

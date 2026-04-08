@@ -1,13 +1,15 @@
+'use client';
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 const Breadcrumbs = () => {
-  const location = useLocation();
-  const pathnames = location.pathname.split("/").filter((x) => x);
+  const pathname = usePathname();
+  const pathnames = (pathname || "").split("/").filter((x) => x);
 
   // If we are on the homepage, don't show breadcrumbs
-  if (location.pathname === "/") return null;
+  if (pathname === "/") return null;
 
   // Custom mapping for human-readable names
   const routeNameMap = {
@@ -55,7 +57,7 @@ const Breadcrumbs = () => {
       <ol className="flex items-center flex-wrap gap-2 text-sm font-medium">
         <motion.li variants={item}>
           <Link
-            to="/"
+            href="/"
             className="text-gray-400 hover:text-[#6A1B9A] transition-colors duration-200 flex items-center"
           >
             <span className="opacity-60">Home</span>
@@ -79,7 +81,7 @@ const Breadcrumbs = () => {
                   <span className="cursor-default tracking-wide">{humanReadableName}</span>
                 ) : (
                   <Link
-                    to={to}
+                    href={to}
                     className="text-gray-500 hover:text-[#6A1B9A] transition-colors duration-200"
                   >
                     {humanReadableName}

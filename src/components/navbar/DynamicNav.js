@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { internalRoutes } from "../../utils/internalRoutes";
 import logo from "../../assets/Temporary Images/Evaga Logo.png";
@@ -167,7 +168,8 @@ const DynamicNav = () => {
     Cookies.set("selectedCategoryId", category?._id, { expires: 1 });
     setIsDropdownOpen(false);
   };
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const handleSearch = useCallback(
     (bypassSearchTermCheck = true) => {
@@ -177,10 +179,10 @@ const DynamicNav = () => {
           category: selectedCategoryId ? selectedCategoryId : "all",
         }).toString();
 
-        navigate(`/search?${query}`);
+        router.push(`/search?${query}`);
       }
     },
-    [searchTerm, selectedCategoryId, navigate]
+    [searchTerm, selectedCategoryId, router]
   );
   const onSubmit = async (data) => {
     try {
@@ -238,8 +240,8 @@ const DynamicNav = () => {
       <nav className="z-50 bg-purpleSecondary text-white shadow-lg w-full flex justify-between items-center flex-wrap px-4 md:px-10">
         <div className="flex items-center justify-between w-full lg:w-auto py-3">
           {/* Brand */}
-          <Link to="/" className="hover:text-gray-300">
-            <img src={logo} alt="logo" className="w-[50px]" />
+          <Link href="/" className="hover:text-gray-300">
+            <img src={logo?.src || logo} alt="logo" className="w-[50px]" />
           </Link>
           <div className=" lg:hidden">
             <HomeSearchBar />
@@ -261,13 +263,11 @@ const DynamicNav = () => {
                 item.component
               ) : (
                 <li>
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `text-lg font-medium ${
-                        isActive ? "text-white" : "text-[#FAFAFA4D]"
-                      } hover:text-gray-300`
-                    }
+                  <Link
+                    href={item.path || "#"}
+                    className={`text-lg font-medium ${
+                      pathname === item.path ? "text-white" : "text-[#FAFAFA4D]"
+                    } hover:text-gray-300`}
                     onClick={(e) => {
                       if (item.label === "Vendor Community") {
                         e.preventDefault(); // Prevent navigation
@@ -279,7 +279,7 @@ const DynamicNav = () => {
                     }}
                   >
                     {item.label}
-                  </NavLink>
+                  </Link>
                 </li>
               )}
             </div>
@@ -326,13 +326,13 @@ const DynamicNav = () => {
                   {dropdownOpen && (
                     <div className="absolute right-0 mt-2 bg-white border rounded-md shadow-lg w-40">
                       <Link
-                        to={internalRoutes.profile}
+                        href={internalRoutes.profile || "#"}
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
                         My Profile
                       </Link>
                       <Link
-                        to={internalRoutes.order}
+                        href={internalRoutes.order || "#"}
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
                         Orders
@@ -341,7 +341,7 @@ const DynamicNav = () => {
                   )}
                 </div>
               ) : (
-                <Link to={`/${auth.role}/profile`}>
+                <Link href={`/${auth.role}/profile`}>
                   <span className="text-lg font-medium capitalize border px-3 py-2 rounded-md">
                     My Profile
                   </span>
@@ -355,7 +355,7 @@ const DynamicNav = () => {
               </button>
             </div>
           ) : (
-            <Link to={internalRoutes?.userLogin}>
+            <Link href={internalRoutes?.userLogin || "#"}>
               <button className="bg-highlightYellow max-w-[200px]  px-6 py-3 text-primary font-semibold text-lg rounded-md hover:bg-[#CBAB00]">
                 Sign In
               </button>
@@ -363,10 +363,10 @@ const DynamicNav = () => {
           )}
 
           {(!auth?.isAuthenticated || auth?.role == "user") && (
-            <Link to={internalRoutes.checkout}>
+            <Link href={internalRoutes.checkout || "#"}>
               <div className="flex items-center justify-center relative">
                 <img
-                  src={cartImg}
+                  src={cartImg?.src || cartImg}
                   alt="cart"
                   className="h-[2rem] object-contain cursor-pointer"
                 />
@@ -400,17 +400,15 @@ const DynamicNav = () => {
                       item.component
                     ) : (
                       <li>
-                        <NavLink
-                          to={item.path}
-                          className={({ isActive }) =>
-                            `text-lg font-medium ${
-                              isActive ? "text-white" : "text-[#FAFAFA4D]"
-                            } hover:text-gray-300`
-                          }
+                        <Link
+                          href={item.path || "#"}
+                          className={`text-lg font-medium ${
+                              pathname === item.path ? "text-white" : "text-[#FAFAFA4D]"
+                            } hover:text-gray-300`}
                           onClick={closeMobileMenu}
                         >
                           {item.label}
-                        </NavLink>
+                        </Link>
                       </li>
                     )}
                   </div>
@@ -453,7 +451,7 @@ const DynamicNav = () => {
                         {mobileDropdownOpen && (
                           <div className="mt-2 bg-white border rounded-md shadow-lg">
                             <Link
-                              to={internalRoutes.profile}
+                              href={internalRoutes.profile || "#"}
                               onClick={() => [
                                 setMobileDropdownOpen(false),
                                 closeMobileMenu(),
@@ -463,7 +461,7 @@ const DynamicNav = () => {
                               My Profile
                             </Link>
                             <Link
-                              to={internalRoutes.checkout}
+                              href={internalRoutes.checkout || "#"}
                               onClick={() => [
                                 setMobileDropdownOpen(false),
                                 closeMobileMenu(),
@@ -473,7 +471,7 @@ const DynamicNav = () => {
                               Cart
                             </Link>{" "}
                             <Link
-                              to={internalRoutes.order}
+                              href={internalRoutes.order || "#"}
                               onClick={() => [
                                 setMobileDropdownOpen(false),
                                 closeMobileMenu(),
@@ -486,7 +484,7 @@ const DynamicNav = () => {
                         )}
                       </div>
                     ) : (
-                      <Link to={`/${auth.role}/profile`}>
+                      <Link href={`/${auth.role}/profile`}>
                         <span className="text-lg font-medium capitalize border px-3 py-2 rounded-md">
                           My Profile
                         </span>
@@ -500,7 +498,7 @@ const DynamicNav = () => {
                     </button>
                   </div>
                 ) : (
-                  <Link to={internalRoutes?.userLogin}>
+                  <Link href={internalRoutes?.userLogin || "#"}>
                     <button className="bg-highlightYellow w-full px-6 py-3 text-primary font-semibold text-lg rounded-md">
                       Sign In
                     </button>
@@ -562,7 +560,7 @@ const DynamicNav = () => {
               padding: "4px",
             }}
           >
-            <Link to={internalRoutes?.blog}>Blog</Link>
+            <Link href={internalRoutes?.blog || "#"}>Blog</Link>
           </motion.div>
 
           <motion.div
@@ -577,7 +575,7 @@ const DynamicNav = () => {
               padding: "4px",
             }}
           >
-            <Link to={internalRoutes.wishlist}>Wishlist</Link>
+            <Link href={internalRoutes.wishlist || "#"}>Wishlist</Link>
           </motion.div>
 
           <motion.div
@@ -612,7 +610,7 @@ const DynamicNav = () => {
               padding: "4px",
             }}
           >
-            <Link to={internalRoutes.customerService}>Customer Service</Link>
+            <Link href={internalRoutes.customerService || "#"}>Customer Service</Link>
           </motion.div>
         </div>
       )}
@@ -656,7 +654,7 @@ const DynamicNav = () => {
             {modalType === "Community" && (
               <div className="bg-white w-full rounded-md flex flex-col items-center justify-center ">
                 <img
-                  src={celebrate}
+                  src={celebrate?.src || celebrate}
                   alt="celebrate"
                   className="object-contain mt-4"
                 />

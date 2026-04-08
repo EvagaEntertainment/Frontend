@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
 import vendorApi from "../../services/vendorApi";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+
 import EditDynamicForm from "../../components/Forms/EditDynamicForm";
 import { toast } from "react-toastify";
 

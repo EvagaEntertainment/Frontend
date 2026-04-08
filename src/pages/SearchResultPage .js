@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useEffect, useState } from "react";
 import FilterCard from "../components/Cards/FilterCard";
 import SortandFilterCard from "../components/Cards/SortAndFilterCard";
@@ -9,7 +10,8 @@ import useDebounce from "../utils/useDebounce";
 import { useSelector } from "react-redux";
 import CustomPagination from "../utils/CustomPagination";
 import Cookies from "js-cookie";
-import { useLocation, useNavigate } from "react-router-dom";
+import { usePathname, useRouter } from "next/navigation";
+
 import { internalRoutes } from "../utils/internalRoutes";
 import { motion } from "framer-motion";
 import { FaFilter } from "react-icons/fa6";
@@ -17,8 +19,8 @@ import { FaTimes } from "react-icons/fa";
 import BackButton from "../utils/globalBackButton";
 import ProductCard from "../components/Cards/ProductCard";
 function SearchResultPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const location = usePathname();
   const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
   const { allWishlist } = useSelector((state) => state.wishlist);
   const [searchResult, setSearchResult] = useState([]);
@@ -228,7 +230,7 @@ function SearchResultPage() {
                       : service.serviceDetails?.values?.ProductImage);
 
                   const popularimage = imageUrl?.startsWith("service/")
-                    ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+                    ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
                     : imageUrl;
                   const sizeAndDimension =
                     service.serviceDetails?.values?.["SizeAndDimension"] || [];
@@ -273,7 +275,7 @@ function SearchResultPage() {
                       serviceId={service?._id}
                       packageId={service?.serviceDetails?._id}
                       onClick={() =>
-                        navigate(
+                        router.push(
                           `${internalRoutes.SinglePackage}/${service?._id}/${service?.serviceDetails?._id}`
                         )
                       }

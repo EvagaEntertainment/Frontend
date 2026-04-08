@@ -11,7 +11,7 @@ const CheckoutItemCard = ({ data }) => {
         onClick={() => console.log("Close button clicked")}
       >
       <img
-          src={CrossButton}
+          src={CrossButton?.src || CrossButton}
           alt="Close"
           className="w-4 h-4"
         />

@@ -163,7 +163,7 @@ function WhyChooseUs() {
             <div className="relative rounded-2xl overflow-hidden ">
               <LazyLoadImage
                 src={
-                  process.env.REACT_APP_API_Aws_Image_BASE_URL +
+                  process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL +
                   "gallery/1749380373717_whychooseuspurchased.webp"
                 }
                 alt="Why Choose Us"

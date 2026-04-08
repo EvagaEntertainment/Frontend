@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 import ServiceImage from "../../assets/Temporary Images/image1.png";
 import TruncateText from "../TruncateText/TruncateText";
@@ -9,7 +10,8 @@ import formatCurrency from "../../utils/formatCurrency";
 import ReusableModal from "../Modal/Modal";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { formatDate } from "../../utils/formatDate";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 function OrderVenderCard({
   title,
@@ -31,7 +33,7 @@ function OrderVenderCard({
   buttons = [],
 }) {
   const [openModal, setOpenModal] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -42,7 +44,7 @@ function OrderVenderCard({
   };
 
   const handleNavigate = () => {
-    if (redirectUrl) navigate(redirectUrl);
+    if (redirectUrl) router.push(redirectUrl);
   };
 
   return (

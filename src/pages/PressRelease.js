@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import PressReleaseCard from "../components/Cards/PressReleaseCard";
 import useServices from "../hooks/useServices";

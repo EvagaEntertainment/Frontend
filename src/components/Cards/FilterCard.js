@@ -17,7 +17,7 @@ function FilterCard({ filters, onFilterChange, onSliderChange }) {
   return (
     <div className="flex flex-col gap-2 ">
       <span className="flex items-center justify-start gap-2 border-b-2 pb-1 mb-1">
-        <img src={filter} alt="filter" className="object-contain h-[1.5rem]" />
+        <img src={filter?.src || filter} alt="filter" className="object-contain h-[1.5rem]" />
         <h2 className="text-base font-medium mt-2 text-primary">Filter</h2>
       </span>
       <div>

@@ -1,8 +1,11 @@
+'use client';
 import BookingSection from "../components/BookingSection/BookingSection";
 import FAQSection from "../components/FAQSection/FAQSection";
 import HeroSection from "../components/HeroSection/HeroSectionCategoryPage";
 import ProductSection from "../components/ProductSection/ProductSection";
-import { NavLink, useParams } from "react-router-dom";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { useEffect, useState } from "react";
@@ -113,9 +116,8 @@ function CatgeoryPage() {
               const isActive = decodedCategory === decodedTab;
 
               return (
-                <NavLink
-                  key={tab}
-                  to={`/category/${tab}`}
+                <Link key={tab}
+                  href={`/category/${tab}`}
                   className={`tab ${isActive ? "active" : ""}`}
                   style={{
                     padding: "0.75rem 1.5rem",
@@ -133,7 +135,7 @@ function CatgeoryPage() {
                   }}
                 >
                   {decodedTab}
-                </NavLink>
+                </Link>
               );
             })}
           </div>
@@ -157,7 +159,7 @@ function CatgeoryPage() {
                   : pkg.serviceDetails?.values?.ProductImage);
 
               const processedImageUrl = imageUrl?.startsWith("service/")
-                ? `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${imageUrl}`
+                ? `${process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL}${imageUrl}`
                 : imageUrl;
 
               // Parse price to number

@@ -1,5 +1,7 @@
+'use client';
 import formfields from "../../utils/formFields";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 // import { FcGoogle } from "react-icons/fc";
 // import adminApi from "../../services/adminApi";
 import { loginReducer } from "../../context/redux/slices/authSlice";
@@ -13,7 +15,7 @@ import useServices from "../../hooks/useServices";
 import adminApi from "../../services/adminApi";
 
 function AdminLoginPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { login } = useAuth();
   const {
@@ -36,7 +38,7 @@ function AdminLoginPage() {
         };
         dispatch(loginReducer(payload));
 
-        navigate(internalRoutes.adminDashboard);
+        router.push(internalRoutes.adminDashboard);
       }
     } catch (error) {
       console.log("Login Failed:", error.response?.data || error.message);
@@ -48,7 +50,7 @@ function AdminLoginPage() {
       <div className=" w-full md:w-[50%] h-full flex justify-center items-center bg-highlight">
         <img
           className="w-full md:w-auto md:h-full object-contain "
-          src={AdminLoginLeftImg}
+          src={AdminLoginLeftImg?.src || AdminLoginLeftImg}
           alt="Login"
         />
       </div>
@@ -72,7 +74,7 @@ function AdminLoginPage() {
           />
           <div className=" flex gap-2 font-semibold">
             <h5>Forgot Password?</h5>
-            <Link to={internalRoutes.adminForgotPassword}>
+            <Link href={internalRoutes.adminForgotPassword || "#"}>
               <button className=" btn-transparent ">Reset Password!</button>
             </Link>
           </div>

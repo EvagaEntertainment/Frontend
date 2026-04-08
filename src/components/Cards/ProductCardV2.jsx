@@ -10,7 +10,7 @@ const ProductCardV2 = ({ imageUrl, title, price, onClick }) => (
     <div className="relative pt-[60%] overflow-hidden">
       {imageUrl ? (
         <img
-          src={imageUrl}
+          src={imageUrl?.src || imageUrl}
           alt={title}
           className="absolute top-0 left-0 w-full h-full object-cover"
           loading="lazy"

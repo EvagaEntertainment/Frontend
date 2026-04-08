@@ -1,22 +1,24 @@
+'use client';
 import React from "react";
 import BannerImg from "../../assets/Temporary Images/Banner.png";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 function Banner({ image, height, category }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleSearch = () => {
     const query = new URLSearchParams({
       q: "",
       category: category,
     }).toString();
 
-    navigate(`/search?${query}`);
+    router.push(`/search?${query}`);
   };
 
   return (
     <div className="w-full">
       <img
         src={
-          image ? process.env.REACT_APP_API_Aws_Image_BASE_URL + image : BannerImg
+          image ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + image : BannerImg
         }
         alt="Banner"
         className={

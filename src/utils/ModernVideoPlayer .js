@@ -45,7 +45,7 @@ const ModernVideoPlayer = ({ selectedUrl }) => {
     <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
       <video
         ref={videoRef}
-        src={selectedUrl}
+        src={selectedUrl?.src || selectedUrl}
         muted={isMuted}
         className="w-full h-full object-contain"
         autoPlay

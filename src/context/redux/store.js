@@ -32,7 +32,7 @@ const store = configureStore({
     categoryFees: categoryFessReducer,
     cart: userCartReducer,
   },
-  devTools: process.env.REACT_APP_Server === "development"?true:false,
+  devTools: process.env.NEXT_PUBLIC_Server === "development"?true:false,
 });
 
 export default store;

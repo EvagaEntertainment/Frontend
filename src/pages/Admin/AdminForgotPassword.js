@@ -1,8 +1,11 @@
+'use client';
 import AuthBox from "../../components/AuthBox";
 import AuthForm from "../../components/AuthForm";
 import formfields from "../../utils/formFields";
 import { internalRoutes } from "../../utils/internalRoutes";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import AdminLoginLeftImg from "../../assets/LoginSigupImgs/AdminLoginLeftImg.png";
 import useServices from "../../hooks/useServices";
 import adminApi from "../../services/adminApi";
@@ -10,7 +13,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 function AdminForgotPassword() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const {
         loading: resetLoading,
         error: resetError,
@@ -26,7 +29,7 @@ function AdminForgotPassword() {
                 const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
                 return () => clearTimeout(timer);
             } else if (countdown === 0 && isPasswordResetSuccess) {
-                navigate(internalRoutes.adminLogin);
+                router.push(internalRoutes.adminLogin);
             }
         }
     }, [countdown, isPasswordResetSuccess, navigate]);
@@ -49,7 +52,7 @@ function AdminForgotPassword() {
             <div className=" w-full md:w-[50%] h-full flex justify-center items-center bg-highlight">
                 <img
                     className="w-full md:w-auto md:h-full object-contain "
-                    src={AdminLoginLeftImg}
+                    src={AdminLoginLeftImg?.src || AdminLoginLeftImg}
                     alt="Admin Forgot Password"
                 />
             </div>
@@ -97,7 +100,7 @@ function AdminForgotPassword() {
 
                     <div className="flex gap-2 font-semibold">
                         <h5>Remembered your password?</h5>
-                        <Link to={internalRoutes.adminLogin}>
+                        <Link href={internalRoutes.adminLogin}>
                             <button className="btn-transparent">Sign In</button>
                         </Link>
                     </div>

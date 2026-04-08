@@ -4,7 +4,8 @@ import adminActionsApi from "../../services/adminActionsApi";
 import { formatDateTime } from "../../utils/formatDateTime";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import DeleteForm from "./DeleteForm";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import ReusableModal from "../Modal/Modal";
 import { useForm } from "react-hook-form";
 import commonApis from "../../services/commonApis";
@@ -97,7 +98,7 @@ function Gallery() {
       render: (row) => (
         <img
           src={
-            process.env.REACT_APP_API_Aws_Image_BASE_URL + row?.originalImage
+            process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + row?.originalImage
           }
           alt="gallery"
           className="w-[10rem] h-[10rem] object-contain aspect-3/2"

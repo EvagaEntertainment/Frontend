@@ -1,7 +1,9 @@
+'use client';
 import React, { useEffect } from "react";
 import WishlistCard from "../components/Cards/WishlistCard";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { internalRoutes } from "../utils/internalRoutes";
 import { motion } from "framer-motion";
 import userApi from "../services/userApi";
@@ -12,7 +14,7 @@ import { addWishlist } from "../context/redux/slices/wishlistSlice";
 function Wishlist() {
   const userId = Cookies.get("userId");
   const { auth } = useAuth();
-  const history = useNavigate();
+  const router = useRouter();
   const wishlist = useServices(userApi.Wishlist);
   const { allWishlist } = useSelector((state) => state.wishlist);
 
@@ -45,7 +47,7 @@ function Wishlist() {
         </p>
         <button
           className="btn-primary w-fit px-4"
-          onClick={() => history(internalRoutes.userLogin)}
+          onClick={() => router.push(internalRoutes.userLogin)}
         >
           Login
         </button>
@@ -76,7 +78,7 @@ function Wishlist() {
               : service.packageDetails?.values?.ProductImage);
 
           const popularimage = imageUrl?.startsWith("service/")
-            ? process.env.REACT_APP_API_Aws_Image_BASE_URL + imageUrl
+            ? process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + imageUrl
             : imageUrl;
           return (
             <WishlistCard
@@ -106,7 +108,7 @@ function Wishlist() {
               rating={0}
               reviews={0}
               onClick={() =>
-                history(
+                router.push(
                   `${internalRoutes?.SinglePackage}/${service?._id}/${service?.packageDetails?._id}`
                 )
               }

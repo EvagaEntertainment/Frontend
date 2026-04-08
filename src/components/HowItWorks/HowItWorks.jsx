@@ -123,7 +123,7 @@
 //           >
 //             <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-[#6A1B9A]/10 transform perspective-[1000px]">
 //               <img
-//                 src={howItWorksImage}
+//                 src={howItWorksImage?.src || howItWorksImage}
 //                 alt="How It Works"
 //                 className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105"
 //                 loading="lazy"

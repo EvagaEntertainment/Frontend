@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 import { internalRoutes } from "../../utils/internalRoutes";
 import vendorApi from "../../services/vendorApi";
 import AuthBox from "../../components/AuthBox";
@@ -39,7 +40,7 @@ function VendorSignUpPage() {
       <div className=" w-full md:w-[50%] h-full flex justify-center items-center bg-highlight">
         <img
           className="w-full md:w-auto md:h-full object-contain "
-          src={SignUpLeftImg}
+          src={SignUpLeftImg?.src || SignUpLeftImg}
           alt="Sign-Up"
         />
       </div>
@@ -63,7 +64,7 @@ function VendorSignUpPage() {
 
           <div className="flex gap-2 font-semibold">
             <h5>Already have an account?</h5>
-            <Link to={internalRoutes.vendorLogin}>
+            <Link href={internalRoutes.vendorLogin}>
               <button className="btn-transparent">Sign In</button>
             </Link>
           </div>

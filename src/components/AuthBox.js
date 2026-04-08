@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 import AuthForm from "./AuthForm";
 import { internalRoutes } from "../utils/internalRoutes";
 import { FcGoogle } from "react-icons/fc";
@@ -18,7 +19,7 @@ function AuthBox({ children }) {
       {signUpLink && (
         <div className=" flex gap-2 font-semibold">
           <h5>Don't have an account?</h5>
-          <Link to={internalRoutes.userSignup}>
+          <Link href={internalRoutes.userSignup}>
             <button className=" btn-transparent ">Sign Up</button>
           </Link>
         </div>

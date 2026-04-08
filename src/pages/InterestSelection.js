@@ -1,17 +1,20 @@
+'use client';
 // File: src/pages/InterestSelection.js
 
 import React, { useEffect, useState } from "react";
 import logo from "../assets/Temporary Images/Evaga Logo-color.png";
 import useServices from "../hooks/useServices";
 import userApi from "../services/userApi";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { useAuth } from "../context/AuthContext";
 import { internalRoutes } from "../utils/internalRoutes";
 import { motion } from "framer-motion";
 const InterestSelection = () => {
   const saveUserInterest = useServices(userApi.userInterest);
   const UserInterestStatus = useServices(userApi.userIntereststatus);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { auth } = useAuth();
   const interestsList = [
     "Weddings",
@@ -46,7 +49,7 @@ const InterestSelection = () => {
       console.log("API Response:", response);
 
       // if (response?.user?.userInterestFilled) {
-      //   navigate("/");
+      //   router.push("/");
       // }
 
       setHasFetched(true); 
@@ -62,7 +65,7 @@ const InterestSelection = () => {
     const formData = new FormData();
     formData.append("interests", selectedInterests);
     const response = await saveUserInterest.callApi(formData);
-    return response ? navigate("/") : "";
+    return response ? router.push("/") : "";
   };
   if (!auth?.isAuthenticated || auth?.role !== "user") {
     return (
@@ -81,7 +84,7 @@ const InterestSelection = () => {
         </p>
         <button
           className="btn-primary w-fit px-4"
-          onClick={() => navigate(internalRoutes.home)}
+          onClick={() => router.push(internalRoutes.home)}
         >
           Login
         </button>
@@ -90,8 +93,8 @@ const InterestSelection = () => {
   }
   return (
     <div className="w-full px-2 py-4 flex items-start jystify-start flex-col">
-      <Link to="/" className="hover:text-gray-300">
-        <img src={logo} alt="logo" className="h-[8rem] object-fit" />
+      <Link href="/" className="hover:text-gray-300">
+        <img src={logo?.src || logo} alt="logo" className="h-[8rem] object-fit" />
       </Link>
       <div className="w-full  flex flex-col items-center justify-center">
         <div className="sm:w-[95%] md:w-[80%] lg:w-[70%] bg-textLightGray shadow-md rounded-md p-6">

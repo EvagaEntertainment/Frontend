@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import EditButton from "../../assets/Temporary Images/pen-square 1.png";
 import DeleteButton from "../../assets/Temporary Images/rectangle-xmark 1.png";
@@ -11,7 +12,8 @@ import { fetchUserProfile } from "../../context/redux/slices/userSlice";
 import { internalRoutes } from "../../utils/internalRoutes";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import ReusableModal from "../../components/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -43,7 +45,7 @@ function UserProfile() {
   const deleteOneAddress = useServices(userApi.deleteOneAddress);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const { auth } = useAuth();
-  const history = useNavigate();
+  const router = useRouter();
   const userId = Cookies.get("userId");
   const { profile } = useSelector((state) => state.userProfile);
   const [profileData, setProfileData] = useState({
@@ -268,7 +270,7 @@ function UserProfile() {
         </p>
         <button
           className="btn-primary w-fit px-4"
-          onClick={() => history(internalRoutes.userLogin)}
+          onClick={() => router.push(internalRoutes.userLogin)}
         >
           Login
         </button>
@@ -305,7 +307,7 @@ function UserProfile() {
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 "
                   onClick={() => [handleOpen(), setModalType("editProfile")]}
                 >
-                  <img src={EditButton} alt="Edit" className="h-8 w-8" />
+                  <img src={EditButton?.src || EditButton} alt="Edit" className="h-8 w-8" />
                 </button>
               </div>
             </div>

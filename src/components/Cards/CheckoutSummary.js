@@ -1,9 +1,11 @@
+'use client';
 import React, { useEffect, useMemo, useState } from "react";
 import Tag from "../../assets/Temporary Images/tags1.png";
 import CommentInfo from "../../assets/Temporary Images/comment-info1.png";
 import Add from "../../assets/Temporary Images/AddButton.png";
 import formatCurrency from "../../utils/formatCurrency";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 import { toast } from "react-toastify";
 import PaymentOptions from "../../utils/PaymentOptions";
 
@@ -27,7 +29,7 @@ function CheckoutSummary({
   platformGstAmount,
   estimatedDistance,
 }) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [couponCode, setCouponCode] = useState("");
@@ -41,7 +43,7 @@ function CheckoutSummary({
       return;
     }
     if (paymentPageUrl) {
-      navigate(paymentPageUrl);
+      router.push(paymentPageUrl);
     } else if (onPlaceOrder) {
       try {
         await onPlaceOrder(partialPaymentPart);
@@ -129,7 +131,7 @@ function CheckoutSummary({
         onSubmit={(e) => [e.preventDefault(), applyCoupon(couponCode)]}
         className="flex items-center mb-6"
       >
-        <img src={Tag} alt="tag1" />
+        <img src={Tag?.src || Tag} alt="tag1" />
         <input
           type="text"
           placeholder="Enter Coupon code"
@@ -150,7 +152,7 @@ function CheckoutSummary({
             type="submit"
             className="w-[123px] h-[40px] ml-4 border-2 border-primary text-primary rounded-md"
           >
-            {/* <img src={Add} alt="Add" /> */}
+            {/* <img src={Add?.src || Add} alt="Add" /> */}
             ADD
           </button>
         )}
@@ -204,7 +206,7 @@ function CheckoutSummary({
         <div className="text-normal flex justify-between mb-2">
           <span className="flex text-normal">
             <span className="font-medium">GST & other Charges</span>
-            <img src={CommentInfo} className="h-4 mt-1 ml-1" />
+            <img src={CommentInfo?.src || CommentInfo} className="h-4 mt-1 ml-1" />
           </span>
           <span>{formatCurrency(totalGst)}</span>
         </div>

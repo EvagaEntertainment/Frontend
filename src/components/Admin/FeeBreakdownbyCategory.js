@@ -11,7 +11,7 @@ import EditCouponForm from "./EditCouponForm;";
 import AddCouponForm from "./AddCouponForm";
 import ReusableModal from "../Modal/Modal";
 import { fetchCategoryFess } from "../../context/redux/slices/categoryFeesSlice";
-import { render } from "@testing-library/react";
+
 import AddFeesCatehoryForm from "./AddFeesCatehoryForm";
 import EditFeesCatehoryForm from "./EditFeesCatehoryForm.js";
 

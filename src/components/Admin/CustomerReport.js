@@ -3,7 +3,7 @@ import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import useServices from "../../hooks/useServices";
 import adminActionsApi from "../../services/adminActionsApi";
 import { FaArrowCircleDown } from "react-icons/fa";
-import { render } from "@testing-library/react";
+
 import formatCurrency from "../../utils/formatCurrency";
 
 function CustomerReport() {
