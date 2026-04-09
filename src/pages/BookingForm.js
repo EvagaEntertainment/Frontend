@@ -413,4 +413,8 @@ const BookingForm = () => {
   );
 };
 
+export async function getServerSideProps() {
+  return { props: {} };
+}
+
 export default BookingForm;

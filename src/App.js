@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from "next/navigation";
 
-import { Helmet, HelmetProvider } from "react-helmet-async";
+
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { internalRoutes } from "./utils/internalRoutes";
@@ -90,7 +90,7 @@ const AppContent = () => {
   const location = usePathname();
   const userId = Cookies.get("userId");
   const { allWishlist } = useSelector((state) => state.wishlist);
-  const canonicalUrl = `${window.location.origin}${location.pathname}`;
+  const canonicalUrl = typeof window !== 'undefined' ? `${window.location.origin}${location.pathname}` : '';
   const noNavbarPaths = [
     internalRoutes.vendorDashboard,
     internalRoutes.vendorProfile,
@@ -207,12 +207,6 @@ const AppContent = () => {
   }, [location.search]);
   return (
     <>
-      <Helmet>
-        <html lang="en" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
       {noNavbarPaths.includes(location.pathname) && <DynamicNav />}
       {!noNewNavbarPaths.includes(location.pathname) && <Navbar />}
 
@@ -233,47 +227,6 @@ const AppContent = () => {
         {!noWhatsappPaths.includes(location.pathname) && <WhatsAppButton />}{" "}
         {!noWhatsappPaths.includes(location.pathname) && <StickyAd />}
         <GoToTop />
-        <Helmet>
-          <script type="application/ld+json">
-            {`
-              {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "Eevagga",
-                "alternateName": "Evaga Entertainment Pvt Ltd",
-                "url": "https://www.eevagga.com/",
-                "logo": "https://www.eevagga.com/logo.png",
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "telephone": "+91-8296157611",
-                  "contactType": "customer service",
-                  "areaServed": "IN",
-                  "availableLanguage": "en"
-                },
-                "address": {
-                  "@type": "PostalAddress",
-                  "streetAddress": "Prestige Atlanta, 1A Koramangala",
-                  "addressLocality": "Bangalore",
-                  "addressRegion": "Karnataka",
-                  "postalCode": "560038",
-                  "addressCountry": "IN"
-                },
-                "sameAs": [
-                  "https://www.instagram.com/eevagga/",
-                  "https://www.facebook.com/eevaggaofficial",
-                  "https://twitter.com/eevagga"
-                ],
-                "speakable": {
-                  "@type": "SpeakableSpecification",
-                  "xpath": [
-                    "/html/head/title",
-                    "/html/head/meta[@name='description']/@content"
-                  ]
-                }
-              }
-            `}
-          </script>
-        </Helmet>
         <Routes>
           <Route
             element={
@@ -690,7 +643,6 @@ function App() {
   }, []);
 
   return (
-    <HelmetProvider>
       <Router>
         <AuthProvider>
           <ErrorProvider>
@@ -699,7 +651,6 @@ function App() {
           </ErrorProvider>
         </AuthProvider>
       </Router>
-    </HelmetProvider>
   );
 }
 

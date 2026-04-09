@@ -1,28 +1,30 @@
 'use client';
-import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import BannerNew from "../Banner/BannerNew";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserBanner } from "../../context/redux/slices/bannerSlice.js";
+import dynamic from 'next/dynamic';
+
+const AliceCarousel = dynamic(() => import('react-alice-carousel'), { ssr: false });
+
 function SliderNew() {
   const dispatch = useDispatch();
   const { userBanner, status } = useSelector((state) => state.banner);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (!userBanner || userBanner.length === 0) {
       dispatch(fetchUserBanner());
     }
   }, [dispatch, userBanner]);
-
-
 
   const responsive = {
     0: { items: 1 },
     1024: { items: 1, itemsFit: "contain" },
   };
 
-  // Skeleton loader item
   const skeletonItem = (
     <div className="relative w-full h-[50dvh] md:h-[85dvh] overflow-hidden">
       <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
@@ -34,6 +36,8 @@ function SliderNew() {
       </div>
     </div>
   );
+
+  if (!mounted) return <div className="flex flex-col">{skeletonItem}</div>;
 
   return (
     <>

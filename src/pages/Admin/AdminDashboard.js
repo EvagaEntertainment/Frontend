@@ -57,15 +57,24 @@ const buttonStyles =
 const AdminDashboard = () => {
   const [selectedMenu, setSelectedMenu] = useState("Home");
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const getUserData = useServices(userApi.getTotalUser);
   const changeAdminPasswordApi = useServices(adminApi.changePassword);
 
   const { auth } = useAuth();
   const dispatch = useDispatch();
-  const { details, status, error } = useSelector((state) => state.admin);
-  const { totalNumberOfVendors, totalNumberOfUser } = useSelector(
-    (state) => state.adminActions
-  );
+  const admin = useSelector((state) => state.admin);
+  const details = admin?.details;
+  const status = admin?.status;
+  const error = admin?.error;
+
+  const adminActions = useSelector((state) => state.adminActions);
+  const totalNumberOfVendors = adminActions?.totalNumberOfVendors;
+  const totalNumberOfUser = adminActions?.totalNumberOfUser;
 
   const handleMenuSelect = (menu) => {
     sessionStorage.setItem("adminMenu", menu);
@@ -184,6 +193,8 @@ const AdminDashboard = () => {
       dispatch(fetchAdminDetails(auth.userId));
     }
   }, [dispatch, auth.userId]);
+
+  if (!mounted) return null;
 
   return (
     <div className="flex h-auto bg-gray-100">
@@ -432,5 +443,9 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  return { props: {} };
+}
 
 export default AdminDashboard;

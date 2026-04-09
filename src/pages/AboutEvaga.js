@@ -1,5 +1,4 @@
 'use client';
-import { Helmet } from "react-helmet-async";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "../utils/motion";
@@ -8,13 +7,12 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { getAboutUsBanners } from "../context/redux/slices/bannerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+
 const AboutUs = () => {
   const dispatch = useDispatch();
-  const {
-    banner: { aboutBanner },
-  } = useSelector((state) => ({
-    banner: state.banner,
-  }));
+  const banner = useSelector((state) => state.banner);
+  const aboutBanner = banner?.aboutBanner;
+
   useEffect(() => {
     if (!aboutBanner || aboutBanner.length === 0) {
       dispatch(getAboutUsBanners());
@@ -92,25 +90,6 @@ const AboutUs = () => {
 
   return (
     <>
-      <Helmet>
-        <title>About Eevagga | India's Premium Birthday Celebration Brand</title>
-        <meta
-          name="description"
-          content="Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible."
-        />
-        <meta
-          name="keywords"
-          content="birthday celebrations, premium birthdays, party planning, Eevagga story, birthday experiences India, birthday planners"
-        />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="About Eevagga | India's Premium Birthday Celebration Brand" />
-        <meta
-          property="og:description"
-          content="Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible."
-        />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Breadcrumbs />
       <motion.div
         initial="hidden"
@@ -118,143 +97,133 @@ const AboutUs = () => {
         variants={staggerContainer()}
         className="max-w-4xl mx-auto px-4 py-12"
       >
-      {/* Hero Section */}
-      <motion.div
-        variants={fadeIn("up", "tween", 0.1, 0.6)}
-        className="text-center mb-16"
-      >
-        <h1
-          className="text-3xl md:text-4xl font-bold mb-4"
-          style={{ color: "#6A1B9A" }}
+        {/* Hero Section */}
+        <motion.div
+          variants={fadeIn("up", "tween", 0.1, 0.6)}
+          className="text-center mb-16"
         >
-          About Eevagga
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600">
-          India’s Premium Birthday Celebration Brand
-        </p>
-      </motion.div>
-
-      {/* Content Sections */}
-      <div className="space-y-8">
-        {sections.map((section, index) => (
-          <motion.section
-            key={section.title || section.type || index}
-            variants={fadeIn("up", "tween", 0.2 + index * 0.1, 0.6)}
-            className="space-y-6"
-            viewport={{ once: true }}
-          >
-            {section.type === "image" ? (
-              <motion.div
-                className="relative group overflow-hidden rounded-xl shadow-lg"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <LazyLoadImage
-                  src={
-                    process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + section.src
-                  }
-                  alt={section.alt}
-                  className="w-full h-auto object-cover aspect-video"
-                  effect="blur"
-                  placeholderSrc={section.preview} // Add small placeholder image in your data
-                  wrapperProps={{
-                    style: {
-                      display: "block", // Ensures proper layout
-                      transition: "filter 0.5s ease-out", // Custom blur transition
-                    },
-                  }}
-                  beforeLoad={() => ({
-                    style: {
-                      filter: "blur(20px)",
-                    },
-                  })}
-                  afterLoad={() => ({
-                    style: {
-                      filter: "blur(0)",
-                    },
-                  })}
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                  }}
-                />
-
-                {/* Optional Hover Overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-
-                {/* Optional Loading Skeleton */}
-                {!section.src && (
-                  <div className="absolute inset-0 bg-gray-100 animate-pulse" />
-                )}
-              </motion.div>
-            ) : (
-              <>
-                {section.title && (
-                  <h2
-                    className="text-2xl font-semibold"
-                    style={{ color: "#6A1B9A" }}
-                  >
-                    {section.title}
-                  </h2>
-                )}
-
-                {section.content && (
-                  <p className="text-gray-600 leading-relaxed">
-                    {section.content}
-                  </p>
-                )}
-
-                {section.subcontent && (
-                  <p className="text-gray-600 leading-relaxed">
-                    {section.subcontent}
-                  </p>
-                )}
-
-                {section.list && (
-                  <ul className="list-disc pl-6 space-y-2">
-                    {section.list.map((item, i) => (
-                      <li key={i} className="text-gray-600">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {section.numberedList && (
-                  <ol className="list-decimal pl-6 space-y-3">
-                    {section.numberedList.map((item, i) => (
-                      <li key={i} className="text-gray-600">
-                        {item}
-                      </li>
-                    ))}
-                  </ol>
-                )}
-
-                {section.ending && (
-                  <p className="text-gray-600 mt-6 leading-relaxed italic">
-                    {section.ending}
-                  </p>
-                )}
-              </>
-            )}
-          </motion.section>
-        ))}
-      </div>
-
-      {/* Closing Section */}
-      <motion.div
-        variants={fadeIn("up", "tween", 1, 0.6)}
-        className="text-center mt-16"
-      >
-        <div className=" pt-8">
-          <p
-            className="text-xl md:text-2xl font-semibold mb-4"
+          <h1
+            className="text-3xl md:text-4xl font-bold mb-4"
             style={{ color: "#6A1B9A" }}
           >
-            Celebrate Better. Celebrate with Eevagga.
+            About Eevagga
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-600">
+            India’s Premium Birthday Celebration Brand
           </p>
+        </motion.div>
+
+        {/* Content Sections */}
+        <div className="space-y-8">
+          {sections.map((section, index) => (
+            <motion.section
+              key={section.title || section.type || index}
+              variants={fadeIn("up", "tween", 0.2 + index * 0.1, 0.6)}
+              className="space-y-6"
+              viewport={{ once: true }}
+            >
+              {section.type === "image" ? (
+                <motion.div
+                  className="relative group overflow-hidden rounded-xl shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <LazyLoadImage
+                    src={
+                      process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + section.src
+                    }
+                    alt={section.alt}
+                    className="w-full h-auto object-cover aspect-video"
+                    effect="blur"
+                    placeholderSrc={section.preview}
+                    wrapperProps={{
+                      style: {
+                        display: "block",
+                        transition: "filter 0.5s ease-out",
+                      },
+                    }}
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                    }}
+                  />
+
+                  {/* Optional Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+
+                  {/* Optional Loading Skeleton */}
+                  {!section.src && (
+                    <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+                  )}
+                </motion.div>
+              ) : (
+                <>
+                  {section.title && (
+                    <h2
+                      className="text-2xl font-semibold"
+                      style={{ color: "#6A1B9A" }}
+                    >
+                      {section.title}
+                    </h2>
+                  )}
+
+                  {section.content && (
+                    <p className="text-gray-600 leading-relaxed">
+                      {section.content}
+                    </p>
+                  )}
+
+                  {section.subcontent && (
+                    <p className="text-gray-600 leading-relaxed">
+                      {section.subcontent}
+                    </p>
+                  )}
+
+                  {section.list && (
+                    <ul className="list-disc pl-6 space-y-2">
+                      {section.list.map((item, i) => (
+                        <li key={i} className="text-gray-600">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {section.numberedList && (
+                    <ol className="list-decimal pl-6 space-y-3">
+                      {section.numberedList.map((item, i) => (
+                        <li key={i} className="text-gray-600">
+                          {item}
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+
+                  {section.ending && (
+                    <p className="text-gray-600 mt-6 leading-relaxed italic">
+                      {section.ending}
+                    </p>
+                  )}
+                </>
+              )}
+            </motion.section>
+          ))}
         </div>
+
+        {/* Closing Section */}
+        <motion.div
+          variants={fadeIn("up", "tween", 1, 0.6)}
+          className="text-center mt-16"
+        >
+          <div className=" pt-8">
+            <p
+              className="text-xl md:text-2xl font-semibold mb-4"
+              style={{ color: "#6A1B9A" }}
+            >
+              Celebrate Better. Celebrate with Eevagga.
+            </p>
+          </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
     </>
   );
 };

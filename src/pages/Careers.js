@@ -1,21 +1,10 @@
 'use client';
 import React from 'react'
 import { motion } from 'framer-motion';
-import { Helmet } from "react-helmet-async";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 function Careers() {
   return (
     <>
-      <Helmet>
-        <title>Careers | Join the Eevagga Team</title>
-        <meta
-          name="description"
-          content="Explore career opportunities at Eevagga. Join us in building India's premium birthday celebration brand."
-        />
-        <meta name="keywords" content="careers, jobs, Eevagga hiring, event planning jobs" />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
       <Breadcrumbs />
       <div
     className="flex items-center justify-center min-h-screen"
@@ -32,7 +21,6 @@ function Careers() {
         ease: 'easeInOut',
       }}
     >
-      {/* Title Animation */}
       <motion.h1
         className="text-5xl md:text-8xl font-extrabold tracking-wide mb-6"
         style={{ color: '#F9D703', textShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)' }}
@@ -46,7 +34,6 @@ function Careers() {
         Coming Soon
       </motion.h1>
 
-      {/* Subtext Animation */}
       <motion.p
         className="text-lg md:text-2xl mt-2"
         style={{ color: '#F9D703', opacity: 0.85 }}
@@ -61,7 +48,6 @@ function Careers() {
         Stay tuned! Something extraordinary is on its way.
       </motion.p>
 
-      {/* Animated Wave Dots */}
       <motion.div
         className="mt-10 flex justify-center space-x-4"
         initial="hidden"
@@ -88,7 +74,7 @@ function Careers() {
               }}
               transition={{
                 duration: 2,
-                delay: i * 0.3, // Creates the wave effect
+                delay: i * 0.3,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}

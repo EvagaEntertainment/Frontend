@@ -65,13 +65,14 @@ function SearchResultPage() {
     setPages({ ...pages, currentPage: value });
   };
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
     const category = params.get("category") || "all";
     const page = parseInt(params.get("page"), 10) || 1;
 
     setSelectedCategoryId(category);
     setPages((prev) => ({ ...prev, currentPage: page }));
-  }, [location.search]);
+  }, [location]);
+
   const handleGetAllPackages = useCallback(async () => {
     const queryParams = {
       category: selectedCategoryId,
@@ -115,6 +116,7 @@ function SearchResultPage() {
       handleGetAllPackages();
     }
   }, [handleGetAllPackages, pages.currentPage]);
+
   useEffect(() => {
     const handleCookieChange = () => {
       const currentCategory = Cookies.get("selectedCategoryId") || "all";
@@ -129,24 +131,25 @@ function SearchResultPage() {
       }
     };
 
-    window.addEventListener("cookieChange", onCookieChange);
+    if (typeof window !== "undefined") {
+      window.addEventListener("cookieChange", onCookieChange);
+      
+      const originalSet = Cookies.set;
+      Cookies.set = (...args) => {
+        const result = originalSet.apply(Cookies, args);
+        const event = new CustomEvent("cookieChange", {
+          detail: { key: args[0], value: args[1] },
+        });
+        window.dispatchEvent(event);
+        return result;
+      };
 
-    return () => {
-      window.removeEventListener("cookieChange", onCookieChange);
-    };
+      return () => {
+        window.removeEventListener("cookieChange", onCookieChange);
+        Cookies.set = originalSet;
+      };
+    }
   }, []);
-  Cookies.set = ((originalSet) => {
-    return (...args) => {
-      const result = originalSet.apply(Cookies, args);
-
-      const event = new CustomEvent("cookieChange", {
-        detail: { key: args[0], value: args[1] },
-      });
-      window.dispatchEvent(event);
-
-      return result;
-    };
-  })(Cookies.set);
 
   return (
     <motion.div
@@ -160,44 +163,6 @@ function SearchResultPage() {
       }}
     >
       <div className="flex md:flex-row flex-col w-full lg:w-11/12 relative">
-        {/* <div className="lg:w-1/4 lg:block hidden px-4 py-2 sticky top-0 self-start">
-          <FilterCard
-            filters={filters}
-            onFilterChange={handleFilterChange}
-            onSliderChange={handleSliderChange}
-          />
-        </div> */}
-
-        {/* Filter card for mobile */}
-        {/* <div
-          className={`lg:hidden fixed h-fit  inset-y-0 top-40 left-0 rounded-md z-50 w-fit bg-white shadow-lg transform ${
-            isMobileFilterVisible ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out`}
-        >
-          <div className="p-4">
-            <button
-              className="absolute top-2 right-2 text-gray-600"
-              onClick={() => setIsMobileFilterVisible(false)}
-            >
-              <FaTimes size={24} />
-            </button>
-            <FilterCard
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              onSliderChange={handleSliderChange}
-            />
-          </div>
-        </div> */}
-
-        {/* Floating filter button for mobile */}
-        {/* <button
-          className={` ${
-            isMobileFilterVisible ? "hidden" : ""
-          } lg:hidden fixed bottom-10 left-4 bg-white text-primary p-3 rounded-full shadow-md shadow-gray-400 z-50`}
-          onClick={() => setIsMobileFilterVisible(true)}
-        >
-          <FaFilter size={24} />
-        </button> */}
         <div className="flex flex-col w-full  mt-6">
           <div className="w-full px-4 pt-2 flex items-center justify-between ">
             <BackButton />
@@ -212,12 +177,7 @@ function SearchResultPage() {
 
           <div className="w-full px-4 pb-2">
             <div
-              className="grid grid-cols-1  grid-cols-1      
-  sm:grid-cols-2  
-  md:grid-cols-3    
-  lg:grid-cols-4    
-  xl:grid-cols-5   
-  2xl:grid-cols-5   gap-6"
+              className="grid grid-cols-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-6"
             >
               {searchResult?.length >= 0 ? (
                 searchResult?.map((service, index) => {
@@ -245,18 +205,11 @@ function SearchResultPage() {
                     service.serviceDetails?.values?.Pricing ||
                     service.serviceDetails?.values?.Price ||
                     service.serviceDetails?.values?.Package?.[0]?.Rates ||
-                    service.serviceDetails?.values?.[
-                      "OrderQuantity&Pricing"
-                    ]?.[0]?.Rates ||
-                    service.serviceDetails?.values?.["Duration&Pricing"]?.[0]
-                      ?.Amount ||
-                    service.serviceDetails?.values?.["SessionLength"]?.[0]
-                      ?.Amount ||
-                    service.serviceDetails?.values?.[
-                      "SessionLength&Pricing"
-                    ]?.[0]?.Amount ||
-                    service.serviceDetails?.values?.["QtyPricing"]?.[0]
-                      ?.Rates ||
+                    service.serviceDetails?.values?.["OrderQuantity&Pricing"]?.[0]?.Rates ||
+                    service.serviceDetails?.values?.["Duration&Pricing"]?.[0]?.Amount ||
+                    service.serviceDetails?.values?.["SessionLength"]?.[0]?.Amount ||
+                    service.serviceDetails?.values?.["SessionLength&Pricing"]?.[0]?.Amount ||
+                    service.serviceDetails?.values?.["QtyPricing"]?.[0]?.Rates ||
                     sizeAndDimensionPrice;
 
                   return (
@@ -307,6 +260,10 @@ function SearchResultPage() {
       )}
     </motion.div>
   );
+}
+
+export async function getServerSideProps() {
+  return { props: {} };
 }
 
 export default SearchResultPage;

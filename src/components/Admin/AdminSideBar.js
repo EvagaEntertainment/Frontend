@@ -234,40 +234,32 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       typeof permissions === "string" ? JSON.parse(permissions) : permissions;
 
     return menuItems.filter((item) => {
-      // Always exclude "Home" for sub_admin unless explicitly allowed
-      if (role === "sub_admin" && item.id === "Home") {
-        return false;
+      if (role === "sub_admin" && (parsedPermissions?.includes("superadmin") || false)) {
+        return true;
       }
-
       if (role === "admin") {
-        return true; // Show all items for admin
+        return true;
       }
-
-      if (role === "sub_admin" && parsedPermissions.includes("superadmin")) {
-        return true; // Show all items for sub_admin with superadmin permission
-      }
-
       if (role === "sub_admin") {
-        if (parsedPermissions.includes("ContentModerator")) {
+        if (parsedPermissions?.includes("ContentModerator")) {
           return (
             item.id === "User Management" &&
             item.children?.some((child) => child.id === "All Services")
           );
         }
-        if (parsedPermissions.includes("support")) {
+        if (parsedPermissions?.includes("support")) {
           return item.id === "SupportCenter";
         }
-        if (parsedPermissions.includes("marketingandPromotions")) {
+        if (parsedPermissions?.includes("marketingandPromotions")) {
           return item.id === "Website Management";
         }
-        if (parsedPermissions.includes("vendorManager")) {
+        if (parsedPermissions?.includes("vendorManager")) {
           return item.id === "User Management";
         }
-        if (parsedPermissions.includes("eventManager")) {
+        if (parsedPermissions?.includes("eventManager")) {
           return item.id === "Orders";
         }
       }
-
       return false;
     });
   };

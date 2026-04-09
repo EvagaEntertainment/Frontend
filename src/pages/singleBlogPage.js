@@ -5,7 +5,6 @@ import { useRouter, useParams } from "next/navigation";
 
 import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
-import { Helmet } from "react-helmet-async";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 function SingleBlogPage() {
@@ -21,16 +20,9 @@ function SingleBlogPage() {
     if (blogId) {
       getOneBlogApiHandle();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogId]);
   return (
     <>
-      <Helmet>
-        <title>{blog?.title ? `${blog.title} | Eevagga Blog` : "Blog | Eevagga"}</title>
-        <meta name="description" content={blog?.summary || "Read the latest celebration insights from Eevagga."} />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
       <Breadcrumbs />
       <Box
       sx={{
@@ -93,10 +85,8 @@ function SingleBlogPage() {
           border: "1px solid",
           borderColor: "divider",
           overflow: "hidden",
-          // Fixed height for laptop/desktop (min-width: 900px)
-          height: { xs: "auto", md: "525px" }, // Mobile: auto, Desktop: 525px
-          // Maintain 4:5 aspect ratio for mobile (xs) using padding
-          paddingTop: { xs: "125%", md: 0 }, // Only apply aspect ratio on mobile
+          height: { xs: "auto", md: "525px" }, 
+          paddingTop: { xs: "125%", md: 0 }, 
         }}
       >
         <Box
@@ -111,9 +101,7 @@ function SingleBlogPage() {
             left: 0,
             width: "100%",
             height: "100%",
-            // Show full image (no cropping) with letterboxing if needed
             objectFit: "contain",
-            // Optional: Add a background for letterboxed areas
             bgcolor: "background.default",
           }}
         />

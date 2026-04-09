@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-
 import { motion, useSpring, useMotionValue } from "framer-motion";
-import { Helmet } from "react-helmet-async";
 
 const NotFound = () => {
-  // Cursor tracking for background interaction
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth spring effect for the background glow
   const springConfig = { damping: 25, stiffness: 150 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
@@ -24,20 +20,12 @@ const NotFound = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Particle configuration
   const particles = Array.from({ length: 5 });
 
   return (
     <>
-      <Helmet>
-        <title>404 - Page Not Found | Eevagga</title>
-        <meta name="robots" content="noindex, follow" />
-      </Helmet>
-      
-      {/* Interaction Layer (Background) */}
       <div className="relative flex flex-col items-center justify-center min-h-[90vh] bg-white text-[#1a1a1a] px-6 overflow-hidden selection:bg-[#6A1B9A]/10">
         
-        {/* Dynamic Background Spotlight */}
         <motion.div
           className="pointer-events-none fixed inset-0 z-0 opacity-40 blur-[120px]"
           style={{
@@ -47,7 +35,6 @@ const NotFound = () => {
           }}
         />
 
-        {/* Playful Floating Accent Particles */}
         {particles.map((_, i) => (
           <motion.div
             key={i}
@@ -73,10 +60,8 @@ const NotFound = () => {
           />
         ))}
 
-        {/* Main Content (Centered) */}
         <div className="relative z-10 flex flex-col items-center max-w-2xl text-center">
           
-          {/* Subtle Masked 404 Typography */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +78,6 @@ const NotFound = () => {
             </div>
           </motion.div>
 
-          {/* Interactive Message & Call-to-Action */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -109,7 +93,6 @@ const NotFound = () => {
               </p>
             </div>
 
-            {/* Simple, Interactive Premium Button */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -131,7 +114,6 @@ const NotFound = () => {
           </motion.div>
         </div>
 
-        {/* Global Branding Micro-Detail */}
         <div className="absolute bottom-10 left-10 hidden md:block">
           <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-200 rotate-90 origin-left">
             Eevagga Premium

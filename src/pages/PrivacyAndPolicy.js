@@ -2,10 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "../utils/motion";
-import { Helmet } from "react-helmet-async";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
-// Define color constants for maintainability
 const colors = {
   primary: '#6A1B9A',
   secondary: '#757575',
@@ -14,16 +12,6 @@ const colors = {
 const PrivacyPolicy = () => {
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | Eevagga</title>
-        <meta
-          name="description"
-          content="Learn how Eevagga collects, uses, and protects your personal information. Read our comprehensive Privacy Policy."
-        />
-        <meta name="keywords" content="privacy policy, data protection, Eevagga privacy" />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
       <Breadcrumbs />
       <motion.main
         initial="hidden"
@@ -31,7 +19,6 @@ const PrivacyPolicy = () => {
         variants={staggerContainer(0.1, 0.2)}
         className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12"
       >
-        {/* Header Section */}
         <motion.header className="mb-12">
           <motion.h1 
             variants={fadeIn('up', 'tween', 0.1, 0.6)}
@@ -49,7 +36,6 @@ const PrivacyPolicy = () => {
           </motion.p>
         </motion.header>
 
-        {/* Policy Sections */}
         <article className="space-y-12">
           {sections.map((section, index) => (
             <motion.section 
@@ -92,7 +78,6 @@ const PrivacyPolicy = () => {
           ))}
         </article>
 
-        {/* Contact Section */}
         <motion.section
           variants={fadeIn('up', 'tween', 0.4, 0.6)}
           className="mt-12 pt-8 border-t border-gray-200"
