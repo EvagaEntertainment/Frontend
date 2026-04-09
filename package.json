@@ -53,6 +53,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -74,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "next-sitemap": "^4.2.3",
     "tailwindcss": "^3.4.14"
   }
 }
