@@ -1,3 +1,14 @@
+if (typeof Promise.withResolvers === "undefined") {
+  Promise.withResolvers = function () {
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  };
+}
+
 import { Provider } from 'react-redux';
 import store from '../context/redux/store';
 import ErrorBoundary from '../components/Errors/ErrorBoundary';
