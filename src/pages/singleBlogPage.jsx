@@ -8,7 +8,7 @@ import commonApis from "../services/commonApis";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 function SingleBlogPage() {
-  const { blogId } = useParams();
+  const params = useParams(); const { blogId  } = params || {};
   const [blog, setBlog] = useState();
   const router = useRouter();
   const getOneBlogApi = useServices(commonApis.getOneBlog);

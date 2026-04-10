@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import BackButton from "../utils/globalBackButton";
 function SinglePackage() {
   const userId = Cookies.get("userId");
-  const { serviceId, packageId } = useParams();
+  const params = useParams(); const { serviceId, packageId  } = params || {};
   const [images, setImages] = useState([]);
   const { allWishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);

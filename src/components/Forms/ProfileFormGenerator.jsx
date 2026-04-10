@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import SearchableCategoryAndSubcategoryDropdown from "../Inputs/SearchableCategoryAndSubcategoryDropdown";

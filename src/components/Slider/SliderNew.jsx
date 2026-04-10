@@ -3,7 +3,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import BannerNew from "../Banner/BannerNew";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserBanner } from "../../context/redux/slices/bannerSlice.js";
+import { fetchUserBanner } from "../../context/redux/slices/bannerSlice";
 import dynamic from 'next/dynamic';
 
 const AliceCarousel = dynamic(() => import('react-alice-carousel'), { ssr: false });

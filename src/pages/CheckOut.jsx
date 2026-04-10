@@ -274,7 +274,7 @@ function CheckOut() {
   const createOrderHandle = async (numofParts) => {
     try {
       const isScriptLoaded = await loadScript(
-        "https://checkout.razorpay.com/v1/checkout.js"
+        "https://checkout.razorpay.com/v1/checkout"
       );
       if (!isScriptLoaded) {
         console.error("Failed to load Razorpay script.");

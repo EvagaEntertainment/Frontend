@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
 import adminActionsApi from "../../services/adminActionsApi";

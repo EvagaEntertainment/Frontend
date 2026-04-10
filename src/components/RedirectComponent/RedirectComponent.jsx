@@ -10,7 +10,7 @@ const RedirectComponent = ({url, children }) => {
     if (url) {
       router.push(url);
     }
-  }, [url, navigate]); 
+  }, [url]); 
   return<>{children}</>;
 };
 

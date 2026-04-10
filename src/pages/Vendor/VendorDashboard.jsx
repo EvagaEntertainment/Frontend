@@ -10,7 +10,7 @@ import {
 import Cookies from "js-cookie";
 import ErrorView from "../../components/Errors/ErrorView";
 import ServiceCard from "../../components/Cards/ServiceCard";
-import Calendar from "react-calendar/dist/cjs/Calendar.js";
+import Calendar from "react-calendar/dist/cjs/Calendar";
 import "react-calendar/dist/Calendar.css";
 import CalenderBookingCard from "../../components/Cards/CalenderBookingCard";
 import Slider from "../../components/Slider/Slider";

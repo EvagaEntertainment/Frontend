@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 
 import { useDispatch } from "react-redux";
@@ -12,7 +13,7 @@ import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min";
 
 const style = {
   position: "absolute",

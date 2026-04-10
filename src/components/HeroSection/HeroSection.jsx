@@ -1,3 +1,4 @@
+'use client';
 import { motion } from "framer-motion";
 import BookingForm from "../../pages/BookingForm";
 import { useDispatch, useSelector } from "react-redux";

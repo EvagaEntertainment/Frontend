@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useEffect, useState } from "react";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import { CiEdit } from "react-icons/ci";

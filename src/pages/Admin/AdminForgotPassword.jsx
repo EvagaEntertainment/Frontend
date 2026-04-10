@@ -32,7 +32,7 @@ function AdminForgotPassword() {
                 router.push(internalRoutes.adminLogin);
             }
         }
-    }, [countdown, isPasswordResetSuccess, navigate]);
+    }, [countdown, isPasswordResetSuccess]);
 
     const handleFormSubmit = async (data) => {
         console.log("hitting admin forgot password", data);

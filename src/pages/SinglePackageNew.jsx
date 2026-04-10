@@ -11,8 +11,8 @@ import BookNowCTA from "../utils/BookNowCTA";
 import { internalRoutes } from "../utils/internalRoutes";
 import ProductCardV2 from "../components/Cards/ProductCardV2";
 function SinglePackageNew() {
-  const { serviceId, packageId } = useParams();
-  const [searchParams] = useSearchParams();
+  const params = useParams(); const { serviceId, packageId  } = params || {};
+  const searchParams = useSearchParams();;
   const category = searchParams.get("category");
   const router = useRouter();
   const [singlePageData, setSinglePageData] = useState();

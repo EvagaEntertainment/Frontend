@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 // import SearchableInput from "./SearchableInput";
 import { CiLocationOn } from "react-icons/ci";

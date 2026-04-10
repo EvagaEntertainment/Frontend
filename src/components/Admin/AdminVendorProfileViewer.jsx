@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVendorProfile } from "../../context/redux/slices/vendorSlice";

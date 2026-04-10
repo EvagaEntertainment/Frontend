@@ -1,3 +1,4 @@
+'use client';
 import { motion } from "framer-motion";
 
 const OurServiceCta = () => {
@@ -67,3 +68,4 @@ const OurServiceCta = () => {
 };
 
 export default OurServiceCta;
+

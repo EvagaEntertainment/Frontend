@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useRef } from "react";
 import { Modal, Box, Typography, Checkbox, Button } from "@mui/material";
 import useServices from "../../hooks/useServices";

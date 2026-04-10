@@ -1,3 +1,4 @@
+'use client';
 import Link from "next/link";
 
 import { internalRoutes } from "../../utils/internalRoutes";
@@ -75,3 +76,4 @@ function VendorSignUpPage() {
 }
 
 export default VendorSignUpPage;
+

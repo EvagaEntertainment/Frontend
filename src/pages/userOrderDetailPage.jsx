@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 
 import { formatDate } from "../utils/formatDate";
 function UserOrderDetailPage() {
-  const { orderId, itemId } = useParams();
+  const params = useParams(); const { orderId, itemId  } = params || {};
   const [orderDetail, setOrderDetail] = useState(null);
   const getOneUserOrderByOrderIdApi = useServices(
     orderApis.getOneUserOrderByOrderId

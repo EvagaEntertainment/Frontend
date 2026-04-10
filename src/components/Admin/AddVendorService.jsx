@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import SearchableCategoryAndSubcategoryDropdown from "../../components/Inputs/SearchableCategoryAndSubcategoryDropdown";
 import { useDispatch, useSelector } from "react-redux";

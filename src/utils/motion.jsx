@@ -1,3 +1,4 @@
+'use client';
 // utils/motion.js
 import { motion } from 'framer-motion';
 
@@ -31,3 +32,4 @@ export const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 1
 });
 
 // You can add more variants here if needed
+

@@ -11,9 +11,9 @@ import SkeletonProductCardV2 from "../components/Cards/SkeletonProductCardV2";
 import { internalRoutes } from "../utils/internalRoutes";
 const ViewAllPage = () => {
   const router = useRouter();
-  const { category } = useParams();
-  const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("categoryId");
+  const params = useParams(); const { category  } = params || {};
+  const searchParams = useSearchParams();
+  const categoryId = searchParams?.get("categoryId");
   const [packageData, setPackageData] = useState([]);
   const [pages, setPages] = useState({
     currentPage: 1,

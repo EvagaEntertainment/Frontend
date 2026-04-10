@@ -1,3 +1,4 @@
+'use client';
 // src/components/ProtectedRoute.js
 
 import { useAuth } from "../context/AuthContext";
@@ -17,3 +18,4 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 };
 
 export default ProtectedRoute;
+

@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineDelete } from "react-icons/md";

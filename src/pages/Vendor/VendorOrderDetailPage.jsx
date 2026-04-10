@@ -8,7 +8,7 @@ import orderApis from "../../services/orderApis";
 import { formatDate } from "../../utils/formatDate";
 import formatCurrency from "../../utils/formatCurrency";
 function VendorOrderDetailPage() {
-  const { orderId, itemId } = useParams();
+  const params = useParams(); const { orderId, itemId  } = params || {};
   const [orderDetail, setOrderDetail] = useState(null);
   const GetOneOrderDetailsApi = useServices(orderApis.GetOneOrderDetails);
   const GetOneOrderDetailsApiHandle = async () => {

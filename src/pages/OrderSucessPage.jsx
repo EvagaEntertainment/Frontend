@@ -1,21 +1,21 @@
 'use client';
 import React, { useEffect } from "react";
 import successImage from "../assets/Temporary Images/badge-check 1.png";
-import { useSearchParams } from "next/navigation";
-
+import { useRouter } from "next/router";
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
+
 function OrderSucessPage() {
-  const [searchParams] = useSearchParams();
-  const orderId = searchParams.get("order_id");
+  const router = useRouter();
+  const { order_id } = router.query;
   const getPaymentDetailsByOrderIdApi = useServices(
     orderApis.getPaymentDetailsByOrderId
   );
   useEffect(() => {
     const fetchPaymentDetails = async () => {
       try {
-        if (orderId) {
-          const response = await getPaymentDetailsByOrderIdApi.callApi(orderId);
+        if (order_id) {
+          const response = await getPaymentDetailsByOrderIdApi.callApi(order_id);
           console.log("Payment Details:", response);
         }
       } catch (error) {
@@ -24,7 +24,7 @@ function OrderSucessPage() {
     };
 
     fetchPaymentDetails();
-  }, [orderId]); 
+  }, [order_id]); 
 
   return (
     <div className="w-full min-h-[50vh] flex items-center justify-center flex-col gap-2">

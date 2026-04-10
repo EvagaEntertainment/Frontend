@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import PageComponent from '../../../../pages/SinglePackageNew.jsx';
 
 export async function generateMetadata({ params }) {
@@ -57,7 +58,9 @@ export default async function Page({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}
-      <PageComponent />
+      <Suspense fallback={null}>
+        <PageComponent />
+      </Suspense>
     </>
   );
 }

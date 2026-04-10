@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineEnter } from "react-icons/ai";

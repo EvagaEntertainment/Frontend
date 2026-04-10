@@ -1,3 +1,4 @@
+'use client';
 import { motion } from "framer-motion";
 import expertImage from "../../assets/expertpurchased.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -117,3 +118,4 @@ const ExpertSection = () => {
 };
 
 export default ExpertSection;
+

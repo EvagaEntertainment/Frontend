@@ -1,3 +1,4 @@
+'use client';
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";

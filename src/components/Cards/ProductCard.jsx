@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 import formatCurrency from "../../utils/formatCurrency";
 import Wishlist from "../../utils/Wishlist";

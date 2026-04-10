@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect, useRef } from "react";
 
 export const useOnScreen = (options = { threshold: 0.1 }) => {

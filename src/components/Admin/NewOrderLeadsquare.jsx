@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useRef } from "react";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import { MdOutlineDelete } from "react-icons/md";

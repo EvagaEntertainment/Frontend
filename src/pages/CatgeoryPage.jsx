@@ -11,7 +11,7 @@ import commonApis from "../services/commonApis";
 import { useEffect, useState } from "react";
 import SkeletonProductCardV2 from "../components/Cards/SkeletonProductCardV2";
 function CatgeoryPage() {
-  const { category } = useParams();
+  const params = useParams(); const { category  } = params || {};
   const [packageData, setPackageData] = useState([]);
   const queryParams = {
     search: category || "",

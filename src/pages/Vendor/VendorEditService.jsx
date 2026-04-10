@@ -9,7 +9,8 @@ import EditDynamicForm from "../../components/Forms/EditDynamicForm";
 import { toast } from "react-toastify";
 
 function VendorEditService() {
-  const { serviceId } = useParams();
+  const params = useParams();
+  const serviceId = params?.serviceId;
   const getOneServiceByid = useServices(vendorApi.getOnevendorService);
   const [inHouseCateringMenuData, setInHouseCateringMenuData] = useState(null);
   const [masterMenuData, setMasterMenuData] = useState(null);

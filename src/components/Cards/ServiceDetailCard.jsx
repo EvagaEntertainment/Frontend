@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import parse from "html-react-parser";
@@ -151,7 +152,7 @@ function ServiceDetailCard({
         </div>{" "}
         <div className="w-[10%] items-end">
           <ShareButton
-            url={`${window.location.origin}${internalRoutes.SinglePackage}/${serviceId}/${packageId}`}
+            url={`${typeof window !== "undefined" ? window.location.origin : ""}${internalRoutes.SinglePackage}/${serviceId}/${packageId}`}
           />
         </div>
         <div className="w-[10%] items-end">

@@ -86,7 +86,7 @@ function HomeSearchBar({ cities, value, onChange }) {
         router.push(`/search?${query}`);
       }
     },
-    [searchTerm, selectedCategoryId, navigate]
+    [searchTerm, selectedCategoryId]
   );
 
   useEffect(() => {

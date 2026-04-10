@@ -1,3 +1,4 @@
+'use client';
 // Make this responsive for both mobile and other devices with bigger screen. Make it default for mobile and then use md for all the above devices.
 import React from "react";
 import { FcLike } from "react-icons/fc";

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import HomePage from '../pages/HomePage';
 
 export const metadata = {
@@ -14,7 +15,9 @@ export const metadata = {
 export default function Home() {
   return (
     <main>
-      <HomePage />
+      <Suspense fallback={null}>
+        <HomePage />
+      </Suspense>
     </main>
   );
 }

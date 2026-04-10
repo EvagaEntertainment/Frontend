@@ -1,13 +1,14 @@
+'use client';
 import axios from "axios";
 
 const logErrorToServer = (logData) => {
   const enhancedLogData = {
     ...logData,
     timestamp: new Date().toISOString(),
-    userAgent: navigator.userAgent,
-    platform: navigator.platform,
-    language: navigator.language,
-    url: window.location.href,
+    userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "SSR",
+    platform: typeof navigator !== "undefined" ? navigator.platform : "SSR",
+    language: typeof navigator !== "undefined" ? navigator.language : "en",
+    url: typeof window !== "undefined" ? window.location.href : "SSR",
   };
 
   axios
@@ -87,3 +88,4 @@ if (typeof window !== "undefined") {
     }
   };
 }
+

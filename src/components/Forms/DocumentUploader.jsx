@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Cookies from "js-cookie";

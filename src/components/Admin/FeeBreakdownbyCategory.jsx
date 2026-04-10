@@ -1,3 +1,4 @@
+'use client';
 import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import adminActionsApi from "../../services/adminActionsApi";
@@ -13,7 +14,7 @@ import ReusableModal from "../Modal/Modal";
 import { fetchCategoryFess } from "../../context/redux/slices/categoryFeesSlice";
 
 import AddFeesCatehoryForm from "./AddFeesCatehoryForm";
-import EditFeesCatehoryForm from "./EditFeesCatehoryForm.js";
+import EditFeesCatehoryForm from "./EditFeesCatehoryForm";
 
 const FeeBreakdownbyCategory = memo(() => {
   const [page, setPage] = useState(1);

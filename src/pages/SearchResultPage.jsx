@@ -10,7 +10,7 @@ import useDebounce from "../utils/useDebounce";
 import { useSelector } from "react-redux";
 import CustomPagination from "../utils/CustomPagination";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 import { internalRoutes } from "../utils/internalRoutes";
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ import BackButton from "../utils/globalBackButton";
 import ProductCard from "../components/Cards/ProductCard";
 function SearchResultPage() {
   const router = useRouter();
-  const location = usePathname();
+  const location = router.pathname;
   const [isMobileFilterVisible, setIsMobileFilterVisible] = useState(false);
   const { allWishlist } = useSelector((state) => state.wishlist);
   const [searchResult, setSearchResult] = useState([]);

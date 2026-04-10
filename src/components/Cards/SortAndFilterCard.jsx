@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { LuArrowDownUp } from "react-icons/lu";

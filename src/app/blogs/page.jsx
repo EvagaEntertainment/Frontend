@@ -12,8 +12,10 @@ export const metadata = {
 };
 
 
+import { Suspense } from 'react';
 import PageComponent from '../../pages/Blog';
 
 export default function Page() {
-  return <PageComponent />;
+  return <Suspense fallback={null}><PageComponent /></Suspense>;
 }
+

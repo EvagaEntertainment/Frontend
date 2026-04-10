@@ -1,3 +1,4 @@
+'use client';
 if (typeof Promise.withResolvers === "undefined") {
   Promise.withResolvers = function () {
     let resolve, reject;
@@ -33,3 +34,4 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+

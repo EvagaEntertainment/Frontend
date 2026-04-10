@@ -6,22 +6,28 @@ import { FiArrowRight } from "react-icons/fi";
 import { BsStars } from "react-icons/bs";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
-
+import { useRouter } from "next/router";
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
 
 function TrackOrder() {
+  const router = useRouter();
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
   
-  const initialQuery = searchParams.get("id") || "";
+  const initialQuery = router.query.id || "";
   
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     mode: "onChange",
     defaultValues: { searchQuery: initialQuery }
   });
+
+  // Keep form in sync with URL
+  useEffect(() => {
+    if (initialQuery) {
+      setValue("searchQuery", initialQuery);
+    }
+  }, [initialQuery, setValue]);
 
   const trackOrderApi = useServices(orderApis.trackSyncLead);
 
@@ -32,7 +38,7 @@ function TrackOrder() {
     const queryStr = data.searchQuery.trim();
     
     // Update the URL beautifully so users can share or refresh
-    setSearchParams({ id: queryStr });
+    router.replace({ query: { ...router.query, id: queryStr } }, undefined, { shallow: true });
     
     const isNumeric = /^\d+$/.test(queryStr);
     

@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
@@ -54,3 +55,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import { MdAccessTime } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";

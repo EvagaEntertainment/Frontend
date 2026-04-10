@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { loginReducer } from "../context/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
