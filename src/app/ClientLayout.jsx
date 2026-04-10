@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactGA from "react-ga4";
 
 import { useAuth } from '../context/AuthContext';
 import { fetchUserWishlist } from '../context/redux/slices/wishlistSlice';
@@ -87,6 +88,12 @@ export default function ClientLayout({ children }) {
     internalRoutes.adminDashboard,
     internalRoutes.interest,
   ];
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_Server === "production") {
+      ReactGA.initialize(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
+    }
+  }, []);
 
   useEffect(() => {
     if (
