@@ -19,6 +19,7 @@ import {
   FaChevronDown,
   FaFirstOrder,
   FaFirstOrderAlt,
+  FaPlay,
   FaRegImage,
   FaWpforms,
 } from "react-icons/fa6";
@@ -129,6 +130,11 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           id: "Testimonial",
           label: "Testimonial",
           icon: <MdRateReview />,
+        },
+        {
+          id: "FloatingVideo",
+          label: "Floating Video",
+          icon: <FaPlay />,
         },
       ],
     },

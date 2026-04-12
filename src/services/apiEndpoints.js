@@ -255,6 +255,8 @@ const apiEndpoints = {
     getCustomEventSubmissionsByStatus: (status) => `customEventSubmissions/status/${status}`,
     getCustomEventSubmissionStats: "customEventSubmissions/stats/overview",
     getCustomEventSubmissionsNeedingAttention: "customEventSubmissions/admin/needing-attention",
+    getFloatingVideoConfig: "floating-video/get-config",
+    updateFloatingVideoConfig: "floating-video/update-config",
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",
