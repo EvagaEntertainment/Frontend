@@ -51,6 +51,7 @@ import Gallery from "../../components/Admin/gallery";
 import AdminCustomEvent from "../../components/Admin/AdminCustomEvent";
 import AdminCustomEventSubmissions from "../../components/Admin/AdminCustomEventSubmissions";
 import AdminTestimonial from "../../components/Admin/AdminTestimonial";
+import AdminGenerateQR from "../../components/Admin/AdminGenerateQR";
 const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
@@ -344,6 +345,7 @@ const AdminDashboard = () => {
         {selectedMenu === "AdminCustomEvent" && <AdminCustomEvent />}
         {selectedMenu === "AdminCustomEventSubmissions" && <AdminCustomEventSubmissions />}
         {selectedMenu === "Testimonial" && <AdminTestimonial />}
+        {selectedMenu === "GenerateQR" && <AdminGenerateQR />}
       </div>
       <ReusableModal open={open} onClose={handleClose} width={"50%"}>
         <div className="max-w-ld mx-auto  p-6 bg-white rounded-lg ">
