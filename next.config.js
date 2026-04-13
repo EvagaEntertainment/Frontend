@@ -1,6 +1,5 @@
-// next.config.js
 const nextConfig = {
-  output: 'standalone',  // 🔥 CRITICAL
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
