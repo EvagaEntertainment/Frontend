@@ -3,28 +3,22 @@ frontend:
   phases:
     preBuild:
       commands:
-        # Install Node 20 and then switch to it
-        - nvm install 20
-        - nvm use 20
+        # Use default Node (already installed in Amplify)
         - node -v
-        # Clean up conflicting dependencies
-        - yarn remove @typescript-eslint/eslint-plugin || true
-        - yarn add typescript@4.9.5 --dev
-        - yarn add fork-ts-checker-webpack-plugin@6.5.3 --dev
-        # Install with frozen lockfile and extended timeout
-        - yarn install --frozen-lockfile --network-timeout 1000000
-        
+
+        # Install dependencies
+        - yarn install --frozen-lockfile
+
     build:
       commands:
-        # Build with maximum memory allocation and optimizations
-        - NODE_OPTIONS=--max-old-space-size=8192 GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false yarn build
-        
+        - yarn build
+
   artifacts:
-    baseDirectory: build
+    baseDirectory: .next
     files:
       - '**/*'
-      
+
   cache:
     paths:
       - node_modules/**/*
-      - .cache/**/*
+      - .next/cache/**/*
