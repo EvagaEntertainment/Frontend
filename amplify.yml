@@ -3,10 +3,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        # Use default Node (already installed in Amplify)
-        - node -v
-
-        # Install dependencies
         - yarn install --frozen-lockfile
 
     build:
@@ -14,7 +10,7 @@ frontend:
         - yarn build
 
   artifacts:
-    baseDirectory: .next
+    baseDirectory: .next  
     files:
       - '**/*'
 
