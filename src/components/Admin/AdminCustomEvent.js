@@ -39,6 +39,10 @@ function AdminCustomEvent() {
   const [editingEventType, setEditingEventType] = useState(null);
   const [isEditingType, setIsEditingType] = useState(false);
 
+  // States to track existing media during edit
+  const [existingImages, setExistingImages] = useState([]);
+  const [existingVideo, setExistingVideo] = useState(null);
+
   // Available field types for admin to choose from when adding custom fields
   const availableFieldTypes = [
     { value: "text", label: "Text Field", icon: "📝" },
@@ -394,6 +398,7 @@ function AdminCustomEvent() {
   const createCustomEventApi = useServices(customEventsApi.createCustomEvent);
   const updateCustomEventApi = useServices(customEventsApi.updateCustomEvent);
   const deleteCustomEventApi = useServices(customEventsApi.deleteCustomEvent);
+  const toggleActiveApi = useServices(customEventsApi.toggleActiveStatus);
 
   const getCustomEventsHandle = async () => {
     try {
@@ -472,7 +477,7 @@ function AdminCustomEvent() {
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: { detail: "", contents: "", delivery: "" }
+    defaultValues: { eventType: "Birthday Party", detail: "", contents: "", delivery: "" }
   });
 
   const {
@@ -1638,33 +1643,50 @@ function AdminCustomEvent() {
     try {
       setIsSubmitting(true);
 
-      const payload = {
-        title: data.title,
-        age: data.age,
-        gender: data.gender,
-        venueType: data.venueType,
-        budget: data.budget,
-        peopleCapacity: data.peopleCapacity,
-        addons: data.addons || [],
-        description: data.description,
-        detail: data.detail,
-        contents: data.contents,
-        delivery: data.delivery,
-        images: data.images,
-        video: data.video,
-        createdAt: new Date().toISOString()
-      };
+      const formData = new FormData();
+      formData.append("eventType", data.eventType);
+      formData.append("tierType", data.tierType);
+      formData.append("title", data.title);
+      formData.append("age", data.age);
+      formData.append("gender", data.gender);
+      formData.append("venueType", data.venueType);
+      formData.append("budget", data.budget);
+      formData.append("peopleCapacity", data.peopleCapacity);
+      formData.append("description", data.description);
+      formData.append("detail", data.detail);
+      formData.append("contents", data.contents);
+      formData.append("delivery", data.delivery);
+      formData.append("isActive", true);
 
-      console.log("Create Custom Event Payload:", payload);
+      // Append Add-ons as JSON string
+      if (data.addons && data.addons.length > 0) {
+        formData.append("addons", JSON.stringify(data.addons));
+      }
 
-      // MOCK SUCCESS (API Integration Deferred)
-      await new Promise(resolve => setTimeout(resolve, 500));
-      toast.success("Custom event created successfully! (Local Mock)");
-      setModalType(null);
-      handleClose();
-      getCustomEventsHandle();
+      // Append Images
+      if (data.images && data.images.length > 0) {
+        Array.from(data.images).forEach((file) => {
+          formData.append("images", file);
+        });
+      }
+
+      // Append Video
+      if (data.video && data.video.length > 0) {
+        formData.append("video", data.video[0]);
+      }
+
+      const response = await createCustomEventApi.callApi(formData);
+
+      if (response && response.success) {
+        toast.success("Custom event created successfully!");
+        setModalType(null);
+        handleClose();
+        getCustomEventsHandle();
+      } else {
+        toast.error(response?.message || "Failed to create custom event");
+      }
     } catch (error) {
-      toast.error("An error occurred while creating the custom event form");
+      toast.error("An error occurred while creating the custom event");
     } finally {
       setIsSubmitting(false);
     }
@@ -1674,35 +1696,73 @@ function AdminCustomEvent() {
     try {
       setIsSubmitting(true);
 
-      const payload = {
-        title: data.title,
-        age: data.age,
-        gender: data.gender,
-        venueType: data.venueType,
-        budget: data.budget,
-        peopleCapacity: data.peopleCapacity,
-        addons: data.addons || [],
-        description: data.description,
-        detail: data.detail,
-        contents: data.contents,
-        delivery: data.delivery,
-        images: data.images,
-        video: data.video,
-        updatedAt: new Date().toISOString()
-      };
+      const formData = new FormData();
+      formData.append("eventType", data.eventType);
+      formData.append("tierType", data.tierType);
+      formData.append("title", data.title);
+      formData.append("age", data.age);
+      formData.append("gender", data.gender);
+      formData.append("venueType", data.venueType);
+      formData.append("budget", data.budget);
+      formData.append("peopleCapacity", data.peopleCapacity);
+      formData.append("description", data.description);
+      formData.append("detail", data.detail);
+      formData.append("contents", data.contents);
+      formData.append("delivery", data.delivery);
 
-      console.log("Edit Custom Event Payload:", payload);
+      // Send the list of existing images we want to KEEP
+      formData.append("remainingImages", JSON.stringify(existingImages));
+      
+      // If we still have an existing video then send its URL, else the backend knows it might be replaced by the new one or cleared
+      if (existingVideo) {
+        formData.append("remainingVideo", existingVideo);
+      }
 
-      // MOCK SUCCESS (API Integration Deferred)
-      await new Promise(resolve => setTimeout(resolve, 500));
-      toast.success("Custom event updated successfully! (Local Mock)");
-      setModalType(null);
-      handleClose();
-      getCustomEventsHandle();
+      // Append Add-ons as JSON string
+      if (data.addons && data.addons.length > 0) {
+        formData.append("addons", JSON.stringify(data.addons));
+      }
+
+      // Append NEW Images if any
+      if (data.images && data.images.length > 0) {
+        Array.from(data.images).forEach((file) => {
+          formData.append("images", file);
+        });
+      }
+
+      // Append NEW Video if provided
+      if (data.video && data.video.length > 0) {
+        formData.append("video", data.video[0]);
+      }
+
+      const response = await updateCustomEventApi.callApi(oneCustomEvent._id, formData);
+
+      if (response && response.success) {
+        toast.success("Custom event updated successfully!");
+        setModalType(null);
+        handleClose();
+        getCustomEventsHandle();
+      } else {
+        toast.error(response?.message || "Failed to update custom event");
+      }
     } catch (error) {
-      toast.error("An error occurred while updating the custom event form");
+      toast.error("An error occurred while updating the custom event");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleToggleActive = async (id) => {
+    try {
+      const response = await toggleActiveApi.callApi(id);
+      if (response && response.success) {
+        toast.success("Status updated successfully!");
+        getCustomEventsHandle();
+      } else {
+        toast.error(response?.message || "Failed to update status");
+      }
+    } catch (error) {
+      toast.error("Error updating status");
     }
   };
 
@@ -1774,23 +1834,20 @@ function AdminCustomEvent() {
   // Populate edit form when oneCustomEvent changes
   useEffect(() => {
     if (oneCustomEvent && modalType === "editCustomEvent") {
-      // Reset the edit form and populate with existing data
-      reset();
-      setValue("eventType", oneCustomEvent.eventType || "");
-      setValue("tierType", oneCustomEvent.tierType || "");
-      setValue("title", oneCustomEvent.title || "");
-      setValue("age", oneCustomEvent.age || "");
-      setValue("gender", oneCustomEvent.gender || "");
-      setValue("venueType", oneCustomEvent.venueType || "");
-      setValue("budget", oneCustomEvent.budget || "");
-      setValue("peopleCapacity", oneCustomEvent.peopleCapacity || "");
-      setValue("addons", oneCustomEvent.addons || []);
-      setValue("description", oneCustomEvent.description || "");
-      setValue("detail", oneCustomEvent.detail || "");
-      setValue("contents", oneCustomEvent.contents || "");
-      setValue("delivery", oneCustomEvent.delivery || "");
+      // Set existing media states
+      setExistingImages(oneCustomEvent.images || []);
+      setExistingVideo(oneCustomEvent.video || null);
+
+      // Use reset to properly initialize all fields including the addons FieldArray
+      reset({
+        ...oneCustomEvent,
+        addons: oneCustomEvent.addons || [],
+        // We set these to null/empty in the form state so the file inputs are fresh
+        images: null,
+        video: null 
+      });
     }
-  }, [oneCustomEvent, modalType, reset, setValue]);
+  }, [oneCustomEvent, modalType, reset]);
 
   const columns = [
     { label: "No", key: "index", render: (_, i) => i + 1 },
@@ -1830,12 +1887,24 @@ function AdminCustomEvent() {
       label: "Status",
       key: "status",
       render: (row) => (
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${row?.isActive
-          ? 'bg-green-100 text-green-800'
-          : 'bg-red-100 text-red-800'
+        <div 
+          className="flex items-center cursor-pointer" 
+          onClick={() => handleToggleActive(row._id)}
+          title={row?.isActive ? "Click to Deactivate" : "Click to Activate"}
+        >
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+            row?.isActive ? 'bg-green-500' : 'bg-gray-300'
           }`}>
-          {row?.isActive ? 'Active' : 'Inactive'}
-        </span>
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                row?.isActive ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </div>
+          <span className={`ml-2 text-xs font-medium ${row?.isActive ? 'text-green-700' : 'text-gray-500'}`}>
+            {row?.isActive ? 'Active' : 'Inactive'}
+          </span>
+        </div>
       ),
     },
     {
@@ -1871,12 +1940,6 @@ function AdminCustomEvent() {
   return (
     <div>
       <div className="flex justify-end gap-2 mb-4">
-        <button
-          onClick={() => [handleOpen(), setModalType("manageEventTypes")]}
-          className="btn-secondary w-fit px-4"
-        >
-          Manage Event Types
-        </button>
         <button
           onClick={() => [handleOpen(), setModalType("addCustomEvent")]}
           className="btn-primary w-fit px-4"
@@ -2059,11 +2122,16 @@ function AdminCustomEvent() {
                     </label>
                     <select
                       {...register("eventType", { required: "Event type is required" })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-gray-50 bg-opacity-50"
                     >
-                      <option value="">Select Event Type</option>
                       {eventTypes.map(type => (
-                        <option key={type._id} value={type.name}>{type.name}</option>
+                        <option 
+                          key={type._id} 
+                          value={type.name}
+                          disabled={type.name !== "Birthday Party"}
+                        >
+                          {type.name}
+                        </option>
                       ))}
                     </select>
                     {errors.eventType && (
@@ -2292,11 +2360,16 @@ function AdminCustomEvent() {
                     </label>
                     <select
                       {...editRegister("eventType", { required: "Event type is required" })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-gray-50 bg-opacity-50"
                     >
-                      <option value="">Select Event Type</option>
                       {eventTypes.map(type => (
-                        <option key={type._id} value={type.name}>{type.name}</option>
+                        <option 
+                          key={type._id} 
+                          value={type.name}
+                          disabled={type.name !== "Birthday Party"}
+                        >
+                          {type.name}
+                        </option>
                       ))}
                     </select>
                     {editErrors.eventType && (
@@ -2378,27 +2451,87 @@ function AdminCustomEvent() {
                     {editErrors.description && <p className="text-sm text-red-500 mt-1">{editErrors.description.message}</p>}
                   </div>
                   <div>
-                    <ModernFileUpload id="edit_images" label="Upload Images (Multiple)" accept="image/*" multiple error={editErrors.images} {...editRegister("images")} />
+                    <ModernFileUpload id="edit_images" label="Upload New Images" accept="image/*" multiple error={editErrors.images} {...editRegister("images")} />
+                    
+                    {/* Existing Images Preview */}
+                    {existingImages && existingImages.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-xs font-medium text-gray-500 mb-2">Current Live Images:</p>
+                        <div className="flex flex-wrap gap-3">
+                          {existingImages.map((url, idx) => {
+                            const imageUrl = url?.startsWith('http') 
+                              ? url 
+                              : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${url}`;
+                            
+                            return (
+                              <div key={idx} className="relative group rounded-md border border-gray-200 overflow-hidden shadow-sm">
+                                <img src={imageUrl} alt={`existing-${idx}`} className="w-24 h-24 object-cover" />
+                                <div 
+                                  className="absolute top-1 right-1 bg-white rounded-full p-1 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50 text-red-500"
+                                  onClick={() => setExistingImages(prev => prev.filter((_, i) => i !== idx))}
+                                  title="Remove from Server"
+                                >
+                                  <FiX className="w-4 h-4" />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* New Selection Preview */}
                     {editImages && editImages.length > 0 && (
-                      <div className="flex flex-wrap gap-3 mt-3">
-                        {Array.from(editImages).map((file, idx) => (
-                          <div key={idx} className="relative group overflow-hidden rounded-md border border-gray-200">
-                            <img src={URL.createObjectURL(file)} alt={`preview-${idx}`} className="w-24 h-24 object-cover" />
-                            <div className="absolute top-1 right-1 bg-white rounded-full p-1 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50" onClick={() => handleRemoveFile("images", idx, true)}>
-                              <FiX className="text-red-500 w-4 h-4" />
+                      <div className="mt-3">
+                        <p className="text-xs font-medium text-blue-600 mb-2">Newly Selected (Pending Upload):</p>
+                        <div className="flex flex-wrap gap-3">
+                          {Array.from(editImages).map((file, idx) => (
+                            <div key={idx} className="relative group overflow-hidden rounded-md border-2 border-dashed border-blue-200">
+                              <img src={URL.createObjectURL(file)} alt={`new-preview-${idx}`} className="w-24 h-24 object-cover opacity-80" />
+                              <div className="absolute top-1 right-1 bg-white rounded-full p-1 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50" onClick={() => handleRemoveFile("images", idx, true)}>
+                                <FiX className="text-red-500 w-4 h-4" />
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
                   <div>
-                    <ModernFileUpload id="edit_video" label="Upload Video" accept="video/*" error={editErrors.video} {...editRegister("video")} />
+                    <ModernFileUpload id="edit_video" label="Upload New Video" accept="video/*" error={editErrors.video} {...editRegister("video")} />
+                    
+                    {/* Existing Video Preview */}
+                    {existingVideo && (
+                      <div className="mt-3">
+                        <p className="text-xs font-medium text-gray-500 mb-2">Current Live Video:</p>
+                        <div className="relative group rounded-md overflow-hidden border border-gray-200 shadow-sm">
+                          <video 
+                            src={existingVideo?.startsWith('http') 
+                              ? existingVideo 
+                              : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${existingVideo}`} 
+                            controls 
+                            className="w-full max-h-48 object-cover" 
+                          />
+                          <div 
+                            className="absolute top-2 right-10 bg-white rounded-full p-1.5 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm hover:bg-red-50 text-red-500"
+                            onClick={() => setExistingVideo(null)}
+                            title="Remove Video from Server"
+                          >
+                            <FiX className="w-5 h-5" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* New Video Preview */}
                     {editVideo && editVideo.length > 0 && (
-                      <div className="mt-3 relative group rounded-md overflow-hidden border border-gray-200">
-                        <video src={URL.createObjectURL(editVideo[0])} controls className="w-full max-h-48 object-cover" />
-                        <div className="absolute top-2 right-2 bg-white rounded-full p-1.5 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm hover:bg-red-50" onClick={() => handleRemoveFile("video", 0, true)}>
-                          <FiX className="text-red-500 w-5 h-5" />
+                      <div className="mt-3">
+                        <p className="text-xs font-medium text-blue-600 mb-2">Newly Selected Video (Pending Upload):</p>
+                        <div className="relative group rounded-md overflow-hidden border-2 border-dashed border-blue-200">
+                          <video src={URL.createObjectURL(editVideo[0])} controls className="w-full max-h-48 object-cover opacity-80" />
+                          <div className="absolute top-2 right-2 bg-white rounded-full p-1.5 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm hover:bg-red-50" onClick={() => handleRemoveFile("video", 0, true)}>
+                            <FiX className="text-red-500 w-5 h-5" />
+                          </div>
                         </div>
                       </div>
                     )}
