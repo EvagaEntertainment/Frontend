@@ -49,7 +49,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap && node clean-build.js",
     "start": "next start",
     "lint": "next lint"
   },
