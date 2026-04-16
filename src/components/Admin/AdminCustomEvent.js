@@ -1691,62 +1691,126 @@ function AdminCustomEvent() {
       setIsSubmitting(false);
     }
   };
+  const normalizeImages = (images) => {
+    const result = [];
 
+    if (!images) return result;
+
+    images.flat(Infinity).forEach((img) => {
+      if (!img) return;
+
+      // Valid string URL
+      if (typeof img === "string" && !img.startsWith("[")) {
+        result.push(img);
+      }
+
+      // Stringified array
+      else if (typeof img === "string" && img.startsWith("[")) {
+        try {
+          const parsed = JSON.parse(img);
+          if (Array.isArray(parsed)) {
+            parsed.forEach((p) => {
+              if (typeof p === "string") result.push(p);
+            });
+          }
+        } catch (e) {
+          console.warn("Invalid JSON image:", img);
+        }
+      }
+    });
+
+    return result;
+  };
   const onSubmitEdit = async (data) => {
     try {
       setIsSubmitting(true);
 
       const formData = new FormData();
-      formData.append("eventType", data.eventType);
-      formData.append("tierType", data.tierType);
-      formData.append("title", data.title);
-      formData.append("age", data.age);
-      formData.append("gender", data.gender);
-      formData.append("venueType", data.venueType);
-      formData.append("budget", data.budget);
-      formData.append("peopleCapacity", data.peopleCapacity);
-      formData.append("description", data.description);
-      formData.append("detail", data.detail);
-      formData.append("contents", data.contents);
-      formData.append("delivery", data.delivery);
 
-      // Send the list of existing images we want to KEEP
-      formData.append("remainingImages", JSON.stringify(existingImages));
-      
-      // If we still have an existing video then send its URL, else the backend knows it might be replaced by the new one or cleared
-      if (existingVideo) {
-        formData.append("remainingVideo", existingVideo);
-      }
+      // ✅ Basic fields
+      [
+        "eventType",
+        "tierType",
+        "title",
+        "age",
+        "gender",
+        "venueType",
+        "budget",
+        "peopleCapacity",
+        "description",
+        "detail",
+        "contents",
+        "delivery",
+      ].forEach((key) => {
+        if (data[key] !== undefined && data[key] !== null) {
+          formData.append(key, data[key]);
+        }
+      });
 
-      // Append Add-ons as JSON string
-      if (data.addons && data.addons.length > 0) {
+      // ✅ Addons
+      if (data.addons?.length) {
         formData.append("addons", JSON.stringify(data.addons));
       }
 
-      // Append NEW Images if any
-      if (data.images && data.images.length > 0) {
+      // ✅ EXISTING IMAGES (keep only valid URLs)
+      console.log("🔍 RAW existingImages state:", existingImages);
+      console.log("🔍 Type:", typeof existingImages, Array.isArray(existingImages));
+      if (Array.isArray(existingImages)) {
+        existingImages.forEach((item, i) => console.log(`  [${i}]:`, typeof item, item));
+      }
+
+      const cleanExistingImages = normalizeImages(existingImages);
+      console.log("✅ cleanExistingImages after normalize:", cleanExistingImages);
+
+      cleanExistingImages.forEach((url) => {
+        formData.append("images", url);
+      });
+
+      // ✅ NEW IMAGES (only File objects)
+      console.log("🔍 data.images from form:", data.images);
+      if (data.images?.length) {
         Array.from(data.images).forEach((file) => {
-          formData.append("images", file);
+          if (file instanceof File) {
+            console.log("📎 Appending new file:", file.name);
+            formData.append("images", file);
+          }
         });
       }
 
-      // Append NEW Video if provided
-      if (data.video && data.video.length > 0) {
+      // ✅ VIDEO HANDLING
+      if (data.video?.length && data.video[0] instanceof File) {
+        // new video
         formData.append("video", data.video[0]);
+      } else if (existingVideo) {
+        // keep old video
+        formData.append("video", existingVideo);
+      } else {
+        // delete video
+        formData.append("video", "");
       }
 
-      const response = await updateCustomEventApi.callApi(oneCustomEvent._id, formData);
+      // ✅ DEBUG — Final FormData entries
+      console.log("📦 Final FormData entries:");
+      for (let [key, value] of formData.entries()) {
+        console.log(`  ${key}:`, value);
+      }
 
-      if (response && response.success) {
-        toast.success("Custom event updated successfully!");
-        setModalType(null);
+      // ✅ API CALL
+      const response = await updateCustomEventApi.callApi(
+        oneCustomEvent._id,
+        formData
+      );
+
+      if (response?.success) {
+        toast.success("Updated successfully");
         handleClose();
         getCustomEventsHandle();
       } else {
-        toast.error(response?.message || "Failed to update custom event");
+        toast.error(response?.message || "Update failed");
       }
-    } catch (error) {
-      toast.error("An error occurred while updating the custom event");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -1834,8 +1898,12 @@ function AdminCustomEvent() {
   // Populate edit form when oneCustomEvent changes
   useEffect(() => {
     if (oneCustomEvent && modalType === "editCustomEvent") {
-      // Set existing media states
-      setExistingImages(oneCustomEvent.images || []);
+      // Normalize images from DB — flatten any corrupted nested arrays and keep only plain string URLs
+      const rawImages = oneCustomEvent.images || [];
+      const cleanImages = rawImages
+        .flat(Infinity)
+        .filter((img) => typeof img === "string" && !img.startsWith("["));
+      setExistingImages(cleanImages);
       setExistingVideo(oneCustomEvent.video || null);
 
       // Use reset to properly initialize all fields including the addons FieldArray
@@ -1844,7 +1912,7 @@ function AdminCustomEvent() {
         addons: oneCustomEvent.addons || [],
         // We set these to null/empty in the form state so the file inputs are fresh
         images: null,
-        video: null 
+        video: null
       });
     }
   }, [oneCustomEvent, modalType, reset]);
@@ -1887,18 +1955,16 @@ function AdminCustomEvent() {
       label: "Status",
       key: "status",
       render: (row) => (
-        <div 
-          className="flex items-center cursor-pointer" 
+        <div
+          className="flex items-center cursor-pointer"
           onClick={() => handleToggleActive(row._id)}
           title={row?.isActive ? "Click to Deactivate" : "Click to Activate"}
         >
-          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-            row?.isActive ? 'bg-green-500' : 'bg-gray-300'
-          }`}>
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${row?.isActive ? 'bg-green-500' : 'bg-gray-300'
+            }`}>
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-                row?.isActive ? 'translate-x-6' : 'translate-x-1'
-              }`}
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${row?.isActive ? 'translate-x-6' : 'translate-x-1'
+                }`}
             />
           </div>
           <span className={`ml-2 text-xs font-medium ${row?.isActive ? 'text-green-700' : 'text-gray-500'}`}>
@@ -1957,12 +2023,12 @@ function AdminCustomEvent() {
         totalPages={totalPages}
       />
 
-      <ReusableModal 
-        open={open} 
-        onClose={handleClose} 
+      <ReusableModal
+        open={open}
+        onClose={handleClose}
         width={
-          modalType === "deleteEventType" || modalType === "deleteCustomEvent" ? "30%" : 
-          modalType === "manageEventTypes" ? "50%" : "80%"
+          modalType === "deleteEventType" || modalType === "deleteCustomEvent" ? "30%" :
+            modalType === "manageEventTypes" ? "50%" : "80%"
         }
       >
         {modalType === "manageEventTypes" && (
@@ -1980,8 +2046,8 @@ function AdminCustomEvent() {
                 <input
                   type="text"
                   value={isEditingType ? editingEventType?.name : newEventTypeName}
-                  onChange={(e) => isEditingType 
-                    ? setEditingEventType({ ...editingEventType, name: e.target.value }) 
+                  onChange={(e) => isEditingType
+                    ? setEditingEventType({ ...editingEventType, name: e.target.value })
                     : setNewEventTypeName(e.target.value)
                   }
                   placeholder="Enter event type name (e.g. Wedding)"
@@ -2125,8 +2191,8 @@ function AdminCustomEvent() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-gray-50 bg-opacity-50"
                     >
                       {eventTypes.map(type => (
-                        <option 
-                          key={type._id} 
+                        <option
+                          key={type._id}
                           value={type.name}
                           disabled={type.name !== "Birthday Party"}
                         >
@@ -2363,8 +2429,8 @@ function AdminCustomEvent() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-gray-50 bg-opacity-50"
                     >
                       {eventTypes.map(type => (
-                        <option 
-                          key={type._id} 
+                        <option
+                          key={type._id}
                           value={type.name}
                           disabled={type.name !== "Birthday Party"}
                         >
@@ -2451,7 +2517,16 @@ function AdminCustomEvent() {
                     {editErrors.description && <p className="text-sm text-red-500 mt-1">{editErrors.description.message}</p>}
                   </div>
                   <div>
-                    <ModernFileUpload id="edit_images" label="Upload New Images" accept="image/*" multiple error={editErrors.images} {...editRegister("images")} />
+                    <ModernFileUpload 
+                      id="edit_images" 
+                      label="Upload New Images" 
+                      accept="image/*" 
+                      multiple 
+                      error={editErrors.images} 
+                      {...editRegister("images", {
+                        onChange: (e) => setValue("images", e.target.files)
+                      })} 
+                    />
                     
                     {/* Existing Images Preview */}
                     {existingImages && existingImages.length > 0 && (
@@ -2459,14 +2534,14 @@ function AdminCustomEvent() {
                         <p className="text-xs font-medium text-gray-500 mb-2">Current Live Images:</p>
                         <div className="flex flex-wrap gap-3">
                           {existingImages.map((url, idx) => {
-                            const imageUrl = url?.startsWith('http') 
-                              ? url 
+                            const imageUrl = url?.startsWith('http')
+                              ? url
                               : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${url}`;
-                            
+
                             return (
                               <div key={idx} className="relative group rounded-md border border-gray-200 overflow-hidden shadow-sm">
                                 <img src={imageUrl} alt={`existing-${idx}`} className="w-24 h-24 object-cover" />
-                                <div 
+                                <div
                                   className="absolute top-1 right-1 bg-white rounded-full p-1 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50 text-red-500"
                                   onClick={() => setExistingImages(prev => prev.filter((_, i) => i !== idx))}
                                   title="Remove from Server"
@@ -2498,21 +2573,29 @@ function AdminCustomEvent() {
                     )}
                   </div>
                   <div>
-                    <ModernFileUpload id="edit_video" label="Upload New Video" accept="video/*" error={editErrors.video} {...editRegister("video")} />
+                    <ModernFileUpload 
+                      id="edit_video" 
+                      label="Upload New Video" 
+                      accept="video/*" 
+                      error={editErrors.video} 
+                      {...editRegister("video", {
+                        onChange: (e) => setValue("video", e.target.files)
+                      })} 
+                    />
                     
                     {/* Existing Video Preview */}
                     {existingVideo && (
                       <div className="mt-3">
                         <p className="text-xs font-medium text-gray-500 mb-2">Current Live Video:</p>
                         <div className="relative group rounded-md overflow-hidden border border-gray-200 shadow-sm">
-                          <video 
-                            src={existingVideo?.startsWith('http') 
-                              ? existingVideo 
-                              : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${existingVideo}`} 
-                            controls 
-                            className="w-full max-h-48 object-cover" 
+                          <video
+                            src={existingVideo?.startsWith('http')
+                              ? existingVideo
+                              : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${existingVideo}`}
+                            controls
+                            className="w-full max-h-48 object-cover"
                           />
-                          <div 
+                          <div
                             className="absolute top-2 right-10 bg-white rounded-full p-1.5 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-sm hover:bg-red-50 text-red-500"
                             onClick={() => setExistingVideo(null)}
                             title="Remove Video from Server"
