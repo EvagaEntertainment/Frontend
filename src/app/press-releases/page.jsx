@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Press Releases | Eevagga",
+  title: "Press Releases",
   description: "The latest news, media announcements, and press elements from Eevagga.",
   keywords: "Eevagga news, press releases, media",
   openGraph: {

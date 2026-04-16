@@ -1,8 +1,7 @@
-import { Suspense } from 'react';
-import PageComponent from '../../pages/TrackOrder';
+export const metadata = { robots: { index: false, follow: false } };
+
+import TrackOrderClient from './TrackOrderClient';
 
 export default function Page() {
-  return <Suspense fallback={null}><PageComponent /></Suspense>;
+  return <TrackOrderClient />;
 }
-
-

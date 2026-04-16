@@ -27,28 +27,19 @@ export default async function Page({ params }) {
     const service = data?.data?.services?.[0]?.values;
     const title = service?.Title || service?.VenueName || service?.FoodTruckName || "Service Package";
     const description = service?.description || "Premium service on Eevagga";
-    
-    const ratingValue = (Math.random() * 1.3 + 3.5).toFixed(1);
-    const reviewCount = Math.floor(Math.random() * 451) + 50;
 
-    const isEvent = !!service?.VenueName || !!service?.event;
-    
     schema = {
       "@context": "https://schema.org",
-      "@type": isEvent ? "Event" : "Service",
+      "@type": "Service",
       "name": title,
       "description": description,
       "provider": {
         "@type": "Organization",
-        "name": "Eevagga Entertainment"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": ratingValue,
-        "reviewCount": reviewCount
+        "name": "Evaga Entertainment",
+        "url": "https://www.eevagga.com"
       }
     };
-  } catch (e) {}
+  } catch (e) { }
 
   return (
     <>

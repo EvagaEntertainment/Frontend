@@ -1,13 +1,13 @@
 'use client';
 import { motion } from 'framer-motion';
 
-export default function HeroSection() {
+export default function HeroSection({ heading, subheading }) {
   return (
     <section className="relative h-screen w-full overflow-hidden max-h-[90dvh]">
       {/* Optimized Background Image */}
       <div className="absolute inset-0">
         {/* Placeholder for optimized image - replace with actual optimized image */}
-        <div 
+        <div
           className="bg-gray-200  w-full h-full"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1519681393784-d120267933ba)', // Use WebP format
@@ -22,37 +22,36 @@ export default function HeroSection() {
 
       {/* Animated Content */}
       <div className="container mx-auto px-4 h-full flex items-center relative z-10">
-        <motion.div 
+        <motion.div
           className="max-w-2xl text-center mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
+          transition={{
             duration: 0.8,
             ease: "easeOut",
             delay: 0.2
           }}
         >
-          <motion.h1 
+          <motion.h1
             className="text-4xl md:text-6xl font-outfit font-bold tracking-tight text-white mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Modern Digital Experiences
+            {heading || 'Celebrate Every Moment'}
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             className="text-xl text-white/90 max-w-lg mx-auto mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            Crafting performant interfaces with cutting-edge technology
+            {subheading || 'Discover curated event packages tailored for your special occasion'}
           </motion.p>
-     
+
         </motion.div>
       </div>
     </section>
   );
 }
-

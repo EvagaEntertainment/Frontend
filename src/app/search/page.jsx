@@ -1,10 +1,7 @@
-import { Suspense } from 'react';
-import PageComponent from '../../pages/SearchResultPage';
+export const metadata = { robots: { index: false, follow: false } };
+
+import SearchClient from './SearchClient';
 
 export default function Page() {
-  return (
-    <Suspense fallback={null}>
-      <PageComponent />
-    </Suspense>
-  );
+  return <SearchClient />;
 }

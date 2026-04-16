@@ -7,6 +7,12 @@ Disallow: /user
 Disallow: /checkout
 Disallow: /search
 Disallow: /select-your-interest
+Disallow: /track-order
+Disallow: /wishlist
+Disallow: /booking-form
+Disallow: /feedback-form
+Disallow: /orderStatus
+Disallow: /thank-you
 
 # Host
 Host: https://www.eevagga.com

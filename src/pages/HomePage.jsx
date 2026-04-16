@@ -11,21 +11,22 @@ import BookingSection from '../components/BookingSection/BookingSection'
 
 
 function HomePage() {
+  console.log("HomePage");
   return (
     <>
       <Breadcrumbs />
       <div className="flex flex-col ">
-        <SliderNew/>
-        <NewCatgeories/>
-        <WhyPeopleTrustEvaga/>
-        <RealStories/>
-        <HowItWorks/>
-        <BookingSection/>
-        <ExpertSection/>
+        <SliderNew />
+        <NewCatgeories />
+        <WhyPeopleTrustEvaga />
+        <RealStories />
+        <HowItWorks />
+        <BookingSection />
+        <ExpertSection />
         {/* <WhyChooseUs/> */}
         {/* <OurWorkSection/> */}
-        <FAQSection/>
-    </div>
+        <FAQSection />
+      </div>
     </>
   )
 }

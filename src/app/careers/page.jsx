@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Careers | Eevagga",
+  title: "Careers",
   description: "Join the Eevagga team and help us build memorable, premium birthday celebrations across India.",
   keywords: "Eevagga jobs, event planning careers, hiring",
   openGraph: {

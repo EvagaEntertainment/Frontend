@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
-import PageComponent from '../../pages/OrderSucessPage';
+
+export const metadata = { robots: { index: false, follow: false } };
+
+import OrderStatusClient from './OrderStatusClient';
 
 export default function Page() {
-  return <Suspense fallback={null}><PageComponent /></Suspense>;
+  return <OrderStatusClient />;
 }
-
-

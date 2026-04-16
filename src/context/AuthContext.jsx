@@ -3,7 +3,7 @@
 import Cookies from "js-cookie";
 import { createContext, useContext, useState, useEffect } from "react";
 import { internalRoutes } from "../utils/internalRoutes";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { loginReducer, logoutReducer } from "./redux/slices/authSlice";
 import vendorApi from "../services/vendorApi";
@@ -16,7 +16,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const dispatch = useDispatch();
 
   const [auth, setAuth] = useState({
@@ -65,16 +64,18 @@ export const AuthProvider = ({ children }) => {
   const login = (accessToken, role, userId) => {
     // Save to state
     setAuth({ isAuthenticated: true, role, accessToken, userId });
-  
+
     // Save to cookies
     Cookies.set("accessToken", accessToken, { expires: 1 });
     Cookies.set("role", role, { expires: 1 });
     Cookies.set("userId", userId, { expires: 1 });
     notificationService.success("Welcome to Eevagga!");
-  
+
     // Check if a redirect URL is provided
-    const redirectPath = searchParams ? searchParams.get("redirect") : null;
-  
+    const redirectPath = typeof window !== 'undefined'
+      ? new URLSearchParams(window.location.search).get("redirect")
+      : null;
+
     // Redirect to the respective page or dashboard
     if (redirectPath) {
       router.push(redirectPath);
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
       router.push(dashboardRoute);
     }
   };
-  
+
   const logout = async () => {
     try {
       // Call the appropriate logout API based on the user's role
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       } else if (auth.role === "user") {
         // Assuming there's a logout method in userApi, if not, you may need to add it
         console.log('inside elseif user');
-        
+
         await userApi.logout(auth.userId);
       } else if (auth.role === "admin") {
         await adminApi.logout(auth.userId);

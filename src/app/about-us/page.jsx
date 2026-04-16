@@ -3,7 +3,7 @@ export const metadata = {
   description: "Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible.",
   keywords: "Eevagga story, premium birthdays, party planning India",
   openGraph: {
-    title: "About Us | Eevagga",
+    title: "About Us",
     description: "Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible.",
     url: "https://www.eevagga.com/about-us",
     siteName: "Eevagga",

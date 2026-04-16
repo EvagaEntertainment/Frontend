@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Provide Feedback | Eevagga",
   description: "Share your experience with Eevagga services. We value your thoughts on our premium celebrations.",
-  keywords: "Eevagga feedback, customer reviews, contact us",
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Provide Feedback | Eevagga",
     description: "Share your experience with Eevagga services. We value your thoughts on our premium celebrations.",

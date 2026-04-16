@@ -25,9 +25,9 @@ export const metadata = {
   metadataBase: new URL('https://www.eevagga.com'),
   title: {
     default: 'Eevagga Entertainment',
-    template: '%s | Eevagga'
+    template: '%s | Eevagga',
   },
-  description: 'India\'s Premium Birthday Celebration Platform',
+  description: "India's Premium Event Celebration Platform — curated birthday, wedding & corporate event packages in Bangalore.",
   robots: {
     index: true,
     follow: true,
@@ -40,18 +40,85 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: './',
+    canonical: 'https://www.eevagga.com',
+  },
+  openGraph: {
+    siteName: 'Eevagga Entertainment',
+    type: 'website',
+    locale: 'en_IN',
+    images: [
+      {
+        url: 'https://www.eevagga.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Eevagga Entertainment — Premium Event Packages',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@eevagga',
   },
   other: {
     'p:domain_verify': '4ffff8fe28fdfc5268597c4a91669fb1',
-    'facebook-domain-verification': 'your_verification_id'
-  }
+  },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.eevagga.com/#organization",
+      "name": "Evaga Entertainment",
+      "url": "https://www.eevagga.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.eevagga.com/logo.png"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "areaServed": "IN",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.instagram.com/eevagga",
+        "https://www.facebook.com/eevagga"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.eevagga.com/#website",
+      "url": "https://www.eevagga.com",
+      "name": "Eevagga Entertainment",
+      "publisher": { "@id": "https://www.eevagga.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.eevagga.com/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://d3a9w2e6vszgj1.cloudfront.net" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://api.eevagga.com" />
+      </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema).replace(/</g, '\\u003c') }}
+        />
         <Suspense fallback={null}>
           <Providers>
             <ClientLayout>{children}</ClientLayout>
@@ -93,9 +160,9 @@ export default function RootLayout({ children }) {
         </Script>
 
         {/* Google Sign-In */}
-        <Script 
-          src="https://accounts.google.com/gsi/client" 
-          strategy="lazyOnload"
+        <Script
+          src="https://accounts.google.com/gsi/client"
+          strategy="afterInteractive"
         />
 
         {/* noscript Fallbacks */}

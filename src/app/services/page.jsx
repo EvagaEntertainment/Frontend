@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Our Services | Eevagga",
+  title: "Our Services",
   description: "Explore Eevagga's premium birthday celebration and decoration services tailor-fit for you.",
   keywords: "birthday services, decorators, premium event planning",
   openGraph: {

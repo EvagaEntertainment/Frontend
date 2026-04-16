@@ -1,6 +1,6 @@
 'use client';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { ToastContainer } from "react-toastify";
@@ -18,10 +18,10 @@ import WhatsAppButton from '../utils/WhatsAppButton';
 import StickyAd from '../utils/StickyAd';
 import GoToTop from '../GoToTop';
 import Footer from '../components/Footer/Footer';
+import UTMTracker from './UTMTracker';
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const userId = Cookies.get("userId");
@@ -118,21 +118,9 @@ export default function ClientLayout({ children }) {
     return () => events.forEach((event) => document.removeEventListener(event, preventDefault, { capture: true }));
   }, []);
 
-  useEffect(() => {
-    if (searchParams?.toString()?.includes("utm_")) {
-      const utmParams = {
-        utm_source: searchParams.get("utm_source"),
-        utm_medium: searchParams.get("utm_medium"),
-        utm_campaign: searchParams.get("utm_campaign"),
-        utm_term: searchParams.get("utm_term"),
-        utm_content: searchParams.get("utm_content"),
-      };
-      sessionStorage.setItem("utmParams", JSON.stringify(utmParams));
-    }
-  }, [searchParams]);
-
   return (
     <>
+      <Suspense fallback={null}><UTMTracker /></Suspense>
       {noNavbarPaths.includes(pathname) && <DynamicNav />}
       {!noNewNavbarPaths.includes(pathname) && <Navbar />}
 
