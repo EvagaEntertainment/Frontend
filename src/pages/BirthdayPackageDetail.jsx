@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import ProductGallery from "../components/SinglePageV1/ProductGallery";
-import ProductDetails from "../components/SinglePageV1/ProductDetails";
+import EventDetails from "../components/SinglePageV1/EventDetails";
 import ProductCardV3 from "../components/Cards/ProductCardV3";
 import { internalRoutes } from "../utils/internalRoutes";
 import customEventsApi from "../services/customEventsApi";
@@ -9,12 +9,12 @@ import useServices from "../hooks/useServices";
 import Loader from "../components/Loaders/Loader";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
-const SinglePageV1 = () => {
-  const { categoryName, productId } = useParams();
+const BirthdayPackageDetail = () => {
+  const { title, productId } = useParams();
   const navigate = useNavigate();
 
-  // Format category name for display (e.g., LuxuryHampers -> Luxury Hampers)
-  const displayCategoryName = categoryName ? categoryName.replace(/([A-Z])/g, ' $1').trim() : "Category";
+  // Format category name for display
+  const displayCategoryName = title ? decodeURIComponent(title).replace(/-/g, ' ') : "Package";
 
   const [productData, setProductData] = React.useState(null);
   const { callApi, loading } = useServices(customEventsApi.getPublicCustomEventById);
@@ -43,6 +43,16 @@ const SinglePageV1 = () => {
       return imgs.map(img => img.startsWith("http") ? img : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${img}`);
     })(),
     videoUrl: productData.video ? (productData.video.startsWith("http") ? productData.video : `${process.env.REACT_APP_API_Aws_Image_BASE_URL}${productData.video}`) : "",
+    detail: productData.detail || "",
+    venueType: productData.venueType || "",
+    delivery: productData.delivery || "",
+    contents: productData.contents || "",
+    addons: productData.addons || [],
+    age: productData.age || "",
+    gender: productData.gender || "",
+    peopleCapacity: productData.peopleCapacity || "",
+    eventType: productData.eventType || "",
+    tierType: productData.tierType || "",
   } : null;
 
   // Dummy related products
@@ -110,15 +120,15 @@ const SinglePageV1 = () => {
 
           {/* Right Column - Details */}
           <div className="w-full lg:flex-1">
-            <ProductDetails product={product} />
+            <EventDetails product={product} />
           </div>
         </div>
 
         {/* You May Also Adore Section */}
         <div className="mt-24 pt-12 border-t border-gray-200">
           <div className="flex justify-between items-end mb-8">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a1a2e] tracking-tight">You May Also Adore</h2>
-            <Link to={`${internalRoutes.giftStudio}/${categoryName}`} className="text-[#7e22ce] text-sm font-bold tracking-widest uppercase hover:underline">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a1a2e] tracking-tight">Explore More Packages</h2>
+            <Link to={internalRoutes.birthdayPackages} className="text-[#7e22ce] text-sm font-bold tracking-widest uppercase hover:underline">
               View Entire Collection +
             </Link>
           </div>
@@ -133,7 +143,7 @@ const SinglePageV1 = () => {
                 category={rp.category}
                 rating={rp.rating}
                 reviewsCount={rp.reviews}
-                onClickCard={() => navigate(`${internalRoutes.giftStudio}/${categoryName || "Gourmet"}/${rp.id}`)}
+                onClickCard={() => navigate(`${internalRoutes.birthdayPackages}/${title || "Package"}/${rp.id}`)}
               />
             ))}
           </div>
@@ -144,4 +154,4 @@ const SinglePageV1 = () => {
   );
 };
 
-export default SinglePageV1;
+export default BirthdayPackageDetail;

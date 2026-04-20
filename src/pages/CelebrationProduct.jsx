@@ -5,6 +5,7 @@ import CustomPagination from "../utils/CustomPagination";
 import { internalRoutes } from "../utils/internalRoutes";
 import { BiFilterAlt } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 // Dummy data to match the UI precisely
 const dummyProducts = [
@@ -19,11 +20,11 @@ const dummyProducts = [
 ];
 
 const CelebrationSidebar = () => {
-  const [activePrices, setActivePrices] = useState(["$25 - $50"]);
+  const [activePrices, setActivePrices] = useState(["₹2,000 - ₹5,000"]);
   const [activeTypes, setActiveTypes] = useState(["Premium Balloons"]);
   const [activeColor, setActiveColor] = useState("#4285f4"); // The blue circle
 
-  const priceOptions = ["Under $25", "$25 - $50", "$50 - $100", "$100+"];
+  const priceOptions = ["Under ₹2,000", "₹2,000 - ₹5,000", "₹5,000 - ₹10,000", "₹10,000+"];
   const typeOptions = ["Premium Balloons", "Decor Kits", "Banners & Signs", "Party Streamers"];
   const colors = ["#1a1a2e", "#fbbf24", "#ed4956", "#ffffff", "#4285f4"];
 
@@ -160,12 +161,8 @@ const CelebrationProduct = () => {
       <div className="flex-grow pt-4 pb-6 max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center space-x-2 text-[13px] text-gray-500 mb-6 font-medium">
-          <Link to={internalRoutes.home} className="hover:text-[#7e22ce] transition-colors">Home</Link>
-          <span className="text-gray-400 text-[10px]">›</span>
-          <span className="hover:text-[#7e22ce] transition-colors cursor-pointer">Occasions</span>
-          <span className="text-gray-400 text-[10px]">›</span>
-          <span className="text-[#7e22ce] font-semibold">Celebration Products</span>
+        <div className="mb-6 -mt-4">
+          <Breadcrumbs />
         </div>
 
         {/* Page Header */}

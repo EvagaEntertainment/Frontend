@@ -2517,17 +2517,15 @@ function AdminCustomEvent() {
                     {editErrors.description && <p className="text-sm text-red-500 mt-1">{editErrors.description.message}</p>}
                   </div>
                   <div>
-                    <ModernFileUpload 
-                      id="edit_images" 
-                      label="Upload New Images" 
-                      accept="image/*" 
-                      multiple 
-                      error={editErrors.images} 
-                      {...editRegister("images", {
-                        onChange: (e) => setValue("images", e.target.files)
-                      })} 
+                    <ModernFileUpload
+                      id="edit_images"
+                      label="Upload New Images"
+                      accept="image/*"
+                      multiple
+                      error={editErrors.images}
+                      {...editRegister("images")}
                     />
-                    
+
                     {/* Existing Images Preview */}
                     {existingImages && existingImages.length > 0 && (
                       <div className="mt-3">
@@ -2573,16 +2571,14 @@ function AdminCustomEvent() {
                     )}
                   </div>
                   <div>
-                    <ModernFileUpload 
-                      id="edit_video" 
-                      label="Upload New Video" 
-                      accept="video/*" 
-                      error={editErrors.video} 
-                      {...editRegister("video", {
-                        onChange: (e) => setValue("video", e.target.files)
-                      })} 
+                    <ModernFileUpload
+                      id="edit_video"
+                      label="Upload New Video"
+                      accept="video/*"
+                      error={editErrors.video}
+                      {...editRegister("video")}
                     />
-                    
+
                     {/* Existing Video Preview */}
                     {existingVideo && (
                       <div className="mt-3">

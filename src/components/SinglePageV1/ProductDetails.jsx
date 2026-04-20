@@ -40,7 +40,7 @@ const ProductDetails = ({ product }) => {
           </span>
         </div>
         <p className="text-gray-500 text-sm leading-relaxed max-w-lg mt-2 font-medium">
-          {product.description} A curated selection of award-winning artisan treats, from single-origin dark chocolate truffles to vintage reserve sparkling wine. Perfect for anniversaries, corporate milestones, or ultimate self-care.
+          {product.description}
         </p>
       </div>
 
@@ -52,9 +52,8 @@ const ProductDetails = ({ product }) => {
             <button
               key={idx}
               onClick={() => setSelectedWrap(idx)}
-              className={`w-8 h-8 rounded-full border-2 p-[2px] transition-all duration-300 ${
-                selectedWrap === idx ? "border-[#7e22ce] scale-110 shadow-md" : "border-transparent hover:scale-105"
-              }`}
+              className={`w-8 h-8 rounded-full border-2 p-[2px] transition-all duration-300 ${selectedWrap === idx ? "border-[#7e22ce] scale-110 shadow-md" : "border-transparent hover:scale-105"
+                }`}
             >
               <div className="w-full h-full rounded-full" style={{ backgroundColor: color }}></div>
             </button>
@@ -97,17 +96,16 @@ const ProductDetails = ({ product }) => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-3 text-sm font-bold uppercase transition-all tracking-wider ${
-                activeTab === tab
+              className={`pb-3 text-sm font-bold uppercase transition-all tracking-wider ${activeTab === tab
                   ? "text-[#7e22ce] border-b-2 border-[#7e22ce]"
                   : "text-gray-400 hover:text-gray-600"
-              }`}
+                }`}
             >
               {tab}
             </button>
           ))}
         </div>
-        
+
         <div className="py-6 text-sm text-gray-500 leading-relaxed font-medium">
           {activeTab === "Details" && (
             <div className="animate-[fadeIn_0.3s_ease-out]">

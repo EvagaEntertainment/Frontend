@@ -147,8 +147,9 @@ const apiEndpoints = {
     // Public custom events endpoints
     getPublicCustomEvents: "customEvents/public",
     getPublicCustomEventsByType: (eventType) => `customEvents/public/type/${eventType}`,
+    getPublicEventsByTierType: (tierType) => `customEvents/public/tier/${tierType}`,
     getPublicCustomEventNames: "customEvents/public/events/names",
-    getPublicCustomEventById: (id) => `customEvents/public/events/${id}`,
+    getPublicCustomEventById: (id) => `customEvents/public/${id}`,
     // Custom event submissions
     submitCustomEventForm: "customEventSubmissions/submit",
     // Testimonial endpoints
@@ -316,6 +317,12 @@ const apiEndpoints = {
       `order/getOneOrderDetail/${OrderId}/${itemId}`,
     downloadOrdersCSV: (orderStatus) =>
       `order/downloadOrdersCSV/${orderStatus}`,
+    syncLeads: "syncLeads/sync-leads",
+    getAllSyncLeads: "syncLeads/get-all",
+    getOneSyncLead: (id) => `syncLeads/get-one/${id}`,
+    updateOneSyncLead: (id) => `syncLeads/update-one/${id}`,
+    deleteOneSyncLead: (id) => `syncLeads/delete-one/${id}`,
+    trackSyncLead: "syncLeads/track",
   },
 };
 

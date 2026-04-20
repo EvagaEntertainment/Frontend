@@ -115,7 +115,7 @@ const ProductCardV3 = ({
 
         {/* Description */}
         {description && (
-          <p className="text-gray-500 text-[12px] mb-4 line-clamp-1 font-normal opacity-90">
+          <p className="text-gray-500 text-[12px] mb-4 line-clamp-4 font-normal opacity-90">
             {description}
           </p>
         )}

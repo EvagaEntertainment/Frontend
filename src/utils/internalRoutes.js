@@ -62,5 +62,8 @@ export const internalRoutes = {
   celebrationProduct: "/celebration-product",
   celebrationProductDetail: "/celebration/:productId",
   birthdayPackages: "/birthday-packages",
+  birthdayPackageDetail: "/birthday-packages/:title/:productId",
+  packageBooking: "/package-booking",
+  trackOrder: "/track-order",
 };
 

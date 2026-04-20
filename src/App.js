@@ -86,6 +86,9 @@ const BookingForm = lazy(() => import("./pages/BookingForm.js"));
 const GiftStudio = lazy(() => import("./pages/GiftStudio.jsx"));
 const CelebrationProduct = lazy(() => import("./pages/CelebrationProduct.jsx"));
 const BirthdayPackages = lazy(() => import("./pages/BirthdayPackages.jsx"));
+const BirthdayPackageDetail = lazy(() => import("./pages/BirthdayPackageDetail.jsx"));
+const PackageBookingForm = lazy(() => import("./pages/PackageBookingForm.jsx"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder.js"));
 const GiftStudioCategoryPage = lazy(() => import("./pages/GiftStudioCategoryPage.jsx"));
 const SinglePageV1 = lazy(() => import("./pages/SinglePageV1.jsx"));
 
@@ -662,6 +665,30 @@ const AppContent = () => {
             element={
               <Suspense fallback={<Loader />}>
                 <BirthdayPackages />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.birthdayPackageDetail}
+            element={
+              <Suspense fallback={<Loader />}>
+                <BirthdayPackageDetail />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.packageBooking}
+            element={
+              <Suspense fallback={<Loader />}>
+                <PackageBookingForm />
+              </Suspense>
+            }
+          />
+          <Route
+            path={internalRoutes.trackOrder}
+            element={
+              <Suspense fallback={<Loader />}>
+                <TrackOrder />
               </Suspense>
             }
           />

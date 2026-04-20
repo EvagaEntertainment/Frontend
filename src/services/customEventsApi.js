@@ -8,9 +8,12 @@ const customEventsApi = {
   getPublicCustomEvents: (queryParams) => 
     apiService.get(apiEndpoints.common.getPublicCustomEvents, queryParams),
 
-  // Get public custom events by event type
   getPublicCustomEventsByType: (eventType, queryParams) => 
     apiService.get(apiEndpoints.common.getPublicCustomEventsByType(eventType), queryParams),
+
+  // Get public custom events by tier type
+  getPublicEventsByTierType: (tierType, queryParams) => 
+    apiService.get(apiEndpoints.common.getPublicEventsByTierType(tierType), queryParams),
 
   // Get public custom event template by ID
   getPublicCustomEventById: (id) => 

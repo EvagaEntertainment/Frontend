@@ -154,6 +154,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
       icon: <FaRegMoneyBillAlt />,
       children: [
         { id: "New Orders", label: "New Orders", icon: <FaBorderAll /> },
+        { id: "New Order Leadsquare", label: "New Order Leadsquare", icon: <FaBorderAll /> },
         {
           id: "Confirmed Orders",
           label: "Confirmed Orders",
