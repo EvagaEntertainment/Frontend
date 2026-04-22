@@ -11,7 +11,7 @@ import orderApis from "../../services/orderApis";
 import { toast } from "react-toastify";
 
 function NewOrderLeadsquare() {
-  const syncLeadsApi = useServices(orderApis.syncLeads);
+  const createSyncLeadApi = useServices(orderApis.createSyncLead);
   const getAllSyncLeadsApi = useServices(orderApis.getAllSyncLeads);
   const updateSyncLeadApi = useServices(orderApis.updateOneSyncLead);
   const deleteSyncLeadApi = useServices(orderApis.deleteOneSyncLead);
@@ -20,12 +20,17 @@ function NewOrderLeadsquare() {
   const [allLeads, setAllLeads] = useState([]);
   const [itemName, setItemName] = useState("");
   const [status, setStatus] = useState("pending");
+  const [newLead, setNewLead] = useState({
+    customerName: "",
+    customerMobile: "",
+    items: [{ name: "", status: "pending" }]
+  });
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(""); // e.g., 'A-Z' or 'Z-A'
-  
+
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("viewOrder");
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -35,27 +40,27 @@ function NewOrderLeadsquare() {
   const handleOpenModal = async (type, order) => {
     setModalType(type);
     setSelectedOrder(order);
-    
+
     // Set form defaults if editing
     if (type === "editOrder") {
       setItemName(order?.itemName || "");
       setStatus(order?.status || "pending");
     }
-    
+
     setOpenModal(true);
-    
+
     // Optionally fetch full details
     if (order && (order.id || order._id)) {
       try {
         const res = await getOneSyncLeadApi.callApi(order.id || order._id);
         if (res && res.data) {
-           setSelectedOrder(res.data);
-           if (type === "editOrder") {
-             setItemName(res.data.itemName || order?.itemName || "");
-             setStatus(res.data.status || order?.status || "pending");
-           }
+          setSelectedOrder(res.data);
+          if (type === "editOrder") {
+            setItemName(res.data.itemName || order?.itemName || "");
+            setStatus(res.data.status || order?.status || "pending");
+          }
         }
-      } catch (e) {}
+      } catch (e) { }
     }
   };
 
@@ -64,6 +69,11 @@ function NewOrderLeadsquare() {
     setSelectedOrder(null);
     setItemName("");
     setStatus("pending");
+    setNewLead({
+      customerName: "",
+      customerMobile: "",
+      items: [{ name: "", status: "pending" }]
+    });
   };
 
   const fetchAllLeads = async () => {
@@ -80,67 +90,7 @@ function NewOrderLeadsquare() {
     fetchAllLeads();
   }, [page, sortOrder]);
 
-  const COOLDOWN_TIME = 5 * 60 * 1000; // 5 minutes in ms
-  const [isRefreshDisabled, setIsRefreshDisabled] = useState(() => {
-    const lastSyncStr = localStorage.getItem("lastSyncLeadsTime");
-    if (lastSyncStr) {
-      const lastSync = parseInt(lastSyncStr, 10);
-      return (Date.now() - lastSync) < COOLDOWN_TIME;
-    }
-    return false;
-  });
-
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const lastSyncStr = localStorage.getItem("lastSyncLeadsTime");
-    if (lastSyncStr) {
-      const lastSync = parseInt(lastSyncStr, 10);
-      const diff = Date.now() - lastSync;
-      if (diff < COOLDOWN_TIME) {
-        return Math.ceil((COOLDOWN_TIME - diff) / 1000);
-      }
-    }
-    return 0;
-  });
-
-  useEffect(() => {
-    let interval;
-    if (isRefreshDisabled) {
-      interval = setInterval(() => {
-        const lastSyncStrCheck = localStorage.getItem("lastSyncLeadsTime");
-        if (!lastSyncStrCheck) return;
-        
-        const lastSync = parseInt(lastSyncStrCheck, 10);
-        const now = Date.now();
-        const diff = now - lastSync;
-        if (diff >= COOLDOWN_TIME) {
-          setIsRefreshDisabled(false);
-          setTimeLeft(0);
-          clearInterval(interval);
-        } else {
-          setTimeLeft(Math.ceil((COOLDOWN_TIME - diff) / 1000));
-        }
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isRefreshDisabled]);
-
-  const handleRefresh = async () => {
-    if (isRefreshDisabled) return;
-
-    try {
-      await syncLeadsApi.callApi();
-      toast.success("Leads synced successfully!");
-      
-      localStorage.setItem("lastSyncLeadsTime", Date.now().toString());
-      setIsRefreshDisabled(true);
-      setTimeLeft(COOLDOWN_TIME / 1000);
-      
-      fetchAllLeads();
-    } catch (error) {
-      console.error("Failed to sync leads:", error);
-      toast.error("Failed to sync leads!");
-    }
-  };
+  // Cooldown logic permanently removed in favor of manual add
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -179,7 +129,7 @@ function NewOrderLeadsquare() {
     {
       label: "Order ID",
       key: "orderid",
-      render: (row) => row.orderid || row.OrderId || row._id || "N/A"
+      render: (row) => row.orderId || row.OrderId || row._id || "N/A"
     },
     {
       label: "Customer Name",
@@ -206,16 +156,16 @@ function NewOrderLeadsquare() {
       key: "action",
       render: (row) => (
         <div className="flex items-center justify-center gap-2">
-          <CiViewBoard 
+          <CiViewBoard
             className="text-3xl font-semibold cursor-pointer text-textGray hover:text-primary transition"
             onClick={() => handleOpenModal("viewOrder", row)}
           />
-          <CiEdit 
+          <CiEdit
             className="text-3xl font-semibold cursor-pointer text-textGray hover:text-primary transition"
             onClick={() => handleOpenModal("editOrder", row)}
           />
-          <MdOutlineDelete 
-            className="text-3xl font-semibold cursor-pointer text-textGray hover:text-red-500 transition" 
+          <MdOutlineDelete
+            className="text-3xl font-semibold cursor-pointer text-textGray hover:text-red-500 transition"
             onClick={async () => {
               try {
                 await deleteSyncLeadApi.callApi(row._id || row.id);
@@ -235,14 +185,10 @@ function NewOrderLeadsquare() {
     <div>
       <div className="flex justify-end items-center gap-4 mb-4">
         <button
-          onClick={handleRefresh}
-          disabled={isRefreshDisabled}
-          className={`float-right w-fit px-2 mb-2 flex items-center gap-2 ${
-            isRefreshDisabled ? "bg-gray-400 cursor-not-allowed text-white rounded py-2" : "btn-primary rounded py-2"
-          }`}
+          onClick={() => handleOpenModal("addLead")}
+          className="float-right btn-primary w-fit px-4 mb-2 flex items-center gap-2 rounded py-2"
         >
-          <IoMdRefresh className={`text-lg ${isRefreshDisabled ? "animate-spin" : ""}`} />
-          {isRefreshDisabled ? `Refresh (${formatTime(timeLeft)})` : "Refresh"}
+          + Add Lead
         </button>
 
         <div className="relative" ref={dropdownRef}>
@@ -285,7 +231,7 @@ function NewOrderLeadsquare() {
       <ReusableModal
         open={openModal}
         onClose={handleCloseModal}
-        title={modalType === "viewOrder" ? "View Order" : "Edit Order"}
+        title={modalType === "viewOrder" ? "View Order" : modalType === "addLead" ? "Add Lead" : "Edit Order"}
       >
         {modalType === "viewOrder" && (
           <div className="w-full mx-auto p-6 bg-white overflow-y-auto max-h-[70vh]">
@@ -293,13 +239,13 @@ function NewOrderLeadsquare() {
               <h2 className="text-2xl font-bold text-primary">
                 Order Details
               </h2>
-              <button 
+              <button
                 onClick={() => {
-                   const rawMobile = selectedOrder?.customerMobile?.replace("+91-", "") || selectedOrder?.customerMobile;
-                   const url = `${window.location.origin}/track-order?id=${rawMobile}`;
-                   navigator.clipboard.writeText(url);
-                   toast.success("Tracking URL copied to clipboard!");
-                }} 
+                  const rawMobile = selectedOrder?.customerMobile?.replace("+91-", "") || selectedOrder?.customerMobile;
+                  const url = `${window.location.origin}/track-order?id=${rawMobile}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success("Tracking URL copied to clipboard!");
+                }}
                 className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-sm font-semibold rounded shadow-sm transition-all"
               >
                 Copy Tracking Link
@@ -327,7 +273,7 @@ function NewOrderLeadsquare() {
                       <div key={idx} className="p-3 bg-gray-50 border border-gray-100 rounded flex items-center justify-between">
                         <span className="font-medium text-gray-800">{item.itemName || item.name || "Unnamed"}</span>
                         <span className={`text-sm px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-bold capitalize`}>
-                           {item.currentStatus || item.status || "Unknown"}
+                          {item.currentStatus || item.status || "Unknown"}
                         </span>
                       </div>
                     ))}
@@ -344,20 +290,20 @@ function NewOrderLeadsquare() {
               <h2 className="text-2xl font-bold text-primary">
                 Edit Order
               </h2>
-              <button 
+              <button
                 type="button"
                 onClick={() => {
-                   const rawMobile = selectedOrder?.customerMobile?.replace("+91-", "") || selectedOrder?.customerMobile;
-                   const url = `${window.location.origin}/track-order?id=${rawMobile}`;
-                   navigator.clipboard.writeText(url);
-                   toast.success("Tracking URL copied to clipboard!");
-                }} 
+                  const rawMobile = selectedOrder?.customerMobile?.replace("+91-", "") || selectedOrder?.customerMobile;
+                  const url = `${window.location.origin}/track-order?id=${rawMobile}`;
+                  navigator.clipboard.writeText(url);
+                  toast.success("Tracking URL copied to clipboard!");
+                }}
                 className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-sm font-semibold rounded shadow-sm transition-all"
               >
                 Copy Tracking Link
               </button>
             </div>
-            
+
             <div className="space-y-4 mb-6 text-gray-700 border-b pb-6">
               <p><strong className="text-primary">Order ID:</strong> {selectedOrder?.orderid || selectedOrder?._id}</p>
               <p><strong className="text-primary">Customer Name:</strong> {selectedOrder?.customerName}</p>
@@ -370,26 +316,26 @@ function NewOrderLeadsquare() {
                   {selectedOrder.items.map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-lg">
                       <span className="flex-1 font-medium text-gray-800">{item.name || item.itemName}</span>
-                      <select 
+                      <select
                         className="px-3 py-1.5 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:outline-none text-sm font-medium w-40 capitalize"
                         defaultValue={item.currentStatus || item.status}
                         onChange={async (e) => {
-                            const newStatus = e.target.value;
-                            try {
-                               const payload = { itemName: item.name || item.itemName, status: newStatus };
-                               await updateSyncLeadApi.callApi(selectedOrder._id || selectedOrder.id, payload);
-                               toast.success(`Updated "${item.name || item.itemName}" status to ${newStatus}`);
-                               fetchAllLeads();
-                               
-                               // Optmistic local update
-                               setSelectedOrder(prev => {
-                                  const newItems = [...prev.items];
-                                  newItems[idx] = { ...newItems[idx], currentStatus: newStatus, status: newStatus };
-                                  return { ...prev, items: newItems };
-                               });
-                            } catch (err) {
-                               toast.error("Failed to update item status!");
-                            }
+                          const newStatus = e.target.value;
+                          try {
+                            const payload = { itemName: item.name || item.itemName, status: newStatus };
+                            await updateSyncLeadApi.callApi(selectedOrder._id || selectedOrder.id, payload);
+                            toast.success(`Updated "${item.name || item.itemName}" status to ${newStatus}`);
+                            fetchAllLeads();
+
+                            // Optmistic local update
+                            setSelectedOrder(prev => {
+                              const newItems = [...prev.items];
+                              newItems[idx] = { ...newItems[idx], currentStatus: newStatus, status: newStatus };
+                              return { ...prev, items: newItems };
+                            });
+                          } catch (err) {
+                            toast.error("Failed to update item status!");
+                          }
                         }}
                       >
                         <option value="pending">Pending</option>
@@ -406,7 +352,7 @@ function NewOrderLeadsquare() {
             <h3 className="text-lg font-semibold mb-3 text-primary">
               Add New Option
             </h3>
-            
+
             <form className="space-y-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -420,12 +366,12 @@ function NewOrderLeadsquare() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Status
                 </label>
-                <select 
+                <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -448,19 +394,140 @@ function NewOrderLeadsquare() {
                 <button
                   type="button"
                   onClick={async () => {
-                     try {
-                        const payload = { itemName, status };
-                        await updateSyncLeadApi.callApi(selectedOrder._id || selectedOrder.id, payload);
-                        toast.success("Lead updated successfully!");
-                        handleCloseModal();
-                        fetchAllLeads();
-                     } catch(e) {
-                        toast.error("Failed to update lead!");
-                     }
+                    try {
+                      const payload = { itemName, status };
+                      await updateSyncLeadApi.callApi(selectedOrder._id || selectedOrder.id, payload);
+                      toast.success("Lead updated successfully!");
+                      handleCloseModal();
+                      fetchAllLeads();
+                    } catch (e) {
+                      toast.error("Failed to update lead!");
+                    }
                   }}
                   className="px-4 py-2 bg-primary text-white rounded-md hover:opacity-90 font-medium"
                 >
                   Add Option
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {modalType === "addLead" && (
+          <div className="w-full mx-auto p-6 bg-white overflow-y-auto max-h-[70vh]">
+            <h2 className="text-2xl font-bold mb-6 text-primary">
+              Add New Lead
+            </h2>
+            <form className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Customer Name
+                </label>
+                <input
+                  type="text"
+                  value={newLead.customerName}
+                  onChange={(e) => setNewLead({ ...newLead, customerName: e.target.value })}
+                  placeholder="Enter customer name..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Customer Mobile
+                </label>
+                <input
+                  type="text"
+                  value={newLead.customerMobile}
+                  onChange={(e) => setNewLead({ ...newLead, customerMobile: e.target.value })}
+                  placeholder="Enter customer mobile..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Items
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setNewLead({ ...newLead, items: [...newLead.items, { name: "", status: "pending" }] })}
+                    className="text-sm text-primary font-medium hover:underline"
+                  >
+                    + Add Item
+                  </button>
+                </div>
+                {newLead.items.map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 mb-3">
+                    <input
+                      type="text"
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      placeholder="Item name..."
+                      value={item.name}
+                      onChange={(e) => {
+                        const updatedItems = [...newLead.items];
+                        updatedItems[index].name = e.target.value;
+                        setNewLead({ ...newLead, items: updatedItems });
+                      }}
+                    />
+                    <select
+                      className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      value={item.status}
+                      onChange={(e) => {
+                        const updatedItems = [...newLead.items];
+                        updatedItems[index].status = e.target.value;
+                        setNewLead({ ...newLead, items: updatedItems });
+                      }}
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="confirmed">Confirmed</option>
+                      <option value="processing">Processing</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                    {newLead.items.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updatedItems = newLead.items.filter((_, i) => i !== index);
+                          setNewLead({ ...newLead, items: updatedItems });
+                        }}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <MdOutlineDelete className="text-xl" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4 flex justify-end gap-3 border-t">
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      if (!newLead.customerName || !newLead.customerMobile) {
+                        return toast.error("Please fill required fields (Name, Mobile)");
+                      }
+                      await createSyncLeadApi.callApi(newLead);
+                      toast.success("Lead created successfully!");
+                      handleCloseModal();
+                      fetchAllLeads();
+                    } catch (e) {
+                      toast.error("Failed to create lead!");
+                    }
+                  }}
+                  className="px-4 py-2 bg-primary text-white rounded-md hover:opacity-90 font-medium"
+                >
+                  Create Lead
                 </button>
               </div>
             </form>

@@ -101,6 +101,7 @@ const orderApis = {
       queryParams
     ),
   syncLeads: () => apiService.post(apiEndpoints.order.syncLeads),
+  createSyncLead: (data) => apiService.post(apiEndpoints.order.createSyncLead, data),
   getAllSyncLeads: (queryParams) => apiService.get(apiEndpoints.order.getAllSyncLeads, queryParams),
   getOneSyncLead: (id) => apiService.get(apiEndpoints.order.getOneSyncLead(id)),
   updateOneSyncLead: (id, data) => apiService.put(apiEndpoints.order.updateOneSyncLead(id), data),

@@ -15,6 +15,10 @@ const DateRangePicker = ({ onSearch }) => {
   };
 
   const handleSubmit = () => {
+    if (!fromDate || !toDate) {
+      alert("Please select both 'From' and 'To' dates.");
+      return;
+    }
     if (new Date(fromDate) > new Date(toDate)) {
       alert("The 'From' date cannot be later than the 'To' date.");
       return;
