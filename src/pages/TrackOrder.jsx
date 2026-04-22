@@ -6,64 +6,58 @@ import { FiArrowRight } from "react-icons/fi";
 import { BsStars } from "react-icons/bs";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import useServices from "../hooks/useServices";
 import orderApis from "../services/orderApis";
 
 function TrackOrder() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  const initialQuery = router.query.id || "";
-  
+
+  const initialQuery = searchParams.get("id") || "";
+
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     mode: "onChange",
     defaultValues: { searchQuery: initialQuery }
   });
-
-  // Keep form in sync with URL
-  useEffect(() => {
-    if (initialQuery) {
-      setValue("searchQuery", initialQuery);
-    }
-  }, [initialQuery, setValue]);
 
   const trackOrderApi = useServices(orderApis.trackSyncLead);
 
   const onSubmit = async (data) => {
     setLoading(true);
     setOrderData(null);
-    
+
     const queryStr = data.searchQuery.trim();
-    
+
     // Update the URL beautifully so users can share or refresh
-    router.replace({ query: { ...router.query, id: queryStr } }, undefined, { shallow: true });
-    
+    router.replace(`/track-order?id=${queryStr}`, { scroll: false });
+
     const isNumeric = /^\d+$/.test(queryStr);
-    
+
     const payload = {};
     if (isNumeric) {
       // Pass as customerMobile formatted to DB matching rules
-      payload.customerMobile = `+91-${queryStr}`;
+      payload.customerMobile = `${queryStr}`;
     } else {
       // Pass as Order ID
       payload.orderid = queryStr;
     }
-    
+
     try {
       const response = await trackOrderApi.callApi(payload);
-      
+
       // The backend returns an array: either in response.data or response itself
       let trackingResult = null;
       if (response?.data && Array.isArray(response.data) && response.data.length > 0) {
-         trackingResult = response.data[0];
+        trackingResult = response.data[0];
       } else if (Array.isArray(response) && response.length > 0) {
-         trackingResult = response[0];
+        trackingResult = response[0];
       } else if (response?.data && !Array.isArray(response.data)) {
-         trackingResult = response.data;
+        trackingResult = response.data;
       }
-      
+
       if (trackingResult) {
         setOrderData(trackingResult);
         toast.success("Tracking data retrieved successfully!");
@@ -71,12 +65,22 @@ function TrackOrder() {
         toast.error("No tracking details found. Please verify your ID or Mobile.");
       }
     } catch (error) {
-       console.error("Tracking Error:", error);
-       toast.error("Failed to track order. Please check your details and try again.");
+      console.error("Tracking Error:", error);
+      toast.error("Failed to track order. Please check your details and try again.");
     } finally {
-       setLoading(false);
+      setLoading(false);
     }
   };
+
+  // Keep form in sync and auto-fetch
+  useEffect(() => {
+    if (initialQuery) {
+      setValue("searchQuery", initialQuery);
+      // Auto trigger the fetch manually
+      onSubmit({ searchQuery: initialQuery });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialQuery, setValue]);
 
   return (
     <div className="font-[Outfit] min-h-screen bg-[#faf9f8] overflow-hidden">
@@ -125,18 +129,18 @@ function TrackOrder() {
                             const trimmed = value.trim();
                             // Check characters: If it contains ONLY digits, it's evaluated as a mobile number.
                             const isNumeric = /^\d+$/.test(trimmed);
-                            
+
                             // Check if they typed a mobile number but used +, hyphens, or spaces which they shouldn't
                             const hasInvalidSymbols = /^[+\-\s]+\d+|\d+[+\-\s]+/.test(trimmed);
-                            
+
                             if (isNumeric) {
                               if (trimmed.length !== 10) return "Mobile number must be exactly 10 digits without symbols.";
                             } else {
-                               // It's likely an Order ID, which can contain letters and hyphens
-                               if (hasInvalidSymbols && !isNaN(trimmed.replace(/[^\d]/g, ''))) {
-                                  return "Mobile number must be exactly 10 digits without + or any extra symbols.";
-                               }
-                               if (trimmed.length < 5) return "Please enter a valid Order ID.";
+                              // It's likely an Order ID, which can contain letters and hyphens
+                              if (hasInvalidSymbols && !isNaN(trimmed.replace(/[^\d]/g, ''))) {
+                                return "Mobile number must be exactly 10 digits without + or any extra symbols.";
+                              }
+                              if (trimmed.length < 5) return "Please enter a valid Order ID.";
                             }
                             return true;
                           }
@@ -239,7 +243,7 @@ function TrackOrder() {
                         <div className="bg-gray-50/50 hover:bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1 transition-colors">
                           <p className="font-bold text-gray-900 text-lg mb-1">{item.name || item.itemName}</p>
                           <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${isCompleted ? 'bg-green-100 text-green-700' :
-                              isProcessing ? 'bg-amber-100 text-amber-700' : 'bg-primary/10 text-primary'
+                            isProcessing ? 'bg-amber-100 text-amber-700' : 'bg-primary/10 text-primary'
                             }`}>
                             Status: {statusVal}
                           </span>

@@ -234,6 +234,8 @@ const apiEndpoints = {
     getAllErrorLogs: `logerror/logs`,
     getOneError: (id) => `logerror/getOneError/${id}`,
     getAllBookingCta: `bookingCTA/admin/bookings`,
+    exportBookingCta: `bookingCTA/admin/bookings/export`,
+    markAsReadBookingCta: (id) => `bookingCTA/admin/bookings/${id}/read`,
     // Custom Events Admin endpoints
     getCustomEvents: "customEvents",
     getCustomEventById: (id) => `customEvents/${id}`,
@@ -321,6 +323,7 @@ const apiEndpoints = {
     downloadOrdersCSV: (orderStatus) =>
       `order/downloadOrdersCSV/${orderStatus}`,
     syncLeads: "syncLeads/sync-leads",
+    createSyncLead: "syncLeads/create",
     getAllSyncLeads: "syncLeads/get-all",
     getOneSyncLead: (id) => `syncLeads/get-one/${id}`,
     updateOneSyncLead: (id) => `syncLeads/update-one/${id}`,

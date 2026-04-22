@@ -184,6 +184,10 @@ const adminActionsApi = {
     apiService.get(apiEndpoints.adminActions.getOneError(id)),
   getAllBookingCta: (queryParams) =>
     apiService.get(apiEndpoints.adminActions.getAllBookingCta,queryParams),
+  exportBookingCta: (queryParams) =>
+    apiService.get(apiEndpoints.adminActions.exportBookingCta, queryParams),
+  markAsReadBookingCta: (id) =>
+    apiService.put(apiEndpoints.adminActions.markAsReadBookingCta(id)),
   // Custom Events Admin APIs
   getCustomEvents: (queryParams) => apiService.get(apiEndpoints.adminActions.getCustomEvents, queryParams),
   getCustomEventById: (id) => apiService.get(apiEndpoints.adminActions.getCustomEventById(id)),
