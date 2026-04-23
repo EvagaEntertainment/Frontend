@@ -11,7 +11,6 @@ import BookingSection from '../components/BookingSection/BookingSection'
 
 
 function HomePage() {
-  console.log("HomePage");
   return (
     <>
       <Breadcrumbs />

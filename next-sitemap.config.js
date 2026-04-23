@@ -16,10 +16,12 @@ module.exports = {
     '/booking-form',
     '/feedback-form',
     '/orderStatus',
+    '/custom-packages',
+    '/category',
     '/user/*',
     '/vendor/*',
     '/admin/*',
-    // PascalCase Pages Router duplicates
+    // PascalCase Pages Router duplicates (now 301-redirected via next.config.js)
     '/HomePage', '/HomePageOld',
     '/AboutEvaga',
     '/Blog',
@@ -43,10 +45,19 @@ module.exports = {
     '/userOrderDetailPage',
     '/TermsAndConditions',
     '/PrivacyPolicy',
+    // Missing PascalCase pages now added
+    '/AdvertisewithUs',
+    '/Careers',
+    '/CustomPackages',
+    '/CustomerService',
+    '/PressRelease',
+    '/PrivacyAndPolicy',
+    '/RefundAndCancellation',
+    '/SinglePackage',
   ],
 
   // Strip priority and changefreq — Google ignores them
-  transform: async (config, path) => ({
+  transform: async (_config, path) => ({
     loc: path,
     lastmod: new Date().toISOString(),
   }),

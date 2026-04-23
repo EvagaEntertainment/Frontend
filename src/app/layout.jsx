@@ -39,21 +39,12 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  alternates: {
-    canonical: 'https://www.eevagga.com',
-  },
+  // No root canonical — each page sets its own via alternates.canonical
   openGraph: {
     siteName: 'Eevagga Entertainment',
     type: 'website',
     locale: 'en_IN',
-    images: [
-      {
-        url: 'https://www.eevagga.com/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Eevagga Entertainment — Premium Event Packages',
-      },
-    ],
+    // og:image is auto-applied from src/app/opengraph-image.jpg by Next.js
   },
   twitter: {
     card: 'summary_large_image',
@@ -70,11 +61,11 @@ const organizationSchema = {
     {
       "@type": "Organization",
       "@id": "https://www.eevagga.com/#organization",
-      "name": "Evaga Entertainment",
+      "name": "Eevagga Entertainment",
       "url": "https://www.eevagga.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.eevagga.com/logo.png"
+        "url": "https://www.eevagga.com/logo.webp"
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -180,6 +171,7 @@ export default function RootLayout({ children }) {
             width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=1539348276629405&ev=PageView&noscript=1"
+            alt=""
           />
         </noscript>
       </body>
