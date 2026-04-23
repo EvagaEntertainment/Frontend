@@ -1,5 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 301 redirects: PascalCase legacy Pages Router URLs → canonical lowercase App Router URLs
+  async redirects() {
+    return [
+      { source: '/AdvertisewithUs', destination: '/advertise-with-us', permanent: true },
+      { source: '/Careers', destination: '/careers', permanent: true },
+      { source: '/CustomPackages', destination: '/custom-packages', permanent: true },
+      { source: '/CustomerService', destination: '/customer-service', permanent: true },
+      { source: '/PressRelease', destination: '/press-releases', permanent: true },
+      { source: '/PrivacyAndPolicy', destination: '/privacy-policy', permanent: true },
+      { source: '/RefundAndCancellation', destination: '/cancellation-policy', permanent: true },
+      { source: '/SinglePackage', destination: '/viewAll', permanent: true },
+      // Category index has no page — redirect to browse
+      { source: '/category', destination: '/viewAll', permanent: false },
+      // Other legacy ghost routes
+      { source: '/HomePage', destination: '/', permanent: true },
+      { source: '/HomePageOld', destination: '/', permanent: true },
+      { source: '/AboutEvaga', destination: '/about-us', permanent: true },
+      { source: '/OurService', destination: '/services', permanent: true },
+      { source: '/ViewAllPage', destination: '/viewAll', permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {
