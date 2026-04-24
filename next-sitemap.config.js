@@ -54,6 +54,8 @@ module.exports = {
     '/PrivacyAndPolicy',
     '/RefundAndCancellation',
     '/SinglePackage',
+    // Next.js OG image route — not an HTML page
+    '/opengraph-image.jpg',
   ],
 
   // Strip priority and changefreq — Google ignores them

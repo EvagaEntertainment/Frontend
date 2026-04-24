@@ -29,13 +29,10 @@ const aboutPageSchema = {
   "about": { "@id": "https://www.eevagga.com/#organization" }
 };
 
-const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
-
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
-      <h1 style={srOnly}>About Eevagga — India&apos;s Premium Event Celebration Brand</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );
