@@ -44,11 +44,11 @@ const CategoryNewCard = ({ imageUrl, title, text, link, disabled }) => {
         />
         
         {/* Base Gradient Overlay for standard legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent backdrop-blur-[2px] transition-opacity duration-700" />
         
         {/* Deep Dark/Accent Hover Overlay (Smooth Cross Fade) */}
         {!disabled && (
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20 opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-0 backdrop-blur-[4px] transition-opacity duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:opacity-100" />
         )}
       </div>
 
