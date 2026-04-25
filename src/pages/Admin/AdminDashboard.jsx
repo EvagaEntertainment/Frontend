@@ -2,6 +2,7 @@
 // src/components/AdminDashboard/AdminDashboard.jsx
 
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import AdminSideBar from "../../components/Admin/AdminSideBar";
 import VendorTable from "../../components/Admin/VendorTable";
@@ -56,8 +57,17 @@ const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
   "w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2";
+const slugify = (text) => text.toLowerCase().replace(/[\s_]+/g, '-');
+
+const allMenuItems = [
+  "Home", "Vendor", "Client", "All Services", "Waitlist", "Banner", "Gallery", "AdminCustomEvent", "Coupons", "Fee Breakdown by Category", "Gst by Category", "Testimonial", "GenerateQR", "New Orders", "New Order Leadsquare", "Confirmed Orders", "Ongoing Orders", "Completed Orders", "Cancelled Orders", "Vendor Reports", "Customer Reports", "Booking Reports", "Payment Financial Reports", "Blog", "NewsLetter", "Customer Query", "Vendor Query", "Feedback", "BookingCTA", "AdminCustomEventSubmissions", "Admin Users", "Error Logs", "VendorDocumentVerification", "vendorServiceAccess"
+];
+
 const AdminDashboard = () => {
-  const [selectedMenu, setSelectedMenu] = useState("Home");
+  const router = useRouter();
+  const segment = useSelectedLayoutSegment();
+  const tabSlug = segment;
+  const selectedMenu = allMenuItems.find(m => slugify(m) === tabSlug) || "Home";
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [mounted, setMounted] = useState(false);
 
@@ -79,8 +89,7 @@ const AdminDashboard = () => {
   const totalNumberOfUser = adminActions?.totalNumberOfUser;
 
   const handleMenuSelect = (menu) => {
-    sessionStorage.setItem("adminMenu", menu);
-    setSelectedMenu(menu);
+    router.push(`/admin/dashboard/${slugify(menu)}`);
   };
   const handleGetAllUser = async () => {
     const response = await getUserData.callApi();
@@ -171,12 +180,7 @@ const AdminDashboard = () => {
       "Password must contain at least one alphabet, one number, and one symbol."
     );
   };
-  useEffect(() => {
-    const adminMenu = sessionStorage.getItem("adminMenu");
-    if (adminMenu) {
-      setSelectedMenu(adminMenu);
-    }
-  }, []);
+  // sessionStorage effect removed as we now rely on URL params
 
   const handleVendorSelect = (vendor) => {
     setSelectedVendor(vendor);

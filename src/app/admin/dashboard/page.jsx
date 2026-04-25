@@ -1,8 +1,7 @@
-import { Suspense } from 'react';
-import PageComponent from '../../../pages/Admin/AdminDashboard';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
-  return <Suspense fallback={null}><PageComponent /></Suspense>;
+  redirect('/admin/dashboard/home');
 }
 
 
