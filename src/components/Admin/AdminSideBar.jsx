@@ -237,41 +237,70 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
   ];
 
   const filterMenuItems = (role, permissions) => {
-    const parsedPermissions =
-      typeof permissions === "string" ? JSON.parse(permissions) : permissions;
+    let parsedPermissions = permissions;
+    if (typeof permissions === "string") {
+      try {
+        parsedPermissions = JSON.parse(permissions);
+      } catch (e) {
+        parsedPermissions = permissions.split(",");
+      }
+    }
+
+    // 1. If role is admin OR permissions are empty/null, show everything
+    if (role === "admin" || !parsedPermissions || parsedPermissions.length === 0) {
+      return menuItems;
+    }
 
     return menuItems.filter((item) => {
-      if (role === "sub_admin" && (parsedPermissions?.includes("superadmin") || false)) {
-        return true;
+      // Super Admin bypass
+      if (parsedPermissions.includes("superadmin")) return true;
+
+      // supportcenter -> Show Support Center
+      if (parsedPermissions.includes("supportcenter")) {
+        if (item.id === "SupportCenter") return true;
       }
-      if (role === "admin") {
-        return true;
-      }
-      if (role === "sub_admin") {
-        if (parsedPermissions?.includes("ContentModerator")) {
-          return (
-            item.id === "User Management" &&
-            item.children?.some((child) => child.id === "All Services")
-          );
-        }
-        if (parsedPermissions?.includes("support")) {
-          return item.id === "SupportCenter";
-        }
-        if (parsedPermissions?.includes("marketingandPromotions")) {
-          return item.id === "Website Management";
-        }
-        if (parsedPermissions?.includes("vendorManager")) {
-          return item.id === "User Management";
-        }
-        if (parsedPermissions?.includes("eventManager")) {
-          return item.id === "Orders";
+
+      // orders:ordertracking -> Show Orders (specifically New Order Leadsquare)
+      if (parsedPermissions.includes("orders:ordertracking")) {
+        if (item.id === "Orders") {
+          // If we want to filter children as well, we can do it here or just return true to show all Orders
+          // The user specifically mentioned "show orders and new order leadsquare"
+          // Let's ensure the item itself is shown.
+          return true;
         }
       }
+
+      // Existing sub_admin mappings
+      if (parsedPermissions.includes("ContentModerator")) {
+        if (item.id === "User Management" && item.children?.some(c => c.id === "All Services")) return true;
+      }
+      if (parsedPermissions.includes("support")) {
+        if (item.id === "SupportCenter") return true;
+      }
+      if (parsedPermissions.includes("marketingandPromotions")) {
+        if (item.id === "Website Management") return true;
+      }
+      if (parsedPermissions.includes("vendorManager")) {
+        if (item.id === "User Management") return true;
+      }
+      if (parsedPermissions.includes("eventManager")) {
+        if (item.id === "Orders") return true;
+      }
+
       return false;
+    }).map(item => {
+      // 2. If it's orders:ordertracking, filter the children of "Orders" to only show "New Order Leadsquare"
+      if (parsedPermissions.includes("orders:ordertracking") && !parsedPermissions.includes("superadmin") && item.id === "Orders") {
+        return {
+          ...item,
+          children: item.children?.filter(child => child.id === "New Order Leadsquare")
+        };
+      }
+      return item;
     });
   };
 
-  const filteredMenuItems = filterMenuItems(details?.role, details?.permissions);
+  const filteredMenuItems = filterMenuItems(auth?.role || details?.role, auth?.permissions || details?.permissions);
 
   return (
     <motion.div

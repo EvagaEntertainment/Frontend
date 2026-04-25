@@ -13,6 +13,17 @@ import { toast } from "react-toastify";
 import TruncateText from "../../utils/TruncateText";
 import parse from "html-react-parser";
 import DeleteForm from "./DeleteForm";
+import ReactDOM from "react-dom";
+import 'react-quill/dist/quill.snow.css';
+
+// Polyfill for findDOMNode in React 18 for libraries like react-quill
+if (typeof window !== 'undefined' && !ReactDOM.findDOMNode) {
+    ReactDOM.findDOMNode = (instance) => {
+        if (!instance) return null;
+        if (instance instanceof HTMLElement) return instance;
+        return null;
+    };
+}
 function AdminBlog() {
   const [page, setPage] = useState(1);
   const [allBlog, setAllBlog] = useState([]);
@@ -317,6 +328,8 @@ function AdminBlog() {
                 </label>
                 <ReactQuill
                   id="content"
+                  theme="snow"
+                  defaultValue=""
                   onChange={handleQuillChange}
                   className="bg-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -455,7 +468,8 @@ function AdminBlog() {
                 <ReactQuill
                   ref={quillRef}
                   id="content"
-                  value={blogContent}
+                  theme="snow"
+                  value={blogContent || ""}
                   onChange={(value) => setBlogContent(value)}
                   className="bg-white rounded-md h-[300px] shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />

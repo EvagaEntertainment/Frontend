@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     role: Cookies.get("role") || null,
     accessToken: Cookies.get("accessToken") || null,
     userId: Cookies.get("userId") || null,
+    permissions: Cookies.get("permissions") ? JSON.parse(Cookies.get("permissions")) : null,
   });
   const allowedUserRoutes = [
     internalRoutes.home,
@@ -37,6 +38,8 @@ export const AuthProvider = ({ children }) => {
       case "vendor":
         return internalRoutes.vendorDashboard;
       case "admin":
+      case "sub_admin":
+      case "employee":
         return internalRoutes.adminDashboard;
       case "user":
         return internalRoutes.home;
@@ -61,14 +64,17 @@ export const AuthProvider = ({ children }) => {
   // };
 
 
-  const login = (accessToken, role, userId) => {
+  const login = (accessToken, role, userId, permissions) => {
     // Save to state
-    setAuth({ isAuthenticated: true, role, accessToken, userId });
+    setAuth({ isAuthenticated: true, role, accessToken, userId, permissions });
 
     // Save to cookies
     Cookies.set("accessToken", accessToken, { expires: 1 });
     Cookies.set("role", role, { expires: 1 });
     Cookies.set("userId", userId, { expires: 1 });
+    if (permissions) {
+      Cookies.set("permissions", JSON.stringify(permissions), { expires: 1 });
+    }
     notificationService.success("Welcome to Eevagga!");
 
     // Check if a redirect URL is provided
@@ -95,7 +101,7 @@ export const AuthProvider = ({ children }) => {
         console.log('inside elseif user');
 
         await userApi.logout(auth.userId);
-      } else if (auth.role === "admin") {
+      } else if (auth.role === "admin" || auth.role === "sub_admin" || auth.role === "employee") {
         await adminApi.logout(auth.userId);
       }
 
@@ -105,10 +111,12 @@ export const AuthProvider = ({ children }) => {
         role: null,
         accessToken: null,
         userId: null,
+        permissions: null,
       });
       Cookies.remove("accessToken");
       Cookies.remove("role");
       Cookies.remove("userId");
+      Cookies.remove("permissions");
 
       // Dispatch logout action to Redux store
       dispatch(logoutReducer());
@@ -128,12 +136,14 @@ export const AuthProvider = ({ children }) => {
       role: Cookies.get("role") || null,
       accessToken: Cookies.get("accessToken") || null,
       userId: Cookies.get("userId") || null,
+      permissions: Cookies.get("permissions") ? JSON.parse(Cookies.get("permissions")) : null,
     });
     dispatch(
       loginReducer({
         role: Cookies.get("role") || null,
         accessToken: Cookies.get("accessToken") || null,
         userId: Cookies.get("userId") || null,
+        permissions: Cookies.get("permissions") ? JSON.parse(Cookies.get("permissions")) : null,
       })
     );
 

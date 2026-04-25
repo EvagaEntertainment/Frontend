@@ -68,7 +68,9 @@ function CreateSubAdmin() {
     formdata.append("name", data?.name);
     formdata.append("email", data?.email);
     formdata.append("password", data?.password);
-    formdata.append("role", "sub_admin");
+
+    const roleToSend = (data?.adminType === "orders:ordertracking" || data?.adminType === "supportcenter") ? "employee" : "sub_admin";
+    formdata.append("role", roleToSend);
     formdata.append("permissions", data?.adminType);
     formdata.append("status", data?.status);
 
@@ -99,7 +101,9 @@ function CreateSubAdmin() {
       formdata.append("name", data?.name);
       formdata.append("email", data?.email);
       formdata.append("password", data?.password);
-      formdata.append("role", "sub_admin");
+
+      const roleToSend = (data?.adminType === "orders:ordertracking" || data?.adminType === "supportcenter") ? "employee" : "sub_admin";
+      formdata.append("role", roleToSend);
       formdata.append("permissions", data?.adminType);
       formdata.append("status", data?.status);
 
@@ -288,16 +292,8 @@ function CreateSubAdmin() {
                   >
                     <InputLabel>Admin Type</InputLabel>
                     <Select {...field} label="Admin Type">
-                      <MenuItem value="superadmin">Super Admin</MenuItem>
-                      <MenuItem value="ContentModerator">
-                        Content Moderator
-                      </MenuItem>
-                      <MenuItem value="marketingandPromotions">
-                        Marketing & Promotions
-                      </MenuItem>
-                      <MenuItem value="support">Customer Support</MenuItem>
-                      <MenuItem value="vendorManager">Vendor Manager</MenuItem>
-                      <MenuItem value="eventManager">Event Manager</MenuItem>
+                      <MenuItem value="supportcenter">Customer Service</MenuItem>
+                      <MenuItem value="orders:ordertracking">Event Operations</MenuItem>
                     </Select>
                   </FormControl>
                 )}

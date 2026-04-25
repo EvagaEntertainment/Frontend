@@ -327,7 +327,7 @@ const AuthForm = ({ stages, formType, handleFormSubmit, role }) => {
             );
             setCurrentStage(currentStage + 1); // Redirect to password reset stage
           } else {
-            login(response.token, response.role, response.userId);
+            login(response.token, response.role, response.userId, response.permissions);
           }
         }
       } else {
