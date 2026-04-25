@@ -8,6 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactGA from "react-ga4";
 
 import { useAuth } from '../context/AuthContext';
+import ReactDOM from 'react-dom';
+
+// Polyfill for findDOMNode in React 18 for compatibility with older libraries
+if (typeof window !== 'undefined' && !ReactDOM.findDOMNode) {
+  ReactDOM.findDOMNode = (instance) => {
+    if (!instance) return null;
+    if (instance instanceof HTMLElement) return instance;
+    return null;
+  };
+}
 import { fetchUserWishlist } from '../context/redux/slices/wishlistSlice';
 import { internalRoutes } from '../utils/internalRoutes';
 
