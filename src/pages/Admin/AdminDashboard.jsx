@@ -88,6 +88,14 @@ const AdminDashboard = () => {
   const totalNumberOfVendors = adminActions?.totalNumberOfVendors;
   const totalNumberOfUser = adminActions?.totalNumberOfUser;
 
+  // Permission parsing for conditional rendering and redirection
+  const permissions = auth.permissions || details?.permissions;
+  let parsedPermissions = permissions;
+  if (typeof permissions === "string") {
+    try { parsedPermissions = JSON.parse(permissions); } catch (e) { parsedPermissions = permissions.split(","); }
+  }
+  const role = auth.role || details?.role;
+
   const handleMenuSelect = (menu) => {
     router.push(`/admin/dashboard/${slugify(menu)}`);
   };
@@ -193,6 +201,30 @@ const AdminDashboard = () => {
       setSelectedVendor(JSON.parse(selectedVendorInSession));
     }
   }, []);
+
+  useEffect(() => {
+    if (auth.userId && (!segment || segment === 'home')) {
+      // If Super Admin, they are allowed to stay on Home
+      if (role === "admin" || (parsedPermissions && (parsedPermissions.includes("superadmin") || parsedPermissions.length === 0))) {
+        return;
+      }
+
+      // Redirect logic for restricted roles (Employees/Sub-Admins)
+      if (parsedPermissions?.includes("supportcenter")) {
+        router.replace("/admin/dashboard/customer-query");
+      } else if (parsedPermissions?.includes("orders:ordertracking")) {
+        router.replace("/admin/dashboard/new-order-leadsquare");
+      } else if (parsedPermissions?.includes("ContentModerator")) {
+        router.replace("/admin/dashboard/all-services");
+      } else if (parsedPermissions?.includes("marketingandPromotions")) {
+        router.replace("/admin/dashboard/banner");
+      } else if (parsedPermissions?.includes("vendorManager")) {
+        router.replace("/admin/dashboard/vendor");
+      } else if (parsedPermissions?.includes("eventManager")) {
+        router.replace("/admin/dashboard/new-orders");
+      }
+    }
+  }, [auth.userId, segment, auth.permissions, details?.permissions, details?.role, router]);
 
   useEffect(() => {
     if (auth.userId) {
@@ -340,7 +372,9 @@ const AdminDashboard = () => {
         {selectedMenu === "Payment Financial Reports" && (
           <PaymentFinancialReports />
         )}
-        {selectedMenu === "Home" && <AdminDashBoardchart />}
+        {selectedMenu === "Home" && (role === "admin" || !parsedPermissions || parsedPermissions.length === 0 || parsedPermissions.includes("superadmin")) && (
+          <AdminDashBoardchart />
+        )}
         {selectedMenu === "Blog" && <AdminBlog />}
         {selectedMenu === "NewsLetter" && <AdminNewsLetter />}
         {selectedMenu === "Error Logs" && <AdminErrorLogs />}

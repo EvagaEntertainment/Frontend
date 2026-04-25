@@ -150,6 +150,8 @@ function EditSubAdminForm({ defaultValues, onSubmit }) {
                 <MenuItem value="support">Customer Support</MenuItem>
                 <MenuItem value="vendorManager">Vendor Manager</MenuItem>
                 <MenuItem value="eventManager">Event Manager</MenuItem>
+                <MenuItem value="supportcenter">Customer Service</MenuItem>
+                <MenuItem value="orders:ordertracking">Event Operations</MenuItem>
               </Select>
             </FormControl>
           )}

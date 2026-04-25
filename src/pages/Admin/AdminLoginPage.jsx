@@ -30,11 +30,12 @@ function AdminLoginPage() {
       const response = await adminLoginApi(data);
       //   console.log("admin login response:", response);
       if (response.token && response.role && response.userId) {
-        login(response.token, response.role, response.userId);
+        login(response.token, response.role, response.userId, response.permissions);
         const payload = {
           accessToken: response.token,
           role: response.role,
           userId: response.userId,
+          permissions: response.permissions,
         };
         dispatch(loginReducer(payload));
 
