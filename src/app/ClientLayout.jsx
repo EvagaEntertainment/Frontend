@@ -122,7 +122,7 @@ export default function ClientLayout({ children }) {
     <>
       <Suspense fallback={null}><UTMTracker /></Suspense>
       {noNavbarPaths.includes(pathname) && <DynamicNav />}
-      {!noNewNavbarPaths.includes(pathname) && <Navbar />}
+      {!noNewNavbarPaths.includes(pathname) && !pathname.startsWith(internalRoutes.adminDashboard) && <Navbar />}
 
       <GlobalEventHandlers>
         <ToastContainer
@@ -137,11 +137,11 @@ export default function ClientLayout({ children }) {
           pauseOnHover
           theme="light"
         />
-        {!noWhatsappPaths.includes(pathname) && <WhatsAppButton />}
-        {!noWhatsappPaths.includes(pathname) && <StickyAd />}
+        {!noWhatsappPaths.includes(pathname) && !pathname.startsWith(internalRoutes.adminDashboard) && <WhatsAppButton />}
+        {!noWhatsappPaths.includes(pathname) && !pathname.startsWith(internalRoutes.adminDashboard) && <StickyAd />}
         <GoToTop />
         {children}
-        {!noFooterPaths.includes(pathname) && <Footer />}
+        {!noFooterPaths.includes(pathname) && !pathname.startsWith(internalRoutes.adminDashboard) && <Footer />}
       </GlobalEventHandlers>
     </>
   );

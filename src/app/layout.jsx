@@ -96,9 +96,17 @@ const organizationSchema = {
   ]
 };
 
+import { Playfair_Display } from 'next/font/google';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={playfair.variable}>
       <head>
         <link rel="preconnect" href="https://d3a9w2e6vszgj1.cloudfront.net" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
