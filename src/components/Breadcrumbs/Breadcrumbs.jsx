@@ -6,7 +6,9 @@ import { motion } from "framer-motion";
 
 const Breadcrumbs = () => {
   const pathname = usePathname();
-  const pathnames = (pathname || "").split("/").filter((x) => x);
+  const pathnames = (pathname || "")
+    .split("/")
+    .filter((x) => x && !/^[0-9a-fA-F]{24}$/.test(x));
 
   // If we are on the homepage, don't show breadcrumbs
   if (pathname === "/") return null;
