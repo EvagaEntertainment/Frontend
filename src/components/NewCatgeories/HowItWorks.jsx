@@ -27,7 +27,7 @@ function NewCatgeories() {
   const data = [
     {
       image: DecorImage,
-      title: "Eevagga Decor",
+      title: "Eevagga Decor Studio",
       text: "Stunning setups that transform your moments into memories.",
       link: `${internalRoutes?.bookingForm}?category=decor`,
     },
@@ -35,22 +35,19 @@ function NewCatgeories() {
       image: GiftStudioImage,
       title: "Eevagga Gift Studio",
       text: "Thoughtful gifts that leave smiles long after the celebration ends.",
-      link: `#`,
-      disabled: true,
+      link: `${internalRoutes?.bookingForm}?category=gift`,
     },
     {
       image: ExperienceCentreImage,
       title: "Eevagga Experience Studio",
       text: "Engaging activities that spark joy and create unforgettable experiences.",
-      link: `#`,
-      disabled: true,
+      link: `${internalRoutes?.bookingForm}?category=experience`,
     },
     {
       image: FeastStudioImage,
       title: "Eevagga Feast Studio",
       text: "Delicious food that brings people together and makes every bite count.",
-      link: `#`,
-      disabled: true,
+      link: `${internalRoutes?.bookingForm}?category=feast`,
     },
   ];
 
@@ -71,11 +68,11 @@ function NewCatgeories() {
       >
         {/* Main Title */}
         <motion.h2
-          className="text-primary text-4xl font-normal text-center"
+          className="text-primary text-4xl sm:text-5xl font-normal text-center font-playfair tracking-wide"
           variants={itemVariants}
           transition={{ type: "spring", stiffness: 120, damping: 15 }}
         >
-          How it Works?
+          Your Celebration, Fully Crafted.
         </motion.h2>
 
         {/* Decorative divider */}
@@ -86,13 +83,13 @@ function NewCatgeories() {
         />
 
         {/* Subheading */}
-        <motion.h3
+        {/* <motion.h3
           className="text-textGray text-xl md:text-xl font-normal text-center"
           variants={itemVariants}
           transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
         >
-          Choose Your Celebration
-        </motion.h3>
+          From décor and gifts to immersive experiences and gourmet dining—everything is created, curated, and delivered by Eevagga.
+        </motion.h3> */}
 
         {/* Description */}
         <motion.p
@@ -100,7 +97,7 @@ function NewCatgeories() {
           variants={itemVariants}
           transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
         >
-          Pick an event type and find the perfect package in seconds
+          From décor and gifts to immersive experiences and gourmet dining—everything is created, curated, and delivered by Eevagga.
         </motion.p>
       </motion.div>
 
