@@ -1,7 +1,7 @@
 'use client';
 import React from 'react'
 import { motion } from 'framer-motion';
-import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 function Careers() {
   return (
     <>

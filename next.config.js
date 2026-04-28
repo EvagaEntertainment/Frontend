@@ -4,7 +4,7 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/AdvertisewithUs', destination: '/advertise-with-us', permanent: true },
-      { source: '/Careers', destination: '/careers', permanent: true },
+
       { source: '/CustomPackages', destination: '/custom-packages', permanent: true },
       { source: '/CustomerService', destination: '/customer-service', permanent: true },
       { source: '/PressRelease', destination: '/press-releases', permanent: true },

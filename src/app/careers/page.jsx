@@ -16,7 +16,7 @@ export const metadata = {
 
 import { Suspense } from 'react';
 import { ogImages } from '../_seo';
-import PageComponent from '../../pages/Careers';
+import PageComponent from '../../components/Careers/CareersPage';
 
 export default function Page() {
   return <Suspense fallback={null}><PageComponent /></Suspense>;
