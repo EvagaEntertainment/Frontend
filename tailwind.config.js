@@ -25,8 +25,8 @@ module.exports = {
         hoverYellow: "#CBAB00",
       },
       fontFamily: {
-        outfit: ["Outfit", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        outfit: ["var(--font-outfit)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
       },
     },
     fontSize: {

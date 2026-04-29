@@ -14,6 +14,11 @@ import { Suspense } from 'react';
 import Providers from './Providers';
 import ClientLayout from './ClientLayout';
 import Script from 'next/script';
+import { Outfit, Inter, Playfair_Display } from 'next/font/google';
+
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', display: 'swap' });
 
 export const viewport = {
   width: 'device-width',
@@ -59,13 +64,28 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
+      "@type": ["LocalBusiness", "EntertainmentBusiness"],
       "@id": "https://www.eevagga.com/#organization",
       "name": "Eevagga Entertainment",
       "url": "https://www.eevagga.com",
       "logo": {
         "@type": "ImageObject",
         "url": "https://www.eevagga.com/logo.webp"
+      },
+      "image": "https://www.eevagga.com/og-image.jpg",
+      "description": "India's premium birthday and event celebration platform in Bangalore.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "No10/12, Prestige Atlanta, 80 Feet Rd, Koramangala, 1 A Block Koramangala",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "postalCode": "560034",
+        "addressCountry": "IN"
+      },
+      "priceRange": "₹₹₹",
+      "areaServed": {
+        "@type": "City",
+        "name": "Bangalore"
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -74,8 +94,10 @@ const organizationSchema = {
         "availableLanguage": "English"
       },
       "sameAs": [
-        "https://www.instagram.com/eevagga",
-        "https://www.facebook.com/eevagga"
+        "https://www.instagram.com/eevaggaofficial",
+        "https://www.facebook.com/share/15UhbdRWh8/",
+        "https://www.linkedin.com/company/evaga-entertainment",
+        "https://x.com/eevagga"
       ]
     },
     {
@@ -96,18 +118,13 @@ const organizationSchema = {
   ]
 };
 
-import { Playfair_Display } from 'next/font/google';
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={playfair.variable}>
+    <html lang="en" className={`${outfit.variable} ${inter.variable} ${playfair.variable}`}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://accounts.google.com" />
         <link rel="preconnect" href="https://d3a9w2e6vszgj1.cloudfront.net" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />

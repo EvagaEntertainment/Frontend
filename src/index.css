@@ -2,7 +2,7 @@
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 @import "./styles/tailwindComponents.css";
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Inter:wght@100..900&display=swap");
+/* Google Fonts loaded via next/font/google in layout.jsx (self-hosted, eliminates external request) */
 
 @tailwind base;
 @tailwind components;
