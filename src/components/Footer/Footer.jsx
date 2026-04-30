@@ -233,7 +233,7 @@ function Footer() {
 
         {/* Footer Bottom */}
         <div className="text-center mt-6 text-sm col-span-2">
-          <p>© 2024 {companyDetails.fullName} All rights reserved</p>
+          <p>© {new Date().getFullYear()} {companyDetails.fullName} All rights reserved</p>
         </div>
       </div>
     </footer>

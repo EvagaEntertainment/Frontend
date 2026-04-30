@@ -25,17 +25,25 @@ const aboutPageSchema = {
   "url": "https://www.eevagga.com/about-us",
   "name": "About Us — Eevagga Entertainment",
   "description": "Learn about Eevagga, India's premium birthday celebration brand.",
+  "inLanguage": "en-IN",
   "isPartOf": { "@id": "https://www.eevagga.com/#website" },
   "about": { "@id": "https://www.eevagga.com/#organization" }
 };
 
-const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eevagga.com" },
+    { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://www.eevagga.com/about-us" }
+  ]
+};
 
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
-      <h1 style={srOnly}>About Eevagga — India&apos;s Premium Event Celebration Brand</h1>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

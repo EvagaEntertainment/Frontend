@@ -17,6 +17,7 @@ module.exports = {
     '/feedback-form',
     '/orderStatus',
     '/custom-packages',
+    '/advertise-with-us',
     '/category',
     '/user/*',
     '/vendor/*',
@@ -47,13 +48,14 @@ module.exports = {
     '/PrivacyPolicy',
     // Missing PascalCase pages now added
     '/AdvertisewithUs',
-    '/Careers',
     '/CustomPackages',
     '/CustomerService',
     '/PressRelease',
     '/PrivacyAndPolicy',
     '/RefundAndCancellation',
     '/SinglePackage',
+    // Next.js OG image route — not an HTML page
+    '/opengraph-image.jpg',
   ],
 
   // Strip priority and changefreq — Google ignores them

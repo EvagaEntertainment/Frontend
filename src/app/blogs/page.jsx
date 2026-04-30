@@ -29,12 +29,22 @@ const blogSchema = {
   "inLanguage": "en-IN"
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eevagga.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.eevagga.com/blogs" }
+  ]
+};
+
 const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
 
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <h1 style={srOnly}>Eevagga Blog — Birthday &amp; Event Celebration Ideas</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>

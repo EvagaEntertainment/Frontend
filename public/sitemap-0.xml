@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://www.eevagga.com</loc><lastmod>2026-04-23T16:43:53.153Z</lastmod></url>
-<url><loc>https://www.eevagga.com/about-us</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/advertise-with-us</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/blogs</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/cancellation-policy</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/customer-service</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/opengraph-image.jpg</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/press-releases</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/privacy-policy</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/services</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/terms-and-condition</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
-<url><loc>https://www.eevagga.com/viewAll</loc><lastmod>2026-04-23T16:43:53.154Z</lastmod></url>
+<url><loc>https://www.eevagga.com</loc><lastmod>2026-04-30T04:34:47.827Z</lastmod></url>
+<url><loc>https://www.eevagga.com/about-us</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/blogs</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/cancellation-policy</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/careers</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/customer-service</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/press-releases</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/privacy-policy</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/services</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/terms-and-condition</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
+<url><loc>https://www.eevagga.com/viewAll</loc><lastmod>2026-04-30T04:34:47.828Z</lastmod></url>
 </urlset>

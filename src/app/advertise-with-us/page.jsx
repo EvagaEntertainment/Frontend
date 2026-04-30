@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Advertise With Us",
   description: "Partner with Eevagga to reach thousands of celebration-ready customers in Bangalore and across India.",
+  robots: { index: false, follow: false },
   alternates: { canonical: '/advertise-with-us' },
   openGraph: {
     title: "Advertise With Us | Eevagga",

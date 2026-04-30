@@ -91,7 +91,8 @@ function BannerNew({ image, height, category, preview }) {
           alt="Banner"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${!imageLoaded ? 'opacity-0' : 'opacity-100'
             }`}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           onLoad={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-black/30"></div>
