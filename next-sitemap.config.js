@@ -17,6 +17,7 @@ module.exports = {
     '/feedback-form',
     '/orderStatus',
     '/custom-packages',
+    '/advertise-with-us',
     '/category',
     '/user/*',
     '/vendor/*',
@@ -47,7 +48,6 @@ module.exports = {
     '/PrivacyPolicy',
     // Missing PascalCase pages now added
     '/AdvertisewithUs',
-    '/Careers',
     '/CustomPackages',
     '/CustomerService',
     '/PressRelease',
