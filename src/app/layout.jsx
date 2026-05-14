@@ -58,9 +58,6 @@ export const metadata = {
   other: {
     'p:domain_verify': '4ffff8fe28fdfc5268597c4a91669fb1',
   },
-  verification: {
-    google: 'iPHZ2NxMlXjSa6-GXwPyixa0fcIvNyBi33WrIHYvsaM',
-  },
 };
 
 const organizationSchema = {
