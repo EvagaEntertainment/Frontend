@@ -233,7 +233,14 @@ const AdminDashboard = () => {
     }
   }, [dispatch, auth.userId]);
 
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      router.replace("/admin/login");
+    }
+  }, [auth.isAuthenticated, router]);
+
   if (!mounted) return null;
+  if (!auth.isAuthenticated) return null;
 
   return (
     <div className="flex h-auto bg-gray-100">
