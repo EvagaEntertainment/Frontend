@@ -8,6 +8,7 @@ import RealStories from '../components/RealStories/RealStories'
 import ExpertSection from '../components/ExpertSection/ExpertSection'
 import FAQSection from '../components/FAQSection/FAQSection'
 import BookingSection from '../components/BookingSection/BookingSection'
+import FloatingVideoWidget from '../utils/FloatingVideoWidget'
 
 
 function HomePage() {
@@ -25,6 +26,7 @@ function HomePage() {
         {/* <WhyChooseUs/> */}
         {/* <OurWorkSection/> */}
         <FAQSection />
+        <FloatingVideoWidget />
       </div>
     </>
   )

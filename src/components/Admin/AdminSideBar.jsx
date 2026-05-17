@@ -23,6 +23,7 @@ import {
   FaFirstOrderAlt,
   FaRegImage,
   FaWpforms,
+  FaPlay,
 } from "react-icons/fa6";
 import { GrCompliance } from "react-icons/gr";
 import { motion, AnimatePresence } from "framer-motion";
@@ -136,6 +137,11 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
           id: "GenerateQR",
           label: "Generate QR",
           icon: <FaQrcode />,
+        },
+        {
+          id: "FloatingVideo",
+          label: "Floating Video",
+          icon: <FaPlay />,
         },
       ],
     },

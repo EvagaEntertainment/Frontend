@@ -257,6 +257,9 @@ const apiEndpoints = {
     getCustomEventSubmissionsByStatus: (status) => `customEventSubmissions/status/${status}`,
     getCustomEventSubmissionStats: "customEventSubmissions/stats/overview",
     getCustomEventSubmissionsNeedingAttention: "customEventSubmissions/admin/needing-attention",
+    getFloatingVideoConfig: "floating-video/get-config",
+    updateFloatingVideoConfig: "floating-video/update-config",
+    deleteFloatingVideoConfig: "floating-video/delete-config",
     // QR Codes Admin endpoints
     getAllQRs: "qr/get-all",
     getOneQR: (id) => `qr/get-one/${id}`,
