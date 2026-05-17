@@ -33,6 +33,12 @@ const adminApi = {
         "Content-Type": "multipart/form-data",
       },
     }),
+  getFloatingVideoConfig: () =>
+    apiService.get(apiEndpoints.adminActions.getFloatingVideoConfig),
+  updateFloatingVideoConfig: (data) =>
+    apiService.post(apiEndpoints.adminActions.updateFloatingVideoConfig, data),
+  deleteFloatingVideo: () =>
+    apiService.delete(apiEndpoints.adminActions.deleteFloatingVideoConfig),
 };
 
 export default adminApi;
