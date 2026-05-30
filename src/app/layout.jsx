@@ -32,7 +32,7 @@ export const metadata = {
     default: 'Eevagga Entertainment',
     template: '%s | Eevagga',
   },
-  description: "India's Premium Event Celebration Platform — curated birthday, wedding & corporate event packages in Bangalore.",
+  description: "Bangalore's premium full-service birthday, house warming and baby shower celebration company. End-to-end planning, decor, themes and execution in Bangalore.",
   robots: {
     index: true,
     follow: true,
@@ -73,7 +73,7 @@ const organizationSchema = {
         "url": "https://www.eevagga.com/logo.webp"
       },
       "image": "https://www.eevagga.com/og-image.jpg",
-      "description": "India's premium birthday and event celebration platform in Bangalore.",
+      "description": "Bangalore's premium full-service birthday, house warming and baby shower planning company. We handle end-to-end decoration, themes, venues and execution.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "No10/12, Prestige Atlanta, 80 Feet Rd, Koramangala, 1 A Block Koramangala",

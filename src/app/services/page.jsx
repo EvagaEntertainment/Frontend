@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Our Services",
-  description: "Explore Eevagga's premium birthday celebration and decoration services tailor-fit for you.",
-  keywords: "birthday services, decorators, premium event planning",
+  title: "Birthday & Celebration Services in Bangalore | Eevagga",
+  description: "Explore Eevagga's full-service birthday, house warming and baby shower planning services in Bangalore. Themes, decor, photography, venues and end-to-end execution.",
+  keywords: "birthday decoration services Bangalore, birthday planning services Bangalore, house warming services Bangalore, baby shower planning Bangalore, premium celebration services",
   alternates: { canonical: '/services' },
   openGraph: {
-    title: "Our Services | Eevagga",
-    description: "Explore Eevagga's premium birthday celebration and decoration services tailor-fit for you.",
+    title: "Birthday & Celebration Services in Bangalore | Eevagga",
+    description: "Full-service birthday, house warming and baby shower planning in Bangalore. Themes, decor, photography and end-to-end execution.",
     url: "https://www.eevagga.com/services",
     siteName: "Eevagga",
     type: "website",
@@ -22,10 +22,10 @@ const servicesSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "@id": "https://www.eevagga.com/services#service",
-  "name": "Premium Event Celebration Services",
-  "description": "Curated birthday, wedding and corporate event packages in Bangalore including decoration, photography, catering and entertainment.",
+  "name": "Birthday, House Warming & Baby Shower Planning Services in Bangalore",
+  "description": "Full-service birthday, house warming and baby shower planning in Bangalore. Includes theme decoration, photography, venue coordination, entertainment and on-ground execution.",
   "provider": { "@id": "https://www.eevagga.com/#organization" },
-  "serviceType": "Event Planning and Celebration",
+  "serviceType": "Birthday and Celebration Planning",
   "areaServed": { "@type": "City", "name": "Bangalore", "sameAs": "https://en.wikipedia.org/wiki/Bangalore" },
   "url": "https://www.eevagga.com/services"
 };
@@ -39,11 +39,14 @@ const breadcrumbSchema = {
   ]
 };
 
+const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
+
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <h1 style={srOnly}>Birthday &amp; Celebration Services in Bangalore — Eevagga</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

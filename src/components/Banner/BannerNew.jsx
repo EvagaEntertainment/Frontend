@@ -79,7 +79,7 @@ function BannerNew({ image, height, category, preview }) {
           preview ? (
             <img
               src={preview?.src || preview}
-              alt="Banner Preview"
+              alt={category ? `${category} celebration in Bangalore — Eevagga` : "Birthday celebration in Bangalore — Eevagga"}
               className="absolute inset-0 w-full h-full object-cover blur-md"
             />
           ) : (
@@ -88,7 +88,7 @@ function BannerNew({ image, height, category, preview }) {
         )}
         <img
           src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + image}
-          alt="Banner"
+          alt={category ? `${category} celebration in Bangalore — Eevagga` : "Birthday celebration in Bangalore — Eevagga"}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${!imageLoaded ? 'opacity-0' : 'opacity-100'
             }`}
           loading="eager"
