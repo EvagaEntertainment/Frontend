@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Blogs",
-  description: "Read our latest articles on premium birthday celebrations, decoration ideas, and event planning.",
-  keywords: "birthday blog, celebration ideas, party planning tips",
+  title: "Birthday & Celebration Blog — Ideas, Themes & Planning Guides | Eevagga",
+  description: "Read Eevagga's blog for birthday decoration ideas, theme inspiration, house warming tips, baby shower guides and event planning advice in Bangalore.",
+  keywords: "birthday ideas Bangalore, birthday decoration ideas, birthday theme ideas, house warming ideas, baby shower ideas, birthday planning tips Bangalore",
   alternates: { canonical: '/blogs' },
   openGraph: {
-    title: "Blogs | Eevagga",
-    description: "Read our latest articles on premium birthday celebrations, decoration ideas, and event planning.",
+    title: "Birthday & Celebration Blog — Ideas, Themes & Planning Guides | Eevagga",
+    description: "Birthday decoration ideas, theme inspiration, house warming tips and baby shower guides for celebrations in Bangalore.",
     url: "https://www.eevagga.com/blogs",
     siteName: "Eevagga",
     type: "website",
@@ -23,8 +23,8 @@ const blogSchema = {
   "@type": "Blog",
   "@id": "https://www.eevagga.com/blogs#blog",
   "url": "https://www.eevagga.com/blogs",
-  "name": "Eevagga Blog",
-  "description": "Articles on birthday celebrations, decoration ideas, and event planning in India.",
+  "name": "Eevagga Blog — Birthday & Celebration Ideas in Bangalore",
+  "description": "Birthday decoration ideas, theme inspiration, house warming tips, baby shower guides and event planning advice for Bangalore celebrations.",
   "publisher": { "@id": "https://www.eevagga.com/#organization" },
   "inLanguage": "en-IN"
 };
@@ -45,7 +45,7 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <h1 style={srOnly}>Eevagga Blog — Birthday &amp; Event Celebration Ideas</h1>
+      <h1 style={srOnly}>Eevagga Blog — Birthday &amp; Celebration Ideas, Themes &amp; Planning Guides</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

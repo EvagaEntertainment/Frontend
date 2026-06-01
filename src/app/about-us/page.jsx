@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "About Us",
-  description: "Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible.",
-  keywords: "Eevagga story, premium birthdays, party planning India",
+  title: "About Eevagga — Premium Birthday & Celebration Planner in Bangalore",
+  description: "Learn how Eevagga became Bangalore's most trusted full-service birthday, house warming and baby shower planning company. Premium execution, creative themes, end-to-end planning.",
+  keywords: "about Eevagga, birthday planner Bangalore, full-service celebration company, premium event planning Bangalore",
   alternates: { canonical: '/about-us' },
   openGraph: {
-    title: "About Us | Eevagga",
-    description: "Learn about Eevagga, India's premium birthday celebration brand. We make premium birthday celebrations effortless, memorable, and accessible.",
+    title: "About Eevagga — Premium Birthday & Celebration Planner in Bangalore",
+    description: "Learn how Eevagga became Bangalore's most trusted full-service birthday, house warming and baby shower planning company.",
     url: "https://www.eevagga.com/about-us",
     siteName: "Eevagga",
     type: "website",
@@ -23,8 +23,8 @@ const aboutPageSchema = {
   "@type": "AboutPage",
   "@id": "https://www.eevagga.com/about-us#webpage",
   "url": "https://www.eevagga.com/about-us",
-  "name": "About Us — Eevagga Entertainment",
-  "description": "Learn about Eevagga, India's premium birthday celebration brand.",
+  "name": "About Eevagga — Premium Birthday & Celebration Planner in Bangalore",
+  "description": "Bangalore's most trusted full-service birthday, house warming and baby shower planning company.",
   "inLanguage": "en-IN",
   "isPartOf": { "@id": "https://www.eevagga.com/#website" },
   "about": { "@id": "https://www.eevagga.com/#organization" }

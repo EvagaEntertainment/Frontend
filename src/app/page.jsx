@@ -2,15 +2,15 @@ import { Suspense } from 'react';
 import HomePage from '../pages/HomePage';
 
 export const metadata = {
-  title: { absolute: "Eevagga | India's Premier Event Celebration Platform" },
-  description: "Discover India's first premium birthday celebration platform. We offer curated birthday experiences, products, and services to make your birthday special.",
-  keywords: "birthday party planning, birthday decorators, birthday gifts, premium birthday experiences, Eevagga, birthday packages",
+  title: { absolute: "Eevagga | Premium Birthday Planner in Bangalore — House Warming & Baby Showers" },
+  description: "Eevagga is Bangalore's premium full-service birthday, house warming and baby shower planning company. We handle everything — themes, decor, venues, photography and execution.",
+  keywords: "birthday planner Bangalore, birthday decoration Bangalore, house warming planner Bangalore, baby shower planner Bangalore, kids birthday planner Bangalore, premium birthday celebration Bangalore, birthday party planning Bangalore",
   alternates: {
     canonical: 'https://www.eevagga.com',
   },
   openGraph: {
-    title: "Eevagga | India's Premier Event Celebration Platform",
-    description: "Discover India's first premium birthday celebration platform. We offer curated birthday experiences, products, and services to make your birthday special.",
+    title: "Eevagga | Premium Birthday Planner in Bangalore",
+    description: "Bangalore's premium full-service birthday, house warming and baby shower planning company. End-to-end themes, decor, venues and execution.",
     type: 'website'
   }
 };
@@ -24,56 +24,59 @@ const faqSchema = {
       "name": "What is Eevagga?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Eevagga is a premium birthday celebration platform designed to make planning birthdays simple, beautiful, and stress-free. From curated birthday decorations and full-service event planning to thoughtfully designed celebration products and gifts, Eevagga brings everything needed for a memorable birthday into one place."
+        "text": "Eevagga is Bangalore's premium full-service birthday, house warming and baby shower planning company. We handle everything — themes, decorations, venue coordination, photography, entertainment and on-ground execution — so you can celebrate without the stress."
       }
     },
     {
       "@type": "Question",
-      "name": "What types of birthday celebrations does Eevagga organize?",
+      "name": "What types of celebrations does Eevagga plan in Bangalore?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Eevagga specializes in a wide range of birthday celebrations, including kids birthday parties, milestone birthdays, surprise birthday setups, home birthday decorations, venue birthday celebrations, and themed birthday parties."
+        "text": "Eevagga specializes in birthday celebrations (kids, adults, milestone birthdays), house warming ceremonies and baby shower celebrations in Bangalore. We offer themed setups, home decorations, venue celebrations and end-to-end planning for all these occasions."
       }
     },
     {
       "@type": "Question",
-      "name": "Do you only operate in Bangalore?",
+      "name": "Which areas of Bangalore does Eevagga serve?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Currently, most of our event services are available in Bangalore, while our celebration products can be delivered across India through online platforms. As Eevagga grows, we plan to expand our celebration services to more cities."
+        "text": "Eevagga serves all major areas of Bangalore including Whitefield, HSR Layout, Koramangala, Indiranagar, Sarjapur, Bellandur, Hebbal, Electronic City, Hennur, Yellhanka and JP Nagar. We are Bangalore's most trusted birthday and celebration planner."
       }
     },
     {
       "@type": "Question",
-      "name": "How far in advance should I book a birthday celebration?",
+      "name": "How far in advance should I book a birthday celebration with Eevagga?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We recommend booking your celebration at least 22 days in advance to ensure the best availability for themes, venues, and services. For larger or customized birthday events, earlier booking is always beneficial."
+        "text": "We recommend booking at least 22 days in advance to ensure availability of your preferred theme, venue and services. For luxury or highly customized celebrations, earlier booking is always better."
       }
     },
     {
       "@type": "Question",
-      "name": "Can I book a complete birthday celebration through Eevagga?",
+      "name": "Does Eevagga handle everything end-to-end?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. With Eevagga Birthdays, you can book end-to-end birthday planning, including décor and theme setup, photography and videography, entertainment and activities, stage and event setup, catering coordination, and on-ground event management."
+        "text": "Yes. Eevagga is a full-service planning company — not a marketplace or vendor aggregator. We own the entire execution including décor and theme setup, photography and videography, entertainment, stage and event setup, catering coordination and on-ground event management."
       }
     },
     {
       "@type": "Question",
-      "name": "How can I book a birthday celebration with Eevagga?",
+      "name": "How can I book a celebration with Eevagga?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You can book through the Eevagga website or by contacting our team directly. Our team will guide you through themes, packages, and customization options to help you plan the perfect birthday celebration."
+        "text": "You can book through the Eevagga website or reach us directly via WhatsApp. Our team will guide you through themes, packages and customization options to plan the perfect birthday, house warming or baby shower celebration."
       }
     }
   ]
 };
 
+const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
+
 export default function Home() {
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <h1 style={srOnly}>Birthday Planner in Bangalore — House Warming &amp; Baby Shower Celebrations | Eevagga</h1>
       <Suspense fallback={null}>
         <HomePage />
       </Suspense>
