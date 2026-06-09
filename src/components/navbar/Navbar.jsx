@@ -1,16 +1,18 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone } from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone, FaStar, FaChevronDown } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import logo from "../../assets/Temporary Images/Eevagga_yellow.webp";
 import { internalRoutes } from "../../utils/internalRoutes";
 
 function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+
   const navLinks = [
     { name: "Home", path: internalRoutes.home, icon: <FaHome /> },
     { name: "About Us", path: internalRoutes.aboutUs, icon: <FaInfoCircle /> },
@@ -19,6 +21,18 @@ function Navbar() {
       path: internalRoutes.ourServices,
       icon: <FaPhone />,
     },
+  ];
+
+  const celebrationLinks = [
+    { name: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore" },
+    { name: "Kids Birthday Planner", path: "/kids-birthday-planner-bangalore" },
+    { name: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
+    { name: "Celebration At Home", path: "/birthday-celebration-at-home-bangalore" },
+    { name: "Luxury Birthday Planner", path: "/luxury-birthday-planner-bangalore" },
+    { name: "Premium Birthday Planner", path: "/premium-birthday-planner" },
+    { name: "Premium House Warming", path: "/premium-house-warming-planner" },
+    { name: "Premium Baby Shower", path: "/premium-baby-shower-planner" },
+    { name: "Premium Birthday End-to-End", path: "/premium-birthday-end-to-end-planner" },
   ];
 
   const toggleMenu = () => {
@@ -66,6 +80,8 @@ function Navbar() {
   
   useEffect(() => {
     setIsOpen(false);
+    setDropdownOpen(false);
+    setMobileDropdownOpen(false);
   }, [pathname]);
 
   return (
@@ -90,17 +106,17 @@ function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-10">
+        <div className="hidden md:flex space-x-10 items-center">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
-            <Link
-              key={link.name}
-              href={link.path}
-              className={`relative text-sm font-medium ${
-                isActive ? "text-[#FFE500]" : "text-white"
-              }`}
-            >
+              <Link
+                key={link.name}
+                href={link.path}
+                className={`relative text-sm font-medium ${
+                  isActive ? "text-[#FFE500]" : "text-white"
+                }`}
+              >
                 <motion.span
                   className="inline-block"
                   variants={linkVariants}
@@ -111,7 +127,7 @@ function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="activeIndicator"
-                      className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#FFE500] text-sm"
+                      className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#FFE500]"
                       initial={false}
                       transition={{
                         type: "spring",
@@ -121,8 +137,55 @@ function Navbar() {
                     />
                   )}
                 </motion.span>
-            </Link>
-          )})}
+              </Link>
+            );
+          })}
+
+          {/* Celebrations Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
+            <button
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+                celebrationLinks.some((l) => pathname === l.path) ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
+              }`}
+            >
+              <FaStar className="text-xs" />
+              Celebrations
+              <FaChevronDown className={`text-[10px] transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2.5 z-50 origin-top-left"
+                >
+                  {celebrationLinks.map((subLink) => {
+                    const isSubActive = pathname === subLink.path;
+                    return (
+                      <Link
+                        key={subLink.name}
+                        href={subLink.path}
+                        className={`block px-4 py-2 text-sm transition-colors duration-150 ${
+                          isSubActive
+                            ? "bg-[#6A1B9A]/10 text-[#6A1B9A] font-semibold"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-[#6A1B9A]"
+                        }`}
+                      >
+                        {subLink.name}
+                      </Link>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -175,16 +238,16 @@ function Navbar() {
                   {navLinks.map((link) => {
                     const isActive = pathname === link.path;
                     return (
-                    <Link
-                      key={link.name}
-                      href={link.path}
-                      className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
-                        isActive
-                          ? "text-[#FFE500] bg-[#FFE500]/20"
-                          : "text-white hover:bg-[#FFE500]/20"
-                      }`}
-                      onClick={toggleMenu}
-                    >
+                      <Link
+                        key={link.name}
+                        href={link.path}
+                        className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
+                          isActive
+                            ? "text-[#FFE500] bg-[#FFE500]/20"
+                            : "text-white hover:bg-[#FFE500]/20"
+                        }`}
+                        onClick={toggleMenu}
+                      >
                         <motion.div
                           className="flex items-center w-full"
                           variants={linkVariants}
@@ -206,8 +269,57 @@ function Navbar() {
                             />
                           )}
                         </motion.div>
-                    </Link>
-                  )})}
+                      </Link>
+                    );
+                  })}
+
+                  {/* Mobile Celebrations Accordion */}
+                  <div className="space-y-1">
+                    <button
+                      onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                      className={`flex items-center justify-between w-full text-base font-medium py-3 px-4 rounded-xl transition-all ${
+                        celebrationLinks.some((l) => pathname === l.path)
+                          ? "text-[#FFE500] bg-[#FFE500]/20"
+                          : "text-white hover:bg-[#FFE500]/20"
+                      }`}
+                    >
+                      <span className="flex items-center">
+                        <span className="mr-3 text-lg"><FaStar /></span>
+                        <span>Celebrations</span>
+                      </span>
+                      <FaChevronDown className={`text-xs transition-transform duration-200 ${mobileDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {mobileDropdownOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden pl-8 space-y-1"
+                        >
+                          {celebrationLinks.map((subLink) => {
+                            const isSubActive = pathname === subLink.path;
+                            return (
+                              <Link
+                                key={subLink.name}
+                                href={subLink.path}
+                                className={`block text-sm py-2.5 px-4 rounded-lg transition-all ${
+                                  isSubActive
+                                    ? "text-[#FFE500] font-semibold bg-[#FFE500]/10"
+                                    : "text-white/80 hover:text-white hover:bg-[#FFE500]/10"
+                                }`}
+                                onClick={toggleMenu}
+                              >
+                                {subLink.name}
+                              </Link>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </motion.div>
             </>
