@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Koramangala | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Koramangala — Eevagga" },
   description: 'Looking for a birthday planner in Koramangala, Bangalore? Eevagga offers end-to-end birthday planning in Koramangala — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Koramangala, birthday party planner Koramangala Bangalore, birthday decoration Koramangala, birthday planning Koramangala Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-koramangala' },
@@ -55,6 +55,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    },
+    {
+      "label": "Birthday Planner Sarjapur",
+      "href": "/birthday-planner-sarjapur"
+    }
+  ],
   title: 'Birthday Planner Koramangala',
   badge: 'Serving Koramangala & BTM Layout',
   h1: 'Birthday Planner in Koramangala, Bangalore — Premium Celebrations by Eevagga',

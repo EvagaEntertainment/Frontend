@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: '1st Birthday Planner Bangalore | First Birthday Setup — Eevagga',
+  title: { absolute: "1st Birthday Planner Bangalore — Eevagga" },
   description:
     'Plan your baby\'s first birthday in Bangalore with Eevagga. Smash cake setups, milestone balloon décor, half-saree ceremony coordination & full first birthday planning. Book today.',
   keywords:
@@ -100,6 +100,20 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Kids Birthday Party",
+      "href": "/kids-birthday-party-bangalore"
+    },
+    {
+      "label": "Teen Birthday Celebration",
+      "href": "/teen-birthday-celebration-bangalore"
+    },
+    {
+      "label": "Adult Birthday Planner",
+      "href": "/adult-birthday-planner-bangalore"
+    }
+  ],
   title: '1st Birthday Planner Bangalore',
   badge: 'First Birthday Specialists',
   h1: '1st Birthday Planner in Bangalore — Precious Milestone Celebrations by Eevagga',

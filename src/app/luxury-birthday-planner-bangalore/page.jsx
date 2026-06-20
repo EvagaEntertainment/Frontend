@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Luxury Birthday Planner in Bangalore | High-End Event Designers — Eevagga",
+  title: { absolute: "Luxury Birthday Party Planner in Bangalore — Eevagga" },
   description:
     "Eevagga is the leading luxury birthday planner in Bangalore. We create exquisite, high-end birthday celebrations with premium production, designer styling & VIP management.",
   keywords:
@@ -97,6 +97,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Luxury Birthday Planner Bangalore',
   badge: 'Elite Event Designers',
   h1: "Bangalore's Leading Luxury Birthday Event Planner & Designer",

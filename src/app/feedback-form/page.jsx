@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Provide Feedback | Eevagga",
+  title: { absolute: "Provide Feedback — Eevagga" },
   description: "Share your experience with Eevagga services. We value your thoughts on our premium celebrations.",
   robots: { index: false, follow: false },
   openGraph: {

@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Birthday Planner in Bangalore | Premium Birthday Planning — Eevagga',
+  title: { absolute: "Best Birthday Party Planner in Bangalore — Eevagga" },
   description:
     'Looking for a birthday planner in Bangalore? Eevagga offers end-to-end birthday planning — themes, decorations, photography, catering & venue coordination. Book your free consultation today.',
   keywords:
@@ -105,6 +105,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    },
+    {
+      "label": "Luxury Birthday Planner",
+      "href": "/luxury-birthday-planner-bangalore"
+    }
+  ],
   title: 'Birthday Planner Bangalore',
   badge: 'Premium Birthday Planning',
   h1: "Bangalore's Premier Birthday Planner \u2014 Stress-Free Celebrations",
@@ -265,6 +283,26 @@ const pageConfig = {
       answer:
         "Absolutely! All our packages are a starting point. We work closely with every client to build a fully bespoke experience. Just reach us on WhatsApp and we'll craft a custom quote.",
     },
+  ],
+  reviews: [
+    {
+      author: "Priya Sharma",
+      rating: 5,
+      text: "Eevagga made our son's 1st birthday party absolutely spectacular! The jungle theme decor was stunning, and the emcee kept the kids engaged the whole time. High-quality photography too!",
+      date: "2026-05-15"
+    },
+    {
+      author: "Rahul Nair",
+      rating: 5,
+      text: "Extremely professional birthday planners in Bangalore. They handled everything from theme setup to cleanup, allowing us to enjoy the party stress-free. Highly recommended!",
+      date: "2026-06-01"
+    },
+    {
+      author: "Anjali Gupta",
+      rating: 5,
+      text: "Beautiful balloon arches and floral decorations. Eevagga's package options are transparent and they customized everything to our budget. Excellent service!",
+      date: "2026-06-10"
+    }
   ],
 };
 

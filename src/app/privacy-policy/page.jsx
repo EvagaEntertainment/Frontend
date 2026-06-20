@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy",
+  title: { absolute: "Privacy Policy — Eevagga" },
   description: "Read Eevagga's privacy policy to understand how we securely protect your data and information.",
   keywords: "privacy policy, Eevagga privacy, data protection",
   alternates: { canonical: '/privacy-policy' },

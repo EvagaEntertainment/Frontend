@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Birthday Venues Bangalore | Best Party Halls & Spaces — Eevagga',
+  title: { absolute: "Birthday Venues Bangalore — Eevagga" },
   description:
     'Find the best birthday venues in Bangalore with Eevagga. Banquet halls, garden spaces, rooftops & premium party venues for all budgets. Venue scouting + full planning included. Book today.',
   keywords:
@@ -113,6 +113,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Indoor Birthday Venues",
+      "href": "/indoor-birthday-venues-bangalore"
+    },
+    {
+      "label": "Birthday Venues Whitefield",
+      "href": "/birthday-venues-whitefield"
+    },
+    {
+      "label": "Birthday Party Resorts",
+      "href": "/birthday-party-resorts-bangalore"
+    },
+    {
+      "label": "Birthday Venues Under 50k",
+      "href": "/birthday-venues-under-50k-bangalore"
+    }
+  ],
   title: 'Birthday Venues Bangalore',
   badge: 'Venue Scouting & Full Planning',
   h1: 'Best Birthday Venues in Bangalore — Scouted & Decorated by Eevagga',

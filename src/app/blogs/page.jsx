@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Birthday & Celebration Blog — Ideas, Themes & Planning Guides | Eevagga",
+  title: { absolute: "Birthday & Celebration Blog — Eevagga" },
   description: "Read Eevagga's blog for birthday decoration ideas, theme inspiration, house warming tips, baby shower guides and event planning advice in Bangalore.",
   keywords: "birthday ideas Bangalore, birthday decoration ideas, birthday theme ideas, house warming ideas, baby shower ideas, birthday planning tips Bangalore",
   alternates: { canonical: '/blogs' },

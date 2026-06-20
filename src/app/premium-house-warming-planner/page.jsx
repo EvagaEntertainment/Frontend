@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners — Eevagga",
+  title: { absolute: "Premium House Warming Planner in Bangalore — Eevagga" },
   description:
     "Planning a house warming (Griha Pravesh) ceremony? Eevagga provides premium house warming planning in Bangalore — traditional and modern decorations, catering, puja setup & logistics.",
   keywords:
@@ -97,12 +97,30 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium House Warming Planner',
   badge: 'Blessings & Joy',
   h1: "Premium House Warming (Griha Pravesh) Ceremony Planner",
   heroSubtitle:
     "Step into your new home with positive energy and joy. Eevagga designs and organizes beautiful house warming events, handling fresh floral decorations, puja setups, and premium catering coordination.",
-  heroImage: '/service-pages/birthday-hero.png',
+  heroImage: '/service-pages/house-warming-hero.png',
   heroImageAlt: 'Traditional marigold floral decoration at home entrance for Griha Pravesh',
 
   stats: [
@@ -120,27 +138,27 @@ const pageConfig = {
 
   gallery: [
     {
-      src: '/service-pages/birthday-hero.png',
+      src: '/service-pages/house-warming-hero.png',
       alt: 'Traditional Griha Pravesh flower entrance',
       caption: 'Entrance Floral Decor',
     },
     {
-      src: '/service-pages/birthday-gallery-1.png',
+      src: '/service-pages/house-warming-gallery-1.png',
       alt: 'Homa/Puja mandap setup with marigold garland',
       caption: 'Puja Mandap Setup',
     },
     {
-      src: '/service-pages/birthday-gallery-2.png',
+      src: '/service-pages/house-warming-gallery-2.png',
       alt: 'Traditional dining arrangements for house warming',
       caption: 'Traditional Dining',
     },
     {
-      src: '/service-pages/birthday-gallery-3.png',
+      src: '/service-pages/house-warming-gallery-3.png',
       alt: 'Traditional welcome items and floor design (Rangoli)',
       caption: 'Rangoli & Welcome',
     },
     {
-      src: '/service-pages/birthday-gallery-4.png',
+      src: '/service-pages/house-warming-gallery-4.png',
       alt: 'Elegant lounge seating for house warming guests',
       caption: 'Guest Lounge Area',
     },

@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Electronic City | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Electronic City — Eevagga" },
   description: 'Looking for a birthday planner in Electronic City, Bangalore? Eevagga offers end-to-end birthday planning in Electronic City — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Electronic City, birthday party planner Electronic City Bangalore, birthday decoration Electronic City, birthday planning Electronic City Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-electronic-city' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Electronic City?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga serves Electronic City Phase 1 & 2, Neeladri Road, Hebbagodi and surrounding areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'What birthday venues are available in Electronic City?', acceptedAnswer: { '@type': 'Answer', text: 'Electronic City has gated community clubhouses in Neeladri Road and EC Phase 2 residential complexes, banquet halls on Hosur Road, garden resorts nearby and hotel venues. Eevagga coordinates all bookings and decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party in Electronic City cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Electronic City start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' } }, { '@type': 'Question', name: 'Does Eevagga serve Bommasandra and Hebbagodi from Electronic City?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our South Bangalore team covers Electronic City, Bommasandra, Hebbagodi and surrounding areas for seamless birthday planning.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Electronic City', badge: 'Serving Electronic City & Hosur Road',
   h1: 'Birthday Planner in Electronic City, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across Electronic City, Neeladri Road and Hosur Road. Eevagga\'s local team delivers premium themes, venue coordination, décor and photography — fully managed for you.',

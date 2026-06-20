@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Birthday & Celebration Packages in Bangalore | Eevagga",
+  title: { absolute: "Birthday & Celebration Packages in Bangalore — Eevagga" },
   description: "Browse Eevagga's birthday, house warming and baby shower packages in Bangalore. Curated themes, decor and full-service celebration experiences.",
   alternates: { canonical: '/viewAll' },
   openGraph: {

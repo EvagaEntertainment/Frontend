@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium Birthday End-to-End Event Planner — Eevagga",
+  title: { absolute: "Premium Birthday End-to-End Event Planner — Eevagga" },
   description:
     "Complete end-to-end birthday event planning. Eevagga manages your entire birthday celebration from invitations, venue booking, décor, catering, entertainment to cleanup.",
   keywords:
@@ -97,6 +97,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium Birthday End-to-End Planner',
   badge: 'Total Event Management',
   h1: "Full Service End-to-End Premium Birthday Planner",

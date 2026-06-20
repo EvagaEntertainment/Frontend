@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner HSR Layout | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner HSR Layout — Eevagga" },
   description: 'Looking for a birthday planner in HSR Layout, Bangalore? Eevagga offers end-to-end birthday planning in HSR Layout — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner HSR Layout, birthday party planner HSR Layout Bangalore, birthday decoration HSR Layout, birthday planning HSR Layout Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-hsr-layout' },
@@ -55,6 +55,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    },
+    {
+      "label": "Birthday Planner Sarjapur",
+      "href": "/birthday-planner-sarjapur"
+    }
+  ],
   title: 'Birthday Planner HSR Layout',
   badge: 'Serving HSR Layout & Agara',
   h1: 'Birthday Planner in HSR Layout, Bangalore — End-to-End Celebrations by Eevagga',

@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Indiranagar | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Indiranagar — Eevagga" },
   description: 'Looking for a birthday planner in Indiranagar, Bangalore? Eevagga offers end-to-end birthday planning in Indiranagar — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Indiranagar, birthday party planner Indiranagar Bangalore, birthday decoration Indiranagar, birthday planning Indiranagar Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-indiranagar' },
@@ -21,6 +21,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Indiranagar?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga is a trusted birthday planner in Indiranagar serving 100 Feet Road, CMH Road, Domlur and surrounding areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'Which venues does Eevagga recommend in Indiranagar?', acceptedAnswer: { '@type': 'Answer', text: 'Indiranagar has vibrant birthday venue options including restaurant private dining rooms on 100 Feet Road, rooftop venues on CMH Road, banquet halls and home party setups. Eevagga coordinates all venue bookings and full decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party in Indiranagar cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Indiranagar start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. We offer packages for all budgets.' } }, { '@type': 'Question', name: 'Can Eevagga plan restaurant birthday parties in Indiranagar?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! Indiranagar has some of Bangalore\'s finest restaurants with private dining rooms. Eevagga coordinates restaurant venue bookings and adds custom birthday decorations for a truly special dining celebration.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Sarjapur",
+      "href": "/birthday-planner-sarjapur"
+    }
+  ],
   title: 'Birthday Planner Indiranagar',
   badge: 'Serving Indiranagar & CMH Road',
   h1: 'Birthday Planner in Indiranagar, Bangalore — Stylish Celebrations by Eevagga',

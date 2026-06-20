@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Venues Whitefield | Party Halls & Spaces — Eevagga',
+  title: { absolute: "Birthday Venues Whitefield — Eevagga" },
   description: 'Find the best birthday venues in Whitefield, Bangalore with Eevagga. Banquet halls, garden spaces, clubhouses & premium party venues in Whitefield. Venue + full decoration. Book today.',
   keywords: 'birthday venues Whitefield, birthday party halls Whitefield, birthday venue Whitefield Bangalore, party venues Whitefield, birthday planner Whitefield',
   alternates: { canonical: 'https://www.eevagga.com/birthday-venues-whitefield' },
@@ -54,6 +54,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Venues",
+      "href": "/birthday-venues-bangalore"
+    },
+    {
+      "label": "Indoor Birthday Venues",
+      "href": "/indoor-birthday-venues-bangalore"
+    },
+    {
+      "label": "Birthday Party Resorts",
+      "href": "/birthday-party-resorts-bangalore"
+    },
+    {
+      "label": "Birthday Venues Under 50k",
+      "href": "/birthday-venues-under-50k-bangalore"
+    }
+  ],
   title: 'Birthday Venues Whitefield',
   badge: 'Whitefield Birthday Specialists',
   h1: 'Birthday Venues in Whitefield, Bangalore — Scouted & Decorated by Eevagga',

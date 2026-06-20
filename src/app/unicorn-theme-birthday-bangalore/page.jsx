@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Unicorn Theme Birthday Bangalore | Magical Party Setup — Eevagga',
+  title: { absolute: "Unicorn Theme Birthday Bangalore — Eevagga" },
   description:
     'Create a magical unicorn theme birthday party in Bangalore with Eevagga. Pastel balloon arches, unicorn cakes, rainbow décor & full planning. Book your free consultation today.',
   keywords:
@@ -123,6 +123,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Jungle Theme Birthday",
+      "href": "/jungle-theme-birthday-bangalore"
+    },
+    {
+      "label": "Barbie Theme Birthday",
+      "href": "/barbie-theme-birthday-bangalore"
+    },
+    {
+      "label": "Space Theme Birthday",
+      "href": "/space-theme-birthday-bangalore"
+    },
+    {
+      "label": "Cocomelon Birthday Theme",
+      "href": "/cocomelon-birthday-theme-bangalore"
+    }
+  ],
   title: 'Unicorn Theme Birthday Bangalore',
   badge: 'Magical Theme Specialists',
   h1: 'Unicorn Theme Birthday Party in Bangalore — Magical Setups by Eevagga',

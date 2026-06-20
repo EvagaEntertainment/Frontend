@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Yelahanka | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Yelahanka — Eevagga" },
   description: 'Looking for a birthday planner in Yelahanka, Bangalore? Eevagga offers end-to-end birthday planning in Yelahanka — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Yelahanka, birthday party planner Yelahanka Bangalore, birthday decoration Yelahanka, birthday planning Yelahanka Bangalore, birthday planner Yellhanka',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-yellhanka' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Yelahanka?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga serves Yelahanka New Town, Yelahanka Old Town, Jakkur and surrounding North Bangalore areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'What birthday venues are available in Yelahanka?', acceptedAnswer: { '@type': 'Answer', text: 'Yelahanka has community halls, banquet halls near Yelahanka main road, gated community clubhouses in new developments and garden venues near Jakkur Lake. Eevagga coordinates venue bookings and complete decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party in Yelahanka cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Yelahanka start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury celebrations. We have packages for all budgets and guest counts.' } }, { '@type': 'Question', name: 'Does Eevagga serve Jakkur and Thanisandra from Yelahanka?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our North Bangalore team covers Yelahanka, Jakkur, Thanisandra, Hebbal and surrounding areas for seamless birthday planning.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Yelahanka', badge: 'Serving Yelahanka & North Bangalore',
   h1: 'Birthday Planner in Yelahanka, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across Yelahanka New Town, Old Town, Jakkur and North Bangalore. Eevagga\'s local team delivers premium themes, venue coordination, décor and photography — fully managed.',

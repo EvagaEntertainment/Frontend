@@ -198,7 +198,7 @@ function Gallery({ gallery }) {
                 alt={item.alt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 33vw"
+                sizes="(max-width: 768px) 400px, 800px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               {item.caption && (
@@ -265,8 +265,8 @@ function Features({ features }) {
 }
 
 /* ─── WHY EEVAGGA ────────────────────────────────────────────────────────── */
-function WhyEevagga() {
-  const points = [
+function WhyEevagga({ customPoints }) {
+  const defaultPoints = [
     { icon: '🎯', title: 'End-to-End Planning', desc: 'From concept to cleanup — every detail handled by us.' },
     { icon: '✨', title: 'Bespoke Themes', desc: 'Every celebration is designed uniquely for you, no templates.' },
     { icon: '📸', title: 'Flawless Execution', desc: 'Dedicated on-ground team, zero stress for you on the day.' },
@@ -274,6 +274,7 @@ function WhyEevagga() {
     { icon: '🏆', title: '500+ Events Done', desc: 'Trusted by hundreds of families across Bangalore.' },
     { icon: '⚡', title: 'Always-On Support', desc: 'From start to finish we are with you — 24/7 availability.' },
   ];
+  const points = customPoints && customPoints.length > 0 ? customPoints : defaultPoints;
 
   return (
     <motion.section
@@ -652,6 +653,113 @@ function ConsultationForm({ config }) {
   );
 }
 
+/* ─── RELATED LINKS ──────────────────────────────────────────────────────── */
+function RelatedServices({ links }) {
+  if (!links || links.length === 0) return null;
+  return (
+    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-t border-borderPrimary">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-primary text-2xl md:text-3xl font-normal mb-8 text-center sm:text-left">
+          Explore Related Celebration Services
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {links.map((link, idx) => (
+            <Link
+              key={idx}
+              href={link.href}
+              className="flex items-center justify-between p-4 rounded-xl border border-borderPrimary bg-background hover:border-primary/40 hover:shadow-sm transition-all duration-300 group"
+            >
+              <span className="text-textPrimary text-sm font-medium group-hover:text-primary transition-colors">
+                {link.label}
+              </span>
+              <FaArrowRight size={10} className="text-borderSecondary group-hover:text-primary group-hover:translate-x-1 transition-all" />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── TESTIMONIALS / REVIEWS ────────────────────────────────────────────── */
+function ReviewsSection({ reviews, pageTitle }) {
+  if (!reviews || reviews.length === 0) return null;
+
+  const totalRating = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+  const avgRating = (totalRating / reviews.length).toFixed(1);
+
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": pageTitle,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": avgRating,
+      "reviewCount": reviews.length.toString(),
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": reviews.map(r => ({
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": r.author
+      },
+      "datePublished": r.date || "2026-06-20",
+      "reviewBody": r.text,
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": r.rating.toString(),
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }))
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema).replace(/</g, '\\u003c') }}
+      />
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background border-t border-borderPrimary">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center mb-12">
+            <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
+              What Our Clients Say
+            </h2>
+            <div className="h-1 w-24 bg-highlightYellow mb-4" />
+            <p className="text-textGray text-sm text-center">
+              Rated <span className="font-semibold text-primary">{avgRating}/5</span> based on {reviews.length} customer reviews.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((r, idx) => (
+              <div key={idx} className="bg-white border border-borderPrimary rounded-2xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300">
+                <div>
+                  <div className="flex items-center gap-1 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} size={14} className={i < r.rating ? 'text-[#6A1B9A]' : 'text-borderSecondary'} />
+                    ))}
+                  </div>
+                  <p className="text-textGray text-sm italic leading-relaxed mb-4">
+                    "{r.text}"
+                  </p>
+                </div>
+                <div className="border-t border-borderPrimary pt-3 mt-3 flex items-center justify-between">
+                  <span className="text-primary font-semibold text-xs">{r.author}</span>
+                  {r.date && <span className="text-textGray/60 text-xs">{r.date}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 /* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
   return (
@@ -660,10 +768,12 @@ export default function ServiceLandingPage({ config }) {
       <Hero config={config} />
       <Gallery gallery={config.gallery} />
       <Features features={config.features} />
-      <WhyEevagga />
+      <WhyEevagga customPoints={config.whyPoints} />
       <Pricing pricing={config.pricing} config={config} />
       <ConsultationForm config={config} />
-      <FAQSection />
+      <RelatedServices links={config.relatedLinks} />
+      <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
+      <FAQSection customFaqs={config.faqs} />
     </main>
   );
 }

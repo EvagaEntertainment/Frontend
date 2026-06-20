@@ -184,9 +184,8 @@ function Navbar() {
             onMouseLeave={handleMouseLeave}
           >
             <button
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
-                isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
-              }`}
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
+                }`}
             >
               <FaStar className="text-xs" />
               Celebrations
@@ -247,11 +246,10 @@ function Navbar() {
                                   <li key={link.path}>
                                     <Link
                                       href={link.path}
-                                      className={`flex items-start gap-1.5 text-[11.5px] leading-snug py-1.5 px-2 rounded-lg transition-all duration-150 group ${
-                                        isActive
+                                      className={`flex items-start gap-1.5 text-[11.5px] leading-snug py-1.5 px-2 rounded-lg transition-all duration-150 group ${isActive
                                           ? "font-semibold"
                                           : "text-gray-600 hover:text-gray-900"
-                                      }`}
+                                        }`}
                                       style={isActive ? { color: cat.color, backgroundColor: cat.color + "15" } : {}}
                                     >
                                       <span
@@ -276,12 +274,7 @@ function Navbar() {
                           <FaMapMarkerAlt className="text-[#6A1B9A] text-[10px]" />
                           <span>Serving all areas of Bangalore</span>
                         </div>
-                        <Link
-                          href="/birthday-planner-bangalore"
-                          className="text-xs font-semibold text-[#6A1B9A] hover:text-[#8E24AA] transition-colors flex items-center gap-1"
-                        >
-                          View all services →
-                        </Link>
+
                       </div>
                     </div>
                   </div>
@@ -342,9 +335,8 @@ function Navbar() {
                       <Link
                         key={link.name}
                         href={link.path}
-                        className={`flex items-center gap-3 text-sm font-medium mx-3 mb-1 py-3 px-4 rounded-xl transition-all ${
-                          isActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
-                        }`}
+                        className={`flex items-center gap-3 text-sm font-medium mx-3 mb-1 py-3 px-4 rounded-xl transition-all ${isActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
+                          }`}
                         onClick={toggleMenu}
                       >
                         <span className="text-base opacity-80">{link.icon}</span>
@@ -360,9 +352,8 @@ function Navbar() {
                   <div className="mx-3 mt-1">
                     <button
                       onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-                      className={`flex items-center justify-between w-full text-sm font-medium py-3 px-4 rounded-xl transition-all ${
-                        isCelebrationActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
-                      }`}
+                      className={`flex items-center justify-between w-full text-sm font-medium py-3 px-4 rounded-xl transition-all ${isCelebrationActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
+                        }`}
                     >
                       <span className="flex items-center gap-3">
                         <FaStar className="text-base opacity-80" />
@@ -412,11 +403,10 @@ function Navbar() {
                                         <Link
                                           key={subLink.path}
                                           href={subLink.path}
-                                          className={`flex items-center gap-2 text-[13px] py-2 px-3 rounded-lg transition-all ${
-                                            isSubActive
+                                          className={`flex items-center gap-2 text-[13px] py-2 px-3 rounded-lg transition-all ${isSubActive
                                               ? "text-[#FFE500] font-semibold bg-[#FFE500]/10"
                                               : "text-white/75 hover:text-white hover:bg-white/10"
-                                          }`}
+                                            }`}
                                           onClick={toggleMenu}
                                         >
                                           <span className="w-1.5 h-1.5 rounded-full bg-white/30 flex-shrink-0" />

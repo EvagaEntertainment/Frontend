@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Hebbal | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Hebbal — Eevagga" },
   description: 'Looking for a birthday planner in Hebbal, Bangalore? Eevagga offers end-to-end birthday planning in Hebbal — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Hebbal, birthday party planner Hebbal Bangalore, birthday decoration Hebbal, birthday planning Hebbal Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-hebbal' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Hebbal?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga serves Hebbal, Thanisandra, Jakkur and surrounding North Bangalore areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'What birthday venues are available in Hebbal?', acceptedAnswer: { '@type': 'Answer', text: 'Hebbal offers banquet halls near Hebbal flyover, lakeside garden venues near Hebbal Lake, hotel banquet rooms and clubhouse spaces in nearby gated communities. Eevagga coordinates venue booking and full decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party in Hebbal cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Hebbal start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets and guest counts.' } }, { '@type': 'Question', name: 'Does Eevagga serve Yelahanka from Hebbal?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our North Bangalore team covers Hebbal, Yelahanka, Thanisandra, Hennur and surrounding areas for seamless birthday planning.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Hebbal', badge: 'Serving Hebbal & North Bangalore',
   h1: 'Birthday Planner in Hebbal, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across Hebbal, Thanisandra, Jakkur and North Bangalore. Eevagga\'s local team delivers premium themes, venue coordination, décor and photography — fully managed for you.',

@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Sarjapur | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Sarjapur — Eevagga" },
   description: 'Looking for a birthday planner in Sarjapur, Bangalore? Eevagga offers end-to-end birthday planning in Sarjapur Road — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Sarjapur, birthday party planner Sarjapur Road Bangalore, birthday decoration Sarjapur, birthday planning Sarjapur Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-sarjapur' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Sarjapur?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga is a trusted birthday planner in Sarjapur, Bangalore. We serve Sarjapur Road, Carmelaram, Attibele and surrounding areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'Which venues does Eevagga recommend in Sarjapur?', acceptedAnswer: { '@type': 'Answer', text: 'Sarjapur has great birthday venue options including gated community clubhouses in Brigade Meadows, Sobha City and Prestige Oaks, farmhouse venues on Sarjapur Road and garden spaces. Eevagga coordinates all bookings and decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party cost in Sarjapur?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Sarjapur start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. We offer packages for all budgets and guest counts.' } }, { '@type': 'Question', name: 'Does Eevagga plan birthday parties in gated communities in Sarjapur?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! We regularly plan birthday parties in gated communities across Sarjapur Road — including clubhouse setups in Brigade Meadows, Sobha City and Prestige Oaks. We coordinate venue booking and complete decoration.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Sarjapur',
   badge: 'Serving Sarjapur Road & Carmelaram',
   h1: 'Birthday Planner in Sarjapur, Bangalore — Premium Celebrations by Eevagga',

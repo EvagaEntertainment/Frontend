@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Barbie Theme Birthday Bangalore | Glam Pink Party Setup — Eevagga',
+  title: { absolute: "Barbie Theme Birthday Bangalore — Eevagga" },
   description:
     'Create a stunning Barbie theme birthday party in Bangalore with Eevagga. Hot pink décor, glam balloon installations, Barbie cake & full planning. Book your free consultation today.',
   keywords:
@@ -123,6 +123,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Unicorn Theme Birthday",
+      "href": "/unicorn-theme-birthday-bangalore"
+    },
+    {
+      "label": "Jungle Theme Birthday",
+      "href": "/jungle-theme-birthday-bangalore"
+    },
+    {
+      "label": "Space Theme Birthday",
+      "href": "/space-theme-birthday-bangalore"
+    },
+    {
+      "label": "Cocomelon Birthday Theme",
+      "href": "/cocomelon-birthday-theme-bangalore"
+    }
+  ],
   title: 'Barbie Theme Birthday Bangalore',
   badge: 'Glam Pink Theme Specialists',
   h1: 'Barbie Theme Birthday Party in Bangalore — Glam Celebrations by Eevagga',

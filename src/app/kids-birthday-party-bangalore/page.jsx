@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Kids Birthday Party Bangalore | Children\'s Party Planners — Eevagga',
+  title: { absolute: "Kids Birthday Party Bangalore — Eevagga" },
   description:
     'Plan the perfect kids birthday party in Bangalore with Eevagga. Theme décor, magicians, games, entertainers & end-to-end kids party planning. Book your free consultation today.',
   keywords:
@@ -100,6 +100,20 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "1st Birthday Planner",
+      "href": "/1st-birthday-planner-bangalore"
+    },
+    {
+      "label": "Teen Birthday Celebration",
+      "href": "/teen-birthday-celebration-bangalore"
+    },
+    {
+      "label": "Adult Birthday Planner",
+      "href": "/adult-birthday-planner-bangalore"
+    }
+  ],
   title: 'Kids Birthday Party Bangalore',
   badge: 'Children\'s Party Specialists',
   h1: 'Kids Birthday Party Planning in Bangalore — Fun-Filled Celebrations by Eevagga',

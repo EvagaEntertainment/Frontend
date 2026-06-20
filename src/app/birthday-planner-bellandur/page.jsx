@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Bellandur | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Bellandur — Eevagga" },
   description: 'Looking for a birthday planner in Bellandur, Bangalore? Eevagga offers end-to-end birthday planning in Bellandur — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Bellandur, birthday party planner Bellandur Bangalore, birthday decoration Bellandur, birthday planning Bellandur Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-bellandur' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Bellandur?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga serves Bellandur, Kadubeesanahalli, Outer Ring Road corridors and surrounding areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'What venues are popular for birthday parties in Bellandur?', acceptedAnswer: { '@type': 'Answer', text: 'Popular Bellandur birthday venues include gated community clubhouses in Sobha Daffodil, Mantri Espana and Salarpuria Sattva, hotel banquet halls on Outer Ring Road and home party setups.' } }, { '@type': 'Question', name: 'How much does a birthday party in Bellandur cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Bellandur start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' } }, { '@type': 'Question', name: 'Does Eevagga plan birthday parties in Bellandur gated communities?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! We regularly plan birthday parties in Bellandur gated communities — coordinating clubhouse bookings and full decoration at Sobha Daffodil, Mantri Espana and many more.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Bellandur', badge: 'Serving Bellandur & Kadubeesanahalli',
   h1: 'Birthday Planner in Bellandur, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across Bellandur, Kadubeesanahalli and Outer Ring Road. From gated community clubhouses to home parties — Eevagga delivers premium themes, décor and photography.',

@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Cocomelon Birthday Theme Bangalore | Kids Party Setup — Eevagga',
+  title: { absolute: "Cocomelon Birthday Theme Bangalore — Eevagga" },
   description:
     'Plan a vibrant Cocomelon birthday party in Bangalore for your toddler. Bright themed décor, JJ character props, Cocomelon cake & full planning by Eevagga. Book today.',
   keywords:
@@ -123,6 +123,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Unicorn Theme Birthday",
+      "href": "/unicorn-theme-birthday-bangalore"
+    },
+    {
+      "label": "Jungle Theme Birthday",
+      "href": "/jungle-theme-birthday-bangalore"
+    },
+    {
+      "label": "Barbie Theme Birthday",
+      "href": "/barbie-theme-birthday-bangalore"
+    },
+    {
+      "label": "Space Theme Birthday",
+      "href": "/space-theme-birthday-bangalore"
+    }
+  ],
   title: 'Cocomelon Birthday Theme Bangalore',
   badge: 'Kids Theme Party Specialists',
   h1: 'Cocomelon Birthday Theme in Bangalore — Fun Toddler Celebrations by Eevagga',

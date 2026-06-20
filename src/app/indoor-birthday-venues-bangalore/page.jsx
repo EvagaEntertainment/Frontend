@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Indoor Birthday Venues Bangalore | AC Halls & Private Spaces — Eevagga',
+  title: { absolute: "Indoor Birthday Venues Bangalore — Eevagga" },
   description:
     'Find the best indoor birthday venues in Bangalore with Eevagga. Air-conditioned banquet halls, private dining rooms, AV-ready spaces & full decoration. Book your free consultation today.',
   keywords:
@@ -60,6 +60,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Venues",
+      "href": "/birthday-venues-bangalore"
+    },
+    {
+      "label": "Birthday Venues Whitefield",
+      "href": "/birthday-venues-whitefield"
+    },
+    {
+      "label": "Birthday Party Resorts",
+      "href": "/birthday-party-resorts-bangalore"
+    },
+    {
+      "label": "Birthday Venues Under 50k",
+      "href": "/birthday-venues-under-50k-bangalore"
+    }
+  ],
   title: 'Indoor Birthday Venues Bangalore',
   badge: 'Indoor Venue Specialists',
   h1: 'Indoor Birthday Venues in Bangalore — Climate-Controlled Celebrations by Eevagga',

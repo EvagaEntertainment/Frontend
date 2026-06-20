@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Boss Baby Birthday Decoration Bangalore | Corporate Kids Theme — Eevagga',
+  title: { absolute: "Boss Baby Birthday Decoration Bangalore — Eevagga" },
   description:
     'Plan a fun Boss Baby theme birthday in Bangalore. Suit & tie décor, baby boss props, boardroom table setups & full planning by Eevagga. Book your free consultation today.',
   keywords:
@@ -123,6 +123,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Unicorn Theme Birthday",
+      "href": "/unicorn-theme-birthday-bangalore"
+    },
+    {
+      "label": "Jungle Theme Birthday",
+      "href": "/jungle-theme-birthday-bangalore"
+    },
+    {
+      "label": "Barbie Theme Birthday",
+      "href": "/barbie-theme-birthday-bangalore"
+    },
+    {
+      "label": "Space Theme Birthday",
+      "href": "/space-theme-birthday-bangalore"
+    }
+  ],
   title: 'Boss Baby Birthday Decoration Bangalore',
   badge: 'Corporate Kids Theme Experts',
   h1: 'Boss Baby Birthday Decoration in Bangalore — Little CEO Celebrations by Eevagga',

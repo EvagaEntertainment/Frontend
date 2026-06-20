@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Birthday Decoration in Bangalore | Balloon & Theme Decors — Eevagga",
+  title: { absolute: "Premium Birthday Decoration in Bangalore — Eevagga" },
   description:
     "Premium birthday decoration in Bangalore. We specialize in organic balloon arches, stunning backdrops, floral themes, neon light setups & stage decoration. Customise your décor today.",
   keywords:
@@ -97,6 +97,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    },
+    {
+      "label": "Luxury Birthday Planner",
+      "href": "/luxury-birthday-planner-bangalore"
+    }
+  ],
   title: 'Birthday Decoration Bangalore',
   badge: 'Premium Decorators',
   h1: "Stunning Birthday Decoration in Bangalore \u2014 Balloon & Theme Decors",

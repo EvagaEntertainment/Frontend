@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner Hennur | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner Hennur — Eevagga" },
   description: 'Looking for a birthday planner in Hennur, Bangalore? Eevagga offers end-to-end birthday planning in Hennur Road — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner Hennur, birthday party planner Hennur Bangalore, birthday decoration Hennur Road, birthday planning Hennur Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-hennur' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in Hennur?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga serves Hennur Road, Kalyan Nagar, Banaswadi and surrounding North-East Bangalore areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'What birthday venues are available in Hennur?', acceptedAnswer: { '@type': 'Answer', text: 'Hennur Road has banquet halls, community halls, gated community clubhouses on Hennur Road and home birthday party options. Eevagga coordinates venue bookings and complete decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party in Hennur cost?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in Hennur start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury celebrations. Eevagga has packages for all budgets.' } }, { '@type': 'Question', name: 'Does Eevagga cover Kalyan Nagar and Banaswadi from Hennur?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our North-East Bangalore team covers Hennur Road, Kalyan Nagar, Banaswadi and Ramamurthy Nagar for seamless birthday planning.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner Hennur', badge: 'Serving Hennur Road & Kalyan Nagar',
   h1: 'Birthday Planner in Hennur, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across Hennur Road, Kalyan Nagar, Banaswadi and North-East Bangalore. Eevagga\'s local team delivers premium themes, venue coordination, décor and photography.',

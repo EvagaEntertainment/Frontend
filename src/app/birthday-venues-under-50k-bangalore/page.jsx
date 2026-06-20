@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Venues Under 50K Bangalore | Budget Party Halls — Eevagga',
+  title: { absolute: "Birthday Venues Under 50K Bangalore — Eevagga" },
   description: 'Find the best birthday venues under ₹50,000 in Bangalore with Eevagga. Affordable banquet halls, home parties, budget-friendly venues + full decoration. Book your free consultation today.',
   keywords: 'birthday venues under 50000 Bangalore, budget birthday venues Bangalore, affordable birthday halls Bangalore, birthday party under 50k Bangalore, cheap birthday venues Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-venues-under-50k-bangalore' },
@@ -54,6 +54,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Venues",
+      "href": "/birthday-venues-bangalore"
+    },
+    {
+      "label": "Indoor Birthday Venues",
+      "href": "/indoor-birthday-venues-bangalore"
+    },
+    {
+      "label": "Birthday Venues Whitefield",
+      "href": "/birthday-venues-whitefield"
+    },
+    {
+      "label": "Birthday Party Resorts",
+      "href": "/birthday-party-resorts-bangalore"
+    }
+  ],
   title: 'Birthday Venues Under 50K Bangalore',
   badge: 'Budget-Smart Birthday Planning',
   h1: 'Birthday Venues Under ₹50,000 in Bangalore — Best Value Celebrations by Eevagga',

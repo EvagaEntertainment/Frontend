@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium Birthday Party Planner | End-to-End Planning — Eevagga",
+  title: { absolute: "Premium End-to-End Birthday Party Planner — Eevagga" },
   description:
     "Choose Eevagga, the premier birthday planner for elegant and stylish birthday events. We handle everything from concept to execution. Contact us on WhatsApp.",
   keywords:
@@ -97,6 +97,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium Birthday Planner',
   badge: 'Elegant Celebrations',
   h1: "Premium Birthday Party Planner \u2014 Seamless & Stylish",

@@ -89,6 +89,7 @@ const organizationSchema = {
       },
       "contactPoint": {
         "@type": "ContactPoint",
+        "telephone": "+91-8050279101",
         "contactType": "customer support",
         "areaServed": "IN",
         "availableLanguage": "English"
@@ -140,7 +141,7 @@ export default function RootLayout({ children }) {
             <ClientLayout>{children}</ClientLayout>
           </Providers>
         </Suspense>
-
+ 
         {/* Google Analytics & Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
@@ -163,7 +164,7 @@ export default function RootLayout({ children }) {
               window.fbq.version = "2.0";
               window.fbq.queue = [];
               var script = document.createElement("script");
-              script.src = "https://connect.facebook.net/en_US/fbevents";
+              script.src = "https://connect.facebook.net/en_US/fbevents.js";
               script.async = true;
               script.defer = true;
               script.onload = function () {

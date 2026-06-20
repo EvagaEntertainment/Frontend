@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium Baby Shower Planner | Godh Bharani Planners — Eevagga",
+  title: { absolute: "Premium Baby Shower & Godh Bharani Planner — Eevagga" },
   description:
     "Host a gorgeous baby shower (Godh Bharani) with Eevagga. We offer custom themes, cute decorations, photography, fun guest activities & complete event management.",
   keywords:
@@ -97,12 +97,30 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium Baby Shower Planner',
   badge: 'Joyful Beginnings',
   h1: "Premium Baby Shower Planner \u2014 Sweet & Memorable",
   heroSubtitle:
     "Celebrate the upcoming arrival of your little one. Eevagga designs beautiful, heartwarming baby shower (Godh Bharani) events with creative themes, charming pastel decors, and fun guest activities.",
-  heroImage: '/service-pages/birthday-hero.png',
+  heroImage: '/service-pages/baby-shower-hero.png',
   heroImageAlt: 'Charming pastel pink and blue baby shower theme balloon decoration setup',
 
   stats: [
@@ -120,27 +138,27 @@ const pageConfig = {
 
   gallery: [
     {
-      src: '/service-pages/birthday-hero.png',
+      src: '/service-pages/baby-shower-hero.png',
       alt: 'Delightful baby shower balloon backdrop',
       caption: 'Main Theme Stage',
     },
     {
-      src: '/service-pages/birthday-gallery-1.png',
+      src: '/service-pages/baby-shower-gallery-1.png',
       alt: 'Traditional Godh Bharani swing decoration',
       caption: 'Traditional Swing',
     },
     {
-      src: '/service-pages/birthday-gallery-2.png',
+      src: '/service-pages/baby-shower-gallery-2.png',
       alt: 'Cupcakes and macarons station for baby shower',
       caption: 'Sweet Dessert Table',
     },
     {
-      src: '/service-pages/birthday-gallery-3.png',
+      src: '/service-pages/baby-shower-gallery-3.png',
       alt: 'Baby shower guest wish board and prop',
       caption: 'Activity Stand',
     },
     {
-      src: '/service-pages/birthday-gallery-4.png',
+      src: '/service-pages/baby-shower-gallery-4.png',
       alt: 'Cute teddy bear theme photo booth setup',
       caption: 'Cute Photo Booth',
     },

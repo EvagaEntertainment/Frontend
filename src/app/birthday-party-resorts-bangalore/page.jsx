@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Party Resorts Bangalore | Resort Celebrations — Eevagga',
+  title: { absolute: "Birthday Party Resorts Bangalore — Eevagga" },
   description: 'Plan a stunning birthday party at a resort in Bangalore with Eevagga. Pool-side parties, resort lawns, garden venues & luxury resort birthday planning. Book today.',
   keywords: 'birthday party resorts Bangalore, resort birthday party Bangalore, birthday resort Bangalore, pool party birthday Bangalore, resort birthday planning Bangalore',
   alternates: { canonical: 'https://www.eevagga.com/birthday-party-resorts-bangalore' },
@@ -54,6 +54,24 @@ const faqSchema = {
 };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Venues",
+      "href": "/birthday-venues-bangalore"
+    },
+    {
+      "label": "Indoor Birthday Venues",
+      "href": "/indoor-birthday-venues-bangalore"
+    },
+    {
+      "label": "Birthday Venues Whitefield",
+      "href": "/birthday-venues-whitefield"
+    },
+    {
+      "label": "Birthday Venues Under 50k",
+      "href": "/birthday-venues-under-50k-bangalore"
+    }
+  ],
   title: 'Birthday Party Resorts Bangalore',
   badge: 'Resort Birthday Specialists',
   h1: 'Birthday Party Resorts near Bangalore — Pool-Side & Garden Celebrations by Eevagga',

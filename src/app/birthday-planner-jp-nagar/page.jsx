@@ -3,7 +3,7 @@ import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
 export const metadata = {
-  title: 'Birthday Planner JP Nagar | Local Party Planners — Eevagga',
+  title: { absolute: "Birthday Planner JP Nagar — Eevagga" },
   description: 'Looking for a birthday planner in JP Nagar, Bangalore? Eevagga offers end-to-end birthday planning in JP Nagar — themes, décor, photography, venues & catering. Book today.',
   keywords: 'birthday planner JP Nagar, birthday party planner JP Nagar Bangalore, birthday decoration JP Nagar, birthday planning JP Nagar Bangalore, birthday organiser JP Nagar',
   alternates: { canonical: 'https://www.eevagga.com/birthday-planner-jp-nagar' },
@@ -17,6 +17,24 @@ const breadcrumbSchema = { '@context': 'https://schema.org', '@type': 'Breadcrum
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'Does Eevagga offer birthday planning in JP Nagar?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Eevagga is a trusted birthday planner in JP Nagar, Bangalore. We serve all phases of JP Nagar, Jayanagar, BTM Layout and surrounding South Bangalore areas with full end-to-end birthday planning.' } }, { '@type': 'Question', name: 'Which venues does Eevagga recommend in JP Nagar for birthday parties?', acceptedAnswer: { '@type': 'Answer', text: 'JP Nagar has excellent birthday venues including banquet halls on JP Nagar 7th Phase, community halls, restaurant private dining rooms near Jayanagar Shopping Complex and garden spaces. Eevagga coordinates all bookings and decoration.' } }, { '@type': 'Question', name: 'How much does a birthday party cost in JP Nagar?', acceptedAnswer: { '@type': 'Answer', text: 'Birthday parties in JP Nagar start from ₹15,000 for home décor setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets and guest counts.' } }, { '@type': 'Question', name: 'Does Eevagga also serve Jayanagar and BTM Layout from JP Nagar?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our South Bangalore team covers JP Nagar all phases, Jayanagar, BTM Layout and Banashankari for seamless birthday planning.' } }] };
 
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner Whitefield",
+      "href": "/birthday-planner-whitefield"
+    },
+    {
+      "label": "Birthday Planner Hsr Layout",
+      "href": "/birthday-planner-hsr-layout"
+    },
+    {
+      "label": "Birthday Planner Koramangala",
+      "href": "/birthday-planner-koramangala"
+    },
+    {
+      "label": "Birthday Planner Indiranagar",
+      "href": "/birthday-planner-indiranagar"
+    }
+  ],
   title: 'Birthday Planner JP Nagar', badge: 'Serving JP Nagar & Jayanagar',
   h1: 'Birthday Planner in JP Nagar, Bangalore — Premium Celebrations by Eevagga',
   heroSubtitle: 'Celebrate in style across all phases of JP Nagar, Jayanagar, BTM Layout and South Bangalore. Eevagga\'s local team delivers premium themes, venue coordination, décor and photography.',

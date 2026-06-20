@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Thank You | Eevagga",
+  title: { absolute: "Thank You — Eevagga" },
   robots: { index: false, follow: false },
 };
 

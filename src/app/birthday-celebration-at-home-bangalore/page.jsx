@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Birthday Celebration at Home in Bangalore | Home Planners — Eevagga",
+  title: { absolute: "Birthday Celebration at Home in Bangalore — Eevagga" },
   description:
     "Planning a birthday party at home in Bangalore? Eevagga offers intimate home birthday packages with beautiful room decors, private catering & home entertainment.",
   keywords:
@@ -97,6 +97,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Luxury Birthday Planner",
+      "href": "/luxury-birthday-planner-bangalore"
+    }
+  ],
   title: 'Birthday Celebration At Home Bangalore',
   badge: 'Intimate Home Parties',
   h1: "Intimate Birthday Celebration at Home in Bangalore \u2014 Effortless",

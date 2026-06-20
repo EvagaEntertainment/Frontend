@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Space Theme Birthday Bangalore | Galaxy Party Setup — Eevagga',
+  title: { absolute: "Space Theme Birthday Bangalore — Eevagga" },
   description:
     'Launch your celebration into orbit with a space theme birthday in Bangalore. Galaxy balloon arches, neon planet props, astronaut décor & full planning by Eevagga. Book today.',
   keywords:
@@ -123,6 +123,24 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Unicorn Theme Birthday",
+      "href": "/unicorn-theme-birthday-bangalore"
+    },
+    {
+      "label": "Jungle Theme Birthday",
+      "href": "/jungle-theme-birthday-bangalore"
+    },
+    {
+      "label": "Barbie Theme Birthday",
+      "href": "/barbie-theme-birthday-bangalore"
+    },
+    {
+      "label": "Cocomelon Birthday Theme",
+      "href": "/cocomelon-birthday-theme-bangalore"
+    }
+  ],
   title: 'Space Theme Birthday Bangalore',
   badge: 'Galaxy & Space Theme Experts',
   h1: 'Space Theme Birthday Party in Bangalore — Out-of-This-World by Eevagga',

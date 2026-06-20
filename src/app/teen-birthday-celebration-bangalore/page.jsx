@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Teen Birthday Celebration Bangalore | DJ & Photo Booth — Eevagga',
+  title: { absolute: "Teen Birthday Celebration Bangalore — Eevagga" },
   description:
     'Plan an epic teen birthday celebration in Bangalore with Eevagga. DJ nights, neon themes, photo booths, live performers & full teen party planning. Book your free consultation today.',
   keywords:
@@ -100,6 +100,20 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "1st Birthday Planner",
+      "href": "/1st-birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Party",
+      "href": "/kids-birthday-party-bangalore"
+    },
+    {
+      "label": "Adult Birthday Planner",
+      "href": "/adult-birthday-planner-bangalore"
+    }
+  ],
   title: 'Teen Birthday Celebration Bangalore',
   badge: 'Teen & Tween Party Experts',
   h1: 'Teen Birthday Celebration in Bangalore — Epic Parties by Eevagga',

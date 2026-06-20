@@ -4,7 +4,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: 'Adult Birthday Planner Bangalore | Milestone Celebrations — Eevagga',
+  title: { absolute: "Adult Birthday Planner Bangalore — Eevagga" },
   description:
     'Plan a sophisticated adult birthday in Bangalore with Eevagga. Milestone 30th, 40th, 50th celebrations, cocktail setups, luxury themes & full end-to-end planning. Book today.',
   keywords:
@@ -100,6 +100,20 @@ const faqSchema = {
 
 /* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "1st Birthday Planner",
+      "href": "/1st-birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Party",
+      "href": "/kids-birthday-party-bangalore"
+    },
+    {
+      "label": "Teen Birthday Celebration",
+      "href": "/teen-birthday-celebration-bangalore"
+    }
+  ],
   title: 'Adult Birthday Planner Bangalore',
   badge: 'Milestone Birthday Specialists',
   h1: 'Adult Birthday Planner in Bangalore — Sophisticated Celebrations by Eevagga',
