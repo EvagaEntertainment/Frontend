@@ -129,6 +129,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://api.eevagga.com" />
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcrQCotAAAAADGcQBjFWlPjW7X22_thFG4YdbJt" async defer></script>
       </head>
       <body>
         <script
