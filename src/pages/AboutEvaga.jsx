@@ -117,7 +117,7 @@ const AboutUs = () => {
         <div className="space-y-8">
           {sections.map((section, index) => (
             <motion.section
-              key={section.title || section.type || index}
+              key={section.title ? section.title : `section-${index}`}
               variants={fadeIn("up", "tween", 0.2 + index * 0.1, 0.6)}
               className="space-y-6"
               viewport={{ once: true }}

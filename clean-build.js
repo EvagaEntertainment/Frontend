@@ -1,6 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+// Strip "Host:" directive from robots.txt (next-sitemap adds it; it's Yandex-only and non-standard)
+const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
+if (fs.existsSync(robotsPath)) {
+  const cleaned = fs.readFileSync(robotsPath, 'utf8')
+    .replace(/^# Host\s*\nHost:[^\n]*\n?/m, '');
+  fs.writeFileSync(robotsPath, cleaned, 'utf8');
+}
+
 const nextDir = path.join(process.cwd(), '.next');
 
 if (fs.existsSync(nextDir)) {

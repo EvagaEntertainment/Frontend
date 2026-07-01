@@ -32,8 +32,19 @@ const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, 
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <h1 style={srOnly}>Press Releases — Eevagga News &amp; Announcements</h1>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
+      <div className="bg-[#6A1B9A] text-white py-12 px-6 text-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">Press Releases &amp; Media</h1>
+        <p className="max-w-2xl mx-auto text-white/85 text-lg">
+          Stay up to date with the latest news, announcements, and media coverage from Eevagga — Bangalore&#39;s
+          premium birthday, house warming, and baby shower celebration company. Our press releases cover
+          new service launches, city expansions, industry milestones, and partnerships.
+        </p>
+        <p className="mt-4 text-white/70 text-sm">
+          For media enquiries, contact us at{' '}
+          <a href="mailto:info@eevagga.com" className="underline hover:text-[#FFE500]">info@eevagga.com</a>
+        </p>
+      </div>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

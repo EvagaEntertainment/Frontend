@@ -54,6 +54,7 @@ function SingleBlogPage() {
 
       <Typography
         variant="h3"
+        component="h1"
         gutterBottom
         sx={{
           fontWeight: "bold",

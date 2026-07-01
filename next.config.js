@@ -10,15 +10,20 @@ const nextConfig = {
       { source: '/PressRelease', destination: '/press-releases', permanent: true },
       { source: '/PrivacyAndPolicy', destination: '/privacy-policy', permanent: true },
       { source: '/RefundAndCancellation', destination: '/cancellation-policy', permanent: true },
-      { source: '/SinglePackage', destination: '/viewAll', permanent: true },
+      { source: '/SinglePackage', destination: '/viewall', permanent: true },
+      // Redirect legacy PascalCase URL to lowercase canonical
+      { source: '/viewAll', destination: '/viewall', permanent: true },
       // Category index has no page — redirect to browse
-      { source: '/category', destination: '/viewAll', permanent: false },
+      { source: '/category', destination: '/viewall', permanent: true },
       // Other legacy ghost routes
       { source: '/HomePage', destination: '/', permanent: true },
       { source: '/HomePageOld', destination: '/', permanent: true },
       { source: '/AboutEvaga', destination: '/about-us', permanent: true },
       { source: '/OurService', destination: '/services', permanent: true },
-      { source: '/ViewAllPage', destination: '/viewAll', permanent: true },
+      { source: '/ViewAllPage', destination: '/viewall', permanent: true },
+      { source: '/Blog', destination: '/blogs', permanent: true },
+      { source: '/TermsAndConditions', destination: '/terms-and-condition', permanent: true },
+      { source: '/PrivacyPolicy', destination: '/privacy-policy', permanent: true },
     ];
   },
 
@@ -53,7 +58,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy-Report-Only',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.facebook.net accounts.google.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src * data: blob:; connect-src * data:; frame-src accounts.google.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.facebook.net accounts.google.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src * data: blob:; connect-src * data:; frame-src accounts.google.com; frame-ancestors 'self';",
           },
         ],
       },

@@ -27,6 +27,9 @@ const BookingForm = () => {
   } = useForm({
     defaultValues: {
       sku: sku || "",
+      eventType: "",
+      eventLocation: "",
+      eventMonth: "",
     },
   });
   const [loading, setLoading] = useState(false);
@@ -362,7 +365,6 @@ const BookingForm = () => {
                     borderColor: "#FFD700",
                   },
                 }}
-                select
               >
                 {generateMonthOptions()}
               </Select>

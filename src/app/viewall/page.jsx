@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Birthday & Celebration Packages in Bangalore | Eevagga",
+  title: "Birthday & Celebration Packages in Bangalore",
   description: "Browse Eevagga's birthday, house warming and baby shower packages in Bangalore. Curated themes, decor and full-service celebration experiences.",
-  alternates: { canonical: '/viewAll' },
+  alternates: { canonical: '/viewall' },
   openGraph: {
     title: "Birthday & Celebration Packages in Bangalore | Eevagga",
     description: "Browse birthday, house warming and baby shower packages in Bangalore. Curated themes, decor and full-service celebration experiences by Eevagga.",
-    url: "https://www.eevagga.com/viewAll",
+    url: "https://www.eevagga.com/viewall",
     type: "website",
     images: ogImages
   }
@@ -20,7 +20,7 @@ const breadcrumbSchema = {
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eevagga.com" },
-    { "@type": "ListItem", "position": 2, "name": "Celebration Packages", "item": "https://www.eevagga.com/viewAll" }
+    { "@type": "ListItem", "position": 2, "name": "Celebration Packages", "item": "https://www.eevagga.com/viewall" }
   ]
 };
 
@@ -29,7 +29,7 @@ const itemListSchema = {
   "@type": "ItemList",
   "name": "Birthday & Celebration Packages in Bangalore",
   "description": "Curated birthday, house warming and baby shower packages in Bangalore by Eevagga.",
-  "url": "https://www.eevagga.com/viewAll",
+  "url": "https://www.eevagga.com/viewall",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Birthday Decoration Packages" },
     { "@type": "ListItem", "position": 2, "name": "Kids Birthday Party Packages" },
@@ -44,8 +44,8 @@ const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, 
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Birthday &amp; Celebration Packages in Bangalore — Browse &amp; Book | Eevagga</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>

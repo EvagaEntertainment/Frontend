@@ -68,11 +68,17 @@ const organizationSchema = {
       "@id": "https://www.eevagga.com/#organization",
       "name": "Eevagga Entertainment",
       "url": "https://www.eevagga.com",
+      "telephone": "+91-8050279101",
       "logo": {
         "@type": "ImageObject",
         "url": "https://www.eevagga.com/logo.webp"
       },
-      "image": "https://www.eevagga.com/og-image.jpg",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.eevagga.com/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
       "description": "Bangalore's premium full-service birthday, house warming and baby shower planning company. We handle end-to-end decoration, themes, venues and execution.",
       "address": {
         "@type": "PostalAddress",
@@ -89,6 +95,7 @@ const organizationSchema = {
       },
       "contactPoint": {
         "@type": "ContactPoint",
+        "telephone": "+91-8050279101",
         "contactType": "customer support",
         "areaServed": "IN",
         "availableLanguage": "English"
@@ -108,10 +115,7 @@ const organizationSchema = {
       "publisher": { "@id": "https://www.eevagga.com/#organization" },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://www.eevagga.com/search?q={search_term_string}"
-        },
+        "target": "https://www.eevagga.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }
@@ -163,7 +167,7 @@ export default function RootLayout({ children }) {
               window.fbq.version = "2.0";
               window.fbq.queue = [];
               var script = document.createElement("script");
-              script.src = "https://connect.facebook.net/en_US/fbevents";
+              script.src = "https://connect.facebook.net/en_US/fbevents.js";
               script.async = true;
               script.defer = true;
               script.onload = function () {

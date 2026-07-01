@@ -14,7 +14,7 @@ export const internalRoutes = {
   thankyou: "/thank-you",
   ourServices: "/services",
   categoryPage: "/category",
-  viewAllPage: "/viewAll",
+  viewAllPage: "/viewall",
 
   userSignup: "/user/signup",
   userLogin: "/user/login",

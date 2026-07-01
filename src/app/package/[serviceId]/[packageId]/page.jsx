@@ -12,15 +12,17 @@ export async function generateMetadata({ params }) {
     return {
       title,
       description,
+      alternates: { canonical: `https://www.eevagga.com/package/${serviceId}/${packageId}` },
     };
   } catch (e) {
-    return { title: 'Package Details | Eevagga' };
+    return { title: 'Package Details' };
   }
 }
 
 export default async function Page({ params }) {
   const { serviceId, packageId } = params;
   let schema = null;
+  let breadcrumbSchema = null;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}packages/get-one-package/${serviceId}/${packageId}`);
     const data = await res.json();
@@ -31,13 +33,22 @@ export default async function Page({ params }) {
     schema = {
       "@context": "https://schema.org",
       "@type": "Service",
+      "@id": `https://www.eevagga.com/package/${serviceId}/${packageId}#service`,
+      "url": `https://www.eevagga.com/package/${serviceId}/${packageId}`,
       "name": title,
       "description": description,
-      "provider": {
-        "@type": "Organization",
-        "name": "Evaga Entertainment",
-        "url": "https://www.eevagga.com"
-      }
+      "provider": { "@id": "https://www.eevagga.com/#organization" },
+      "areaServed": { "@type": "City", "name": "Bangalore", "sameAs": "https://en.wikipedia.org/wiki/Bangalore" }
+    };
+
+    breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eevagga.com" },
+        { "@type": "ListItem", "position": 2, "name": "Packages", "item": "https://www.eevagga.com/viewall" },
+        { "@type": "ListItem", "position": 3, "name": title, "item": `https://www.eevagga.com/package/${serviceId}/${packageId}` }
+      ]
     };
   } catch (e) { }
 
@@ -46,7 +57,13 @@ export default async function Page({ params }) {
       {schema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
+        />
+      )}
+      {breadcrumbSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
         />
       )}
       <Suspense fallback={null}>

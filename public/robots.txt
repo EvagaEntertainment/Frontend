@@ -13,9 +13,9 @@ Disallow: /booking-form
 Disallow: /feedback-form
 Disallow: /orderStatus
 Disallow: /thank-you
+Disallow: /advertise-with-us
+Disallow: /custom-packages
 
-# Host
-Host: https://www.eevagga.com
 
 # Sitemaps
 Sitemap: https://www.eevagga.com/sitemap.xml
