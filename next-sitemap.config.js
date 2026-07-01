@@ -22,6 +22,8 @@ module.exports = {
     '/user/*',
     '/vendor/*',
     '/admin/*',
+    // noindex pages
+    '/careers',
     // PascalCase Pages Router duplicates (now 301-redirected via next.config.js)
     '/HomePage', '/HomePageOld',
     '/AboutEvaga',
@@ -58,36 +60,58 @@ module.exports = {
     '/opengraph-image.jpg',
   ],
 
-  // Strip priority and changefreq — Google ignores them
-  transform: async (_config, path) => ({
-    loc: path,
-    lastmod: new Date().toISOString(),
-  }),
+  // Per-page lastmod dates — use actual content dates, not build timestamp
+  transform: async (_config, path) => {
+    const lastmodMap = {
+      '/':                    '2026-06-15',
+      '/about-us':            '2026-05-01',
+      '/services':            '2026-05-01',
+      '/blogs':               '2026-06-27',
+      '/viewall':             '2026-06-01',
+      '/customer-service':    '2026-05-01',
+      '/press-releases':      '2026-05-01',
+      '/cancellation-policy': '2025-02-07',
+      '/privacy-policy':      '2025-02-01',
+      '/terms-and-condition': '2025-02-01',
+    };
+    return {
+      loc: path,
+      lastmod: lastmodMap[path] || '2026-05-01',
+    };
+  },
 
-  // TODO: uncomment and implement once APIs are stable
-  // additionalPaths: async (config) => {
-  //   const paths = [];
-  //
-  //   // Package detail pages
-  //   // const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}packages/get-all-packages`);
-  //   // const data = await res.json();
-  //   // data?.data?.forEach(pkg => {
-  //   //   paths.push({ loc: `/package/${pkg.serviceId}/${pkg._id}`, lastmod: pkg.updatedAt });
-  //   // });
-  //
-  //   // Blog posts
-  //   // const blogs = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}blog/get-all-blogs`);
-  //   // const blogData = await blogs.json();
-  //   // blogData?.data?.forEach(blog => {
-  //   //   paths.push({ loc: `/blogs/singleBlog/${blog._id}`, lastmod: blog.updatedAt });
-  //   // });
-  //
-  //   // Category pages (once /category/[slug] route exists)
-  //   // paths.push({ loc: '/category/birthday-celebration' });
-  //   // paths.push({ loc: '/category/wedding' });
-  //
-  //   return paths;
-  // },
+  // Fetch dynamic routes at build time — gracefully skips if API unavailable
+  additionalPaths: async (config) => {
+    const paths = [];
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!base) return paths;
+
+    try {
+      const res = await fetch(`${base}packages/get-all-packages`, { signal: AbortSignal.timeout(10000) });
+      if (res.ok) {
+        const data = await res.json();
+        (data?.data || []).forEach(pkg => {
+          if (pkg.serviceId && pkg._id) {
+            paths.push({ loc: `/package/${pkg.serviceId}/${pkg._id}`, lastmod: pkg.updatedAt || '2026-05-01' });
+          }
+        });
+      }
+    } catch {}
+
+    try {
+      const res = await fetch(`${base}blog/get-all-blog-for-user`, { signal: AbortSignal.timeout(10000) });
+      if (res.ok) {
+        const data = await res.json();
+        (data?.data || []).forEach(blog => {
+          if (blog._id) {
+            paths.push({ loc: `/blogs/singleBlog/${blog._id}`, lastmod: blog.updatedAt || '2026-05-01' });
+          }
+        });
+      }
+    } catch {}
+
+    return paths;
+  },
 
   robotsTxtOptions: {
     policies: [
@@ -107,6 +131,8 @@ module.exports = {
           '/feedback-form',
           '/orderStatus',
           '/thank-you',
+          '/advertise-with-us',
+          '/custom-packages',
         ],
       },
     ],

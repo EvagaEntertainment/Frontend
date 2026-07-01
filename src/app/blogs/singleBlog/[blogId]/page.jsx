@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
       twitter: { card: 'summary_large_image', title, description, images: [image] },
     };
   } catch {
-    return { title: 'Blog | Eevagga' };
+    return { title: 'Blog' };
   }
 }
 
@@ -58,16 +58,15 @@ export default async function Page({ params }) {
     "@type": "BlogPosting",
     "@id": `https://www.eevagga.com/blogs/singleBlog/${blogId}#article`,
     "url": `https://www.eevagga.com/blogs/singleBlog/${blogId}`,
-    "headline": blog?.title || '',
-    "description": blog?.excerpt || blog?.content?.slice(0, 155) || '',
+    ...(blog?.title ? { "headline": blog.title.slice(0, 110) } : {}),
+    ...(blog?.excerpt || blog?.content ? { "description": (blog.excerpt || blog.content.slice(0, 155)) } : {}),
     "image": image,
-    "datePublished": blog?.createdAt || '',
-    "dateModified": blog?.updatedAt || '',
+    ...(blog?.createdAt ? { "datePublished": blog.createdAt } : {}),
+    ...(blog?.updatedAt ? { "dateModified": blog.updatedAt } : {}),
     "inLanguage": "en-IN",
-    "author": {
-      "@type": "Organization",
-      "@id": "https://www.eevagga.com/#organization"
-    },
+    "author": blog?.authorName
+      ? { "@type": "Person", "name": blog.authorName }
+      : { "@type": "Organization", "name": "Eevagga Editorial Team", "@id": "https://www.eevagga.com/#organization" },
     "publisher": { "@id": "https://www.eevagga.com/#organization" },
     "isPartOf": { "@id": "https://www.eevagga.com/blogs#blog" }
   };
@@ -90,7 +89,7 @@ export default async function Page({ params }) {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <Suspense fallback={null}>
         <PageComponent />

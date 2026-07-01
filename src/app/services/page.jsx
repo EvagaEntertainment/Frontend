@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Birthday & Celebration Services in Bangalore | Eevagga",
+  title: "Birthday & Celebration Services in Bangalore",
   description: "Explore Eevagga's full-service birthday, house warming and baby shower planning services in Bangalore. Themes, decor, photography, venues and end-to-end execution.",
   keywords: "birthday decoration services Bangalore, birthday planning services Bangalore, house warming services Bangalore, baby shower planning Bangalore, premium celebration services",
   alternates: { canonical: '/services' },
@@ -27,7 +27,15 @@ const servicesSchema = {
   "provider": { "@id": "https://www.eevagga.com/#organization" },
   "serviceType": "Birthday and Celebration Planning",
   "areaServed": { "@type": "City", "name": "Bangalore", "sameAs": "https://en.wikipedia.org/wiki/Bangalore" },
-  "url": "https://www.eevagga.com/services"
+  "url": "https://www.eevagga.com/services",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "INR",
+    "lowPrice": "2999",
+    "highPrice": "99999",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.eevagga.com/viewall"
+  }
 };
 
 const breadcrumbSchema = {
@@ -44,8 +52,8 @@ const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, 
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Birthday &amp; Celebration Services in Bangalore — Eevagga</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>

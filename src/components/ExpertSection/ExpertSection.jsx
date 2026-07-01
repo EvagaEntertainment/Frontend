@@ -4,6 +4,9 @@ import expertImage from "../../assets/expertpurchased.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+// Deterministic pseudo-random (sin-based) — same output on server and client
+const sr = (seed) => { const x = Math.sin(seed + 1) * 10000; return x - Math.floor(x); };
+
 const ExpertSection = () => {
   const handleBooking = () => {
     // Scroll to booking section
@@ -99,15 +102,15 @@ const ExpertSection = () => {
             key={i}
             className="absolute w-2 h-2 bg-blue-400/30 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${(sr(i) * 100).toFixed(4)}%`,
+              top: `${(sr(i + 31) * 100).toFixed(4)}%`,
             }}
             animate={{
               scale: [0.5, 1, 0.5],
               transition: {
-                duration: 2 + Math.random() * 2,
+                duration: 2 + sr(i + 62) * 2,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: sr(i + 93) * 2,
               },
             }}
           />

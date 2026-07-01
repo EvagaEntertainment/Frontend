@@ -44,7 +44,7 @@
     "react-zoom-pan-pinch": "^3.6.1",
     "redux": "^5.0.1",
     "swiper": "^11.2.8",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "dev": "next dev",

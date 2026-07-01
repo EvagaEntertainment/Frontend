@@ -16,8 +16,6 @@ const HeroSection = () => {
       dispatch(fetchOurServicesBanner());
     }
   }, [dispatch, ourServicesBanner]);
-  console.log(ourServicesBanner);
-
   return (
     <section className="relative w-full min-h-[80dvh] overflow-hidden">
       {/* Background Image */}
