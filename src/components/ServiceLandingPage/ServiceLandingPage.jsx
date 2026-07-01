@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
+import BookingForm from '../../pages/BookingForm';
 
 const WHATSAPP = '918050279101';
 
-/* ─── animation ─────────────────────────────────────────────────────────── */
+/* --- animation ----------------------------------------------------------- */
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: (i = 0) => ({
@@ -18,7 +19,7 @@ const fadeUp = {
   }),
 };
 
-/* ─── BREADCRUMB ─────────────────────────────────────────────────────────── */
+/* --- BREADCRUMB ----------------------------------------------------------- */
 function Breadcrumb({ items }) {
   return (
     <nav className="bg-white border-b border-borderPrimary" aria-label="Breadcrumb">
@@ -42,7 +43,7 @@ function Breadcrumb({ items }) {
   );
 }
 
-/* ─── HERO ───────────────────────────────────────────────────────────────── */
+/* --- HERO ----------------------------------------------------------------- */
 function Hero({ config }) {
   const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
     `Hi! I'm interested in ${config.title}. Can you help me plan my event?`
@@ -155,7 +156,7 @@ function Hero({ config }) {
   );
 }
 
-/* ─── GALLERY ────────────────────────────────────────────────────────────── */
+/* --- GALLERY -------------------------------------------------------------- */
 function Gallery({ gallery }) {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
@@ -214,7 +215,7 @@ function Gallery({ gallery }) {
   );
 }
 
-/* ─── FEATURES ───────────────────────────────────────────────────────────── */
+/* --- FEATURES ------------------------------------------------------------- */
 function Features({ features }) {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
@@ -264,7 +265,7 @@ function Features({ features }) {
   );
 }
 
-/* ─── WHY EEVAGGA ────────────────────────────────────────────────────────── */
+/* --- WHY EEVAGGA ---------------------------------------------------------- */
 function WhyEevagga() {
   const points = [
     { icon: '🎯', title: 'End-to-End Planning', desc: 'From concept to cleanup — every detail handled by us.' },
@@ -353,7 +354,7 @@ function WhyEevagga() {
   );
 }
 
-/* ─── PRICING ────────────────────────────────────────────────────────────── */
+/* --- PRICING -------------------------------------------------------------- */
 function Pricing({ pricing, config }) {
   const waLink = (plan) =>
     `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
@@ -475,184 +476,42 @@ function Pricing({ pricing, config }) {
   );
 }
 
-/* ─── CONSULTATION FORM ──────────────────────────────────────────────────── */
+/* --- CONSULTATION FORM ---------------------------------------------------- */
+
 function ConsultationForm({ config }) {
-  const [form, setForm] = useState({ name: '', phone: '', date: '', guests: '', message: '' });
-  const [sent, setSent] = useState(false);
-
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const msg = [
-      `Hi! I would like a free consultation for ${config.title}.`,
-      `Name: ${form.name}`,
-      `Phone: ${form.phone}`,
-      form.date ? `Event Date: ${form.date}` : '',
-      form.guests ? `Guests: ${form.guests}` : '',
-      form.message ? `Message: ${form.message}` : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
-    setSent(true);
-  };
-
-  const guestOptions = ['Under 30', '30–50', '50–100', '100–200', '200+'];
+  // Infer defaults from config.title
+  const titleLower = (config.title || '').toLowerCase();
+  
+  let defaultEventType = "";
+  let defaultCategory = "";
+  if (titleLower.includes('birthday')) {
+    defaultEventType = "Birthdays";
+    defaultCategory = "birthday";
+  } else if (titleLower.includes('baby-shower') || titleLower.includes('baby shower')) {
+    defaultEventType = "Baby Showers";
+    defaultCategory = "baby-shower";
+  } else if (titleLower.includes('house-warming') || titleLower.includes('house warming')) {
+    defaultEventType = "House Warming";
+    defaultCategory = "house-warming";
+  }
+  
+  const defaultLocation = "Bangalore";
 
   return (
     <section id="consultation" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ type: 'spring', stiffness: 120 }}
-          className="flex flex-col items-center mb-10"
-        >
-          <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
-            Plan Your Dream Event
-          </h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="h-1 w-24 bg-highlightYellow mb-4"
-          />
-          <p className="text-textGray text-sm text-center max-w-sm">
-            Fill in the details below and our lead designer will contact you within 24 hours.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15, duration: 0.45 }}
-          className="bg-white rounded-3xl shadow-xl border border-borderPrimary p-8"
-        >
-          {sent ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-background border-2 border-primary/20 flex items-center justify-center mx-auto mb-4">
-                <FaCheckCircle size={28} className="text-primary" />
-              </div>
-              <h3 className="text-primary text-xl font-normal mb-2">All set!</h3>
-              <p className="text-textGray text-sm">
-                Your request has been sent via WhatsApp. Our team will reach out shortly.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} id="consultation-form" className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="cf-name" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Full Name <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    id="cf-name"
-                    name="name"
-                    type="text"
-                    required
-                    placeholder="Enter your name"
-                    value={form.name}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="cf-phone" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Phone Number <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    id="cf-phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="+91 XXXXX XXXXX"
-                    value={form.phone}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="cf-date" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Event Date
-                  </label>
-                  <input
-                    id="cf-date"
-                    name="date"
-                    type="date"
-                    value={form.date}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textGray focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="cf-guests" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Guest Count (approx.)
-                  </label>
-                  <select
-                    id="cf-guests"
-                    name="guests"
-                    value={form.guests}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textGray bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  >
-                    <option value="">Select count</option>
-                    {guestOptions.map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="cf-message" className="block text-sm font-medium text-textPrimary mb-1.5">
-                  Tell Us About Your Dream Event
-                </label>
-                <textarea
-                  id="cf-message"
-                  name="message"
-                  rows={4}
-                  placeholder="Theme preferences, venue type, special requirements..."
-                  value={form.message}
-                  onChange={onChange}
-                  className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                />
-              </div>
-
-              <button
-                type="submit"
-                id="consultation-submit"
-                className="bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00] w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all duration-200"
-              >
-                Request Consultation to Get Started
-                <FaArrowRight size={12} />
-              </button>
-
-              <p className="text-center text-sm text-textGray">
-                We respect your privacy and will never share your details.
-              </p>
-            </form>
-          )}
-        </motion.div>
-
-        <p className="text-center text-sm text-textGray mt-5">
-          Prefer to call?{' '}
-          <a href="tel:+918050279101" className="text-primary font-semibold hover:underline">
-            +91 80502 79101
-          </a>
-        </p>
+        <BookingForm 
+          defaultCategory={defaultCategory} 
+          defaultLocation={defaultLocation} 
+          defaultEventType={defaultEventType}
+          inline={true}
+        />
       </div>
     </section>
   );
 }
 
-/* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
+/* --- PAGE EXPORT ---------------------------------------------------------- */
 export default function ServiceLandingPage({ config }) {
   return (
     <main>
