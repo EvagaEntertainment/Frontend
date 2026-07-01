@@ -16,9 +16,9 @@ import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { toast } from "react-toastify";
 import { generateMonthOptions } from "../utils/generateMonthOptions";
-const BookingForm = () => {
+const BookingForm = ({ defaultCategory = null, defaultLocation = "", defaultEventType = "", inline = false }) => {
   const searchParams = useSearchParams();
-  const category = searchParams ? searchParams.get("category") : null;
+  const category = defaultCategory || (searchParams ? searchParams.get("category") : null);
   const sku = searchParams ? searchParams.get("sku") : null;
   const {
     register,
@@ -27,8 +27,8 @@ const BookingForm = () => {
   } = useForm({
     defaultValues: {
       sku: sku || "",
-      eventType: "",
-      eventLocation: "",
+      eventType: defaultEventType || "",
+      eventLocation: defaultLocation || "",
       eventMonth: "",
     },
   });
@@ -204,7 +204,7 @@ const BookingForm = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+      className={inline ? "" : "min-h-screen py-12 px-4 sm:px-6 lg:px-8"}
     >
       <motion.div
         variants={containerVariants}
@@ -323,11 +323,11 @@ const BookingForm = () => {
                   },
                 }}
               >
-                <MenuItem value="Weddings">Weddings</MenuItem>
+                {/* <MenuItem value="Weddings">Weddings</MenuItem> */}
                 <MenuItem value="Corporate">Corporate</MenuItem>
-                <MenuItem value="Baby Showers">Baby Showers</MenuItem>
+                {/* <MenuItem value="Baby Showers">Baby Showers</MenuItem> */}
                 <MenuItem value="Birthdays">Birthdays</MenuItem>
-                <MenuItem value="House Warming">House Warming</MenuItem>
+                {/* <MenuItem value="House Warming">House Warming</MenuItem> */}
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
