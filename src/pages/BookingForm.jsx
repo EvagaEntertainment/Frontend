@@ -35,10 +35,32 @@ const BookingForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const bookingCtaApi = useServices(commonApis.bookingCta);
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+
+      // Execute reCAPTCHA Enterprise
+      let token = "";
+      if (window.grecaptcha && window.grecaptcha.enterprise) {
+        try {
+          token = await new Promise((resolve, reject) => {
+            window.grecaptcha.enterprise.ready(() => {
+              window.grecaptcha.enterprise
+                .execute("6LcrQCotAAAAADGcQBjFWlPjW7X22_thFG4YdbJt", { action: "submit_booking" })
+                .then(resolve)
+                .catch(reject);
+            });
+          });
+        } catch (e) {
+          console.error("reCAPTCHA Enterprise execution failed:", e);
+        }
+      }
+
+      if (!token) {
+        toast.error("reCAPTCHA verification failed. Please try again.");
+        setLoading(false);
+        return;
+      }
 
       // 1. Prepare FormData for your original API
       const formdata = new FormData();
@@ -49,6 +71,7 @@ const BookingForm = () => {
       formdata.append("eventLocation", data.eventLocation);
       formdata.append("eventMonth", data.eventMonth);
       formdata.append("pageCatgeory", category ?? "");
+      formdata.append("gRecaptchaResponse", token);
       if (data.sku) {
         formdata.append("sku", data.sku);
       }

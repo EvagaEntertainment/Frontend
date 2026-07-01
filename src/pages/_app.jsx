@@ -16,11 +16,16 @@ import ErrorBoundary from '../components/Errors/ErrorBoundary';
 import { AuthProvider } from '../context/AuthContext';
 import { ErrorProvider } from '../context/ErrorContext';
 import ErrorHandler from '../components/Errors/ErrorHandler';
+import Script from 'next/script';
 import '../index.css';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ErrorBoundary>
+      <Script
+        src="https://www.google.com/recaptcha/enterprise.js?render=6LcrQCotAAAAADGcQBjFWlPjW7X22_thFG4YdbJt"
+        strategy="afterInteractive"
+      />
       <Provider store={store}>
         <AuthProvider>
           <ErrorProvider>
