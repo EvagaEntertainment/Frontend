@@ -11,8 +11,9 @@ const nextConfig = {
       { source: '/PrivacyAndPolicy', destination: '/privacy-policy', permanent: true },
       { source: '/RefundAndCancellation', destination: '/cancellation-policy', permanent: true },
       { source: '/SinglePackage', destination: '/viewall', permanent: true },
-      // Redirect legacy PascalCase URL to lowercase canonical
-      { source: '/viewAll', destination: '/viewall', permanent: true },
+      // /viewAll omitted: Next.js redirect matching is case-insensitive on Vercel,
+      // so source '/viewAll' would also match '/viewall', causing a self-redirect loop.
+      // The App Router page at src/app/viewall/ serves all case variants natively.
       // Category index has no page — redirect to browse
       { source: '/category', destination: '/viewall', permanent: true },
       // Other legacy ghost routes
@@ -58,7 +59,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy-Report-Only',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.facebook.net accounts.google.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src * data: blob:; connect-src * data:; frame-src accounts.google.com; frame-ancestors 'self';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.facebook.net accounts.google.com www.google.com www.gstatic.com *.clarity.ms *.doubleclick.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com data:; img-src * data: blob:; connect-src * data:; frame-src accounts.google.com *.google.com; frame-ancestors 'self';",
           },
         ],
       },

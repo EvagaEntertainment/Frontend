@@ -31,8 +31,8 @@ const servicesSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "2999",
-    "highPrice": "99999",
+    "lowPrice": 2999,
+    "highPrice": 99999,
     "availability": "https://schema.org/InStock",
     "url": "https://www.eevagga.com/viewall"
   }
