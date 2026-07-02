@@ -1,33 +1,34 @@
 'use client';
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone, FaStar, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import logo from "../../assets/Temporary Images/Eevagga_yellow.webp";
 import { internalRoutes } from "../../utils/internalRoutes";
-
-const celebrationLinks = [
-  { name: "Birthday Planner", path: "/birthday-planner-bangalore" },
-  { name: "Kids Birthday", path: "/kids-birthday-planner-bangalore" },
-  { name: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
-  { name: "House Warming", path: "/premium-house-warming-planner" },
-  { name: "Baby Shower", path: "/premium-baby-shower-planner" },
-  { name: "Browse All Packages", path: internalRoutes.viewAllPage },
-];
 
 function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [celebrationsOpen, setCelebrationsOpen] = useState(false);
-  const [mobileCelebrationsOpen, setMobileCelebrationsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", path: internalRoutes.home, icon: <FaHome /> },
     { name: "About Us", path: internalRoutes.aboutUs, icon: <FaInfoCircle /> },
     { name: "Our Services", path: internalRoutes.ourServices, icon: <FaPhone /> },
+  ];
+
+  const celebrationLinks = [
+    { name: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore" },
+    { name: "Kids Birthday Planner", path: "/kids-birthday-planner-bangalore" },
+    { name: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
+    { name: "Celebration At Home", path: "/birthday-celebration-at-home-bangalore" },
+    { name: "Luxury Birthday Planner", path: "/luxury-birthday-planner-bangalore" },
+    { name: "Premium Birthday Planner", path: "/premium-birthday-planner" },
+    { name: "Premium House Warming", path: "/premium-house-warming-planner" },
+    { name: "Premium Baby Shower", path: "/premium-baby-shower-planner" },
+    { name: "Premium Birthday End-to-End", path: "/premium-birthday-end-to-end-planner" },
   ];
 
   const toggleMenu = () => {
@@ -55,18 +56,9 @@ function Navbar() {
 
   useEffect(() => {
     setIsOpen(false);
-    setMobileCelebrationsOpen(false);
+    setDropdownOpen(false);
+    setMobileDropdownOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setCelebrationsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const isCelebrationActive = celebrationLinks.some(l => pathname === l.path);
 
@@ -85,17 +77,28 @@ function Navbar() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex space-x-10 items-center">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
-              <Link key={link.name} href={link.path} className={`relative text-sm font-medium ${isActive ? "text-[#FFE500]" : "text-white"}`}>
-                <motion.span className="inline-block" variants={linkVariants} whileHover="hover" whileTap="tap">
+              <Link
+                key={link.name}
+                href={link.path}
+                className={`relative text-sm font-medium ${
+                  isActive ? "text-[#FFE500]" : "text-white"
+                }`}
+              >
+                <motion.span
+                  className="inline-block"
+                  variants={linkVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
                   {link.name}
                   {isActive && (
                     <motion.span
                       layoutId="activeIndicator"
-                      className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#FFE500] text-sm"
+                      className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#FFE500]"
                       initial={false}
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
@@ -106,39 +109,46 @@ function Navbar() {
           })}
 
           {/* Celebrations Dropdown */}
-          <div ref={dropdownRef} className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
             <button
-              className={`flex items-center gap-1 text-sm font-medium ${isCelebrationActive ? "text-[#FFE500]" : "text-white"} focus:outline-none`}
-              onMouseEnter={() => setCelebrationsOpen(true)}
-              onMouseLeave={() => setCelebrationsOpen(false)}
-              onClick={() => setCelebrationsOpen(prev => !prev)}
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+                isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
+              }`}
             >
-              <motion.span variants={linkVariants} whileHover="hover" className="inline-block">
-                Celebrations
-              </motion.span>
-              <FaChevronDown size={11} className={`transition-transform duration-200 ${celebrationsOpen ? 'rotate-180' : ''}`} />
+              <FaStar className="text-xs" />
+              Celebrations
+              <FaChevronDown className={`text-[10px] transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             <AnimatePresence>
-              {celebrationsOpen && (
+              {dropdownOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -8 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.18 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-white rounded-xl shadow-xl overflow-hidden z-50"
-                  onMouseEnter={() => setCelebrationsOpen(true)}
-                  onMouseLeave={() => setCelebrationsOpen(false)}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2.5 z-50 origin-top-left"
                 >
-                  {celebrationLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      href={link.path}
-                      className={`block px-4 py-2.5 text-sm font-medium transition-colors ${pathname === link.path ? 'bg-[#6A1B9A] text-[#FFE500]' : 'text-gray-800 hover:bg-[#6A1B9A] hover:text-white'}`}
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                  {celebrationLinks.map((subLink) => {
+                    const isSubActive = pathname === subLink.path;
+                    return (
+                      <Link
+                        key={subLink.name}
+                        href={subLink.path}
+                        className={`block px-4 py-2 text-sm transition-colors duration-150 ${
+                          isSubActive
+                            ? "bg-[#6A1B9A]/10 text-[#6A1B9A] font-semibold"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-[#6A1B9A]"
+                        }`}
+                      >
+                        {subLink.name}
+                      </Link>
+                    );
+                  })}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -195,7 +205,11 @@ function Navbar() {
                       <Link
                         key={link.name}
                         href={link.path}
-                        className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${isActive ? "text-[#FFE500] bg-[#FFE500]/20" : "text-white hover:bg-[#FFE500]/20"}`}
+                        className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
+                          isActive
+                            ? "text-[#FFE500] bg-[#FFE500]/20"
+                            : "text-white hover:bg-[#FFE500]/20"
+                        }`}
                         onClick={toggleMenu}
                       >
                         <span className="mr-3 text-lg">{link.icon}</span>
@@ -213,35 +227,48 @@ function Navbar() {
                   })}
 
                   {/* Mobile Celebrations Accordion */}
-                  <div>
+                  <div className="space-y-1">
                     <button
-                      className={`flex items-center w-full text-base font-medium py-3 px-4 rounded-xl transition-all ${isCelebrationActive ? "text-[#FFE500] bg-[#FFE500]/20" : "text-white hover:bg-[#FFE500]/20"}`}
-                      onClick={() => setMobileCelebrationsOpen(prev => !prev)}
+                      onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                      className={`flex items-center justify-between w-full text-base font-medium py-3 px-4 rounded-xl transition-all ${
+                        isCelebrationActive
+                          ? "text-[#FFE500] bg-[#FFE500]/20"
+                          : "text-white hover:bg-[#FFE500]/20"
+                      }`}
                     >
-                      <span className="mr-3 text-lg">🎉</span>
-                      <span className="flex-grow">Celebrations</span>
-                      {mobileCelebrationsOpen ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+                      <span className="flex items-center">
+                        <span className="mr-3 text-lg"><FaStar /></span>
+                        <span>Celebrations</span>
+                      </span>
+                      <FaChevronDown className={`text-xs transition-transform duration-200 ${mobileDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
 
-                    <AnimatePresence>
-                      {mobileCelebrationsOpen && (
+                    <AnimatePresence initial={false}>
+                      {mobileDropdownOpen && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.22 }}
-                          className="overflow-hidden pl-4"
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden pl-8 space-y-1"
                         >
-                          {celebrationLinks.map((link) => (
-                            <Link
-                              key={link.path}
-                              href={link.path}
-                              className={`flex items-center text-sm font-medium py-2.5 px-4 rounded-xl transition-all ${pathname === link.path ? "text-[#FFE500] bg-[#FFE500]/20" : "text-white/85 hover:bg-[#FFE500]/20 hover:text-white"}`}
-                              onClick={toggleMenu}
-                            >
-                              {link.name}
-                            </Link>
-                          ))}
+                          {celebrationLinks.map((subLink) => {
+                            const isSubActive = pathname === subLink.path;
+                            return (
+                              <Link
+                                key={subLink.name}
+                                href={subLink.path}
+                                className={`block text-sm py-2.5 px-4 rounded-lg transition-all ${
+                                  isSubActive
+                                    ? "text-[#FFE500] font-semibold bg-[#FFE500]/10"
+                                    : "text-white/80 hover:text-white hover:bg-[#FFE500]/10"
+                                }`}
+                                onClick={toggleMenu}
+                              >
+                                {subLink.name}
+                              </Link>
+                            );
+                          })}
                         </motion.div>
                       )}
                     </AnimatePresence>

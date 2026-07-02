@@ -55,6 +55,13 @@ export const metadata = {
     card: 'summary_large_image',
     site: '@eevagga',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   other: {
     'p:domain_verify': '4ffff8fe28fdfc5268597c4a91669fb1',
   },
@@ -71,7 +78,9 @@ const organizationSchema = {
       "telephone": "+91-8050279101",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.eevagga.com/logo.webp"
+        "url": "https://www.eevagga.com/logo.webp",
+        "width": 512,
+        "height": 512
       },
       "image": {
         "@type": "ImageObject",
