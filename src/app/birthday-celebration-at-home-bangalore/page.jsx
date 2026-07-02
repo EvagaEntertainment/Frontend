@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: "Birthday Celebration at Home in Bangalore | Home Planners — Eevagga",
+  title: "Birthday Celebration at Home in Bangalore | Home Planners â€” Eevagga",
   description:
     "Planning a birthday party at home in Bangalore? Eevagga offers intimate home birthday packages with beautiful room decors, private catering & home entertainment.",
   keywords:
@@ -13,7 +13,7 @@ export const metadata = {
     canonical: 'https://www.eevagga.com/birthday-celebration-at-home-bangalore',
   },
   openGraph: {
-    title: "Birthday Celebration at Home in Bangalore | Home Planners — Eevagga",
+    title: "Birthday Celebration at Home in Bangalore | Home Planners â€” Eevagga",
     description:
       "Bring the celebration to your doorstep. Eevagga plans beautiful, stress-free birthday celebrations at home in Bangalore. Decorations, small-scale catering, and activities. Get a free quote.",
     url: 'https://www.eevagga.com/birthday-celebration-at-home-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Birthday Celebration at Home in Bangalore — Eevagga",
+    title: "Birthday Celebration at Home in Bangalore â€” Eevagga",
     description: "Specialist home birthday party planning and room decoration services in Bangalore.",
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '8000',
-    highPrice: '45000',
-    offerCount: '3',
+    lowPrice: 8000,
+    highPrice: 45000,
+    offerCount: 3,
   },
 };
 
@@ -95,7 +95,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Birthday Celebration At Home Bangalore',
   badge: 'Intimate Home Parties',
@@ -108,7 +108,7 @@ const pageConfig = {
   stats: [
     { value: '250+', label: 'Home Events' },
     { value: '2 Hours', label: 'Average Setup' },
-    { value: '4.9★', label: 'Client Satisfaction' },
+    { value: '4.9â˜…', label: 'Client Satisfaction' },
     { value: '100%', label: 'Stress-Free' },
   ],
 
@@ -148,37 +148,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🏠',
+      icon: 'ðŸ ',
       title: 'Custom Room Styling',
       description:
         'We tailor the decor to suit your room size and layout, making the most of your space with stylish details.',
     },
     {
-      icon: '🎈',
+      icon: 'ðŸŽˆ',
       title: 'Door & Room Balloons',
       description:
         'Charming balloon arches, ceiling floaters, wall backdrops, and customized welcome signs for your home entrance.',
     },
     {
-      icon: '📸',
+      icon: 'ðŸ“¸',
       title: 'Home Photography',
       description:
         'Capture the cozy, heartfelt moments with family and friends with a professional candid photographer at home.',
     },
     {
-      icon: '🍔',
+      icon: 'ðŸ”',
       title: 'Mini Catering & Live Counters',
       description:
         'Enjoy high-quality buffet layouts or live snack stations that keep food piping hot and tasty for your guests.',
     },
     {
-      icon: '🎵',
+      icon: 'ðŸŽµ',
       title: 'Sound & Music Setup',
       description:
         'Compact high-quality speakers, karaoke setups, or acoustic guitar players for a warm musical vibe.',
     },
     {
-      icon: '🧹',
+      icon: 'ðŸ§¹',
       title: 'Post-Party Cleanup Assistance',
       description:
         'We ensure our decoration elements are packed up cleanly after your party so you don\'t have to stress about cleaning.',
@@ -256,7 +256,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function BirthdayCelebrationAtHomeBangalorePage() {
   return (
     <>

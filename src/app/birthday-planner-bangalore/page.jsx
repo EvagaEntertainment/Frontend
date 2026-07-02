@@ -1,21 +1,21 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: 'Birthday Planner in Bangalore | Premium Birthday Planning — Eevagga',
+  title: 'Birthday Planner in Bangalore | Premium Birthday Planning â€” Eevagga',
   description:
-    'Looking for a birthday planner in Bangalore? Eevagga offers end-to-end birthday planning — themes, decorations, photography, catering & venue coordination. Book your free consultation today.',
+    'Looking for a birthday planner in Bangalore? Eevagga offers end-to-end birthday planning â€” themes, decorations, photography, catering & venue coordination. Book your free consultation today.',
   keywords:
     'birthday planner Bangalore, birthday planning Bangalore, birthday event planner Bangalore, birthday party planner Bangalore, Eevagga birthday planner',
   alternates: {
     canonical: 'https://www.eevagga.com/birthday-planner-bangalore',
   },
   openGraph: {
-    title: 'Birthday Planner in Bangalore | Premium Birthday Planning — Eevagga',
+    title: 'Birthday Planner in Bangalore | Premium Birthday Planning â€” Eevagga',
     description:
-      'End-to-end birthday planning in Bangalore — themes, décor, photography & full execution. 500+ events delivered. Get your free consultation.',
+      'End-to-end birthday planning in Bangalore â€” themes, dÃ©cor, photography & full execution. 500+ events delivered. Get your free consultation.',
     url: 'https://www.eevagga.com/birthday-planner-bangalore',
     siteName: 'Eevagga',
     type: 'website',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Birthday Planner in Bangalore — Eevagga',
-    description: 'Premium birthday planning in Bangalore. End-to-end themes, décor & execution.',
+    title: 'Birthday Planner in Bangalore â€” Eevagga',
+    description: 'Premium birthday planning in Bangalore. End-to-end themes, dÃ©cor & execution.',
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '15000',
-    highPrice: '150000',
-    offerCount: '3',
+    lowPrice: 15000,
+    highPrice: 150000,
+    offerCount: 3,
   },
 };
 
@@ -73,7 +73,7 @@ const faqSchema = {
       name: 'What does a birthday planner in Bangalore do?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A birthday planner handles all aspects of your birthday celebration — from theme selection and décor setup to photography, catering coordination, entertainment and on-ground management. Eevagga provides full end-to-end birthday planning in Bangalore so you can celebrate stress-free.',
+        text: 'A birthday planner handles all aspects of your birthday celebration â€” from theme selection and dÃ©cor setup to photography, catering coordination, entertainment and on-ground management. Eevagga provides full end-to-end birthday planning in Bangalore so you can celebrate stress-free.',
       },
     },
     {
@@ -81,7 +81,7 @@ const faqSchema = {
       name: 'How much does a birthday planner cost in Bangalore?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Birthday planning costs in Bangalore typically start from ₹15,000 for intimate setups and can go up to ₹1,50,000+ for large luxury celebrations. Eevagga offers three packages — Starter (₹15,000), Premium (₹35,000) and Luxury (₹65,000) — all fully customisable.',
+        text: 'Birthday planning costs in Bangalore typically start from â‚¹15,000 for intimate setups and can go up to â‚¹1,50,000+ for large luxury celebrations. Eevagga offers three packages â€” Starter (â‚¹15,000), Premium (â‚¹35,000) and Luxury (â‚¹65,000) â€” all fully customisable.',
       },
     },
     {
@@ -89,7 +89,7 @@ const faqSchema = {
       name: 'How far in advance should I book a birthday planner in Bangalore?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'We recommend booking at least 2–3 weeks in advance to secure your preferred date, theme and venue. For milestone birthdays or large events (100+ guests), booking 4–6 weeks ahead ensures the best options.',
+        text: 'We recommend booking at least 2â€“3 weeks in advance to secure your preferred date, theme and venue. For milestone birthdays or large events (100+ guests), booking 4â€“6 weeks ahead ensures the best options.',
       },
     },
     {
@@ -103,7 +103,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Birthday Planner Bangalore',
   badge: 'Premium Birthday Planning',
@@ -115,7 +115,7 @@ const pageConfig = {
 
   stats: [
     { value: '500+', label: 'Events Delivered' },
-    { value: '4.9★', label: 'Average Rating' },
+    { value: '4.9â˜…', label: 'Average Rating' },
     { value: '22+', label: 'Themes Available' },
     { value: '100%', label: 'Stress-Free' },
   ],
@@ -156,37 +156,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🎨',
+      icon: 'ðŸŽ¨',
       title: 'Theme Design & Conceptualisation',
       description:
-        'Our designers create a cohesive, personalised theme — from colour palettes and mood boards to every last decoration detail.',
+        'Our designers create a cohesive, personalised theme â€” from colour palettes and mood boards to every last decoration detail.',
     },
     {
-      icon: '🎈',
-      title: 'Balloon & Floral Décor',
+      icon: 'ðŸŽˆ',
+      title: 'Balloon & Floral DÃ©cor',
       description:
-        'Premium organic balloon arrangements, floral arches and centrepieces crafted by our specialist décor team.',
+        'Premium organic balloon arrangements, floral arches and centrepieces crafted by our specialist dÃ©cor team.',
     },
     {
-      icon: '📸',
+      icon: 'ðŸ“¸',
       title: 'Photography & Videography',
       description:
         'Professional photographers and videographers to capture every magical moment of your celebration.',
     },
     {
-      icon: '🎂',
+      icon: 'ðŸŽ‚',
       title: 'Custom Cake Coordination',
       description:
         "We coordinate with Bangalore's top bakers to deliver themed custom cakes that wow your guests.",
     },
     {
-      icon: '🎤',
+      icon: 'ðŸŽ¤',
       title: 'Entertainment & Emcee',
       description:
-        'Games, live music, DJs, emcees and performers — we curate entertainment to keep your guests engaged.',
+        'Games, live music, DJs, emcees and performers â€” we curate entertainment to keep your guests engaged.',
     },
     {
-      icon: '🏠',
+      icon: 'ðŸ ',
       title: 'Venue Coordination',
       description:
         "Whether it's your home, a banquet hall or an outdoor space, we coordinate every logistics detail.",
@@ -201,7 +201,7 @@ const pageConfig = {
       featured: false,
       includes: [
         'Theme consultation',
-        'Balloon & basic décor setup',
+        'Balloon & basic dÃ©cor setup',
         'Birthday backdrop & signage',
         'Cleanup & post-event support',
         'Up to 30 guests',
@@ -214,7 +214,7 @@ const pageConfig = {
       featured: true,
       includes: [
         'Full theme design & execution',
-        'Premium balloon & floral décor',
+        'Premium balloon & floral dÃ©cor',
         'Stage setup & backdrop',
         'Photography (2 hours)',
         'Custom cake coordination',
@@ -243,17 +243,17 @@ const pageConfig = {
     {
       question: 'What does a birthday planner in Bangalore do?',
       answer:
-        'A birthday planner handles all aspects of your birthday celebration — from theme selection and décor setup to photography, catering coordination, entertainment and on-ground management. Eevagga provides full end-to-end birthday planning in Bangalore so you can celebrate stress-free.',
+        'A birthday planner handles all aspects of your birthday celebration â€” from theme selection and dÃ©cor setup to photography, catering coordination, entertainment and on-ground management. Eevagga provides full end-to-end birthday planning in Bangalore so you can celebrate stress-free.',
     },
     {
       question: 'How much does a birthday planner cost in Bangalore?',
       answer:
-        'Birthday planning costs in Bangalore typically start from ₹15,000 for intimate setups and can go up to ₹1,50,000+ for large luxury celebrations. Our packages are fully customisable based on your requirements.',
+        'Birthday planning costs in Bangalore typically start from â‚¹15,000 for intimate setups and can go up to â‚¹1,50,000+ for large luxury celebrations. Our packages are fully customisable based on your requirements.',
     },
     {
       question: 'How far in advance should I book a birthday planner?',
       answer:
-        'We recommend booking at least 2–3 weeks in advance to secure your preferred date, theme and venue. For large or milestone birthday events, 4–6 weeks ahead is ideal.',
+        'We recommend booking at least 2â€“3 weeks in advance to secure your preferred date, theme and venue. For large or milestone birthday events, 4â€“6 weeks ahead is ideal.',
     },
     {
       question: 'Which areas of Bangalore does Eevagga serve?',
@@ -268,7 +268,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function BirthdayPlannerBangalorePage() {
   return (
     <>

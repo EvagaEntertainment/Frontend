@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Customer Support — Birthday Planning Help & Booking Queries",
-  description: "Need help with your Eevagga birthday, house warming or baby shower booking? Contact our support team for booking queries, cancellations, order tracking and celebration planning assistance.",
+  description: "Need help with your Eevagga booking? Contact our support team for booking queries, cancellations, order tracking and birthday planning assistance.",
   alternates: { canonical: '/customer-service' },
   openGraph: {
     title: "Customer Support | Eevagga",

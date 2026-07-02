@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: "Premium Baby Shower Planner | Godh Bharani Planners — Eevagga",
+  title: "Premium Baby Shower Planner | Godh Bharani Planners â€” Eevagga",
   description:
     "Host a gorgeous baby shower (Godh Bharani) with Eevagga. We offer custom themes, cute decorations, photography, fun guest activities & complete event management.",
   keywords:
@@ -13,7 +13,7 @@ export const metadata = {
     canonical: 'https://www.eevagga.com/premium-baby-shower-planner',
   },
   openGraph: {
-    title: "Premium Baby Shower Planner | Godh Bharani Planners — Eevagga",
+    title: "Premium Baby Shower Planner | Godh Bharani Planners â€” Eevagga",
     description:
       "Celebrate new beginnings with warmth and beauty. Eevagga plans delightful baby shower and Godh Bharani events. Charming theme decors, photography, and interactive games. Get a free quote.",
     url: 'https://www.eevagga.com/premium-baby-shower-planner',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Premium Baby Shower Planner — Eevagga",
+    title: "Premium Baby Shower Planner â€” Eevagga",
     description: "Delightful baby shower & Godh Bharani planning. Custom themes, sweet treats & fun activities.",
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '15000',
-    highPrice: '60000',
-    offerCount: '3',
+    lowPrice: 15000,
+    highPrice: 60000,
+    offerCount: 3,
   },
 };
 
@@ -95,7 +95,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Premium Baby Shower Planner',
   badge: 'Joyful Beginnings',
@@ -109,7 +109,7 @@ const pageConfig = {
     { value: '140+', label: 'Showers Planned' },
     { value: 'Pastel & Floral', label: 'Decor options' },
     { value: 'Fun Games', label: 'Coordinated' },
-    { value: '4.9★', label: 'Average Review' },
+    { value: '4.9â˜…', label: 'Average Review' },
   ],
 
   breadcrumbs: [
@@ -148,37 +148,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🧸',
+      icon: 'ðŸ§¸',
       title: 'Charming Theme Concepts',
       description:
         'Select from adorable themes like Winnie the Pooh, Baby Elephant, Floral Meadow, or customized color stories.',
     },
     {
-      icon: '🎈',
+      icon: 'ðŸŽˆ',
       title: 'Soft Pastel Ballon & Floral styling',
       description:
         'Organic pastel pink, blue, cream, and peach balloon arches, custom word cutouts (e.g., "Oh Baby"), and fresh flower accents.',
     },
     {
-      icon: '🧁',
+      icon: 'ðŸ§',
       title: 'Themed Dessert Curation',
       description:
         'Delicious matching dessert setups with themed cupcakes, cake pops, cookies, and custom cakes.',
     },
     {
-      icon: '🎤',
+      icon: 'ðŸŽ¤',
       title: 'Fun Host & Interactive Games',
       description:
         'Lively emcees who lead baby shower games, baby trivia, guessing challenges, and distribute fun prizes.',
     },
     {
-      icon: '📸',
+      icon: 'ðŸ“¸',
       title: 'Candid Baby Shower Photo shoot',
       description:
         'Professional coverage of key ceremony rituals, emotional moments, fun games, and cute group portraits.',
     },
     {
-      icon: '👶',
+      icon: 'ðŸ‘¶',
       title: 'Comfortable Mom-to-Be Seating',
       description:
         'We set up comfortable, decorated chairs or traditional swings (jhoola) adorned with fresh flowers for the guest of honor.',
@@ -257,7 +257,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function PremiumBabyShowerPlannerPage() {
   return (
     <>

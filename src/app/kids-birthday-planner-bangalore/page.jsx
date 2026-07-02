@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: "Kids Birthday Party Planner in Bangalore | Theme Planners — Eevagga",
+  title: "Kids Birthday Party Planner in Bangalore | Theme Planners â€” Eevagga",
   description:
     "Planning a kids birthday party in Bangalore? Eevagga designs magical children's birthday celebrations with creative themes, fun decors, games & entertainment. Book a free consultation.",
   keywords:
@@ -13,7 +13,7 @@ export const metadata = {
     canonical: 'https://www.eevagga.com/kids-birthday-planner-bangalore',
   },
   openGraph: {
-    title: "Kids Birthday Party Planner in Bangalore | Theme Planners — Eevagga",
+    title: "Kids Birthday Party Planner in Bangalore | Theme Planners â€” Eevagga",
     description:
       "Designs magical children's birthday celebrations in Bangalore. Creative themes, balloon decors, games, emcees, and entertainment. Get your free consultation.",
     url: 'https://www.eevagga.com/kids-birthday-planner-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Kids Birthday Party Planner in Bangalore — Eevagga",
-    description: "Creative kids birthday planning in Bangalore. Fun themes, amazing décor & entertainment.",
+    title: "Kids Birthday Party Planner in Bangalore â€” Eevagga",
+    description: "Creative kids birthday planning in Bangalore. Fun themes, amazing dÃ©cor & entertainment.",
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '15000',
-    highPrice: '65000',
-    offerCount: '3',
+    lowPrice: 15000,
+    highPrice: 65000,
+    offerCount: 3,
   },
 };
 
@@ -95,7 +95,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Kids Birthday Planner Bangalore',
   badge: 'Magical Kids Celebrations',
@@ -148,37 +148,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🦄',
+      icon: 'ðŸ¦„',
       title: 'Exciting Kid-Friendly Themes',
       description:
         'From Cocomelon and Peppa Pig to Space Explorer and Barbie, we bring your child\'s favorite world to life.',
     },
     {
-      icon: '🎈',
-      title: 'Whimsical Balloon & Prop Décor',
+      icon: 'ðŸŽˆ',
+      title: 'Whimsical Balloon & Prop DÃ©cor',
       description:
         'Stunning balloon backdrops, 3D character cutouts, themed table centerpieces, and decorative photo booths.',
     },
     {
-      icon: '🎤',
+      icon: 'ðŸŽ¤',
       title: 'Interactive Emcees & Games',
       description:
         'Professional kid-friendly hosts who conduct engaging games, distribute prizes, and keep the energy high.',
     },
     {
-      icon: '🎪',
+      icon: 'ðŸŽª',
       title: 'Fun Food & Activity Stalls',
       description:
         'Add popcorn, cotton candy, chocolate fountains, tattoo artists, face painters, or caricature artists.',
     },
     {
-      icon: '🦁',
+      icon: 'ðŸ¦',
       title: 'Mascot & Character Entries',
       description:
         'Delight the kids with surprise visits from Mickey Mouse, Elsa, Spider-Man, or a custom mascot.',
     },
     {
-      icon: '📸',
+      icon: 'ðŸ“¸',
       title: 'Photography & Videography',
       description:
         'Candid photographers to capture the genuine smiles, laughter, and fun moments of your child and guests.',
@@ -194,7 +194,7 @@ const pageConfig = {
       includes: [
         'Theme backdrop (basic 3D cutouts)',
         'Balloon arch & clusters',
-        'Cake table décor',
+        'Cake table dÃ©cor',
         'Music system with kids playlist',
         'Up to 25 kids',
       ],
@@ -259,7 +259,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function KidsBirthdayPlannerBangalorePage() {
   return (
     <>

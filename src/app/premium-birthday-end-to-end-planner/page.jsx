@@ -1,19 +1,19 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: "Premium Birthday End-to-End Event Planner — Eevagga",
+  title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
   description:
-    "Complete end-to-end birthday event planning. Eevagga manages your entire birthday celebration from invitations, venue booking, décor, catering, entertainment to cleanup.",
+    "Complete end-to-end birthday event planning. Eevagga manages your entire birthday celebration from invitations, venue booking, dÃ©cor, catering, entertainment to cleanup.",
   keywords:
     "premium birthday end to end planner, full service birthday planner, end to end birthday organizer Bangalore, Eevagga full service birthday, birthday event management",
   alternates: {
     canonical: 'https://www.eevagga.com/premium-birthday-end-to-end-planner',
   },
   openGraph: {
-    title: "Premium Birthday End-to-End Event Planner — Eevagga",
+    title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
     description:
       "Sit back and celebrate. Eevagga manages every detail of your birthday: custom invitations, venue booking, premium decors, catering coordination, and entertainment. Book a free consultation.",
     url: 'https://www.eevagga.com/premium-birthday-end-to-end-planner',
@@ -23,19 +23,19 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Premium Birthday End-to-End Event Planner — Eevagga",
+    title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
     description: "Complete full-service birthday event management in Bangalore. Stress-free execution.",
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   '@id': 'https://www.eevagga.com/premium-birthday-end-to-end-planner#service',
   name: 'Premium Birthday End-to-End Event Planner',
   description:
-    "Full-service end-to-end birthday event planning, management, and coordination in Bangalore. Covers venue selection, custom digital invitations, premium décor design, catering, custom cake styling, live entertainment, and on-site support.",
+    "Full-service end-to-end birthday event planning, management, and coordination in Bangalore. Covers venue selection, custom digital invitations, premium dÃ©cor design, catering, custom cake styling, live entertainment, and on-site support.",
   provider: { '@id': 'https://www.eevagga.com/#organization' },
   serviceType: 'End-to-End Birthday Event Management',
   areaServed: { '@type': 'City', name: 'Bangalore', sameAs: 'https://en.wikipedia.org/wiki/Bangalore' },
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '25000',
-    highPrice: '100000',
-    offerCount: '3',
+    lowPrice: 25000,
+    highPrice: 100000,
+    offerCount: 3,
   },
 };
 
@@ -95,7 +95,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Premium Birthday End-to-End Planner',
   badge: 'Total Event Management',
@@ -109,7 +109,7 @@ const pageConfig = {
     { value: '200+', label: 'Managed Events' },
     { value: '100%', label: 'Stress-Free' },
     { value: 'All-Inclusive', label: 'Packages' },
-    { value: '4.9★', label: 'Client Reviews' },
+    { value: '4.9â˜…', label: 'Client Reviews' },
   ],
 
   breadcrumbs: [
@@ -148,37 +148,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🏛️',
+      icon: 'ðŸ›ï¸',
       title: 'Venue Sourcing & Curation',
       description:
         'We help you find, negotiate, and book the perfect banquet hall, lawn, or rooftop venue in Bangalore.',
     },
     {
-      icon: '🎫',
+      icon: 'ðŸŽ«',
       title: 'Digital Invites & RSVP flows',
       description:
         'Custom design of digital invitations, managing guest list responses, and sending reminder notifications.',
     },
     {
-      icon: '🍽️',
+      icon: 'ðŸ½ï¸',
       title: 'Premium Catering management',
       description:
         'Coordinate food menus, live station setups, high-quality tableware, and professional service staffs.',
     },
     {
-      icon: '🎪',
-      title: 'Complete Décor & Lighting',
+      icon: 'ðŸŽª',
+      title: 'Complete DÃ©cor & Lighting',
       description:
         'Thematic stage production, photobooths, entrance decors, ambient lighting, and floral accents.',
     },
     {
-      icon: '🎬',
+      icon: 'ðŸŽ¬',
       title: 'Full Entertainment & AV',
       description:
         'Game hosts, professional DJs, custom music playlists, sound speakers, projectors, and performance bookings.',
     },
     {
-      icon: '🧹',
+      icon: 'ðŸ§¹',
       title: 'On-Site Operations & Cleanup',
       description:
         'A dedicated on-site manager coordinates all vendors, timings, and manages final cleanup of the venue.',
@@ -258,7 +258,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function PremiumBirthdayEndToEndPlannerPage() {
   return (
     <>

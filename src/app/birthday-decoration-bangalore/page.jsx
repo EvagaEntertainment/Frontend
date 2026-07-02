@@ -1,19 +1,19 @@
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
+/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export const metadata = {
-  title: "Birthday Decoration in Bangalore | Balloon & Theme Decors — Eevagga",
+  title: "Birthday Decoration in Bangalore | Balloon & Theme Decors â€” Eevagga",
   description:
-    "Premium birthday decoration in Bangalore. We specialize in organic balloon arches, stunning backdrops, floral themes, neon light setups & stage decoration. Customise your décor today.",
+    "Premium birthday decoration in Bangalore. We specialize in organic balloon arches, stunning backdrops, floral themes, neon light setups & stage decoration. Customise your dÃ©cor today.",
   keywords:
     "birthday decoration Bangalore, birthday decorators Bangalore, balloon decoration Bangalore, birthday stage decoration Bangalore, Eevagga birthday decorators",
   alternates: {
     canonical: 'https://www.eevagga.com/birthday-decoration-bangalore',
   },
   openGraph: {
-    title: "Birthday Decoration in Bangalore | Balloon & Theme Decors — Eevagga",
+    title: "Birthday Decoration in Bangalore | Balloon & Theme Decors â€” Eevagga",
     description:
       "Transform your space with stunning birthday decorations in Bangalore. Organic balloon setups, neon light backdrops, floral styling, and custom theme designs. Get a free quote.",
     url: 'https://www.eevagga.com/birthday-decoration-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Birthday Decoration in Bangalore — Eevagga",
+    title: "Birthday Decoration in Bangalore â€” Eevagga",
     description: "Premium balloon decoration and custom stage setups for birthdays in Bangalore.",
   },
 };
 
-/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '10000',
-    highPrice: '50000',
-    offerCount: '3',
+    lowPrice: 10000,
+    highPrice: 50000,
+    offerCount: 3,
   },
 };
 
@@ -95,7 +95,7 @@ const faqSchema = {
   ],
 };
 
-/* ─── Page Config ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const pageConfig = {
   title: 'Birthday Decoration Bangalore',
   badge: 'Premium Decorators',
@@ -108,7 +108,7 @@ const pageConfig = {
   stats: [
     { value: '450+', label: 'Decorations Setup' },
     { value: '30+', label: 'Color Schemes' },
-    { value: '4.8★', label: 'Decor Rating' },
+    { value: '4.8â˜…', label: 'Decor Rating' },
     { value: '100%', label: 'On-Time Setup' },
   ],
 
@@ -148,37 +148,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: '🎈',
+      icon: 'ðŸŽˆ',
       title: 'Organic Balloon Installations',
       description:
         'Stunning balloon arches, columns, ceilings, and customized layouts using premium metallic, pastel, and chrome balloons.',
     },
     {
-      icon: '🎨',
+      icon: 'ðŸŽ¨',
       title: 'Custom Themed Backdrops',
       description:
         'Arch panels, round frames, LED light curtains, wood cutouts, and printed themes tailored to your celebration concept.',
     },
     {
-      icon: '✨',
+      icon: 'âœ¨',
       title: 'Neon Signs & LED Lighting',
       description:
         'Add neon lettering (e.g., "Happy Birthday", "Wild One", "Fifty") and ambient pixel/LED spotlights for a premium glow.',
     },
     {
-      icon: '🌸',
+      icon: 'ðŸŒ¸',
       title: 'Floral Accents & Styling',
       description:
         'Elegant integration of fresh or high-quality artificial flowers, pampas grass, and green foliage for luxury aesthetics.',
     },
     {
-      icon: '🎪',
+      icon: 'ðŸŽª',
       title: 'Premium Theme Props',
       description:
         'Pedestal cake stands, birthday chairs, thematic character cutouts, carpet pathways, and welcome boards.',
     },
     {
-      icon: '🧹',
+      icon: 'ðŸ§¹',
       title: 'Hassle-Free Dismantling',
       description:
         'Our team comes back after the event to systematically pack up and dismantle the setup, leaving the venue clean.',
@@ -256,7 +256,7 @@ const pageConfig = {
   ],
 };
 
-/* ─── Page Component ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function BirthdayDecorationBangalorePage() {
   return (
     <>
