@@ -323,11 +323,10 @@ const BookingForm = ({ defaultCategory = null, defaultLocation = "", defaultEven
                   },
                 }}
               >
-                {/* <MenuItem value="Weddings">Weddings</MenuItem> */}
-                <MenuItem value="Corporate">Corporate</MenuItem>
-                {/* <MenuItem value="Baby Showers">Baby Showers</MenuItem> */}
                 <MenuItem value="Birthdays">Birthdays</MenuItem>
-                {/* <MenuItem value="House Warming">House Warming</MenuItem> */}
+                <MenuItem value="Baby Showers">Baby Showers</MenuItem>
+                <MenuItem value="House Warming">House Warming</MenuItem>
+                <MenuItem value="Corporate">Corporate</MenuItem>
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>

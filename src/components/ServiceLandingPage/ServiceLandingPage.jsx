@@ -1,10 +1,18 @@
 'use client';
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
+
+// BookingForm uses useSearchParams + browser APIs — must be client-only
+const BookingForm = dynamic(() => import('../../pages/BookingForm'), { ssr: false, loading: () => (
+  <div className="flex items-center justify-center py-16">
+    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+) });
 
 const WHATSAPP = '918050279101';
 
@@ -476,34 +484,12 @@ function Pricing({ pricing, config }) {
   );
 }
 
-/* ─── CONSULTATION FORM ──────────────────────────────────────────────────── */
-function ConsultationForm({ config }) {
-  const [form, setForm] = useState({ name: '', phone: '', date: '', guests: '', message: '' });
-  const [sent, setSent] = useState(false);
-
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const msg = [
-      `Hi! I would like a free consultation for ${config.title}.`,
-      `Name: ${form.name}`,
-      `Phone: ${form.phone}`,
-      form.date ? `Event Date: ${form.date}` : '',
-      form.guests ? `Guests: ${form.guests}` : '',
-      form.message ? `Message: ${form.message}` : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
-    setSent(true);
-  };
-
-  const guestOptions = ['Under 30', '30–50', '50–100', '100–200', '200+'];
-
+/* ─── BOOKING FORM SECTION ───────────────────────────────────────────────── */
+function BookingFormSection({ config }) {
   return (
-    <section id="consultation" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="consultation" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-background">
       <div className="max-w-3xl mx-auto">
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -511,8 +497,12 @@ function ConsultationForm({ config }) {
           transition={{ type: 'spring', stiffness: 120 }}
           className="flex flex-col items-center mb-10"
         >
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
+            <FaCalendarAlt size={10} />
+            Free Consultation
+          </div>
           <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
-            Plan Your Dream Event
+            Book Your {config.title}
           </h2>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -522,124 +512,26 @@ function ConsultationForm({ config }) {
             className="h-1 w-24 bg-highlightYellow mb-4"
           />
           <p className="text-textGray text-sm text-center max-w-sm">
-            Fill in the details below and our lead designer will contact you within 24 hours.
+            Fill in the details below and our event specialist will reach out within 24 hours.
           </p>
         </motion.div>
 
+        {/* Real BookingForm — pre-fills event type from page config */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15, duration: 0.45 }}
-          className="bg-white rounded-3xl shadow-xl border border-borderPrimary p-8"
+          className="relative"
         >
-          {sent ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-background border-2 border-primary/20 flex items-center justify-center mx-auto mb-4">
-                <FaCheckCircle size={28} className="text-primary" />
-              </div>
-              <h3 className="text-primary text-xl font-normal mb-2">All set!</h3>
-              <p className="text-textGray text-sm">
-                Your request has been sent via WhatsApp. Our team will reach out shortly.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} id="consultation-form" className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="cf-name" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Full Name <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    id="cf-name"
-                    name="name"
-                    type="text"
-                    required
-                    placeholder="Enter your name"
-                    value={form.name}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="cf-phone" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Phone Number <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    id="cf-phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="+91 XXXXX XXXXX"
-                    value={form.phone}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="cf-date" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Event Date
-                  </label>
-                  <input
-                    id="cf-date"
-                    name="date"
-                    type="date"
-                    value={form.date}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textGray focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="cf-guests" className="block text-sm font-medium text-textPrimary mb-1.5">
-                    Guest Count (approx.)
-                  </label>
-                  <select
-                    id="cf-guests"
-                    name="guests"
-                    value={form.guests}
-                    onChange={onChange}
-                    className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textGray bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                  >
-                    <option value="">Select count</option>
-                    {guestOptions.map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="cf-message" className="block text-sm font-medium text-textPrimary mb-1.5">
-                  Tell Us About Your Dream Event
-                </label>
-                <textarea
-                  id="cf-message"
-                  name="message"
-                  rows={4}
-                  placeholder="Theme preferences, venue type, special requirements..."
-                  value={form.message}
-                  onChange={onChange}
-                  className="w-full border border-borderPrimary rounded-xl px-4 py-3 text-sm text-textPrimary placeholder-textGray/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                />
-              </div>
-
-              <button
-                type="submit"
-                id="consultation-submit"
-                className="bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00] w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all duration-200"
-              >
-                Request Consultation to Get Started
-                <FaArrowRight size={12} />
-              </button>
-
-              <p className="text-center text-sm text-textGray">
-                We respect your privacy and will never share your details.
-              </p>
-            </form>
-          )}
+          {/* Decorative blobs */}
+          <div className="absolute -top-8 -left-8 w-32 h-32 bg-highlightYellow/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+          <BookingForm
+            inline={true}
+            defaultEventType={config.defaultEventType || 'Birthdays'}
+            defaultLocation="Bangalore"
+          />
         </motion.div>
 
         <p className="text-center text-sm text-textGray mt-5">
@@ -770,7 +662,7 @@ export default function ServiceLandingPage({ config }) {
       <Features features={config.features} />
       <WhyEevagga customPoints={config.whyPoints} />
       <Pricing pricing={config.pricing} config={config} />
-      <ConsultationForm config={config} />
+      <BookingFormSection config={config} />
       <RelatedServices links={config.relatedLinks} />
       <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
       <FAQSection customFaqs={config.faqs} />
