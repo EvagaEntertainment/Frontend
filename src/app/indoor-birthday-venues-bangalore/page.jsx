@@ -30,7 +30,7 @@ const serviceSchema = {
   serviceType: 'Indoor Birthday Venue Planning',
   areaServed: { '@type': 'City', name: 'Bangalore', sameAs: 'https://en.wikipedia.org/wiki/Bangalore' },
   url: 'https://www.eevagga.com/indoor-birthday-venues-bangalore',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: '12000', highPrice: '150000', offerCount: '3' },
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: 12000, highPrice: 150000, offerCount: 3 },
 };
 
 const localBusinessSchema = {

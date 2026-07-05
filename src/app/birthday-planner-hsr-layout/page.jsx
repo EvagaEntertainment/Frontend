@@ -24,7 +24,7 @@ const serviceSchema = {
   serviceType: 'Birthday Party Planning',
   areaServed: { '@type': 'Place', name: 'HSR Layout, Bangalore' },
   url: 'https://www.eevagga.com/birthday-planner-hsr-layout',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: '15000', highPrice: '150000', offerCount: '3' },
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: 15000, highPrice: 150000, offerCount: 3 },
 };
 
 const localBusinessSchema = {

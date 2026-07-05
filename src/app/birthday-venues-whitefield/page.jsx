@@ -24,7 +24,7 @@ const serviceSchema = {
   serviceType: 'Birthday Venue Planning in Whitefield',
   areaServed: { '@type': 'Place', name: 'Whitefield, Bangalore' },
   url: 'https://www.eevagga.com/birthday-venues-whitefield',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: '15000', highPrice: '150000', offerCount: '3' },
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: 15000, highPrice: 150000, offerCount: 3 },
 };
 
 const localBusinessSchema = {

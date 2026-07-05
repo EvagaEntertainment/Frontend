@@ -24,7 +24,7 @@ const serviceSchema = {
   serviceType: 'Resort Birthday Party Planning',
   areaServed: { '@type': 'City', name: 'Bangalore', sameAs: 'https://en.wikipedia.org/wiki/Bangalore' },
   url: 'https://www.eevagga.com/birthday-party-resorts-bangalore',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: '35000', highPrice: '250000', offerCount: '3' },
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: 35000, highPrice: 250000, offerCount: 3 },
 };
 
 const localBusinessSchema = {

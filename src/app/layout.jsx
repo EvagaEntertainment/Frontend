@@ -114,6 +114,21 @@ const organizationSchema = {
         "https://www.facebook.com/share/15UhbdRWh8/",
         "https://www.linkedin.com/company/evaga-entertainment",
         "https://x.com/eevagga"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "500",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        }
       ]
     },
     {

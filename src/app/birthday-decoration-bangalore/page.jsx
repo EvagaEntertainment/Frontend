@@ -43,9 +43,9 @@ const serviceSchema = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',
-    lowPrice: '10000',
-    highPrice: '50000',
-    offerCount: '3',
+    lowPrice: 10000,
+    highPrice: 50000,
+    offerCount: 3,
   },
 };
 

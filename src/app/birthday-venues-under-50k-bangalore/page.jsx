@@ -24,7 +24,7 @@ const serviceSchema = {
   serviceType: 'Budget Birthday Venue Planning',
   areaServed: { '@type': 'City', name: 'Bangalore', sameAs: 'https://en.wikipedia.org/wiki/Bangalore' },
   url: 'https://www.eevagga.com/birthday-venues-under-50k-bangalore',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: '15000', highPrice: '50000', offerCount: '3' },
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'INR', lowPrice: 15000, highPrice: 50000, offerCount: 3 },
 };
 
 const localBusinessSchema = {
