@@ -1,15 +1,22 @@
 'use client';
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
-import BookingForm from '../../pages/BookingForm';
+
+// BookingForm uses useSearchParams + browser APIs — must be client-only
+const BookingForm = dynamic(() => import('../../pages/BookingForm'), { ssr: false, loading: () => (
+  <div className="flex items-center justify-center py-16">
+    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+) });
 
 const WHATSAPP = '918050279101';
 
-/* --- animation ----------------------------------------------------------- */
+/* ─── animation ─────────────────────────────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: (i = 0) => ({
@@ -19,7 +26,7 @@ const fadeUp = {
   }),
 };
 
-/* --- BREADCRUMB ----------------------------------------------------------- */
+/* ─── BREADCRUMB ─────────────────────────────────────────────────────────── */
 function Breadcrumb({ items }) {
   return (
     <nav className="bg-white border-b border-borderPrimary" aria-label="Breadcrumb">
@@ -43,7 +50,7 @@ function Breadcrumb({ items }) {
   );
 }
 
-/* --- HERO ----------------------------------------------------------------- */
+/* ─── HERO ───────────────────────────────────────────────────────────────── */
 function Hero({ config }) {
   const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
     `Hi! I'm interested in ${config.title}. Can you help me plan my event?`
@@ -156,7 +163,7 @@ function Hero({ config }) {
   );
 }
 
-/* --- GALLERY -------------------------------------------------------------- */
+/* ─── GALLERY ────────────────────────────────────────────────────────────── */
 function Gallery({ gallery }) {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
@@ -199,7 +206,7 @@ function Gallery({ gallery }) {
                 alt={item.alt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 33vw"
+                sizes="(max-width: 768px) 400px, 800px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               {item.caption && (
@@ -215,7 +222,7 @@ function Gallery({ gallery }) {
   );
 }
 
-/* --- FEATURES ------------------------------------------------------------- */
+/* ─── FEATURES ───────────────────────────────────────────────────────────── */
 function Features({ features }) {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
@@ -265,9 +272,9 @@ function Features({ features }) {
   );
 }
 
-/* --- WHY EEVAGGA ---------------------------------------------------------- */
-function WhyEevagga() {
-  const points = [
+/* ─── WHY EEVAGGA ────────────────────────────────────────────────────────── */
+function WhyEevagga({ customPoints }) {
+  const defaultPoints = [
     { icon: '🎯', title: 'End-to-End Planning', desc: 'From concept to cleanup — every detail handled by us.' },
     { icon: '✨', title: 'Bespoke Themes', desc: 'Every celebration is designed uniquely for you, no templates.' },
     { icon: '📸', title: 'Flawless Execution', desc: 'Dedicated on-ground team, zero stress for you on the day.' },
@@ -275,6 +282,7 @@ function WhyEevagga() {
     { icon: '🏆', title: '500+ Events Done', desc: 'Trusted by hundreds of families across Bangalore.' },
     { icon: '⚡', title: 'Always-On Support', desc: 'From start to finish we are with you — 24/7 availability.' },
   ];
+  const points = customPoints && customPoints.length > 0 ? customPoints : defaultPoints;
 
   return (
     <motion.section
@@ -354,7 +362,7 @@ function WhyEevagga() {
   );
 }
 
-/* --- PRICING -------------------------------------------------------------- */
+/* ─── PRICING ────────────────────────────────────────────────────────────── */
 function Pricing({ pricing, config }) {
   const waLink = (plan) =>
     `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
@@ -476,42 +484,175 @@ function Pricing({ pricing, config }) {
   );
 }
 
-/* --- CONSULTATION FORM ---------------------------------------------------- */
-
-function ConsultationForm({ config }) {
-  // Infer defaults from config.title
-  const titleLower = (config.title || '').toLowerCase();
-  
-  let defaultEventType = "";
-  let defaultCategory = "";
-  if (titleLower.includes('birthday')) {
-    defaultEventType = "Birthdays";
-    defaultCategory = "birthday";
-  } else if (titleLower.includes('baby-shower') || titleLower.includes('baby shower')) {
-    defaultEventType = "Baby Showers";
-    defaultCategory = "baby-shower";
-  } else if (titleLower.includes('house-warming') || titleLower.includes('house warming')) {
-    defaultEventType = "House Warming";
-    defaultCategory = "house-warming";
-  }
-  
-  const defaultLocation = "Bangalore";
-
+/* ─── BOOKING FORM SECTION ───────────────────────────────────────────────── */
+function BookingFormSection({ config }) {
   return (
-    <section id="consultation" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="consultation" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-background">
       <div className="max-w-3xl mx-auto">
-        <BookingForm 
-          defaultCategory={defaultCategory} 
-          defaultLocation={defaultLocation} 
-          defaultEventType={defaultEventType}
-          inline={true}
-        />
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ type: 'spring', stiffness: 120 }}
+          className="flex flex-col items-center mb-10"
+        >
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
+            <FaCalendarAlt size={10} />
+            Free Consultation
+          </div>
+          <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
+            Book Your {config.title}
+          </h2>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="h-1 w-24 bg-highlightYellow mb-4"
+          />
+          <p className="text-textGray text-sm text-center max-w-sm">
+            Fill in the details below and our event specialist will reach out within 24 hours.
+          </p>
+        </motion.div>
+
+        {/* Real BookingForm — pre-fills event type from page config */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15, duration: 0.45 }}
+          className="relative"
+        >
+          {/* Decorative blobs */}
+          <div className="absolute -top-8 -left-8 w-32 h-32 bg-highlightYellow/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+          <BookingForm
+            inline={true}
+            defaultEventType={config.defaultEventType || 'Birthdays'}
+            defaultLocation="Bangalore"
+          />
+        </motion.div>
+
+        <p className="text-center text-sm text-textGray mt-5">
+          Prefer to call?{' '}
+          <a href="tel:+918050279101" className="text-primary font-semibold hover:underline">
+            +91 80502 79101
+          </a>
+        </p>
       </div>
     </section>
   );
 }
 
-/* --- PAGE EXPORT ---------------------------------------------------------- */
+/* ─── RELATED LINKS ──────────────────────────────────────────────────────── */
+function RelatedServices({ links }) {
+  if (!links || links.length === 0) return null;
+  return (
+    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-t border-borderPrimary">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-primary text-2xl md:text-3xl font-normal mb-8 text-center sm:text-left">
+          Explore Related Celebration Services
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {links.map((link, idx) => (
+            <Link
+              key={idx}
+              href={link.href}
+              className="flex items-center justify-between p-4 rounded-xl border border-borderPrimary bg-background hover:border-primary/40 hover:shadow-sm transition-all duration-300 group"
+            >
+              <span className="text-textPrimary text-sm font-medium group-hover:text-primary transition-colors">
+                {link.label}
+              </span>
+              <FaArrowRight size={10} className="text-borderSecondary group-hover:text-primary group-hover:translate-x-1 transition-all" />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── TESTIMONIALS / REVIEWS ────────────────────────────────────────────── */
+function ReviewsSection({ reviews, pageTitle }) {
+  if (!reviews || reviews.length === 0) return null;
+
+  const totalRating = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+  const avgRating = (totalRating / reviews.length).toFixed(1);
+
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": pageTitle,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": avgRating,
+      "reviewCount": reviews.length.toString(),
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": reviews.map(r => ({
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": r.author
+      },
+      "datePublished": r.date || "2026-06-20",
+      "reviewBody": r.text,
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": r.rating.toString(),
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }))
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema).replace(/</g, '\\u003c') }}
+      />
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background border-t border-borderPrimary">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center mb-12">
+            <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
+              What Our Clients Say
+            </h2>
+            <div className="h-1 w-24 bg-highlightYellow mb-4" />
+            <p className="text-textGray text-sm text-center">
+              Rated <span className="font-semibold text-primary">{avgRating}/5</span> based on {reviews.length} customer reviews.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((r, idx) => (
+              <div key={idx} className="bg-white border border-borderPrimary rounded-2xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300">
+                <div>
+                  <div className="flex items-center gap-1 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} size={14} className={i < r.rating ? 'text-[#6A1B9A]' : 'text-borderSecondary'} />
+                    ))}
+                  </div>
+                  <p className="text-textGray text-sm italic leading-relaxed mb-4">
+                    "{r.text}"
+                  </p>
+                </div>
+                <div className="border-t border-borderPrimary pt-3 mt-3 flex items-center justify-between">
+                  <span className="text-primary font-semibold text-xs">{r.author}</span>
+                  {r.date && <span className="text-textGray/60 text-xs">{r.date}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
   return (
     <main>
@@ -519,10 +660,12 @@ export default function ServiceLandingPage({ config }) {
       <Hero config={config} />
       <Gallery gallery={config.gallery} />
       <Features features={config.features} />
-      <WhyEevagga />
+      <WhyEevagga customPoints={config.whyPoints} />
       <Pricing pricing={config.pricing} config={config} />
-      <ConsultationForm config={config} />
-      <FAQSection />
+      <BookingFormSection config={config} />
+      <RelatedServices links={config.relatedLinks} />
+      <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
+      <FAQSection customFaqs={config.faqs} />
     </main>
   );
 }

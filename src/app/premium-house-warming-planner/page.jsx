@@ -1,19 +1,19 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners â€” Eevagga",
+  title: { absolute: "Premium House Warming Planner in Bangalore — Eevagga" },
   description:
-    "Planning a house warming (Griha Pravesh) ceremony? Eevagga provides premium house warming planning in Bangalore â€” traditional and modern decorations, catering, puja setup & logistics.",
+    "Planning a house warming (Griha Pravesh) ceremony? Eevagga provides premium house warming planning in Bangalore — traditional and modern decorations, catering, puja setup & logistics.",
   keywords:
     "premium house warming ceremony planner, Griha Pravesh planner Bangalore, house warming decoration Bangalore, house warming catering, Eevagga Griha Pravesh",
   alternates: {
     canonical: 'https://www.eevagga.com/premium-house-warming-planner',
   },
   openGraph: {
-    title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners â€” Eevagga",
+    title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners — Eevagga",
     description:
       "Step into your new home with joy. Eevagga plans beautiful, traditional or contemporary house warming ceremonies in Bangalore. Floral decors, puja setup, and catering logistics. Get a free quote.",
     url: 'https://www.eevagga.com/premium-house-warming-planner',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Premium House Warming Planner â€” Eevagga",
+    title: "Premium House Warming Planner — Eevagga",
     description: "Traditional and modern Griha Pravesh planning in Bangalore. Decors, puja support & catering.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -95,21 +95,39 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium House Warming Planner',
   badge: 'Blessings & Joy',
   h1: "Premium House Warming (Griha Pravesh) Ceremony Planner",
   heroSubtitle:
     "Step into your new home with positive energy and joy. Eevagga designs and organizes beautiful house warming events, handling fresh floral decorations, puja setups, and premium catering coordination.",
-  heroImage: '/service-pages/birthday-hero.png',
+  heroImage: '/service-pages/house-warming-hero.png',
   heroImageAlt: 'Traditional marigold floral decoration at home entrance for Griha Pravesh',
 
   stats: [
     { value: '180+', label: 'Ceremonies Planned' },
     { value: 'Fresh', label: 'Flower Decor' },
     { value: 'Tradition', label: 'Aligned' },
-    { value: '4.8â˜…', label: 'Client Rating' },
+    { value: '4.8★', label: 'Client Rating' },
   ],
 
   breadcrumbs: [
@@ -120,27 +138,27 @@ const pageConfig = {
 
   gallery: [
     {
-      src: '/service-pages/birthday-hero.png',
+      src: '/service-pages/house-warming-hero.png',
       alt: 'Traditional Griha Pravesh flower entrance',
       caption: 'Entrance Floral Decor',
     },
     {
-      src: '/service-pages/birthday-gallery-1.png',
+      src: '/service-pages/house-warming-gallery-1.png',
       alt: 'Homa/Puja mandap setup with marigold garland',
       caption: 'Puja Mandap Setup',
     },
     {
-      src: '/service-pages/birthday-gallery-2.png',
+      src: '/service-pages/house-warming-gallery-2.png',
       alt: 'Traditional dining arrangements for house warming',
       caption: 'Traditional Dining',
     },
     {
-      src: '/service-pages/birthday-gallery-3.png',
+      src: '/service-pages/house-warming-gallery-3.png',
       alt: 'Traditional welcome items and floor design (Rangoli)',
       caption: 'Rangoli & Welcome',
     },
     {
-      src: '/service-pages/birthday-gallery-4.png',
+      src: '/service-pages/house-warming-gallery-4.png',
       alt: 'Elegant lounge seating for house warming guests',
       caption: 'Guest Lounge Area',
     },
@@ -148,37 +166,37 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸŒ¸',
+      icon: '🌸',
       title: 'Traditional Floral Curation',
       description:
         'Beautiful fresh flower arrangements using marigold, jasmine, orchids, and mango leaves for main entrances and puja areas.',
     },
     {
-      icon: 'ðŸ•Œ',
+      icon: '🕌',
       title: 'Homa & Puja Stage Design',
       description:
         'Specially designed mandaps and backdrops keeping religious customs, homa kunda placement, and priest requirements in mind.',
     },
     {
-      icon: 'ðŸ½ï¸',
+      icon: '🍽️',
       title: 'Catering & Dining setups',
       description:
         'Coordinate premium traditional catering (South/North Indian), providing full table setup, servers, and water systems.',
     },
     {
-      icon: 'ðŸª”',
+      icon: '🪔',
       title: 'Aura & Ambient Lighting',
       description:
         'Fairy lights across the balcony/terrace, traditional brass lamps (diyas), and focused spotlights for the puja space.',
     },
     {
-      icon: 'ðŸ“¸',
+      icon: '📸',
       title: 'Puja Candid Photography',
       description:
         'Professional coverage of the early-morning rituals, homa, family interactions, and group guests.',
     },
     {
-      icon: 'ðŸª‘',
+      icon: '🪑',
       title: 'Seating & Mattress Rentals',
       description:
         'Logistics coordination for chairs, traditional floor mattresses, tables, and umbrella shades for outdoor/terrace seating.',
@@ -258,7 +276,7 @@ const pageConfig = {
   ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function PremiumHouseWarmingPlannerPage() {
   return (
     <>

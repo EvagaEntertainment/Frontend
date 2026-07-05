@@ -1,10 +1,86 @@
 'use client';
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone, FaStar, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaBars, FaTimes, FaHome, FaInfoCircle, FaPhone, FaStar, FaChevronDown, FaMapMarkerAlt } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { internalRoutes } from "../../utils/internalRoutes";
+
+/* ─── All 35 celebration pages in 5 categories ───────────────────────────── */
+const celebrationCategories = [
+  {
+    label: "Our Services",
+    emoji: "🎉",
+    color: "#7C3AED",
+    links: [
+      { name: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore" },
+      { name: "Kids Birthday Planner", path: "/kids-birthday-planner-bangalore" },
+      { name: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
+      { name: "Celebration At Home", path: "/birthday-celebration-at-home-bangalore" },
+      { name: "Luxury Birthday Planner", path: "/luxury-birthday-planner-bangalore" },
+      { name: "Premium Birthday Planner", path: "/premium-birthday-planner" },
+      { name: "Premium House Warming", path: "/premium-house-warming-planner" },
+      { name: "Premium Baby Shower", path: "/premium-baby-shower-planner" },
+      { name: "Premium Birthday End-to-End", path: "/premium-birthday-end-to-end-planner" },
+    ],
+  },
+  {
+    label: "Theme-Based",
+    emoji: "🎨",
+    color: "#DB2777",
+    links: [
+      { name: "Unicorn Theme Birthday", path: "/unicorn-theme-birthday-bangalore" },
+      { name: "Jungle Theme Birthday", path: "/jungle-theme-birthday-bangalore" },
+      { name: "Barbie Theme Birthday", path: "/barbie-theme-birthday-bangalore" },
+      { name: "Space Theme Birthday", path: "/space-theme-birthday-bangalore" },
+      { name: "Cocomelon Birthday Theme", path: "/cocomelon-birthday-theme-bangalore" },
+      { name: "Boss Baby Decoration", path: "/boss-baby-birthday-decoration-bangalore" },
+    ],
+  },
+  {
+    label: "Age-Based",
+    emoji: "🎂",
+    color: "#D97706",
+    links: [
+      { name: "1st Birthday Planner", path: "/1st-birthday-planner-bangalore" },
+      { name: "Kids Birthday Party", path: "/kids-birthday-party-bangalore" },
+      { name: "Teen Birthday Celebration", path: "/teen-birthday-celebration-bangalore" },
+      { name: "Adult Birthday Planner", path: "/adult-birthday-planner-bangalore" },
+    ],
+  },
+  {
+    label: "Venue & Location",
+    emoji: "📍",
+    color: "#059669",
+    links: [
+      { name: "Birthday Venues Bangalore", path: "/birthday-venues-bangalore" },
+      { name: "Indoor Birthday Venues", path: "/indoor-birthday-venues-bangalore" },
+      { name: "Venues in Whitefield", path: "/birthday-venues-whitefield" },
+      { name: "Birthday Party Resorts", path: "/birthday-party-resorts-bangalore" },
+      { name: "Venues Under ₹50K", path: "/birthday-venues-under-50k-bangalore" },
+    ],
+  },
+  {
+    label: "By Area",
+    emoji: "🏙️",
+    color: "#0284C7",
+    links: [
+      { name: "Whitefield", path: "/birthday-planner-whitefield" },
+      { name: "HSR Layout", path: "/birthday-planner-hsr-layout" },
+      { name: "Koramangala", path: "/birthday-planner-koramangala" },
+      { name: "Indiranagar", path: "/birthday-planner-indiranagar" },
+      { name: "Sarjapur", path: "/birthday-planner-sarjapur" },
+      { name: "Bellandur", path: "/birthday-planner-bellandur" },
+      { name: "Hebbal", path: "/birthday-planner-hebbal" },
+      { name: "Electronic City", path: "/birthday-planner-electronic-city" },
+      { name: "Hennur", path: "/birthday-planner-hennur" },
+      { name: "Yelahanka", path: "/birthday-planner-yellhanka" },
+      { name: "JP Nagar", path: "/birthday-planner-jp-nagar" },
+    ],
+  },
+];
+
+const allCelebrationPaths = celebrationCategories.flatMap((c) => c.links.map((l) => l.path));
 
 function Navbar() {
   const pathname = usePathname();
@@ -12,6 +88,8 @@ function Navbar() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [mobileCatOpen, setMobileCatOpen] = useState(null);
+  const closeTimer = useRef(null);
 
   const navLinks = [
     { name: "Home", path: internalRoutes.home, icon: <FaHome /> },
@@ -19,22 +97,8 @@ function Navbar() {
     { name: "Our Services", path: internalRoutes.ourServices, icon: <FaPhone /> },
   ];
 
-  const celebrationLinks = [
-    { name: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore" },
-    { name: "Kids Birthday Planner", path: "/kids-birthday-planner-bangalore" },
-    { name: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
-    { name: "Celebration At Home", path: "/birthday-celebration-at-home-bangalore" },
-    { name: "Luxury Birthday Planner", path: "/luxury-birthday-planner-bangalore" },
-    { name: "Premium Birthday Planner", path: "/premium-birthday-planner" },
-    { name: "Premium House Warming", path: "/premium-house-warming-planner" },
-    { name: "Premium Baby Shower", path: "/premium-baby-shower-planner" },
-    { name: "Premium Birthday End-to-End", path: "/premium-birthday-end-to-end-planner" },
-  ];
-
   const toggleMenu = () => {
-    if (!isOpen) {
-      setMenuVisible(true);
-    }
+    if (!isOpen) setMenuVisible(true);
     setIsOpen((prev) => !prev);
   };
 
@@ -44,56 +108,61 @@ function Navbar() {
   };
 
   const linkVariants = {
-    hover: { color: "#FFE500", y: -2, transition: { type: "spring", stiffness: 400, damping: 10, duration: 0.3 } },
-    tap: { scale: 0.95, transition: { duration: 0.2 } },
+    hover: { color: "#FFE500", y: -2, transition: { type: "spring", stiffness: 400, damping: 10 } },
+    tap: { scale: 0.95 },
   };
 
   const handleAnimationComplete = () => {
-    if (!isOpen) {
-      setMenuVisible(false);
-    }
+    if (!isOpen) setMenuVisible(false);
+  };
+
+  // Debounced close so mouse can travel from button → panel
+  const handleMouseEnter = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setDropdownOpen(true);
+  };
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setDropdownOpen(false), 120);
   };
 
   useEffect(() => {
     setIsOpen(false);
     setDropdownOpen(false);
     setMobileDropdownOpen(false);
+    setMobileCatOpen(null);
   }, [pathname]);
 
-  const isCelebrationActive = celebrationLinks.some(l => pathname === l.path);
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
+
+  const isCelebrationActive = allCelebrationPaths.includes(pathname);
 
   return (
-    <nav className="bg-[#6A1B9A] w-full z-50 border-b border-[#FFE500]/20">
+    <nav className="bg-[#6A1B9A] w-full z-50 border-b border-[#FFE500]/20 relative">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link href={internalRoutes.home} className="flex items-center">
+
+        {/* ── Logo ─────────────────────────────────────────── */}
+        <Link href={internalRoutes.home} passHref legacyBehavior>
+          <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center">
             <img
               src={process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + "gallery/1749377446139_Eevagga_yellow.webp"}
-              alt="Eevagga Logo"
-              className="h-10 md:h-10 object-contain"
+              alt="Evaga Logo"
+              className="h-10 object-contain"
             />
-          </Link>
-        </motion.div>
+          </motion.a>
+        </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-10 items-center">
+        {/* ── Desktop Nav ───────────────────────────────────── */}
+        <div className="hidden md:flex items-center gap-8">
+
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
               <Link
                 key={link.name}
                 href={link.path}
-                className={`relative text-sm font-medium ${
-                  isActive ? "text-[#FFE500]" : "text-white"
-                }`}
+                className={`relative text-sm font-medium ${isActive ? "text-[#FFE500]" : "text-white"}`}
               >
-                <motion.span
-                  className="inline-block"
-                  variants={linkVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
+                <motion.span className="inline-block" variants={linkVariants} whileHover="hover" whileTap="tap">
                   {link.name}
                   {isActive && (
                     <motion.span
@@ -108,68 +177,128 @@ function Navbar() {
             );
           })}
 
-          {/* Celebrations Dropdown */}
+          {/* ── Celebrations Mega-Menu trigger ─────────────── */}
           <div
             className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             <button
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
-              }`}
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
+                }`}
             >
               <FaStar className="text-xs" />
               Celebrations
-              <FaChevronDown className={`text-[10px] transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+              <FaChevronDown className={`text-[10px] transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
             </button>
 
             <AnimatePresence>
               {dropdownOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2.5 z-50 origin-top-left"
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: 0.14 }}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  /* Anchor to right side of viewport via fixed positioning relative to navbar */
+                  className="fixed left-0 right-0 z-50"
+                  style={{ top: "72px" }}
                 >
-                  {celebrationLinks.map((subLink) => {
-                    const isSubActive = pathname === subLink.path;
-                    return (
-                      <Link
-                        key={subLink.name}
-                        href={subLink.path}
-                        className={`block px-4 py-2 text-sm transition-colors duration-150 ${
-                          isSubActive
-                            ? "bg-[#6A1B9A]/10 text-[#6A1B9A] font-semibold"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-[#6A1B9A]"
-                        }`}
-                      >
-                        {subLink.name}
-                      </Link>
-                    );
-                  })}
+                  <div className="max-w-7xl mx-auto px-6">
+                    {/* Caret */}
+                    <div className="flex justify-end pr-4">
+                      <div className="w-3 h-3 bg-[#6A1B9A] rotate-45 -mb-1.5 relative z-10" />
+                    </div>
+
+                    {/* Panel */}
+                    <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+
+                      {/* Purple header */}
+                      <div className="bg-gradient-to-r from-[#6A1B9A] to-[#8E24AA] px-6 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <FaStar className="text-[#FFE500]" />
+                          <span className="text-white font-semibold text-sm">All Celebrations &amp; Services</span>
+                        </div>
+                        <span className="text-[#FFE500]/80 text-xs">35 pages • Bangalore</span>
+                      </div>
+
+                      {/* 5-column grid */}
+                      <div className="grid grid-cols-5 divide-x divide-gray-100">
+                        {celebrationCategories.map((cat) => (
+                          <div key={cat.label} className="py-5 px-5">
+                            {/* Category header */}
+                            <div className="flex items-center gap-2 mb-3 pb-2.5 border-b-2" style={{ borderColor: cat.color + "30" }}>
+                              <span className="text-base leading-none">{cat.emoji}</span>
+                              <span
+                                className="text-[10px] font-black uppercase tracking-wider"
+                                style={{ color: cat.color }}
+                              >
+                                {cat.label}
+                              </span>
+                            </div>
+
+                            {/* Links list */}
+                            <ul className="space-y-0.5">
+                              {cat.links.map((link) => {
+                                const isActive = pathname === link.path;
+                                return (
+                                  <li key={link.path}>
+                                    <Link
+                                      href={link.path}
+                                      className={`flex items-start gap-1.5 text-[11.5px] leading-snug py-1.5 px-2 rounded-lg transition-all duration-150 group ${isActive
+                                          ? "font-semibold"
+                                          : "text-gray-600 hover:text-gray-900"
+                                        }`}
+                                      style={isActive ? { color: cat.color, backgroundColor: cat.color + "15" } : {}}
+                                    >
+                                      <span
+                                        className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                        style={{ backgroundColor: cat.color }}
+                                      />
+                                      <span className="group-hover:translate-x-0.5 transition-transform duration-150">
+                                        {link.name}
+                                      </span>
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="bg-gradient-to-r from-gray-50 to-purple-50 border-t border-gray-100 px-6 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <FaMapMarkerAlt className="text-[#6A1B9A] text-[10px]" />
+                          <span>Serving all areas of Bangalore</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* ── Mobile Hamburger ──────────────────────────────── */}
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="md:hidden text-white p-3 focus:outline-none"
+          className="md:hidden text-white focus:outline-none"
           onClick={toggleMenu}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </motion.button>
 
-        {/* Mobile Menu */}
+        {/* ── Mobile slide-over ─────────────────────────────── */}
         <AnimatePresence>
           {menuVisible && (
             <>
+              {/* Backdrop */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isOpen ? 1 : 0 }}
@@ -179,68 +308,58 @@ function Navbar() {
                 style={{ pointerEvents: isOpen ? "auto" : "none" }}
               />
 
+              {/* Panel */}
               <motion.div
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
                 exit="closed"
                 variants={menuVariants}
                 onAnimationComplete={handleAnimationComplete}
-                className="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-sm bg-[#6A1B9A] shadow-2xl z-50 flex flex-col"
+                className="md:hidden fixed top-0 right-0 h-full w-[88vw] max-w-sm bg-[#6A1B9A] shadow-2xl z-50 flex flex-col"
               >
-                <div className="p-4 flex justify-end">
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-white p-2"
-                    onClick={toggleMenu}
-                  >
-                    <FaTimes size={28} />
+                {/* Close */}
+                <div className="p-4 flex justify-between items-center border-b border-white/10">
+                  <span className="text-white font-semibold text-sm">Menu</span>
+                  <motion.button whileTap={{ scale: 0.9 }} className="text-white p-1" onClick={toggleMenu}>
+                    <FaTimes size={22} />
                   </motion.button>
                 </div>
 
-                <div className="flex-grow overflow-y-auto p-6 space-y-2">
+                {/* Scrollable content */}
+                <div className="flex-grow overflow-y-auto py-4">
+
+                  {/* Standard links */}
                   {navLinks.map((link) => {
                     const isActive = pathname === link.path;
                     return (
                       <Link
                         key={link.name}
                         href={link.path}
-                        className={`flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all ${
-                          isActive
-                            ? "text-[#FFE500] bg-[#FFE500]/20"
-                            : "text-white hover:bg-[#FFE500]/20"
-                        }`}
+                        className={`flex items-center gap-3 text-sm font-medium mx-3 mb-1 py-3 px-4 rounded-xl transition-all ${isActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
+                          }`}
                         onClick={toggleMenu}
                       >
-                        <span className="mr-3 text-lg">{link.icon}</span>
-                        <span className="flex-grow">{link.name}</span>
-                        {isActive && (
-                          <motion.span
-                            layoutId="mobileActiveIndicator"
-                            className="ml-2 w-2.5 h-2.5 rounded-full bg-[#FFE500]"
-                            initial={false}
-                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                          />
-                        )}
+                        <span className="text-base opacity-80">{link.icon}</span>
+                        {link.name}
+                        {isActive && <span className="ml-auto w-2 h-2 rounded-full bg-[#FFE500]" />}
                       </Link>
                     );
                   })}
 
-                  {/* Mobile Celebrations Accordion */}
-                  <div className="space-y-1">
+                  <div className="mx-3 mt-2 border-t border-white/10 pt-2" />
+
+                  {/* Celebrations accordion */}
+                  <div className="mx-3 mt-1">
                     <button
                       onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-                      className={`flex items-center justify-between w-full text-base font-medium py-3 px-4 rounded-xl transition-all ${
-                        isCelebrationActive
-                          ? "text-[#FFE500] bg-[#FFE500]/20"
-                          : "text-white hover:bg-[#FFE500]/20"
-                      }`}
+                      className={`flex items-center justify-between w-full text-sm font-medium py-3 px-4 rounded-xl transition-all ${isCelebrationActive ? "text-[#FFE500] bg-[#FFE500]/15" : "text-white hover:bg-white/10"
+                        }`}
                     >
-                      <span className="flex items-center">
-                        <span className="mr-3 text-lg"><FaStar /></span>
+                      <span className="flex items-center gap-3">
+                        <FaStar className="text-base opacity-80" />
                         <span>Celebrations</span>
                       </span>
-                      <FaChevronDown className={`text-xs transition-transform duration-200 ${mobileDropdownOpen ? 'rotate-180' : ''}`} />
+                      <FaChevronDown className={`text-xs transition-transform duration-200 ${mobileDropdownOpen ? "rotate-180" : ""}`} />
                     </button>
 
                     <AnimatePresence initial={false}>
@@ -249,30 +368,66 @@ function Navbar() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden pl-8 space-y-1"
+                          transition={{ duration: 0.22 }}
+                          className="overflow-hidden"
                         >
-                          {celebrationLinks.map((subLink) => {
-                            const isSubActive = pathname === subLink.path;
-                            return (
-                              <Link
-                                key={subLink.name}
-                                href={subLink.path}
-                                className={`block text-sm py-2.5 px-4 rounded-lg transition-all ${
-                                  isSubActive
-                                    ? "text-[#FFE500] font-semibold bg-[#FFE500]/10"
-                                    : "text-white/80 hover:text-white hover:bg-[#FFE500]/10"
-                                }`}
-                                onClick={toggleMenu}
+                          {celebrationCategories.map((cat) => (
+                            <div key={cat.label} className="ml-2 mt-1">
+                              {/* Category accordion toggle */}
+                              <button
+                                onClick={() => setMobileCatOpen(mobileCatOpen === cat.label ? null : cat.label)}
+                                className="flex items-center justify-between w-full py-2 px-4 rounded-lg transition-all hover:bg-white/10"
                               >
-                                {subLink.name}
-                              </Link>
-                            );
-                          })}
+                                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "#FFE500CC" }}>
+                                  <span>{cat.emoji}</span>
+                                  <span>{cat.label}</span>
+                                  <span className="ml-1 text-white/40 normal-case tracking-normal font-normal">({cat.links.length})</span>
+                                </span>
+                                <FaChevronDown
+                                  className={`text-[9px] text-white/50 transition-transform duration-200 ${mobileCatOpen === cat.label ? "rotate-180" : ""}`}
+                                />
+                              </button>
+
+                              <AnimatePresence initial={false}>
+                                {mobileCatOpen === cat.label && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.18 }}
+                                    className="overflow-hidden pl-6 pr-2 pb-1"
+                                  >
+                                    {cat.links.map((subLink) => {
+                                      const isSubActive = pathname === subLink.path;
+                                      return (
+                                        <Link
+                                          key={subLink.path}
+                                          href={subLink.path}
+                                          className={`flex items-center gap-2 text-[13px] py-2 px-3 rounded-lg transition-all ${isSubActive
+                                              ? "text-[#FFE500] font-semibold bg-[#FFE500]/10"
+                                              : "text-white/75 hover:text-white hover:bg-white/10"
+                                            }`}
+                                          onClick={toggleMenu}
+                                        >
+                                          <span className="w-1.5 h-1.5 rounded-full bg-white/30 flex-shrink-0" />
+                                          {subLink.name}
+                                        </Link>
+                                      );
+                                    })}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          ))}
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
+                </div>
+
+                {/* Mobile footer */}
+                <div className="border-t border-white/10 px-6 py-4">
+                  <p className="text-white/40 text-xs text-center">500+ events · All Bangalore</p>
                 </div>
               </motion.div>
             </>
