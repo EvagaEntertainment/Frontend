@@ -36,7 +36,6 @@ const CategoryNewCard = ({ imageUrl, title, text, link, disabled }) => {
           }`}
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transformStyle: "preserve-3d" }}
           effect="blur"
-          placeholderSrc={"UNIVERSAL_PLACEHOLDER"}
           wrapperClassName="w-full h-full block"
           onError={(e) => {
             e.target.style.display = "none";

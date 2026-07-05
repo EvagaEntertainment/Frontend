@@ -37,7 +37,7 @@ function SliderNew() {
     </div>
   );
 
-  if (!mounted) return <div className="flex flex-col">{skeletonItem}</div>;
+  if (!mounted) return <div className="flex flex-col min-h-[50dvh] md:min-h-[85dvh]">{skeletonItem}</div>;
 
   return (
     <>

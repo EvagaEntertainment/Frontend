@@ -1,6 +1,6 @@
 export const metadata = {
-  title: { absolute: "About Eevagga" },
-  description: "Learn how Eevagga became Bangalore's most trusted full-service birthday, house warming and baby shower planning company. Premium execution, creative themes, end-to-end planning.",
+  title: "About Eevagga — Premium Birthday & Celebration Planner in Bangalore",
+  description: "Eevagga is Bangalore's most trusted full-service birthday, house warming and baby shower planning company. Premium execution, creative themes and end-to-end planning.",
   keywords: "about Eevagga, birthday planner Bangalore, full-service celebration company, premium event planning Bangalore",
   alternates: { canonical: '/about-us' },
   openGraph: {
@@ -42,8 +42,8 @@ const breadcrumbSchema = {
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

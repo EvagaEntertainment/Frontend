@@ -16,9 +16,9 @@ import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import { toast } from "react-toastify";
 import { generateMonthOptions } from "../utils/generateMonthOptions";
-const BookingForm = () => {
+const BookingForm = ({ defaultCategory = null, defaultLocation = "", defaultEventType = "", inline = false }) => {
   const searchParams = useSearchParams();
-  const category = searchParams ? searchParams.get("category") : null;
+  const category = defaultCategory || (searchParams ? searchParams.get("category") : null);
   const sku = searchParams ? searchParams.get("sku") : null;
   const {
     register,
@@ -27,15 +27,40 @@ const BookingForm = () => {
   } = useForm({
     defaultValues: {
       sku: sku || "",
+      eventType: defaultEventType || "",
+      eventLocation: defaultLocation || "",
+      eventMonth: "",
     },
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const bookingCtaApi = useServices(commonApis.bookingCta);
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+
+      // Execute reCAPTCHA Enterprise
+      let token = "";
+      if (window.grecaptcha && window.grecaptcha.enterprise) {
+        try {
+          token = await new Promise((resolve, reject) => {
+            window.grecaptcha.enterprise.ready(() => {
+              window.grecaptcha.enterprise
+                .execute("6LcrQCotAAAAADGcQBjFWlPjW7X22_thFG4YdbJt", { action: "submit_booking" })
+                .then(resolve)
+                .catch(reject);
+            });
+          });
+        } catch (e) {
+          console.error("reCAPTCHA Enterprise execution failed:", e);
+        }
+      }
+
+      if (!token) {
+        toast.error("reCAPTCHA verification failed. Please try again.");
+        setLoading(false);
+        return;
+      }
 
       // 1. Prepare FormData for your original API
       const formdata = new FormData();
@@ -46,6 +71,7 @@ const BookingForm = () => {
       formdata.append("eventLocation", data.eventLocation);
       formdata.append("eventMonth", data.eventMonth);
       formdata.append("pageCatgeory", category ?? "");
+      formdata.append("gRecaptchaResponse", token);
       if (data.sku) {
         formdata.append("sku", data.sku);
       }
@@ -178,7 +204,7 @@ const BookingForm = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+      className={inline ? "" : "min-h-screen py-12 px-4 sm:px-6 lg:px-8"}
     >
       <motion.div
         variants={containerVariants}
@@ -297,11 +323,11 @@ const BookingForm = () => {
                   },
                 }}
               >
-                <MenuItem value="Weddings">Weddings</MenuItem>
+                {/* <MenuItem value="Weddings">Weddings</MenuItem> */}
                 <MenuItem value="Corporate">Corporate</MenuItem>
-                <MenuItem value="Baby Showers">Baby Showers</MenuItem>
+                {/* <MenuItem value="Baby Showers">Baby Showers</MenuItem> */}
                 <MenuItem value="Birthdays">Birthdays</MenuItem>
-                <MenuItem value="House Warming">House Warming</MenuItem>
+                {/* <MenuItem value="House Warming">House Warming</MenuItem> */}
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
@@ -362,7 +388,6 @@ const BookingForm = () => {
                     borderColor: "#FFD700",
                   },
                 }}
-                select
               >
                 {generateMonthOptions()}
               </Select>

@@ -55,6 +55,13 @@ export const metadata = {
     card: 'summary_large_image',
     site: '@eevagga',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   other: {
     'p:domain_verify': '4ffff8fe28fdfc5268597c4a91669fb1',
   },
@@ -68,11 +75,19 @@ const organizationSchema = {
       "@id": "https://www.eevagga.com/#organization",
       "name": "Eevagga Entertainment",
       "url": "https://www.eevagga.com",
+      "telephone": "+91-8050279101",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.eevagga.com/logo.webp"
+        "url": "https://www.eevagga.com/logo.webp",
+        "width": 512,
+        "height": 512
       },
-      "image": "https://www.eevagga.com/og-image.jpg",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.eevagga.com/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
       "description": "Bangalore's premium full-service birthday, house warming and baby shower planning company. We handle end-to-end decoration, themes, venues and execution.",
       "address": {
         "@type": "PostalAddress",
@@ -109,10 +124,7 @@ const organizationSchema = {
       "publisher": { "@id": "https://www.eevagga.com/#organization" },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://www.eevagga.com/search?q={search_term_string}"
-        },
+        "target": "https://www.eevagga.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }
@@ -130,6 +142,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://api.eevagga.com" />
+        <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcrQCotAAAAADGcQBjFWlPjW7X22_thFG4YdbJt" async defer></script>
       </head>
       <body>
         <script

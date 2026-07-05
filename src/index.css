@@ -1,5 +1,4 @@
 @import 'swiper/css';
-@import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 @import "./styles/tailwindComponents.css";
 /* Google Fonts loaded via next/font/google in layout.jsx (self-hosted, eliminates external request) */

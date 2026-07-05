@@ -1,6 +1,6 @@
 export const metadata = {
-  title: { absolute: "Customer Support — Eevagga" },
-  description: "Need help with your Eevagga birthday, house warming or baby shower booking? Contact our support team for booking queries, cancellations, order tracking and celebration planning assistance.",
+  title: "Customer Support — Birthday Planning Help & Booking Queries",
+  description: "Need help with your Eevagga booking? Contact our support team for booking queries, cancellations, order tracking and birthday planning assistance.",
   alternates: { canonical: '/customer-service' },
   openGraph: {
     title: "Customer Support | Eevagga",
@@ -39,8 +39,8 @@ const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, 
 export default function Page() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Customer Service — Eevagga Support &amp; Help</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>

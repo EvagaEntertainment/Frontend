@@ -2,15 +2,20 @@
 import { motion } from "framer-motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import useServices from "../../hooks/useServices";
 import commonApis from "../../services/commonApis";
 
+const AliceCarousel = dynamic(() => import("react-alice-carousel"), { ssr: false });
+
 const RealStories = () => {
   const [stories, setStories] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
   const getTestimonialsForUserApi = useServices(commonApis.getAllTestimonialsForUser);
 
   const fetchStories = async () => {
@@ -81,7 +86,7 @@ const RealStories = () => {
             },
           }}
         >
-          <AliceCarousel
+          {mounted && <AliceCarousel
             mouseTracking
             responsive={responsive}
             disableButtonsControls
@@ -164,7 +169,7 @@ const RealStories = () => {
             ) : (
               <div className="text-center py-10 text-gray-500 w-full">No stories found.</div>
             )}
-          </AliceCarousel>
+          </AliceCarousel>}
         </motion.div>
       </div>
     </section>
