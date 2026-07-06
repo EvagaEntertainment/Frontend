@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '📸', title: 'Photography Team', description: 'Professional photographers experienced with North Bangalore venues.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate Hebbal parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in Hebbal', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand Hebbal celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Hebbal?', answer: 'Yes! We serve Hebbal, Thanisandra, Jakkur and North Bangalore with full end-to-end birthday planning.' },
-    { question: 'What venues are available in Hebbal for birthdays?', answer: 'Banquet halls near Hebbal flyover, lakeside garden venues near Hebbal Lake, hotel banquet rooms and gated community clubhouses — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Hebbal cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'Does Eevagga cover Yelahanka and Hennur from Hebbal?', answer: 'Yes! Our North Bangalore team covers Hebbal, Yelahanka, Thanisandra and Hennur for seamless birthday planning.' },
-    { question: 'How quickly can Eevagga set up in Hebbal?', answer: 'Our local team can set up in 3–4 hours on event day. Overnight setups are also available for morning celebrations.' },
-  ],
 };
 
 export default function BirthdayPlannerHebbalPage() {

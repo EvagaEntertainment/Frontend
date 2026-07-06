@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '📸', title: 'Photography Team', description: 'Professional photographers available across Electronic City and South Bangalore.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate EC parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in Electronic City', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand Electronic City celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Electronic City?', answer: 'Yes! We serve Electronic City Phase 1 & 2, Neeladri Road, Hebbagodi and surrounding areas with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in Electronic City?', answer: 'Gated community clubhouses in EC Phase 2, banquet halls on Hosur Road, garden resorts nearby and hotel venues — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Electronic City cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'Does Eevagga serve Bommasandra and Hebbagodi?', answer: 'Yes! Our team covers Electronic City, Bommasandra, Hebbagodi and surrounding areas for seamless birthday planning.' },
-    { question: 'How quickly can Eevagga set up in Electronic City?', answer: 'Our local team can set up in 3–4 hours on event day. Overnight setups available for morning celebrations.' },
-  ],
 };
 
 export default function BirthdayPlannerElectronicCityPage() {

@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'Magicians, DJs and emcees for Hennur birthday events — for all age groups.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate Hennur parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in Hennur', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand Hennur celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Hennur?', answer: 'Yes! We serve Hennur Road, Kalyan Nagar, Banaswadi and North-East Bangalore with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in Hennur?', answer: 'Banquet halls, community halls, gated community clubhouses on Hennur Road and home birthday party setups — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Hennur cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury celebrations. Packages for all budgets.' },
-    { question: 'Does Eevagga serve Kalyan Nagar and Banaswadi?', answer: 'Yes! Our team covers Hennur Road, Kalyan Nagar, Banaswadi and Ramamurthy Nagar for birthday planning.' },
-    { question: 'How quickly can Eevagga set up in Hennur?', answer: 'Our local team can set up in 3–4 hours on event day. Overnight setups are also available.' },
-  ],
 };
 
 export default function BirthdayPlannerHennurPage() {

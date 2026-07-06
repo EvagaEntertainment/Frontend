@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '📸', title: 'Photography Team', description: 'Professional photographers available across Yelahanka and North Bangalore.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate Yelahanka parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in Yelahanka', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand Yelahanka celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Yelahanka?', answer: 'Yes! We serve Yelahanka New Town, Old Town, Jakkur and surrounding North Bangalore with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in Yelahanka?', answer: 'Community halls, banquet halls near Yelahanka main road, gated community clubhouses and garden venues near Jakkur Lake — coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Yelahanka cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury celebrations. Eevagga has packages for all budgets.' },
-    { question: 'Does Eevagga serve Jakkur and Thanisandra from Yelahanka?', answer: 'Yes! Our North Bangalore team covers Yelahanka, Jakkur, Thanisandra and Hebbal for seamless birthday planning.' },
-    { question: 'How quickly can Eevagga set up in Yelahanka?', answer: 'Our local team can set up in 3–4 hours. Overnight setups are also available for morning events.' },
-  ],
 };
 
 export default function BirthdayPlannerYelahankPage() {

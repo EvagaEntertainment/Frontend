@@ -104,18 +104,6 @@ const pageConfig = {
     { icon: '🎨', title: 'Full Outdoor Decoration', description: 'Weather-resistant outdoor décor including balloon arches, floral installations and themed prop setups tailored for resort venues.' },
     { icon: '🍽️', title: 'Catering & BBQ Coordination', description: 'We coordinate resort catering teams and independent BBQ caterers to create the perfect alfresco dining experience.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Basic resort birthday setup', price: 35000, featured: false, includes: ['Resort scouting & coordination', 'Outdoor balloon & backdrop décor', 'Basic catering coordination', 'Cleanup support', 'Up to 40 guests'] },
-    { name: 'Premium', subtitle: 'Most popular resort package', price: 75000, featured: true, includes: ['Premium resort sourcing', 'Full outdoor theme decoration', 'Pool-side or garden setup', 'Photography (3 hours)', 'Live entertainment (2 hours)', 'Catering coordination', 'Up to 80 guests'] },
-    { name: 'Luxury', subtitle: 'Grand resort celebration', price: 200000, featured: false, includes: ['Exclusive luxury resort venue', 'Bespoke outdoor décor', 'Full-day photography + video', 'Live band + DJ', 'Gourmet BBQ & catering', 'Dedicated event manager', '100+ guests'] },
-  ],
-  faqs: [
-    { question: 'Which resorts near Bangalore are good for birthday parties?', answer: 'Great resort options include venues on Kanakapura Road, Sarjapur farmhouses, Electronic City garden resorts and Bannerghatta Road properties. Eevagga has resort partnerships across all these zones.' },
-    { question: 'How much does a resort birthday party cost near Bangalore?', answer: 'Resort birthday parties start from ₹35,000 for basic venue + décor, up to ₹2,50,000+ for fully managed luxury pool-side experiences with catering, live entertainment and photography.' },
-    { question: 'Can Eevagga plan pool-side birthday parties at resorts?', answer: 'Yes! Pool-side parties are our specialty. We create floating décor, tropical themes, LED lighting and full party management at resort venues near Bangalore.' },
-    { question: 'How far are birthday party resorts from Bangalore?', answer: 'Most resort venues are 20–60 km from Bangalore city — 45–90 minutes drive. We recommend resorts on Kanakapura Road, Sarjapur or Bannerghatta Road for convenient access.' },
-    { question: 'How far in advance should I book a resort birthday?', answer: 'Resort venues require 4–6 weeks advance booking for weekends. Popular resorts fill up especially during summer months (March–May). Book early!' },
-  ],
 };
 
 export default function BirthdayPartyResortsBangalorePage() {

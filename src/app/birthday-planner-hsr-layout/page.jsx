@@ -105,18 +105,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'Magicians, DJs, emcees and performers coordinated for HSR Layout birthday events.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours — efficient and stress-free for you.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Perfect for intimate HSR parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] },
-    { name: 'Premium', subtitle: 'Most popular in HSR Layout', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] },
-    { name: 'Luxury', subtitle: 'Grand HSR Layout celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] },
-  ],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in HSR Layout?', answer: 'Yes! We are active birthday planners in HSR Layout serving all sectors, Agara and Kudlu Gate with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in HSR Layout?', answer: 'Popular options include community halls, banquet halls on 27th Main and Outer Ring Road, restaurant private dining rooms and home birthday setups.' },
-    { question: 'How much does a birthday party in HSR Layout cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'How quickly can Eevagga set up in HSR Layout?', answer: 'Our team can set up in 3–4 hours on event day. For large custom installations we recommend 5–6 hours. Overnight setups are also available.' },
-    { question: 'Does Eevagga serve Koramangala and Bellandur from HSR Layout?', answer: 'Yes! Our HSR Layout team also covers neighbouring areas including Koramangala, Bellandur, Sarjapur Road and Bommanahalli.' },
-  ],
 };
 
 export default function BirthdayPlannerHSRLayoutPage() {

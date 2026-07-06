@@ -62,18 +62,6 @@ const pageConfig = {
     { icon: '📸', title: 'Photography Team', description: 'Professional photographers experienced with Indiranagar venues and vibrant settings.' },
     { icon: '🎤', title: 'Entertainment Coordination', description: 'DJs, live performers and emcees for Indiranagar birthday events — for all age groups.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Perfect for intimate Indiranagar parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] },
-    { name: 'Premium', subtitle: 'Most popular in Indiranagar', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] },
-    { name: 'Luxury', subtitle: 'Grand Indiranagar celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] },
-  ],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Indiranagar?', answer: 'Yes! We are active birthday planners in Indiranagar serving 100 Feet Road, CMH Road, Domlur and surrounding areas.' },
-    { question: 'What venues does Eevagga recommend in Indiranagar?', answer: 'Restaurant private dining rooms on 100 Feet Road, rooftop venues on CMH Road, banquet halls and home party setups — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Indiranagar cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Packages for all budgets available.' },
-    { question: 'Can Eevagga do restaurant birthday parties in Indiranagar?', answer: 'Absolutely! Indiranagar has Bangalore\'s finest restaurants with private rooms. We coordinate venue booking and add custom birthday decorations.' },
-    { question: 'Does Eevagga serve Koramangala and Domlur from Indiranagar?', answer: 'Yes! Our team covers Indiranagar, Domlur, Koramangala and Benson Town with seamless birthday planning.' },
-  ],
 };
 
 export default function BirthdayPlannerIndirangarPage() {

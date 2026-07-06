@@ -104,18 +104,6 @@ const pageConfig = {
     { icon: '🎂', title: 'Cake Coordination', description: 'We coordinate beautiful themed birthday cakes within budget — single-tier, two-tier and cupcake towers all available.' },
     { icon: '💡', title: 'Budget Maximisation Strategy', description: 'We strategically allocate your ₹50K across venue, décor and photography to deliver maximum wow-factor within budget.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Smart budget birthday', price: 15000, featured: false, includes: ['Balloon arch & backdrop décor', 'Birthday name banner', 'Basic table décor', 'Cleanup support', 'Up to 25 guests'] },
-    { name: 'Premium', subtitle: 'Best value — most popular', price: 35000, featured: true, includes: ['Community hall / home setup', 'Full theme decoration', 'Backdrop & stage setup', 'Photography (2 hours)', 'Cake coordination', 'Themed stationery', 'Up to 60 guests'] },
-    { name: 'Value Max', subtitle: 'Maximum impact under ₹50K', price: 50000, featured: false, includes: ['Venue booking coordination', 'Full theme décor + florals', 'Photography (3 hours)', 'Entertainment (1 act)', 'Catering coordination', 'Cleanup & support', 'Up to 75 guests'] },
-  ],
-  faqs: [
-    { question: 'What birthday venues are available under ₹50,000 in Bangalore?', answer: 'Great options under ₹50K include community halls (₹5K–₹15K hire), home birthday setups, small banquet halls, restaurant private rooms and garden spaces. Eevagga optimises your budget for maximum value.' },
-    { question: 'Can I have a nice birthday party in Bangalore under ₹50,000?', answer: 'Absolutely! A ₹35K–₹50K Eevagga package includes venue coordination, full theme décor, photography and decoration — delivering a premium experience at a smart price point.' },
-    { question: 'What is the cheapest birthday option in Bangalore?', answer: 'At-home birthday parties are the most affordable. Eevagga transforms your home into a beautiful themed space starting from ₹15,000 — with balloon setups, backdrop and cake table included.' },
-    { question: 'How does Eevagga maximise a ₹50K birthday budget?', answer: 'We strategically split your budget — venue, décor, photography and entertainment — to maximise wow-factor. Home parties or clubhouses keep venue costs low while premium décor creates a stunning visual impact.' },
-    { question: 'How do I book a budget birthday party with Eevagga in Bangalore?', answer: 'Just click the WhatsApp button or fill in our consultation form. Tell us your budget and guest count — we will design the best possible celebration within your ₹50K.' },
-  ],
 };
 
 export default function BirthdayVenuesUnder50KBangalorePage() {

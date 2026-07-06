@@ -105,18 +105,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'Magicians, DJs, emcees and performers coordinated for Whitefield birthday events — for kids and adults alike.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Our Whitefield team can set up in 3–4 hours and complete teardown within 2 hours post-event.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Perfect for intimate Whitefield parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] },
-    { name: 'Premium', subtitle: 'Most popular in Whitefield', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] },
-    { name: 'Luxury', subtitle: 'Grand Whitefield celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] },
-  ],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Whitefield?', answer: 'Yes! We are active birthday planners in Whitefield, serving ITPL, Marathahalli, Kadugodi and Varthur with full end-to-end birthday planning.' },
-    { question: 'Which venues does Eevagga recommend in Whitefield?', answer: 'We recommend gated community clubhouses, hotel banquet halls near ITPL and garden venues along Whitefield–Sarjapur Road — all within our venue network.' },
-    { question: 'How much does a birthday party in Whitefield cost?', answer: 'Parties in Whitefield start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'How quickly can Eevagga set up in Whitefield?', answer: 'Our local team can set up in 3–4 hours on event day. For large custom installations we prefer 5–6 hours. Overnight setups are also available.' },
-    { question: 'Does Eevagga serve ITPL and Marathahalli areas?', answer: 'Yes! We cover ITPL, Marathahalli, Kadugodi, Varthur Road and all surrounding areas of Whitefield with our full range of birthday planning services.' },
-  ],
 };
 
 export default function BirthdayPlannerWhitefieldPage() {

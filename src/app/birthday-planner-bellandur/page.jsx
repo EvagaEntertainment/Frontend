@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'DJs, magicians and emcees for Bellandur birthday events.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate Bellandur parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in Bellandur', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand Bellandur celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Bellandur?', answer: 'Yes! We serve Bellandur, Kadubeesanahalli and Outer Ring Road areas with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in Bellandur?', answer: 'Gated community clubhouses in Sobha Daffodil, Mantri Espana, Salarpuria Sattva, hotel banquet halls on Outer Ring Road and home party setups.' },
-    { question: 'How much does a birthday party in Bellandur cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Packages for all budgets.' },
-    { question: 'Does Eevagga do gated community birthday parties in Bellandur?', answer: 'Yes! We regularly coordinate clubhouse birthday parties in Sobha Daffodil, Mantri Espana and Salarpuria Sattva.' },
-    { question: 'Does Eevagga cover Sarjapur and Marathahalli from Bellandur?', answer: 'Yes! Our team covers Bellandur, Marathahalli, Sarjapur Road and Kadubeesanahalli for seamless birthday planning.' },
-  ],
 };
 
 export default function BirthdayPlannerBellandurPage() {
