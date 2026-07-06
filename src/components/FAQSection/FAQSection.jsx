@@ -68,7 +68,12 @@ const FAQSection = ({ customFaqs }) => {
     },
   ];
 
-  const faqData = customFaqs && customFaqs.length > 0 ? customFaqs : defaultFaqData;
+  // Always show page-specific FAQs first, then the shared defaults
+  // If customFaqs is empty/null, just show defaults
+  const faqData = [
+    ...(customFaqs && customFaqs.length > 0 ? customFaqs : []),
+    ...defaultFaqData,
+  ];
 
   const handleToggle = (panelIndex) => (_, isExpanded) => {
     setExpandedIndex(isExpanded ? panelIndex : -1);

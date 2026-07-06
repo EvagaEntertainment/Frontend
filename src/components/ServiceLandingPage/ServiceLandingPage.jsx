@@ -16,54 +16,6 @@ const BookingForm = dynamic(() => import('../../pages/BookingForm'), {
   )
 });
 
-/* ─── SHARED HOMEPAGE FAQs (shown on every service page) ─────────────────── */
-const HOMEPAGE_FAQS = [
-  {
-    question: 'What is Eevagga?',
-    answer:
-      'Eevagga is a premium birthday celebration platform designed to make planning birthdays simple, beautiful, and stress-free.\nFrom curated birthday decorations and full-service event planning to thoughtfully designed celebration products and gifts, Eevagga brings everything needed for a memorable birthday into one place.',
-  },
-  {
-    question: 'What types of birthday celebrations does Eevagga organize?',
-    answer:
-      'Eevagga specialises in a wide range of birthday celebrations, including:\n• Kids birthday parties\n• Milestone birthdays\n• Surprise birthday setups\n• Home birthday decorations\n• Venue birthday celebrations\n• Themed birthday parties\nOur team focuses on creating premium and thoughtfully designed birthday experiences tailored to your celebration.',
-  },
-  {
-    question: 'Can I book a complete birthday celebration through Eevagga?',
-    answer:
-      'Yes.\nWith Eevagga Birthdays, you can book end-to-end birthday planning, including:\n• Décor and theme setup\n• Photography and videography\n• Entertainment and activities\n• Stage and event setup\n• Catering coordination\n• On-ground event management\nOur team ensures every detail is professionally handled so you can enjoy the celebration.',
-  },
-  {
-    question: 'Does Eevagga offer custom birthday themes?',
-    answer:
-      'Absolutely.\nWe offer both curated themes and custom-designed birthday setups. If you have a specific concept, colour palette, or theme in mind, our team can design a celebration experience around it.',
-  },
-  {
-    question: 'Do you only operate in Bangalore?',
-    answer:
-      'Currently, most of our event services are available in Bangalore, while our celebration products can be delivered across India through online platforms. As Eevagga grows, we plan to expand our celebration services to more cities.',
-  },
-  {
-    question: 'How far in advance should I book a birthday celebration?',
-    answer:
-      'We recommend booking your celebration at least 22 days in advance to ensure the best availability for themes, venues, and services. For larger or customised birthday events, earlier booking is always beneficial.',
-  },
-  {
-    question: 'Can Eevagga help with small home birthday setups?',
-    answer:
-      'Yes.\nEevagga offers solutions for both intimate home celebrations and large birthday events. From simple decoration setups to complete birthday planning, we can tailor the experience to your needs.',
-  },
-  {
-    question: 'Do you offer last-minute birthday setups?',
-    answer:
-      'Depending on availability, our team can assist with last-minute birthday decoration setups or celebration products. You can contact our team directly to explore available options.',
-  },
-  {
-    question: 'How can I book a birthday celebration with Eevagga?',
-    answer:
-      'You can book through:\n• The Eevagga website\n• Contacting our team directly via WhatsApp or phone\nOur team will guide you through themes, packages, and customisation options to help you plan the perfect birthday celebration.',
-  },
-];
 
 const WHATSAPP = '918050279101';
 
@@ -705,12 +657,6 @@ function ReviewsSection({ reviews, pageTitle }) {
 
 /* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
-  // Merge page-specific FAQs with the shared homepage FAQs
-  const mergedFaqs = [
-    ...(config.faqs && config.faqs.length > 0 ? config.faqs : []),
-    ...HOMEPAGE_FAQS,
-  ];
-
   return (
     <main>
       <Breadcrumb items={config.breadcrumbs} />
@@ -722,7 +668,7 @@ export default function ServiceLandingPage({ config }) {
       <BookingFormSection config={config} />
       <RelatedServices links={config.relatedLinks} />
       <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
-      <FAQSection customFaqs={mergedFaqs} />
+      <FAQSection customFaqs={config.faqs} />
     </main>
   );
 }
