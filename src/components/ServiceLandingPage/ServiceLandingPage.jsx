@@ -8,11 +8,62 @@ import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from '
 import FAQSection from '../FAQSection/FAQSection';
 
 // BookingForm uses useSearchParams + browser APIs — must be client-only
-const BookingForm = dynamic(() => import('../../pages/BookingForm'), { ssr: false, loading: () => (
-  <div className="flex items-center justify-center py-16">
-    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-  </div>
-) });
+const BookingForm = dynamic(() => import('../../pages/BookingForm'), {
+  ssr: false, loading: () => (
+    <div className="flex items-center justify-center py-16">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+  )
+});
+
+/* ─── SHARED HOMEPAGE FAQs (shown on every service page) ─────────────────── */
+const HOMEPAGE_FAQS = [
+  {
+    question: 'What is Eevagga?',
+    answer:
+      'Eevagga is a premium birthday celebration platform designed to make planning birthdays simple, beautiful, and stress-free.\nFrom curated birthday decorations and full-service event planning to thoughtfully designed celebration products and gifts, Eevagga brings everything needed for a memorable birthday into one place.',
+  },
+  {
+    question: 'What types of birthday celebrations does Eevagga organize?',
+    answer:
+      'Eevagga specialises in a wide range of birthday celebrations, including:\n• Kids birthday parties\n• Milestone birthdays\n• Surprise birthday setups\n• Home birthday decorations\n• Venue birthday celebrations\n• Themed birthday parties\nOur team focuses on creating premium and thoughtfully designed birthday experiences tailored to your celebration.',
+  },
+  {
+    question: 'Can I book a complete birthday celebration through Eevagga?',
+    answer:
+      'Yes.\nWith Eevagga Birthdays, you can book end-to-end birthday planning, including:\n• Décor and theme setup\n• Photography and videography\n• Entertainment and activities\n• Stage and event setup\n• Catering coordination\n• On-ground event management\nOur team ensures every detail is professionally handled so you can enjoy the celebration.',
+  },
+  {
+    question: 'Does Eevagga offer custom birthday themes?',
+    answer:
+      'Absolutely.\nWe offer both curated themes and custom-designed birthday setups. If you have a specific concept, colour palette, or theme in mind, our team can design a celebration experience around it.',
+  },
+  {
+    question: 'Do you only operate in Bangalore?',
+    answer:
+      'Currently, most of our event services are available in Bangalore, while our celebration products can be delivered across India through online platforms. As Eevagga grows, we plan to expand our celebration services to more cities.',
+  },
+  {
+    question: 'How far in advance should I book a birthday celebration?',
+    answer:
+      'We recommend booking your celebration at least 22 days in advance to ensure the best availability for themes, venues, and services. For larger or customised birthday events, earlier booking is always beneficial.',
+  },
+  {
+    question: 'Can Eevagga help with small home birthday setups?',
+    answer:
+      'Yes.\nEevagga offers solutions for both intimate home celebrations and large birthday events. From simple decoration setups to complete birthday planning, we can tailor the experience to your needs.',
+  },
+  {
+    question: 'Do you offer last-minute birthday setups?',
+    answer:
+      'Depending on availability, our team can assist with last-minute birthday decoration setups or celebration products. You can contact our team directly to explore available options.',
+  },
+  {
+    question: 'How can I book a birthday celebration with Eevagga?',
+    answer:
+      'You can book through:\n• The Eevagga website\n• Contacting our team directly via WhatsApp or phone\nOur team will guide you through themes, packages, and customisation options to help you plan the perfect birthday celebration.',
+  },
+];
 
 const WHATSAPP = '918050279101';
 
@@ -363,126 +414,126 @@ function WhyEevagga({ customPoints }) {
 }
 
 /* ─── PRICING ────────────────────────────────────────────────────────────── */
-function Pricing({ pricing, config }) {
-  const waLink = (plan) =>
-    `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-      `Hi! I'm interested in the ${plan.name} package for ${config.title}. Please share more details.`
-    )}`;
+// function Pricing({ pricing, config }) {
+//   const waLink = (plan) =>
+//     `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+//       `Hi! I'm interested in the ${plan.name} package for ${config.title}. Please share more details.`
+//     )}`;
 
-  return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ type: 'spring', stiffness: 120 }}
-          className="flex flex-col items-center mb-12"
-        >
-          <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
-            Simplified Pricing
-          </h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="h-1 w-24 bg-highlightYellow mb-4"
-          />
-          <p className="text-textGray text-sm text-center max-w-md">
-            Select the perfect level of luxury for your celebration with our flexible options.
-          </p>
-        </motion.div>
+//   return (
+//     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
+//       <div className="max-w-7xl mx-auto">
+//         <motion.div
+//           initial={{ opacity: 0, y: 30 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           viewport={{ once: true, margin: '-80px' }}
+//           transition={{ type: 'spring', stiffness: 120 }}
+//           className="flex flex-col items-center mb-12"
+//         >
+//           <h2 className="text-primary text-3xl md:text-4xl font-normal text-center mb-4">
+//             Simplified Pricing
+//           </h2>
+//           <motion.div
+//             initial={{ scaleX: 0 }}
+//             whileInView={{ scaleX: 1 }}
+//             viewport={{ once: true }}
+//             transition={{ delay: 0.3, duration: 0.6 }}
+//             className="h-1 w-24 bg-highlightYellow mb-4"
+//           />
+//           <p className="text-textGray text-sm text-center max-w-md">
+//             Select the perfect level of luxury for your celebration with our flexible options.
+//           </p>
+//         </motion.div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-          {pricing.map((plan, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ delay: idx * 0.1, duration: 0.45 }}
-              className={`relative rounded-2xl overflow-hidden border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${plan.featured
-                ? 'border-primary shadow-lg'
-                : 'border-borderPrimary shadow-sm hover:border-primary/30'
-                }`}
-            >
-              {plan.featured && (
-                <div className="bg-primary text-white text-center text-xs font-bold tracking-widest uppercase py-2">
-                  Most Popular
-                </div>
-              )}
-              <div className="p-6">
-                <h3 className="text-textPrimary font-bold text-lg mb-0.5">{plan.name}</h3>
-                <p className="text-textGray text-xs mb-4">{plan.subtitle}</p>
+//         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+//           {pricing.map((plan, idx) => (
+//             <motion.div
+//               key={idx}
+//               initial={{ opacity: 0, y: 20 }}
+//               whileInView={{ opacity: 1, y: 0 }}
+//               viewport={{ once: true, margin: '-60px' }}
+//               transition={{ delay: idx * 0.1, duration: 0.45 }}
+//               className={`relative rounded-2xl overflow-hidden border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${plan.featured
+//                 ? 'border-primary shadow-lg'
+//                 : 'border-borderPrimary shadow-sm hover:border-primary/30'
+//                 }`}
+//             >
+//               {plan.featured && (
+//                 <div className="bg-primary text-white text-center text-xs font-bold tracking-widest uppercase py-2">
+//                   Most Popular
+//                 </div>
+//               )}
+//               <div className="p-6">
+//                 <h3 className="text-textPrimary font-bold text-lg mb-0.5">{plan.name}</h3>
+//                 <p className="text-textGray text-xs mb-4">{plan.subtitle}</p>
 
-                <div className="flex items-baseline gap-2 mb-5">
-                  <span className="text-textGray text-xs">Starting from</span>
-                  <span className={`font-bold text-2xl ${plan.featured ? 'text-primary' : 'text-textPrimary'}`}>
-                    ₹{plan.price.toLocaleString('en-IN')}
-                  </span>
-                </div>
+//                 <div className="flex items-baseline gap-2 mb-5">
+//                   <span className="text-textGray text-xs">Starting from</span>
+//                   <span className={`font-bold text-2xl ${plan.featured ? 'text-primary' : 'text-textPrimary'}`}>
+//                     ₹{plan.price.toLocaleString('en-IN')}
+//                   </span>
+//                 </div>
 
-                <ul className="space-y-2.5 mb-6">
-                  {plan.includes.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-textGray">
-                      <FaCheckCircle
-                        size={13}
-                        className={`mt-0.5 shrink-0 ${plan.featured ? 'text-primary' : 'text-borderSecondary'}`}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+//                 <ul className="space-y-2.5 mb-6">
+//                   {plan.includes.map((item, i) => (
+//                     <li key={i} className="flex items-start gap-2 text-sm text-textGray">
+//                       <FaCheckCircle
+//                         size={13}
+//                         className={`mt-0.5 shrink-0 ${plan.featured ? 'text-primary' : 'text-borderSecondary'}`}
+//                       />
+//                       {item}
+//                     </li>
+//                   ))}
+//                 </ul>
 
-                <a
-                  href={waLink(plan)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id={`pricing-${plan.name.toLowerCase()}-btn`}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-200 ${
-                    plan.featured
-                      ? 'bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00]'
-                      : 'bg-transparent text-primary border-2 border-primary hover:bg-[#6A1B9A33]'
-                  }`}
-                >
-                  <FaWhatsapp size={14} />
-                  Get a Custom Quote
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+//                 <a
+//                   href={waLink(plan)}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   id={`pricing-${plan.name.toLowerCase()}-btn`}
+//                   className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-200 ${
+//                     plan.featured
+//                       ? 'bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00]'
+//                       : 'bg-transparent text-primary border-2 border-primary hover:bg-[#6A1B9A33]'
+//                   }`}
+//                 >
+//                   <FaWhatsapp size={14} />
+//                   Get a Custom Quote
+//                 </a>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </div>
 
-        {/* Custom nudge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="bg-white border border-borderPrimary rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-        >
-          <div>
-            <p className="text-textPrimary font-semibold mb-1">Need a fully customised package?</p>
-            <p className="text-textGray text-sm">
-              Tell us your vision and we will craft a bespoke plan just for you. No obligation.
-            </p>
-          </div>
-          <a
-            href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hi! I need a custom quote for my event.')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="custom-quote-btn"
-            className="shrink-0 bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00] inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold w-fit transition-all duration-200"
-          >
-            <FaWhatsapp size={14} />
-            Get a Custom Quote
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+//         {/* Custom nudge */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.45 }}
+//           className="bg-white border border-borderPrimary rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+//         >
+//           <div>
+//             <p className="text-textPrimary font-semibold mb-1">Need a fully customised package?</p>
+//             <p className="text-textGray text-sm">
+//               Tell us your vision and we will craft a bespoke plan just for you. No obligation.
+//             </p>
+//           </div>
+//           <a
+//             href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hi! I need a custom quote for my event.')}`}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             id="custom-quote-btn"
+//             className="shrink-0 bg-primary text-white hover:bg-accent hover:border-2 hover:border-[#CBAB00] inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold w-fit transition-all duration-200"
+//           >
+//             <FaWhatsapp size={14} />
+//             Get a Custom Quote
+//           </a>
+//         </motion.div>
+//       </div>
+//     </section>
+//   );
+// }
 
 /* ─── BOOKING FORM SECTION ───────────────────────────────────────────────── */
 function BookingFormSection({ config }) {
@@ -654,6 +705,12 @@ function ReviewsSection({ reviews, pageTitle }) {
 
 /* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
+  // Merge page-specific FAQs with the shared homepage FAQs
+  const mergedFaqs = [
+    ...(config.faqs && config.faqs.length > 0 ? config.faqs : []),
+    ...HOMEPAGE_FAQS,
+  ];
+
   return (
     <main>
       <Breadcrumb items={config.breadcrumbs} />
@@ -661,11 +718,11 @@ export default function ServiceLandingPage({ config }) {
       <Gallery gallery={config.gallery} />
       <Features features={config.features} />
       <WhyEevagga customPoints={config.whyPoints} />
-      <Pricing pricing={config.pricing} config={config} />
+      {/* <Pricing pricing={config.pricing} config={config} /> */}
       <BookingFormSection config={config} />
       <RelatedServices links={config.relatedLinks} />
       <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
-      <FAQSection customFaqs={config.faqs} />
+      <FAQSection customFaqs={mergedFaqs} />
     </main>
   );
 }
