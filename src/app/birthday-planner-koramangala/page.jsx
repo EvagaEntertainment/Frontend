@@ -105,18 +105,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'DJs, live performers and emcees coordinated for Koramangala birthday events — for all age groups.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours — stress-free for you and your guests.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Perfect for intimate Koramangala parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] },
-    { name: 'Premium', subtitle: 'Most popular in Koramangala', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] },
-    { name: 'Luxury', subtitle: 'Grand Koramangala celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] },
-  ],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in Koramangala?', answer: 'Yes! We are active birthday planners in Koramangala serving all blocks, BTM Layout and Ejipura with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in Koramangala?', answer: 'Options include restaurant private dining rooms on 80 Feet Road, banquet halls on 5th Block, rooftop venues and home party setups — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in Koramangala cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'Can Eevagga plan a rooftop birthday in Koramangala?', answer: 'Yes! Koramangala has some of Bangalore\'s best rooftop venues. We set up evening lighting, theme décor and entertainment for a premium rooftop experience.' },
-    { question: 'Does Eevagga also serve Indiranagar from Koramangala?', answer: 'Yes! Our South Bangalore team covers Koramangala, Indiranagar, HSR Layout and surrounding areas for seamless birthday planning.' },
-  ],
 };
 
 export default function BirthdayPlannerKoramangalaPage() {

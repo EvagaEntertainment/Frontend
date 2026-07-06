@@ -110,18 +110,6 @@ const pageConfig = {
     { icon: '🎨', title: 'Full Indoor Decoration', description: 'Our team transforms any indoor space with theme décor, balloon installations, lighting setups and floral arrangements.' },
     { icon: '📋', title: 'Complete Event Management', description: 'From venue booking to decoration, catering and cleanup — we manage every detail inside your chosen indoor venue.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Small indoor birthday setup', price: 12000, featured: false, includes: ['Indoor venue scouting', 'Balloon arch & backdrop décor', 'Basic table décor', 'Cleanup support', 'Up to 25 guests'] },
-    { name: 'Premium', subtitle: 'Most popular indoor package', price: 40000, featured: true, includes: ['Indoor venue booking coordination', 'Full theme decoration', 'Stage & backdrop setup', 'Photography (2 hours)', 'Catering coordination', 'Entertainment', 'Up to 80 guests'] },
-    { name: 'Luxury', subtitle: 'Grand indoor celebration', price: 100000, featured: false, includes: ['Premium indoor venue sourcing', 'Bespoke luxury décor', 'Full-day photography + video', 'Live entertainment', 'Gourmet catering', 'Dedicated event manager', '120+ guests'] },
-  ],
-  faqs: [
-    { question: 'What are the best indoor birthday venues in Bangalore?', answer: 'Excellent indoor venues include AC banquet halls in Koramangala and Indiranagar, private dining rooms at premium restaurants, clubhouses in gated communities and dedicated event studios. Eevagga scouts the best for your budget and guest count.' },
-    { question: 'What does an indoor birthday venue cost in Bangalore?', answer: 'Indoor venue hire ranges from ₹5,000 for small private rooms to ₹80,000+ for large AC halls. Eevagga helps you find the right venue and decorates it fully within your total event budget.' },
-    { question: 'Are indoor venues better for Bangalore birthdays?', answer: 'Indoor venues offer year-round comfort and no weather dependency — ideal during Bangalore\'s monsoon (June–September) and hot summer months. They also come with AV facilities and controlled ambience.' },
-    { question: 'Can Eevagga decorate any indoor venue in Bangalore?', answer: 'Yes! Our decoration team works with any indoor venue. We bring all materials, props and lighting to transform any plain hall into a stunning themed birthday space.' },
-    { question: 'How far in advance should I book an indoor birthday venue?', answer: 'Popular indoor venues book 4–6 weeks in advance for weekends. Contact Eevagga early to secure the best options and dates.' },
-  ],
 };
 
 export default function IndoorBirthdayVenuesBangalorePage() {

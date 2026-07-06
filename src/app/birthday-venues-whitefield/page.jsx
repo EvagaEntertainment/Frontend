@@ -104,18 +104,6 @@ const pageConfig = {
     { icon: '📸', title: 'Local Photography Team', description: 'Our Whitefield-based photography team is always ready for quick deployments across the area.' },
     { icon: '📋', title: 'End-to-End Whitefield Planning', description: 'From venue booking to catering, décor and cleanup — one Eevagga team manages your entire Whitefield birthday.' },
   ],
-  pricing: [
-    { name: 'Starter', subtitle: 'Basic Whitefield birthday setup', price: 15000, featured: false, includes: ['Venue scouting (Whitefield)', 'Balloon arch & backdrop décor', 'Basic table décor', 'Cleanup support', 'Up to 30 guests'] },
-    { name: 'Premium', subtitle: 'Most popular Whitefield package', price: 42000, featured: true, includes: ['Venue booking coordination', 'Full theme decoration', 'Stage & backdrop', 'Photography (2 hours)', 'Catering coordination', 'Entertainment', 'Up to 100 guests'] },
-    { name: 'Luxury', subtitle: 'Grand Whitefield celebration', price: 100000, featured: false, includes: ['Premium Whitefield venue sourcing', 'Bespoke luxury décor', 'Full-day photography + video', 'Live entertainment', 'Gourmet catering', 'Dedicated event manager', '120+ guests'] },
-  ],
-  faqs: [
-    { question: 'What are the best birthday venues in Whitefield, Bangalore?', answer: 'Top Whitefield venues include clubhouses in Prestige Shantiniketan, Brigade Metropolis, hotel banquet halls near ITPL, garden venues on Whitefield–Sarjapur Road and resort spaces. Eevagga scouts options matched to your budget.' },
-    { question: 'How much do birthday venues in Whitefield cost?', answer: 'Whitefield venues range from ₹8,000 for small clubhouse bookings to ₹1,00,000+ for premium hotel banquet halls. We handle all decoration and planning within your total event budget.' },
-    { question: 'Does Eevagga serve Whitefield for birthday planning?', answer: 'Absolutely! Whitefield is one of our core service areas. We have planned 100+ birthdays across ITPL, Marathahalli, Kadugodi and Varthur Road.' },
-    { question: 'Can Eevagga decorate birthday venues in Whitefield?', answer: 'Yes! We provide complete venue decoration in Whitefield — balloon arches, themed backdrops, luxury florals and lighting setups. We handle every detail.' },
-    { question: 'How far in advance should I book a birthday venue in Whitefield?', answer: 'Whitefield venues — especially clubhouses — book 4–6 weeks in advance for weekends. Contact Eevagga early to secure the best dates.' },
-  ],
 };
 
 export default function BirthdayVenuesWhitefieldPage() {

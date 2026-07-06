@@ -50,14 +50,6 @@ const pageConfig = {
     { icon: '🎤', title: 'Entertainment Coordination', description: 'Magicians, DJs, emcees and performers for JP Nagar birthday events.' },
     { icon: '🚀', title: 'Fast Setup & Teardown', description: 'Setup in 3–4 hours, complete teardown within 2 hours post-event.' },
   ],
-  pricing: [{ name: 'Starter', subtitle: 'Perfect for intimate JP Nagar parties', price: 15000, featured: false, includes: ['Theme consultation', 'Balloon & basic décor setup', 'Birthday backdrop & signage', 'Cleanup & support', 'Up to 30 guests'] }, { name: 'Premium', subtitle: 'Most popular in JP Nagar', price: 35000, featured: true, includes: ['Full theme design & execution', 'Premium balloon & floral décor', 'Stage setup & backdrop', 'Photography (2 hours)', 'Entertainment coordination', 'Up to 75 guests'] }, { name: 'Luxury', subtitle: 'Grand JP Nagar celebration', price: 65000, featured: false, includes: ['Bespoke theme & full styling', 'Luxury floral & prop installations', 'Full-day photography + video', 'Live entertainment / DJ', 'Catering coordination', '100+ guests'] }],
-  faqs: [
-    { question: 'Does Eevagga plan birthday parties in JP Nagar?', answer: 'Yes! We are active birthday planners in JP Nagar serving all phases, Jayanagar, BTM Layout and Banashankari with full end-to-end birthday planning.' },
-    { question: 'What venues does Eevagga recommend in JP Nagar?', answer: 'Banquet halls on JP Nagar 7th Phase, community halls, restaurant private dining rooms near Jayanagar and garden spaces — all coordinated by Eevagga.' },
-    { question: 'How much does a birthday party in JP Nagar cost?', answer: 'Parties start from ₹15,000 for at-home setups to ₹1,50,000+ for luxury venue celebrations. Eevagga has packages for all budgets.' },
-    { question: 'Does Eevagga serve Jayanagar and BTM Layout from JP Nagar?', answer: 'Yes! Our South Bangalore team covers JP Nagar all phases, Jayanagar, BTM Layout and Banashankari for seamless birthday planning.' },
-    { question: 'How quickly can Eevagga set up in JP Nagar?', answer: 'Our local team can set up in 3–4 hours on event day. Overnight setups are also available for early morning events.' },
-  ],
 };
 
 export default function BirthdayPlannerJPNagarPage() {
