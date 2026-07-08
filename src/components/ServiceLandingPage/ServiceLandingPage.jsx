@@ -1,11 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
+import eventServicesApi from '../../services/eventServicesApi';
 
 // BookingForm uses useSearchParams + browser APIs — must be client-only
 const BookingForm = dynamic(() => import('../../pages/BookingForm'), {
@@ -656,18 +657,96 @@ function ReviewsSection({ reviews, pageTitle }) {
 }
 
 /* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
+/* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
+  const [dynamicConfig, setDynamicConfig] = useState(null);
+  const [isMaintenance, setIsMaintenance] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    const fetchConfig = async () => {
+      try {
+        const path = window.location.pathname;
+        const response = await eventServicesApi.getEventServicePageByPath(path);
+        if (!active) return;
+        
+        if (response && response.isMaintenance) {
+          setIsMaintenance(true);
+        } else if (response && response.success && response.data) {
+          const resolveImage = (src) => {
+            if (!src) return "https://placehold.co/800x400/ece6f5/6a1b9a?text=Birthday+Hero+Setup";
+            if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:") || src.startsWith("blob:")) {
+              return src;
+            }
+            return (process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL || "") + src;
+          };
+
+          const formattedData = {
+            ...response.data,
+            heroImage: resolveImage(response.data.heroImage),
+            gallery: (response.data.gallery || []).map(item => ({
+              ...item,
+              src: resolveImage(item.src)
+            }))
+          };
+          setDynamicConfig(formattedData);
+        }
+      } catch (err) {
+        console.error("Error loading dynamic configuration:", err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    
+    fetchConfig();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (isMaintenance) {
+    return (
+      <div className="min-h-[70vh] bg-gradient-to-br from-[#ece6f5] via-white to-purple-50 flex flex-col justify-center items-center px-6 py-20 text-center">
+        <div className="bg-white border border-[#ece6f5] p-10 md:p-14 rounded-3xl max-w-lg shadow-xl space-y-6">
+          <div className="w-16 h-16 bg-[#6A1B9A]/10 text-[#6A1B9A] rounded-full flex items-center justify-center mx-auto animate-pulse">
+            <FaCalendarAlt size={28} />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800 tracking-tight">Under Maintenance</h2>
+          <p className="text-sm text-textGray leading-relaxed">
+            This landing page is currently undergoing scheduled updates to enhance our planning services. We'll be back shortly with premium celebration options.
+          </p>
+          <div className="pt-4">
+            <Link href="/" className="inline-flex items-center gap-2 bg-[#6A1B9A] hover:bg-[#5a1682] text-white font-semibold text-sm px-6 py-3 rounded-xl transition duration-200 shadow-md">
+              Return Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Merge static default props config with fetched dynamic database values
+  const activeConfig = dynamicConfig ? {
+    ...config,
+    ...dynamicConfig,
+    stats: dynamicConfig.stats?.length ? dynamicConfig.stats : config.stats,
+    features: dynamicConfig.features?.length ? dynamicConfig.features : config.features,
+    gallery: dynamicConfig.gallery?.length ? dynamicConfig.gallery : config.gallery,
+    relatedLinks: dynamicConfig.relatedLinks?.length ? dynamicConfig.relatedLinks : config.relatedLinks,
+  } : config;
+
   return (
     <main>
       <Breadcrumb items={config.breadcrumbs} />
-      <Hero config={config} />
-      <Gallery gallery={config.gallery} />
-      <Features features={config.features} />
+      <Hero config={activeConfig} />
+      <Gallery gallery={activeConfig.gallery} />
+      <Features features={activeConfig.features} />
       <WhyEevagga customPoints={config.whyPoints} />
       {/* <Pricing pricing={config.pricing} config={config} /> */}
-      <BookingFormSection config={config} />
-      <RelatedServices links={config.relatedLinks} />
-      <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
+      <BookingFormSection config={activeConfig} />
+      <RelatedServices links={activeConfig.relatedLinks} />
+      <ReviewsSection reviews={config.reviews} pageTitle={activeConfig.title} />
       <FAQSection customFaqs={config.faqs} />
     </main>
   );

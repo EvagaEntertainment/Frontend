@@ -1,100 +1,20 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import TableComponetWithApi from "../../utils/TableComponetWithApi";
 import ReusableModal from "../Modal/Modal";
 import { toast } from "react-toastify";
 import { FaEdit, FaEye, FaArrowLeft, FaPlus, FaTrash, FaDesktop, FaCheck, FaTimes, FaGlobe, FaUpload } from "react-icons/fa";
+import useServices from "../../hooks/useServices";
+import eventServicesApi from "../../services/eventServicesApi";
 
-// 36 Event Services Pages List
-const servicePages = [
-  { id: 1, slug: "1st-birthday-planner-bangalore", title: "1st Birthday Planner Bangalore", path: "/1st-birthday-planner-bangalore", category: "Birthday" },
-  { id: 2, slug: "adult-birthday-planner-bangalore", title: "Adult Birthday Planner Bangalore", path: "/adult-birthday-planner-bangalore", category: "Birthday" },
-  { id: 3, slug: "barbie-theme-birthday-bangalore", title: "Barbie Theme Birthday Bangalore", path: "/barbie-theme-birthday-bangalore", category: "Birthday Theme" },
-  { id: 4, slug: "birthday-celebration-at-home-bangalore", title: "Birthday Celebration at Home Bangalore", path: "/birthday-celebration-at-home-bangalore", category: "Birthday" },
-  { id: 5, slug: "birthday-decoration-bangalore", title: "Birthday Decoration Bangalore", path: "/birthday-decoration-bangalore", category: "Decoration" },
-  { id: 6, slug: "birthday-party-resorts-bangalore", title: "Birthday Party Resorts Bangalore", path: "/birthday-party-resorts-bangalore", category: "Venues" },
-  { id: 7, slug: "birthday-planner-bangalore", title: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore", category: "Birthday" },
-  { id: 8, slug: "birthday-planner-bellandur", title: "Birthday Planner Bellandur", path: "/birthday-planner-bellandur", category: "Local Planners" },
-  { id: 9, slug: "birthday-planner-electronic-city", title: "Birthday Planner Electronic City", path: "/birthday-planner-electronic-city", category: "Local Planners" },
-  { id: 10, slug: "birthday-planner-hebbal", title: "Birthday Planner Hebbal", path: "/birthday-planner-hebbal", category: "Local Planners" },
-  { id: 11, slug: "birthday-planner-hennur", title: "Birthday Planner Hennur", path: "/birthday-planner-hennur", category: "Local Planners" },
-  { id: 12, slug: "birthday-planner-hsr-layout", title: "Birthday Planner HSR Layout", path: "/birthday-planner-hsr-layout", category: "Local Planners" },
-  { id: 13, slug: "birthday-planner-indiranagar", title: "Birthday Planner Indiranagar", path: "/birthday-planner-indiranagar", category: "Local Planners" },
-  { id: 14, slug: "birthday-planner-jp-nagar", title: "Birthday Planner JP Nagar", path: "/birthday-planner-jp-nagar", category: "Local Planners" },
-  { id: 15, slug: "birthday-planner-koramangala", title: "Birthday Planner Koramangala", path: "/birthday-planner-koramangala", category: "Local Planners" },
-  { id: 16, slug: "birthday-planner-sarjapur", title: "Birthday Planner Sarjapur", path: "/birthday-planner-sarjapur", category: "Local Planners" },
-  { id: 17, slug: "birthday-planner-whitefield", title: "Birthday Planner Whitefield", path: "/birthday-planner-whitefield", category: "Local Planners" },
-  { id: 18, slug: "birthday-planner-yellhanka", title: "Birthday Planner Yellhanka", path: "/birthday-planner-yellhanka", category: "Local Planners" },
-  { id: 19, slug: "birthday-venues-bangalore", title: "Birthday Venues Bangalore", path: "/birthday-venues-bangalore", category: "Venues" },
-  { id: 20, slug: "birthday-venues-under-50k-bangalore", title: "Birthday Venues Under 50k Bangalore", path: "/birthday-venues-under-50k-bangalore", category: "Venues" },
-  { id: 21, slug: "birthday-venues-whitefield", title: "Birthday Venues Whitefield", path: "/birthday-venues-whitefield", category: "Venues" },
-  { id: 22, slug: "boss-baby-birthday-decoration-bangalore", title: "Boss Baby Birthday Decoration Bangalore", path: "/boss-baby-birthday-decoration-bangalore", category: "Birthday Theme" },
-  { id: 23, slug: "cocomelon-birthday-theme-bangalore", title: "Cocomelon Birthday Theme Bangalore", path: "/cocomelon-birthday-theme-bangalore", category: "Birthday Theme" },
-  { id: 24, slug: "indoor-birthday-venues-bangalore", title: "Indoor Birthday Venues Bangalore", path: "/indoor-birthday-venues-bangalore", category: "Venues" },
-  { id: 25, slug: "jungle-theme-birthday-bangalore", title: "Jungle Theme Birthday Bangalore", path: "/jungle-theme-birthday-bangalore", category: "Birthday Theme" },
-  { id: 26, slug: "kids-birthday-party-bangalore", title: "Kids Birthday Party Bangalore", path: "/kids-birthday-party-bangalore", category: "Birthday" },
-  { id: 27, slug: "kids-birthday-planner-bangalore", title: "Kids Birthday Planner Bangalore", path: "/kids-birthday-planner-bangalore", category: "Birthday" },
-  { id: 28, slug: "luxury-birthday-planner-bangalore", title: "Luxury Birthday Planner Bangalore", path: "/luxury-birthday-planner-bangalore", category: "Birthday" },
-  { id: 29, slug: "premium-baby-shower-planner", title: "Premium Baby Shower Planner", path: "/premium-baby-shower-planner", category: "Baby Shower" },
-  { id: 30, slug: "premium-birthday-end-to-end-planner", title: "Premium Birthday End-to-End Planner", path: "/premium-birthday-end-to-end-planner", category: "Birthday" },
-  { id: 31, slug: "premium-birthday-planner", title: "Premium Birthday Planner", path: "/premium-birthday-planner", category: "Birthday" },
-  { id: 32, slug: "premium-house-warming-planner", title: "Premium House Warming Planner", path: "/premium-house-warming-planner", category: "House Warming" },
-  { id: 33, slug: "space-theme-birthday-bangalore", title: "Space Theme Birthday Bangalore", path: "/space-theme-birthday-bangalore", category: "Birthday Theme" },
-  { id: 34, slug: "teen-birthday-celebration-bangalore", title: "Teen Birthday Celebration Bangalore", path: "/teen-birthday-celebration-bangalore", category: "Birthday" },
-  { id: 35, slug: "unicorn-theme-birthday-bangalore", title: "Unicorn Theme Birthday Bangalore", path: "/unicorn-theme-birthday-bangalore", category: "Birthday Theme" },
-  { id: 36, slug: "anniversary-celebration-planner-bangalore", title: "Anniversary Celebration Planner Bangalore (New)", path: "/anniversary-celebration-planner-bangalore", category: "Anniversary" }
-];
-
-// Helper to generate realistic mock page configuration data based on page properties
-const getMockPageConfig = (page) => {
-  const isBirthday = page.category.includes("Birthday") || page.category.includes("Theme");
-  const isVenues = page.category.includes("Venues");
-  
-  return {
-    title: page.title,
-    badge: isBirthday ? "Birthday Specialists" : isVenues ? "Venue Partners" : "Event Experts",
-    h1: `${page.title} — Premium Celebrations by Eevagga`,
-    heroSubtitle: `Make your ${page.category.toLowerCase()} event in Bangalore spectacular. Complete decoration setups, top-rated planning services, and on-ground management by Eevagga.`,
-    heroImage: "https://placehold.co/800x400/ece6f5/6a1b9a?text=Birthday+Hero+Setup",
-    heroImageAlt: `${page.title} setup in Bangalore by Eevagga`,
-    stats: [
-      { value: "350+", label: "Successful Events" },
-      { value: "4.9★", label: "Average Rating" },
-      { value: "100%", label: "Stress Free Planning" },
-      { value: "24hr", label: "Quick Turnaround" }
-    ],
-    breadcrumbs: [
-      { label: "Home", href: "/" },
-      { label: page.category, href: `/category/${page.category.toLowerCase().replace(/\s+/g, '-')}` },
-      { label: page.title }
-    ],
-    gallery: [
-      { src: "https://placehold.co/600x400/ece6f5/6a1b9a?text=Stage+Backdrop+Setup", alt: `${page.title} primary backdrop`, caption: "Stage backdrop setup" },
-      { src: "https://placehold.co/600x400/ece6f5/6a1b9a?text=Entrance+Balloon+Arch", alt: `${page.title} entrance gate`, caption: "Welcome entrance balloon arch" },
-      { src: "https://placehold.co/600x400/ece6f5/6a1b9a?text=Cake+Table+Prop+Layout", alt: `${page.title} cake table decoration`, caption: "Customized cake table prop layout" },
-      { src: "https://placehold.co/600x400/ece6f5/6a1b9a?text=Candid+Photo+Zone", alt: `${page.title} secondary photo zone`, caption: "Candid photo zone zone" }
-    ],
-    features: [
-      { icon: "✨", title: "Tailored Decor Design", description: "Vibrant designs customized to match your budget, colors, and specific theme expectations." },
-      { icon: "🎈", title: "Premium Balloon Work", description: "Top-quality child-safe organic balloon arches, pillars, ceiling coverage and custom backdrops." },
-      { icon: "🎂", title: "Dessert Table Layout", description: "Beautiful cake tables, themed cake stands, character cutouts and matching prop decoration." },
-      { icon: "📸", title: "Professional Support", description: "Experienced event managers on-site ensuring everything matches your schedule." }
-    ],
-    relatedLinks: [
-      { label: "Kids Birthday Party", href: "/kids-birthday-party-bangalore" },
-      { label: "Adult Birthday Planner", href: "/adult-birthday-planner-bangalore" },
-      { label: "Premium Baby Shower", href: "/premium-baby-shower-planner" }
-    ],
-    // Schema & FAQs
-    schemaLowPrice: 15000,
-    schemaHighPrice: 75000,
-    faqs: [
-      { question: "What is included in standard event packages?", answer: "Our packages standardly include stage decoration, custom theme backdrops, entrance arch, themed cake table accessories, balloon clusters, and complete team coordination." },
-      { question: "Can you manage catering and venue arrangements?", answer: "Yes, we work with several top-rated catering providers and venues in Bangalore, allowing us to package these services under a single point of coordination for you." },
-      { question: "How many days in advance should we make a booking?", answer: "We recommend confirming your booking at least 2 weeks ahead of time to allow proper custom props planning and secure event manager availability." }
-    ]
-  };
+// Resolve S3 relative keys to full URLs using env base path
+const getImageUrl = (src) => {
+  if (!src) return "https://placehold.co/600x400/ece6f5/6a1b9a?text=No+Image";
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:") || src.startsWith("blob:")) {
+    return src;
+  }
+  return (process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL || "") + src;
 };
 
 function AdminEventServices() {
@@ -103,45 +23,83 @@ function AdminEventServices() {
   const [editingPage, setEditingPage] = useState(null);
   const [viewingPage, setViewingPage] = useState(null);
   const [formData, setFormData] = useState(null);
-  const [activeTab, setActiveTab] = useState("hero"); // hero, features, gallery, faqs_links
+  const [activeTab, setActiveTab] = useState("hero"); // hero, features, gallery, links
   const [isSaved, setIsSaved] = useState(false);
   
+  // API loader hooks
+  const getAllPagesApi = useServices(eventServicesApi.getAllEventServicePages);
+  const getPageByIdApi = useServices(eventServicesApi.getEventServicePageById);
+  const updatePageApi = useServices(eventServicesApi.updateEventServicePage);
+
+  // Table & data loading states
+  const [pagesList, setPagesList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   const heroFileRef = useRef(null);
   const galleryFileRef = useRef(null);
   const itemsPerPage = 8;
 
-  // Filter service pages based on search term
-  const filteredPages = useMemo(() => {
-    return servicePages.filter((page) => 
-      page.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      page.path.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      page.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [searchTerm]);
+  // Fetch list of event service pages from the backend
+  const fetchPages = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllPagesApi.callApi({
+        page: currentPage,
+        limit: itemsPerPage,
+        search: searchTerm
+      });
+      if (response && response.success) {
+        setPagesList(response.data || []);
+        setTotalCount(response.pagination?.total || 0);
+        setTotalPages(response.pagination?.totalPages || 1);
+      }
+    } catch (error) {
+      console.error("Error fetching pages list:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const totalPages = Math.ceil(filteredPages.length / itemsPerPage);
-
-  // Get current page's slice of data
-  const currentTableData = useMemo(() => {
-    const start = (currentPage - 1) * itemsPerPage;
-    return filteredPages.slice(start, start + itemsPerPage);
-  }, [filteredPages, currentPage]);
+  useEffect(() => {
+    fetchPages();
+  }, [currentPage, searchTerm]);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
 
-  const handleEditClick = (page) => {
-    const config = getMockPageConfig(page);
-    setEditingPage(page);
-    setFormData(config);
-    setActiveTab("hero");
-    setIsSaved(false);
+  // Retrieve single page configuration details for editing
+  const handleEditClick = async (page) => {
+    try {
+      const response = await getPageByIdApi.callApi(page._id);
+      if (response && response.success) {
+        setEditingPage(response.data);
+        setFormData(response.data);
+        setActiveTab("hero");
+        setIsSaved(false);
+      } else {
+        toast.error("Failed to load page configurations.");
+      }
+    } catch (error) {
+      console.error("Error loading page config for edit:", error);
+      toast.error("An error occurred while loading details.");
+    }
   };
 
-  const handleViewClick = (page) => {
-    const config = getMockPageConfig(page);
-    setViewingPage({ ...page, config });
+  // Retrieve single page configuration details for viewing
+  const handleViewClick = async (page) => {
+    try {
+      const response = await getPageByIdApi.callApi(page._id);
+      if (response && response.success) {
+        setViewingPage(response.data);
+      } else {
+        toast.error("Failed to load page details.");
+      }
+    } catch (error) {
+      console.error("Error loading page details for modal:", error);
+    }
   };
 
   const handleFieldChange = (field, value) => {
@@ -170,11 +128,12 @@ function AdminEventServices() {
       src: URL.createObjectURL(file),
       file: file, // holds reference to actual upload file
       alt: "Event decor photo",
-      caption: "Portfolio Image"
+      caption: "Portfolio Image",
+      isNew: true
     }));
     setFormData((prev) => ({
       ...prev,
-      gallery: [...prev.gallery, ...newItems]
+      gallery: [...(prev.gallery || []), ...newItems]
     }));
   };
 
@@ -198,7 +157,7 @@ function AdminEventServices() {
   const addListItem = (field, newObj) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: [...prev[field], newObj]
+      [field]: [...(prev[field] || []), newObj]
     }));
   };
 
@@ -210,12 +169,66 @@ function AdminEventServices() {
     });
   };
 
-  const handleSave = (e) => {
+  // Build FormData payload and update database entry
+  const handleSave = async (e) => {
     e.preventDefault();
-    console.log("Saving Event Service Content Payload for Page " + editingPage.slug + ":", formData);
-    setIsSaved(true);
-    toast.success(`${editingPage.title} content updated successfully! (Data payload logged to developer console)`);
-    setTimeout(() => setIsSaved(false), 3000);
+    try {
+      const payload = new FormData();
+      payload.append("title", formData.title || "");
+      payload.append("slug", formData.slug || "");
+      payload.append("path", formData.path || "");
+      payload.append("category", formData.category || "");
+      payload.append("badge", formData.badge || "");
+      payload.append("h1", formData.h1 || "");
+      payload.append("heroSubtitle", formData.heroSubtitle || "");
+      payload.append("heroImageAlt", formData.heroImageAlt || "");
+      payload.append("isActive", formData.isActive);
+
+      payload.append("stats", JSON.stringify(formData.stats || []));
+      payload.append("features", JSON.stringify(formData.features || []));
+      payload.append("relatedLinks", JSON.stringify(formData.relatedLinks || []));
+      
+      // Map gallery entries, appends newly uploaded files
+      const mappedGallery = (formData.gallery || []).map((item) => {
+        if (item.file) {
+          payload.append("galleryImages", item.file);
+          return {
+            src: item.src, // temporary blob preview url
+            alt: item.alt || "",
+            caption: item.caption || "",
+            isNew: true
+          };
+        }
+        return {
+          src: item.src, // existing S3 key
+          alt: item.alt || "",
+          caption: item.caption || ""
+        };
+      });
+      payload.append("gallery", JSON.stringify(mappedGallery));
+
+      // Append Hero Image if it was uploaded
+      if (formData.heroImageFile) {
+        payload.append("heroImage", formData.heroImageFile);
+      } else {
+        payload.append("heroImage", formData.heroImage || "");
+      }
+
+      const response = await updatePageApi.callApi(editingPage._id, payload);
+      if (response && response.success) {
+        setIsSaved(true);
+        toast.success(`${editingPage.title} content updated successfully!`);
+        setEditingPage(response.data);
+        setFormData(response.data);
+        fetchPages(); // reload paginated list
+        setTimeout(() => setIsSaved(false), 3000);
+      } else {
+        toast.error(response?.message || "Failed to update landing page config.");
+      }
+    } catch (error) {
+      console.error("Error saving page edits:", error);
+      toast.error("An error occurred while saving configs.");
+    }
   };
 
   // Table Columns
@@ -237,6 +250,17 @@ function AdminEventServices() {
       render: (row) => (
         <span className="text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-full text-xs font-medium">
           {row.category}
+        </span>
+      )
+    },
+    {
+      label: "Status",
+      key: "isActive",
+      render: (row) => (
+        <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+          row.isActive ? "text-green-700 bg-green-50" : "text-amber-700 bg-amber-50"
+        }`}>
+          {row.isActive ? "Active" : "Maintenance"}
         </span>
       )
     },
@@ -275,7 +299,7 @@ function AdminEventServices() {
             Website Event Services
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage page-specific content, headers, images, stats and FAQs for all 36 landing pages.
+            Manage page-specific content, headers, images, stats and links for all 36 landing pages.
           </p>
         </div>
         {editingPage && (
@@ -306,18 +330,19 @@ function AdminEventServices() {
               />
             </div>
             <div className="text-sm text-gray-500 font-medium bg-purple-50 text-purple-700 px-3 py-1 rounded-md">
-              Total Event Service Pages: <span className="font-bold">{servicePages.length}</span>
+              Total Event Service Pages: <span className="font-bold">{totalCount}</span>
             </div>
           </div>
 
           <div className="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
             <TableComponetWithApi
               columns={columns}
-              data={currentTableData}
+              data={pagesList}
               page={currentPage}
               itemsPerPage={itemsPerPage}
               onPageChange={handlePageChange}
               totalPages={totalPages}
+              loading={loading}
             />
           </div>
         </div>
@@ -336,7 +361,7 @@ function AdminEventServices() {
                 { id: "hero", label: "Hero & Stats" },
                 { id: "features", label: "Features & Perks" },
                 { id: "gallery", label: "Gallery Portfolio" },
-                { id: "faqs_links", label: "FAQs & Related Links" }
+                { id: "links", label: "Related Links" }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -357,9 +382,22 @@ function AdminEventServices() {
             {activeTab === "hero" && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-4">Hero Information</h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Hero Information</h3>
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs font-semibold text-gray-500">Page Status:</label>
+                      <select 
+                        value={formData.isActive}
+                        onChange={(e) => handleFieldChange("isActive", e.target.value === "true")}
+                        className="px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-650"
+                      >
+                        <option value="true">Active</option>
+                        <option value="false">Maintenance Mode</option>
+                      </select>
+                    </div>
+                  </div>
                   
-                  {/* Image Upload Area instead of text URL input */}
+                  {/* Image Upload Area */}
                   <div className="mb-4">
                     <label className="block text-xs font-semibold text-gray-500 mb-2">Hero Image Banner</label>
                     <input 
@@ -373,7 +411,7 @@ function AdminEventServices() {
                     {formData.heroImage ? (
                       <div className="relative w-full max-w-md h-48 bg-gray-100 rounded-xl overflow-hidden border border-gray-300 group">
                         <img 
-                          src={formData.heroImage} 
+                          src={getImageUrl(formData.heroImage)} 
                           alt="Hero banner preview" 
                           className="object-cover w-full h-full"
                         />
@@ -412,7 +450,7 @@ function AdminEventServices() {
                       <label className="block text-xs font-semibold text-gray-500 mb-1">Badge Tagline</label>
                       <input 
                         type="text" 
-                        value={formData.badge} 
+                        value={formData.badge || ""} 
                         onChange={(e) => handleFieldChange("badge", e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600"
                         placeholder="e.g. Birthday Specialists"
@@ -422,7 +460,7 @@ function AdminEventServices() {
                       <label className="block text-xs font-semibold text-gray-500 mb-1">Main H1 Title</label>
                       <input 
                         type="text" 
-                        value={formData.h1} 
+                        value={formData.h1 || ""} 
                         onChange={(e) => handleFieldChange("h1", e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600"
                         placeholder="Page main H1"
@@ -432,7 +470,7 @@ function AdminEventServices() {
                       <label className="block text-xs font-semibold text-gray-500 mb-1">Hero Subtitle</label>
                       <textarea 
                         rows={3}
-                        value={formData.heroSubtitle} 
+                        value={formData.heroSubtitle || ""} 
                         onChange={(e) => handleFieldChange("heroSubtitle", e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600"
                         placeholder="Brief summary below heading"
@@ -442,7 +480,7 @@ function AdminEventServices() {
                       <label className="block text-xs font-semibold text-gray-500 mb-1">Hero Image Alt Tag</label>
                       <input 
                         type="text" 
-                        value={formData.heroImageAlt} 
+                        value={formData.heroImageAlt || ""} 
                         onChange={(e) => handleFieldChange("heroImageAlt", e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600"
                         placeholder="Alt text describing layout"
@@ -464,7 +502,7 @@ function AdminEventServices() {
                     </button>
                   </div>
                   <div className="space-y-3">
-                    {formData.stats.map((stat, idx) => (
+                    {formData.stats && formData.stats.map((stat, idx) => (
                       <div key={idx} className="flex items-center gap-3 bg-white p-2.5 rounded-lg border border-gray-200">
                         <input 
                           type="text" 
@@ -510,12 +548,12 @@ function AdminEventServices() {
                     </button>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {formData.features.map((feat, idx) => (
+                    {formData.features && formData.features.map((feat, idx) => (
                       <div key={idx} className="bg-white p-3 rounded-lg border border-gray-200 flex flex-col gap-2 relative group shadow-sm">
                         <button 
                           type="button"
                           onClick={() => removeListItem("features", idx)}
-                          className="absolute top-2 right-2 text-red-450 hover:text-red-650 hidden group-hover:block transition duration-150"
+                          className="absolute top-2 right-2 text-red-450 hover:text-red-655 hidden group-hover:block transition duration-150"
                           title="Delete Feature Card"
                         >
                           <FaTrash size={12} />
@@ -550,14 +588,13 @@ function AdminEventServices() {
               </div>
             )}
 
-            {/* Tab Content 3: Gallery Portfolio (With image upload and cross removal) */}
+            {/* Tab Content 3: Gallery Portfolio */}
             {activeTab === "gallery" && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Page Gallery / Portfolio Pictures</h3>
                     
-                    {/* Upload new image button triggers hidden file selector */}
                     <input 
                       type="file" 
                       multiple 
@@ -575,15 +612,13 @@ function AdminEventServices() {
                     </button>
                   </div>
                   
-                  {/* Grid showing existing images with absolute cross button to remove */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {formData.gallery.map((img, idx) => (
+                    {formData.gallery && formData.gallery.map((img, idx) => (
                       <div key={idx} className="bg-white p-3 rounded-lg border border-gray-200 flex flex-col gap-2 relative shadow-sm group">
                         
-                        {/* Red cross overlays absolute top-right of image container to remove it */}
                         <div className="relative h-28 w-full bg-gray-100 rounded-md overflow-hidden border border-gray-200">
                           <img 
-                            src={img.src} 
+                            src={getImageUrl(img.src)} 
                             alt={img.alt} 
                             onError={(e) => {
                               e.target.onerror = null; 
@@ -594,14 +629,13 @@ function AdminEventServices() {
                           <button
                             type="button"
                             onClick={() => removeListItem("gallery", idx)}
-                            className="absolute top-1.5 right-1.5 bg-red-650/90 text-white rounded-full p-1 shadow-md hover:bg-red-700 hover:scale-105 transition"
+                            className="absolute top-1.5 right-1.5 bg-red-655/90 text-white rounded-full p-1 shadow-md hover:bg-red-700 hover:scale-105 transition"
                             title="Remove Photo"
                           >
                             <FaTimes size={10} />
                           </button>
                         </div>
                         
-                        {/* Caption and Alt fields (Image path textbox removed completely) */}
                         <div className="space-y-1.5 pt-1">
                           <div>
                             <label className="block text-[9px] font-semibold text-gray-400 uppercase">Caption</label>
@@ -609,7 +643,7 @@ function AdminEventServices() {
                               type="text" 
                               value={img.caption} 
                               onChange={(e) => updateListItem("gallery", idx, "caption", e.target.value)}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-650"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-655"
                               placeholder="Image Caption text"
                             />
                           </div>
@@ -619,7 +653,7 @@ function AdminEventServices() {
                               type="text" 
                               value={img.alt} 
                               onChange={(e) => updateListItem("gallery", idx, "alt", e.target.value)}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-650"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-655"
                               placeholder="Describe for visually impaired/SEO"
                             />
                           </div>
@@ -627,10 +661,9 @@ function AdminEventServices() {
                       </div>
                     ))}
                     
-                    {/* Add empty/new image trigger area inside grid */}
                     <div 
                       onClick={() => galleryFileRef.current.click()}
-                      className="border-2 border-dashed border-gray-300 rounded-lg h-[210px] bg-white flex flex-col items-center justify-center text-gray-400 hover:text-purple-650 hover:border-purple-400 cursor-pointer transition duration-200"
+                      className="border-2 border-dashed border-gray-300 rounded-lg h-[210px] bg-white flex flex-col items-center justify-center text-gray-400 hover:text-purple-655 hover:border-purple-400 cursor-pointer transition duration-200"
                     >
                       <FaPlus className="text-xl mb-1.5" />
                       <span className="text-xs font-semibold">Upload Photo Entry</span>
@@ -641,84 +674,9 @@ function AdminEventServices() {
               </div>
             )}
 
-            {/* Tab Content 4: FAQs & Related Links */}
-            {activeTab === "faqs_links" && (
+            {/* Tab Content 4: Related Links */}
+            {activeTab === "links" && (
               <div className="space-y-6 animate-fadeIn">
-                
-                {/* FAQ Section */}
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Frequently Asked Questions (FAQ)</h3>
-                    <button 
-                      type="button"
-                      onClick={() => addListItem("faqs", { question: "Insert Question here?", answer: "Insert Answer content here." })}
-                      className="flex items-center gap-1 text-xs text-purple-600 hover:text-purple-800 font-semibold bg-white border border-purple-200 px-2.5 py-1 rounded"
-                    >
-                      <FaPlus size={10} /> Add Q&A
-                    </button>
-                  </div>
-                  <div className="space-y-4">
-                    {formData.faqs.map((faq, idx) => (
-                      <div key={idx} className="bg-white p-3 rounded-lg border border-gray-200 flex flex-col gap-2 relative group shadow-sm">
-                        <button 
-                          type="button"
-                          onClick={() => removeListItem("faqs", idx)}
-                          className="absolute top-2 right-2 text-red-500 hover:text-red-700 hidden group-hover:block transition duration-150"
-                          title="Delete FAQ"
-                        >
-                          <FaTrash size={12} />
-                        </button>
-                        <div>
-                          <label className="block text-[10px] font-semibold text-gray-400">QUESTION #{idx + 1}</label>
-                          <input 
-                            type="text" 
-                            value={faq.question} 
-                            onChange={(e) => updateListItem("faqs", idx, "question", e.target.value)}
-                            className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm font-semibold focus:ring-1 focus:ring-purple-600"
-                            placeholder="Question"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[10px] font-semibold text-gray-400">ANSWER</label>
-                          <textarea 
-                            rows={2}
-                            value={faq.answer} 
-                            onChange={(e) => updateListItem("faqs", idx, "answer", e.target.value)}
-                            className="w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-purple-600 text-gray-500"
-                            placeholder="Answer"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Schema Aggregate Pricing */}
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider md:col-span-2">Schema Aggregate Pricing</h3>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-500 mb-1">Lowest Offer Price (INR)</label>
-                    <input 
-                      type="number" 
-                      value={formData.schemaLowPrice} 
-                      onChange={(e) => handleFieldChange("schemaLowPrice", parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600 font-mono"
-                      placeholder="Low price"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-500 mb-1">Highest Offer Price (INR)</label>
-                    <input 
-                      type="number" 
-                      value={formData.schemaHighPrice} 
-                      onChange={(e) => handleFieldChange("schemaHighPrice", parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-1 focus:ring-purple-600 font-mono"
-                      placeholder="High price"
-                    />
-                  </div>
-                </div>
-
-                {/* Related Links */}
                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Related Services Links</h3>
@@ -731,7 +689,7 @@ function AdminEventServices() {
                     </button>
                   </div>
                   <div className="space-y-3">
-                    {formData.relatedLinks.map((link, idx) => (
+                    {formData.relatedLinks && formData.relatedLinks.map((link, idx) => (
                       <div key={idx} className="flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-200 relative group">
                         <input 
                           type="text" 
@@ -758,7 +716,6 @@ function AdminEventServices() {
                     ))}
                   </div>
                 </div>
-
               </div>
             )}
             
@@ -773,9 +730,8 @@ function AdminEventServices() {
               <button 
                 type="button"
                 onClick={() => {
-                  const initial = getMockPageConfig(editingPage);
-                  setFormData(initial);
-                  toast.info("Form fields reset to default values.");
+                  handleEditClick(editingPage);
+                  toast.info("Form fields reset to DB values.");
                 }}
                 className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm px-5 py-2.5 rounded-lg transition duration-150"
               >
@@ -785,7 +741,7 @@ function AdminEventServices() {
 
           </div>
 
-          {/* ─── LIVE OUTLINE OUTLINE PREVIEW (Right Panel) ─── */}
+          {/* ─── LIVE OUTLINE PREVIEW (Right Panel) ─── */}
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sticky top-6">
               <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-gray-200 pb-2">
@@ -839,7 +795,7 @@ function AdminEventServices() {
                     {formData.gallery && formData.gallery.map((g, i) => (
                       <div key={i} className="aspect-square bg-gray-100 rounded overflow-hidden relative group">
                         <img 
-                          src={g.src} 
+                          src={getImageUrl(g.src)} 
                           alt="preview"
                           onError={(e) => {
                             e.target.onerror = null; 
@@ -849,21 +805,6 @@ function AdminEventServices() {
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition duration-150">
                           <span className="text-[6px] text-white p-0.5 text-center truncate">{g.caption}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* FAQ Accordion Preview */}
-                <div className="p-3 space-y-2 border-b border-gray-100">
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider text-purple-800">FAQs</h4>
-                  <div className="space-y-1">
-                    {formData.faqs && formData.faqs.map((q, i) => (
-                      <div key={i} className="p-1.5 border border-gray-100 rounded bg-white text-[8px]">
-                        <div className="font-bold text-gray-700 flex justify-between">
-                          <span>Q: {q.question}</span>
-                          <span>➕</span>
                         </div>
                       </div>
                     ))}
@@ -906,9 +847,16 @@ function AdminEventServices() {
                   {viewingPage.category} Page
                 </span>
                 <h2 className="text-xl font-bold text-gray-800 mt-1">{viewingPage.title}</h2>
-                <p className="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-0.5 rounded mt-1.5 w-fit">
-                  Path: {viewingPage.path}
-                </p>
+                <div className="flex items-center gap-3 mt-1.5">
+                  <span className="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
+                    Path: {viewingPage.path}
+                  </span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                    viewingPage.isActive ? "text-green-700 bg-green-50" : "text-amber-700 bg-amber-50"
+                  }`}>
+                    {viewingPage.isActive ? "Active" : "Maintenance Mode"}
+                  </span>
+                </div>
               </div>
               <button 
                 type="button"
@@ -930,25 +878,25 @@ function AdminEventServices() {
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <div className="col-span-3">
                     <span className="font-semibold text-gray-400 block uppercase text-[10px]">H1 Title</span>
-                    <p className="text-gray-800 font-bold">{viewingPage.config.h1}</p>
+                    <p className="text-gray-800 font-bold">{viewingPage.h1}</p>
                   </div>
                   <div className="col-span-3">
                     <span className="font-semibold text-gray-400 block uppercase text-[10px]">Hero Subtitle</span>
-                    <p className="text-gray-600">{viewingPage.config.heroSubtitle}</p>
+                    <p className="text-gray-600">{viewingPage.heroSubtitle}</p>
                   </div>
                   <div>
                     <span className="font-semibold text-gray-400 block uppercase text-[10px]">Badge</span>
-                    <p className="text-gray-800">{viewingPage.config.badge}</p>
+                    <p className="text-gray-800">{viewingPage.badge}</p>
                   </div>
                   <div>
                     <span className="font-semibold text-gray-400 block uppercase text-[10px]">Hero Image Banner</span>
                     <div className="w-20 h-12 rounded border border-gray-200 overflow-hidden bg-gray-100 mt-1">
-                      <img src={viewingPage.config.heroImage} alt="hero banner preview" className="object-cover w-full h-full" />
+                      <img src={getImageUrl(viewingPage.heroImage)} alt="hero banner preview" className="object-cover w-full h-full" />
                     </div>
                   </div>
                   <div>
                     <span className="font-semibold text-gray-400 block uppercase text-[10px]">Alt Text</span>
-                    <p className="text-gray-800 truncate">{viewingPage.config.heroImageAlt}</p>
+                    <p className="text-gray-800 truncate">{viewingPage.heroImageAlt}</p>
                   </div>
                 </div>
               </div>
@@ -959,7 +907,7 @@ function AdminEventServices() {
                   Highlight Stats
                 </h3>
                 <div className="grid grid-cols-4 gap-3">
-                  {viewingPage.config.stats.map((s, idx) => (
+                  {viewingPage.stats && viewingPage.stats.map((s, idx) => (
                     <div key={idx} className="bg-purple-50 border border-purple-100 text-center p-2.5 rounded-lg">
                       <span className="block text-base font-bold text-purple-800">{s.value}</span>
                       <span className="text-[10px] text-gray-500">{s.label}</span>
@@ -971,10 +919,10 @@ function AdminEventServices() {
               {/* Feature bullet cards */}
               <div>
                 <h3 className="text-xs font-bold text-purple-900 uppercase tracking-widest border-b border-purple-100 pb-1 mb-2">
-                  Feature / Service Highlights ({viewingPage.config.features.length})
+                  Feature / Service Highlights ({(viewingPage.features || []).length})
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {viewingPage.config.features.map((f, idx) => (
+                  {viewingPage.features && viewingPage.features.map((f, idx) => (
                     <div key={idx} className="border border-gray-200 bg-white p-3 rounded-lg flex items-start gap-2 text-xs">
                       <span className="text-base">{f.icon}</span>
                       <div>
@@ -986,17 +934,16 @@ function AdminEventServices() {
                 </div>
               </div>
 
-              {/* FAQ Accordion item preview */}
+              {/* Related links list */}
               <div>
                 <h3 className="text-xs font-bold text-purple-900 uppercase tracking-widest border-b border-purple-100 pb-1 mb-2">
-                  FAQs ({viewingPage.config.faqs.length})
+                  Related Service Links
                 </h3>
-                <div className="space-y-2.5">
-                  {viewingPage.config.faqs.map((faq, idx) => (
-                    <div key={idx} className="bg-gray-50 border border-gray-200 p-2.5 rounded-lg text-xs">
-                      <div className="font-bold text-purple-800">Q: {faq.question}</div>
-                      <div className="text-gray-600 mt-1 pl-4">A: {faq.answer}</div>
-                    </div>
+                <div className="flex flex-wrap gap-2">
+                  {viewingPage.relatedLinks && viewingPage.relatedLinks.map((link, idx) => (
+                    <span key={idx} className="bg-purple-50 border border-purple-100 px-3 py-1.5 rounded-lg text-xs font-medium text-purple-800">
+                      {link.label} ({link.href})
+                    </span>
                   ))}
                 </div>
               </div>
