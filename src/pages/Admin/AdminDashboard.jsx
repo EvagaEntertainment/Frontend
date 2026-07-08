@@ -54,6 +54,7 @@ import AdminCustomEventSubmissions from "../../components/Admin/AdminCustomEvent
 import AdminTestimonial from "../../components/Admin/AdminTestimonial";
 import AdminGenerateQR from "../../components/Admin/AdminGenerateQR";
 import AdminFloatingVideo from "../../components/Admin/AdminFloatingVideo";
+import AdminEventServices from "../../components/Admin/AdminEventServices";
 const inputStyles =
   "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent";
 const buttonStyles =
@@ -61,7 +62,7 @@ const buttonStyles =
 const slugify = (text) => text.toLowerCase().replace(/[\s_]+/g, '-');
 
 const allMenuItems = [
-  "Home", "Vendor", "Client", "All Services", "Waitlist", "Banner", "Gallery", "AdminCustomEvent", "Coupons", "Fee Breakdown by Category", "Gst by Category", "Testimonial", "GenerateQR", "FloatingVideo", "New Orders", "New Order Leadsquare", "Confirmed Orders", "Ongoing Orders", "Completed Orders", "Cancelled Orders", "Vendor Reports", "Customer Reports", "Booking Reports", "Payment Financial Reports", "Blog", "NewsLetter", "Customer Query", "Vendor Query", "Feedback", "BookingCTA", "AdminCustomEventSubmissions", "Admin Users", "Error Logs", "VendorDocumentVerification", "vendorServiceAccess"
+  "Home", "Vendor", "Client", "All Services", "Waitlist", "Banner", "Gallery", "AdminCustomEvent", "Event Services", "Coupons", "Fee Breakdown by Category", "Gst by Category", "Testimonial", "GenerateQR", "FloatingVideo", "New Orders", "New Order Leadsquare", "Confirmed Orders", "Ongoing Orders", "Completed Orders", "Cancelled Orders", "Vendor Reports", "Customer Reports", "Booking Reports", "Payment Financial Reports", "Blog", "NewsLetter", "Customer Query", "Vendor Query", "Feedback", "BookingCTA", "AdminCustomEventSubmissions", "Admin Users", "Error Logs", "VendorDocumentVerification", "vendorServiceAccess"
 ];
 
 const AdminDashboard = () => {
@@ -389,6 +390,7 @@ const AdminDashboard = () => {
         {selectedMenu === "BookingCTA" && <BookingCTA term={term} />}
         {selectedMenu === "Gallery" && <Gallery />}
         {selectedMenu === "AdminCustomEvent" && <AdminCustomEvent />}
+        {selectedMenu === "Event Services" && <AdminEventServices />}
         {selectedMenu === "AdminCustomEventSubmissions" && <AdminCustomEventSubmissions />}
         {selectedMenu === "Testimonial" && <AdminTestimonial />}
         {selectedMenu === "GenerateQR" && <AdminGenerateQR />}

@@ -1,11 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
+import eventServicesApi from '../../services/eventServicesApi';
 
 // BookingForm uses useSearchParams + browser APIs — must be client-only
 const BookingForm = dynamic(() => import('../../pages/BookingForm'), {
@@ -655,19 +656,189 @@ function ReviewsSection({ reviews, pageTitle }) {
   );
 }
 
+/* ─── SKELETON LOADER ────────────────────────────────────────────────────── */
+function SkeletonLoader() {
+  return (
+    <div className="w-full bg-white min-h-screen animate-pulse space-y-12 pb-20">
+      {/* Breadcrumb Skeleton */}
+      <div className="border-b border-borderPrimary py-3 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="h-4 w-48 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+
+      {/* Hero Skeleton */}
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div className="space-y-6">
+          <div className="h-6 w-32 bg-gray-200 rounded-full"></div>
+          <div className="space-y-3">
+            <div className="h-10 w-full bg-gray-200 rounded-xl"></div>
+            <div className="h-10 w-5/6 bg-gray-200 rounded-xl"></div>
+          </div>
+          <div className="h-1 w-20 bg-gray-200 rounded-full"></div>
+          <div className="space-y-2">
+            <div className="h-4 w-full bg-gray-200 rounded"></div>
+            <div className="h-4 w-11/12 bg-gray-200 rounded"></div>
+            <div className="h-4 w-4/5 bg-gray-200 rounded"></div>
+          </div>
+          <div className="flex gap-4 pt-2">
+            <div className="h-12 w-40 bg-gray-200 rounded-xl"></div>
+            <div className="h-12 w-44 bg-gray-200 rounded-xl"></div>
+          </div>
+        </div>
+        <div className="aspect-[4/3] bg-gray-200 rounded-2xl"></div>
+      </div>
+
+      {/* Stats Bar Skeleton */}
+      <div className="max-w-7xl mx-auto px-6 border-y border-gray-100 py-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="space-y-2 flex flex-col items-center">
+              <div className="h-8 w-20 bg-gray-200 rounded"></div>
+              <div className="h-4 w-28 bg-gray-200 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Gallery Skeleton */}
+      <div className="max-w-7xl mx-auto px-6 space-y-8">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="h-8 w-64 bg-gray-200 rounded"></div>
+          <div className="h-1 w-24 bg-gray-200 rounded-full"></div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="col-span-2 md:col-span-1 md:row-span-2 h-[320px] bg-gray-200 rounded-2xl"></div>
+          <div className="h-[150px] bg-gray-200 rounded-2xl"></div>
+          <div className="h-[150px] bg-gray-200 rounded-2xl"></div>
+          <div className="h-[150px] bg-gray-200 rounded-2xl"></div>
+          <div className="h-[150px] bg-gray-200 rounded-2xl"></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── PAGE EXPORT ────────────────────────────────────────────────────────── */
 export default function ServiceLandingPage({ config }) {
+  const [dynamicConfig, setDynamicConfig] = useState(null);
+  const [isMaintenance, setIsMaintenance] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    const fetchConfig = async () => {
+      try {
+        const path = window.location.pathname;
+        const response = await eventServicesApi.getEventServicePageByPath(path);
+        if (!active) return;
+        
+        if (response && response.isMaintenance) {
+          setIsMaintenance(true);
+        } else if (response && response.success && response.data) {
+          setDynamicConfig(response.data);
+        }
+      } catch (err) {
+        console.error("Error loading dynamic configuration:", err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    
+    fetchConfig();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (loading) {
+    return <SkeletonLoader />;
+  }
+
+  if (isMaintenance) {
+    return (
+      <div className="min-h-[70vh] bg-gradient-to-br from-[#ece6f5] via-white to-purple-50 flex flex-col justify-center items-center px-6 py-20 text-center animate-fadeIn">
+        <div className="bg-white border border-[#ece6f5] p-10 md:p-14 rounded-3xl max-w-lg shadow-xl space-y-6">
+          <div className="w-16 h-16 bg-[#6A1B9A]/10 text-[#6A1B9A] rounded-full flex items-center justify-center mx-auto animate-pulse">
+            <FaCalendarAlt size={28} />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800 tracking-tight">Under Maintenance</h2>
+          <p className="text-sm text-textGray leading-relaxed">
+            This landing page is currently undergoing scheduled updates to enhance our planning services. We'll be back shortly with premium celebration options.
+          </p>
+          <div className="pt-4">
+            <Link href="/" className="inline-flex items-center gap-2 bg-[#6A1B9A] hover:bg-[#5a1682] text-white font-semibold text-sm px-6 py-3 rounded-xl transition duration-200 shadow-md">
+              Return Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Resolve S3 relative key path to full S3 URLs
+  const resolveImageUrl = (src) => {
+    if (!src) return "";
+    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:") || src.startsWith("blob:")) {
+      return src;
+    }
+    return (process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL || "") + src;
+  };
+
+  // 1. Resolve dynamic Hero Image or fall back to static image
+  const resolvedHeroImage = dynamicConfig && dynamicConfig.heroImage && dynamicConfig.heroImage.trim() !== ""
+    ? resolveImageUrl(dynamicConfig.heroImage)
+    : config.heroImage;
+
+  // 2. Resolve dynamic Gallery, fallback to static gallery images for empty slots
+  const resolvedGallery = () => {
+    const staticGallery = config.gallery || [];
+    if (!dynamicConfig) return staticGallery;
+    
+    const dynamicGallery = dynamicConfig.gallery || [];
+    if (dynamicGallery.length === 0) return staticGallery;
+
+    return dynamicGallery.map((item, idx) => {
+      const fallbackItem = staticGallery[idx] || {};
+      const hasImage = item.src && item.src.trim() !== "";
+      
+      let finalSrc = "";
+      if (hasImage) {
+        finalSrc = resolveImageUrl(item.src);
+      } else {
+        finalSrc = fallbackItem.src || "https://placehold.co/600x400/ece6f5/6a1b9a?text=Gallery+Setup";
+      }
+
+      return {
+        src: finalSrc,
+        alt: item.alt || fallbackItem.alt || "Event decoration setup",
+        caption: item.caption || fallbackItem.caption || "Portfolio Gallery"
+      };
+    });
+  };
+
+  // Merge static default props config with fetched dynamic database values
+  const activeConfig = dynamicConfig ? {
+    ...config,
+    ...dynamicConfig,
+    heroImage: resolvedHeroImage,
+    gallery: resolvedGallery(),
+    stats: dynamicConfig.stats?.length ? dynamicConfig.stats : config.stats,
+    features: dynamicConfig.features?.length ? dynamicConfig.features : config.features,
+    relatedLinks: dynamicConfig.relatedLinks?.length ? dynamicConfig.relatedLinks : config.relatedLinks,
+  } : config;
+
   return (
     <main>
       <Breadcrumb items={config.breadcrumbs} />
-      <Hero config={config} />
-      <Gallery gallery={config.gallery} />
-      <Features features={config.features} />
+      <Hero config={activeConfig} />
+      <Gallery gallery={activeConfig.gallery} />
+      <Features features={activeConfig.features} />
       <WhyEevagga customPoints={config.whyPoints} />
       {/* <Pricing pricing={config.pricing} config={config} /> */}
-      <BookingFormSection config={config} />
-      <RelatedServices links={config.relatedLinks} />
-      <ReviewsSection reviews={config.reviews} pageTitle={config.title} />
+      <BookingFormSection config={activeConfig} />
+      <RelatedServices links={activeConfig.relatedLinks} />
+      <ReviewsSection reviews={config.reviews} pageTitle={activeConfig.title} />
       <FAQSection customFaqs={config.faqs} />
     </main>
   );
