@@ -46,6 +46,7 @@ const serviceSchema = {
     lowPrice: 15000,
     highPrice: 75000,
     offerCount: 3,
+    availability: 'https://schema.org/InStock',
   },
 };
 

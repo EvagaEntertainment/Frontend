@@ -6,7 +6,7 @@ import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandi
 export const metadata = {
   title: 'Birthday Planner in Bangalore | Premium Birthday Planning â€” Eevagga',
   description:
-    'Looking for a birthday planner in Bangalore? Eevagga offers end-to-end birthday planning â€” themes, decorations, photography, catering & venue coordination. Book your free consultation today.',
+    'Looking for a birthday planner in Bangalore? Eevagga handles themes, decorations, photography and venue coordination end-to-end. Book a free consultation.',
   keywords:
     'birthday planner Bangalore, birthday planning Bangalore, birthday event planner Bangalore, birthday party planner Bangalore, Eevagga birthday planner',
   alternates: {
@@ -46,6 +46,7 @@ const serviceSchema = {
     lowPrice: 15000,
     highPrice: 150000,
     offerCount: 3,
+    availability: 'https://schema.org/InStock',
   },
 };
 

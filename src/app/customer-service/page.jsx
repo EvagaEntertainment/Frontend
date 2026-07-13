@@ -22,7 +22,8 @@ const contactPageSchema = {
   "name": "Eevagga Customer Support",
   "description": "Contact Eevagga for birthday, house warming and baby shower booking help in Bangalore.",
   "inLanguage": "en-IN",
-  "isPartOf": { "@id": "https://www.eevagga.com/#website" }
+  "isPartOf": { "@id": "https://www.eevagga.com/#website" },
+  "about": { "@id": "https://www.eevagga.com/#organization" }
 };
 
 const breadcrumbSchema = {
