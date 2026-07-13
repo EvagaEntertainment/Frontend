@@ -114,44 +114,43 @@ function Navbar() {
             onMouseEnter={() => setDropdownOpen(true)}
             onMouseLeave={() => setDropdownOpen(false)}
           >
-            <button
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+            <Link
+              href="/viewall"
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
                 isCelebrationActive ? "text-[#FFE500]" : "text-white hover:text-[#FFE500]"
               }`}
             >
               <FaStar className="text-xs" />
               Celebrations
               <FaChevronDown className={`text-[10px] transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
+            </Link>
 
-            <AnimatePresence>
-              {dropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2.5 z-50 origin-top-left"
-                >
-                  {celebrationLinks.map((subLink) => {
-                    const isSubActive = pathname === subLink.path;
-                    return (
-                      <Link
-                        key={subLink.name}
-                        href={subLink.path}
-                        className={`block px-4 py-2 text-sm transition-colors duration-150 ${
-                          isSubActive
-                            ? "bg-[#6A1B9A]/10 text-[#6A1B9A] font-semibold"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-[#6A1B9A]"
-                        }`}
-                      >
-                        {subLink.name}
-                      </Link>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              initial={false}
+              animate={dropdownOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.15 }}
+              aria-hidden={!dropdownOpen}
+              className={`absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2.5 z-50 origin-top-left ${
+                !dropdownOpen ? 'pointer-events-none' : ''
+              }`}
+            >
+              {celebrationLinks.map((subLink) => {
+                const isSubActive = pathname === subLink.path;
+                return (
+                  <Link
+                    key={subLink.name}
+                    href={subLink.path}
+                    className={`block px-4 py-2 text-sm transition-colors duration-150 ${
+                      isSubActive
+                        ? "bg-[#6A1B9A]/10 text-[#6A1B9A] font-semibold"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-[#6A1B9A]"
+                    }`}
+                  >
+                    {subLink.name}
+                  </Link>
+                );
+              })}
+            </motion.div>
           </div>
         </div>
 
