@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaStar, FaArrowRight, FaCalendarAlt, FaTools, FaHome, FaPhone } from 'react-icons/fa';
 import FAQSection from '../FAQSection/FAQSection';
 import eventServicesApi from '../../services/eventServicesApi';
 
@@ -733,10 +733,13 @@ export default function ServiceLandingPage({ config }) {
         const response = await eventServicesApi.getEventServicePageByPath(path);
         if (!active) return;
         
-        if (response && response.isMaintenance) {
-          setIsMaintenance(true);
-        } else if (response && response.success && response.data) {
-          setDynamicConfig(response.data);
+        if (response && response.data) {
+          const resData = response.data;
+          if (resData.isMaintenance) {
+            setIsMaintenance(true);
+          } else if (resData.success && resData.data) {
+            setDynamicConfig(resData.data);
+          }
         }
       } catch (err) {
         console.error("Error loading dynamic configuration:", err);
@@ -757,21 +760,111 @@ export default function ServiceLandingPage({ config }) {
 
   if (isMaintenance) {
     return (
-      <div className="min-h-[70vh] bg-gradient-to-br from-[#ece6f5] via-white to-purple-50 flex flex-col justify-center items-center px-6 py-20 text-center animate-fadeIn">
-        <div className="bg-white border border-[#ece6f5] p-10 md:p-14 rounded-3xl max-w-lg shadow-xl space-y-6">
-          <div className="w-16 h-16 bg-[#6A1B9A]/10 text-[#6A1B9A] rounded-full flex items-center justify-center mx-auto animate-pulse">
-            <FaCalendarAlt size={28} />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-800 tracking-tight">Under Maintenance</h2>
-          <p className="text-sm text-textGray leading-relaxed">
-            This landing page is currently undergoing scheduled updates to enhance our planning services. We'll be back shortly with premium celebration options.
-          </p>
-          <div className="pt-4">
-            <Link href="/" className="inline-flex items-center gap-2 bg-[#6A1B9A] hover:bg-[#5a1682] text-white font-semibold text-sm px-6 py-3 rounded-xl transition duration-200 shadow-md">
-              Return Home
-            </Link>
-          </div>
+      <div className="relative min-h-screen bg-[#6A1B9A] overflow-hidden flex flex-col items-center justify-center px-6 py-16">
+        {/* Decorative blobs */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#F5C518]/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+        <div className="absolute top-1/2 right-0 w-64 h-64 bg-purple-300/10 rounded-full blur-2xl translate-x-1/2 pointer-events-none" />
+
+        {/* Floating sparkles */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          {['✨','🎉','🎊','⭐','✨','🌟','🎈','✨'].map((emoji, i) => (
+            <span
+              key={i}
+              className="absolute text-xl opacity-20 animate-bounce"
+              style={{
+                left: `${10 + i * 11}%`,
+                top: `${15 + (i % 3) * 25}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: `${2 + (i % 3)}s`
+              }}
+            >{emoji}</span>
+          ))}
         </div>
+
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="relative z-10 w-full max-w-xl"
+        >
+          {/* Gold top accent bar */}
+          <div className="h-1.5 w-full bg-gradient-to-r from-[#F5C518] via-yellow-300 to-[#F5C518] rounded-t-2xl" />
+
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-b-2xl px-8 py-12 md:px-14 md:py-16 text-center space-y-8 shadow-2xl">
+
+            {/* Icon with ring animation */}
+            <div className="relative w-24 h-24 mx-auto">
+              <div className="absolute inset-0 rounded-full bg-[#F5C518]/20 animate-ping" />
+              <div className="absolute inset-2 rounded-full bg-[#F5C518]/10" />
+              <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[#F5C518] to-yellow-400 flex items-center justify-center shadow-lg shadow-yellow-500/30">
+                <FaTools size={34} className="text-[#6A1B9A]" />
+              </div>
+            </div>
+
+            {/* Eyebrow label */}
+            <div className="inline-flex items-center gap-2 bg-white/10 text-yellow-300 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full border border-yellow-400/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse inline-block" />
+              Coming Back Soon
+            </div>
+
+            {/* Heading */}
+            <div className="space-y-3">
+              <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+                Under <span className="text-[#F5C518]">Maintenance</span>
+              </h1>
+              <p className="text-white/70 text-base leading-relaxed max-w-sm mx-auto">
+                We're sprucing up this page to deliver you an even more magical celebration experience. We'll be back shortly!
+              </p>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-yellow-400 text-lg">✦</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            {/* Feature pills */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {['Premium Decor', 'Expert Planners', 'Seamless Execution'].map(tag => (
+                <span key={tag} className="flex items-center gap-1.5 bg-white/10 text-white/80 text-xs px-3 py-1.5 rounded-full border border-white/10">
+                  <FaCheckCircle size={10} className="text-[#F5C518]" />
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center gap-2 bg-[#F5C518] hover:bg-yellow-400 text-[#6A1B9A] font-bold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-yellow-500/30 hover:shadow-yellow-400/40 hover:-translate-y-0.5"
+              >
+                <FaHome size={14} />
+                Back to Home
+              </Link>
+              <Link
+                href="/contact-us"
+                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-sm px-7 py-3.5 rounded-xl border border-white/20 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <FaPhone size={12} />
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bottom brand tag */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="relative z-10 mt-10 text-white/40 text-xs tracking-widest uppercase"
+        >
+          Eevagga Entertainment © {new Date().getFullYear()}
+        </motion.p>
       </div>
     );
   }
@@ -790,42 +883,43 @@ export default function ServiceLandingPage({ config }) {
     ? resolveImageUrl(dynamicConfig.heroImage)
     : config.heroImage;
 
-  // 2. Resolve dynamic Gallery, fallback to static gallery images for empty slots
+  // 2. Resolve dynamic Gallery, fallback to static gallery images if empty slots
   const resolvedGallery = () => {
     const staticGallery = config.gallery || [];
     if (!dynamicConfig) return staticGallery;
     
     const dynamicGallery = dynamicConfig.gallery || [];
-    if (dynamicGallery.length === 0) return staticGallery;
-
-    return dynamicGallery.map((item, idx) => {
-      const fallbackItem = staticGallery[idx] || {};
-      const hasImage = item.src && item.src.trim() !== "";
-      
-      let finalSrc = "";
-      if (hasImage) {
-        finalSrc = resolveImageUrl(item.src);
-      } else {
-        finalSrc = fallbackItem.src || "https://placehold.co/600x400/ece6f5/6a1b9a?text=Gallery+Setup";
-      }
-
-      return {
-        src: finalSrc,
-        alt: item.alt || fallbackItem.alt || "Event decoration setup",
-        caption: item.caption || fallbackItem.caption || "Portfolio Gallery"
-      };
-    });
+    
+    // Filter dynamic gallery to find items that actually have an uploaded image path
+    const validDynamicItems = dynamicGallery.filter(item => item.src && item.src.trim() !== "");
+    
+    if (validDynamicItems.length > 0) {
+      // Return ONLY the dynamic images (with resolved S3 base URLs)
+      return validDynamicItems.map(item => ({
+        src: resolveImageUrl(item.src),
+        alt: item.alt || "Event decoration setup",
+        caption: item.caption || "Portfolio Gallery"
+      }));
+    }
+    
+    // Fall back to static gallery if no database images are uploaded
+    return staticGallery;
   };
 
   // Merge static default props config with fetched dynamic database values
   const activeConfig = dynamicConfig ? {
     ...config,
     ...dynamicConfig,
+    title: (dynamicConfig.title && dynamicConfig.title.trim()) ? dynamicConfig.title : config.title,
+    badge: (dynamicConfig.badge && dynamicConfig.badge.trim()) ? dynamicConfig.badge : config.badge,
+    h1: (dynamicConfig.h1 && dynamicConfig.h1.trim()) ? dynamicConfig.h1 : config.h1,
+    heroSubtitle: (dynamicConfig.heroSubtitle && dynamicConfig.heroSubtitle.trim()) ? dynamicConfig.heroSubtitle : config.heroSubtitle,
+    heroImageAlt: (dynamicConfig.heroImageAlt && dynamicConfig.heroImageAlt.trim()) ? dynamicConfig.heroImageAlt : config.heroImageAlt,
     heroImage: resolvedHeroImage,
     gallery: resolvedGallery(),
-    stats: dynamicConfig.stats?.length ? dynamicConfig.stats : config.stats,
-    features: dynamicConfig.features?.length ? dynamicConfig.features : config.features,
-    relatedLinks: dynamicConfig.relatedLinks?.length ? dynamicConfig.relatedLinks : config.relatedLinks,
+    stats: (dynamicConfig.stats && dynamicConfig.stats.length > 0) ? dynamicConfig.stats : config.stats,
+    features: (dynamicConfig.features && dynamicConfig.features.length > 0) ? dynamicConfig.features : config.features,
+    relatedLinks: (dynamicConfig.relatedLinks && dynamicConfig.relatedLinks.length > 0) ? dynamicConfig.relatedLinks : config.relatedLinks,
   } : config;
 
   return (
