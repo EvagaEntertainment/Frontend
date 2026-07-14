@@ -75,7 +75,7 @@ const organizationSchema = {
       "@id": "https://www.eevagga.com/#organization",
       "name": "Eevagga Entertainment",
       "url": "https://www.eevagga.com",
-      "telephone": "+91-8050279101",
+      "telephone": "+918050279101",
       "logo": {
         "@type": "ImageObject",
         "url": "https://www.eevagga.com/logo.webp",
@@ -117,19 +117,11 @@ const organizationSchema = {
       ],
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "500",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-          "opens": "09:00",
-          "closes": "21:00"
-        }
-      ]
+        "ratingValue": 4.8,
+        "reviewCount": 500,
+        "bestRating": 5,
+        "worstRating": 1
+      }
     },
     {
       "@type": "WebSite",

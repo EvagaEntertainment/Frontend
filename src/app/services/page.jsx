@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Birthday & Celebration Services in Bangalore",
-  description: "Explore Eevagga's full-service birthday, house warming and baby shower planning services in Bangalore. Themes, decor, photography, venues and end-to-end execution.",
+  description: "Explore Eevagga's birthday, house warming and baby shower planning services in Bangalore. Themes, decor, photography, venues and end-to-end execution.",
   keywords: "birthday decoration services Bangalore, birthday planning services Bangalore, house warming services Bangalore, baby shower planning Bangalore, premium celebration services",
   alternates: { canonical: '/services' },
   openGraph: {
@@ -33,6 +33,7 @@ const servicesSchema = {
     "priceCurrency": "INR",
     "lowPrice": 2999,
     "highPrice": 99999,
+    "offerCount": 3,
     "availability": "https://schema.org/InStock",
     "url": "https://www.eevagga.com/viewall"
   }
