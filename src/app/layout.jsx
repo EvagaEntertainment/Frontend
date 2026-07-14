@@ -161,7 +161,7 @@ export default function RootLayout({ children }) {
             <ClientLayout>{children}</ClientLayout>
           </Providers>
         </Suspense>
-
+ 
         {/* Google Analytics & Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`

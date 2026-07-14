@@ -1,19 +1,19 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Birthday Decoration in Bangalore | Balloon & Theme Decors â€” Eevagga",
+  title: { absolute: "Premium Birthday Decoration in Bangalore — Eevagga" },
   description:
-    "Premium birthday decoration in Bangalore. We specialize in organic balloon arches, stunning backdrops, floral themes, neon light setups & stage decoration. Customise your dÃ©cor today.",
+    "Premium birthday decoration in Bangalore. We specialize in organic balloon arches, stunning backdrops, floral themes, neon light setups & stage decoration. Customise your décor today.",
   keywords:
     "birthday decoration Bangalore, birthday decorators Bangalore, balloon decoration Bangalore, birthday stage decoration Bangalore, Eevagga birthday decorators",
   alternates: {
     canonical: 'https://www.eevagga.com/birthday-decoration-bangalore',
   },
   openGraph: {
-    title: "Birthday Decoration in Bangalore | Balloon & Theme Decors â€” Eevagga",
+    title: "Birthday Decoration in Bangalore | Balloon & Theme Decors — Eevagga",
     description:
       "Transform your space with stunning birthday decorations in Bangalore. Organic balloon setups, neon light backdrops, floral styling, and custom theme designs. Get a free quote.",
     url: 'https://www.eevagga.com/birthday-decoration-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Birthday Decoration in Bangalore â€” Eevagga",
+    title: "Birthday Decoration in Bangalore — Eevagga",
     description: "Premium balloon decoration and custom stage setups for birthdays in Bangalore.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -96,8 +96,26 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    },
+    {
+      "label": "Luxury Birthday Planner",
+      "href": "/luxury-birthday-planner-bangalore"
+    }
+  ],
   title: 'Birthday Decoration Bangalore',
   badge: 'Premium Decorators',
   h1: "Stunning Birthday Decoration in Bangalore \u2014 Balloon & Theme Decors",
@@ -109,7 +127,7 @@ const pageConfig = {
   stats: [
     { value: '450+', label: 'Decorations Setup' },
     { value: '30+', label: 'Color Schemes' },
-    { value: '4.8â˜…', label: 'Decor Rating' },
+    { value: '4.8★', label: 'Decor Rating' },
     { value: '100%', label: 'On-Time Setup' },
   ],
 
@@ -149,115 +167,46 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸŽˆ',
+      icon: '🎈',
       title: 'Organic Balloon Installations',
       description:
         'Stunning balloon arches, columns, ceilings, and customized layouts using premium metallic, pastel, and chrome balloons.',
     },
     {
-      icon: 'ðŸŽ¨',
+      icon: '🎨',
       title: 'Custom Themed Backdrops',
       description:
         'Arch panels, round frames, LED light curtains, wood cutouts, and printed themes tailored to your celebration concept.',
     },
     {
-      icon: 'âœ¨',
+      icon: '✨',
       title: 'Neon Signs & LED Lighting',
       description:
         'Add neon lettering (e.g., "Happy Birthday", "Wild One", "Fifty") and ambient pixel/LED spotlights for a premium glow.',
     },
     {
-      icon: 'ðŸŒ¸',
+      icon: '🌸',
       title: 'Floral Accents & Styling',
       description:
         'Elegant integration of fresh or high-quality artificial flowers, pampas grass, and green foliage for luxury aesthetics.',
     },
     {
-      icon: 'ðŸŽª',
+      icon: '🎪',
       title: 'Premium Theme Props',
       description:
         'Pedestal cake stands, birthday chairs, thematic character cutouts, carpet pathways, and welcome boards.',
     },
     {
-      icon: 'ðŸ§¹',
+      icon: '🧹',
       title: 'Hassle-Free Dismantling',
       description:
         'Our team comes back after the event to systematically pack up and dismantle the setup, leaving the venue clean.',
     },
   ],
 
-  pricing: [
-    {
-      name: 'Starter',
-      subtitle: 'Simple, elegant balloon setup',
-      price: 10000,
-      featured: false,
-      includes: [
-        'Semi-arch balloon border',
-        'Happy Birthday foil balloons',
-        'Small fabric/flex backdrop',
-        'Standard cake stand',
-        'Setup & dismantling',
-      ],
-    },
-    {
-      name: 'Premium',
-      subtitle: 'Modern theme decoration',
-      price: 25000,
-      featured: true,
-      includes: [
-        'Premium organic double-balloon arch',
-        'Custom colored dual-arch backdrops',
-        'Neon age/birthday light sign',
-        '3 pedestal cake stands & prop carpet',
-        'LED focus spotlights',
-      ],
-    },
-    {
-      name: 'Luxury',
-      subtitle: 'Bespoke grand stage decor',
-      price: 50000,
-      featured: false,
-      includes: [
-        'Luxury multi-panel themed backdrop',
-        'Exquisite floral & balloon styling',
-        'Large custom props & cutouts',
-        'Special client entry styling',
-        'Professional setup crew + manager',
-      ],
-    },
-  ],
-
-  faqs: [
-    {
-      question: 'How long does it take to set up the birthday decorations?',
-      answer:
-        'Depending on the package and design complexity, setup takes between 2 to 5 hours. Our experienced decorators make sure everything is completely finished and cleaned before your guests start arriving.',
-    },
-    {
-      question: 'Do you decorate for home birthday parties as well as halls?',
-      answer:
-        'Yes, absolutely! We do decorations for intimate home setups (living rooms, bedrooms, terraces, gardens) as well as larger party halls, hotels, and clubhouses across Bangalore.',
-    },
-    {
-      question: 'Can we customize the balloon colors and theme props?',
-      answer:
-        'Yes! All our decoration packages are fully customisable. You can select your color palette, backdrop shape, prop styles, neon signs, and add individual elements as needed.',
-    },
-    {
-      question: 'Do you provide fresh flower decoration?',
-      answer:
-        'Yes, we can design fresh flower decorations for traditional birthday events, theme-based floral backdrops, and table settings. Fresh flower customisation might incur additional charges based on market prices.',
-    },
-    {
-      question: 'Do I need to get permission from the banquet hall?',
-      answer:
-        'Yes, we recommend checking with your banquet hall or venue manager regarding guidelines on tape, nails, and setup times. We always ensure our team uses non-damaging materials.',
-    },
-  ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function BirthdayDecorationBangalorePage() {
   return (
     <>

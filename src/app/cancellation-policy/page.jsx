@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Cancellation Policy",
+  title: { absolute: "Cancellation Policy — Eevagga" },
   description: "Review our transparent cancellation and refund policies for birthday packages and services.",
   keywords: "cancellation policy, Eevagga refunds",
   alternates: { canonical: '/cancellation-policy' },

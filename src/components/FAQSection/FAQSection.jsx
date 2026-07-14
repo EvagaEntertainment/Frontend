@@ -3,9 +3,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import AccordionCard from "../Cards/AccordionCard";
 
-const FAQSection = () => {
+const FAQSection = ({ customFaqs }) => {
   const [expandedIndex, setExpandedIndex] = useState(-1);
-  const faqData = [
+  const defaultFaqData = [
     {
       question: "What is Eevagga?",
       answer:
@@ -67,6 +67,8 @@ const FAQSection = () => {
         "You can book through:\n• the Eevagga website\n• contacting our team directly\nOur team will guide you through themes, packages, and customization options to help you plan the perfect birthday celebration.",
     },
   ];
+
+  const faqData = customFaqs && customFaqs.length > 0 ? customFaqs : defaultFaqData;
 
   const handleToggle = (panelIndex) => (_, isExpanded) => {
     setExpandedIndex(isExpanded ? panelIndex : -1);

@@ -1,19 +1,19 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
+  title: { absolute: "Premium Birthday End-to-End Event Planner — Eevagga" },
   description:
-    "Complete end-to-end birthday event planning. Eevagga manages your entire birthday celebration from invitations, venue booking, dÃ©cor, catering, entertainment to cleanup.",
+    "Complete end-to-end birthday event planning. Eevagga manages your entire birthday celebration from invitations, venue booking, décor, catering, entertainment to cleanup.",
   keywords:
     "premium birthday end to end planner, full service birthday planner, end to end birthday organizer Bangalore, Eevagga full service birthday, birthday event management",
   alternates: {
     canonical: 'https://www.eevagga.com/premium-birthday-end-to-end-planner',
   },
   openGraph: {
-    title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
+    title: "Premium Birthday End-to-End Event Planner — Eevagga",
     description:
       "Sit back and celebrate. Eevagga manages every detail of your birthday: custom invitations, venue booking, premium decors, catering coordination, and entertainment. Book a free consultation.",
     url: 'https://www.eevagga.com/premium-birthday-end-to-end-planner',
@@ -23,19 +23,19 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Premium Birthday End-to-End Event Planner â€” Eevagga",
+    title: "Premium Birthday End-to-End Event Planner — Eevagga",
     description: "Complete full-service birthday event management in Bangalore. Stress-free execution.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   '@id': 'https://www.eevagga.com/premium-birthday-end-to-end-planner#service',
   name: 'Premium Birthday End-to-End Event Planner',
   description:
-    "Full-service end-to-end birthday event planning, management, and coordination in Bangalore. Covers venue selection, custom digital invitations, premium dÃ©cor design, catering, custom cake styling, live entertainment, and on-site support.",
+    "Full-service end-to-end birthday event planning, management, and coordination in Bangalore. Covers venue selection, custom digital invitations, premium décor design, catering, custom cake styling, live entertainment, and on-site support.",
   provider: { '@id': 'https://www.eevagga.com/#organization' },
   serviceType: 'End-to-End Birthday Event Management',
   areaServed: { '@type': 'City', name: 'Bangalore', sameAs: 'https://en.wikipedia.org/wiki/Bangalore' },
@@ -96,8 +96,26 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium Birthday End-to-End Planner',
   badge: 'Total Event Management',
   h1: "Full Service End-to-End Premium Birthday Planner",
@@ -110,7 +128,7 @@ const pageConfig = {
     { value: '200+', label: 'Managed Events' },
     { value: '100%', label: 'Stress-Free' },
     { value: 'All-Inclusive', label: 'Packages' },
-    { value: '4.9â˜…', label: 'Client Reviews' },
+    { value: '4.9★', label: 'Client Reviews' },
   ],
 
   breadcrumbs: [
@@ -149,117 +167,46 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸ›ï¸',
+      icon: '🏛️',
       title: 'Venue Sourcing & Curation',
       description:
         'We help you find, negotiate, and book the perfect banquet hall, lawn, or rooftop venue in Bangalore.',
     },
     {
-      icon: 'ðŸŽ«',
+      icon: '🎫',
       title: 'Digital Invites & RSVP flows',
       description:
         'Custom design of digital invitations, managing guest list responses, and sending reminder notifications.',
     },
     {
-      icon: 'ðŸ½ï¸',
+      icon: '🍽️',
       title: 'Premium Catering management',
       description:
         'Coordinate food menus, live station setups, high-quality tableware, and professional service staffs.',
     },
     {
-      icon: 'ðŸŽª',
-      title: 'Complete DÃ©cor & Lighting',
+      icon: '🎪',
+      title: 'Complete Décor & Lighting',
       description:
         'Thematic stage production, photobooths, entrance decors, ambient lighting, and floral accents.',
     },
     {
-      icon: 'ðŸŽ¬',
+      icon: '🎬',
       title: 'Full Entertainment & AV',
       description:
         'Game hosts, professional DJs, custom music playlists, sound speakers, projectors, and performance bookings.',
     },
     {
-      icon: 'ðŸ§¹',
+      icon: '🧹',
       title: 'On-Site Operations & Cleanup',
       description:
         'A dedicated on-site manager coordinates all vendors, timings, and manages final cleanup of the venue.',
     },
   ],
 
-  pricing: [
-    {
-      name: 'Starter',
-      subtitle: 'Complete event execution package',
-      price: 25000,
-      featured: false,
-      includes: [
-        'Complete theme decoration setup',
-        'Basic sound setup + host',
-        'Candid photography (2 hours)',
-        'Event coordination supervisor',
-        'Post-event dismantling & cleaning',
-      ],
-    },
-    {
-      name: 'Premium',
-      subtitle: 'All-inclusive full service planning',
-      price: 50000,
-      featured: true,
-      includes: [
-        'Custom theme visual creation',
-        'Professional photo & video highlight reel',
-        'Premium sound, lighting & DJ booking',
-        'Kids emcee & party games coordinator',
-        'Custom themed cake coordination (2kg included)',
-        '2 operations managers on site',
-      ],
-    },
-    {
-      name: 'Luxury',
-      subtitle: 'Elite VIP event production',
-      price: 100000,
-      featured: false,
-      includes: [
-        'Grand bespoke stage & entry production',
-        'Full digital invitation & RSVP manager',
-        'Multi-cuisine catering coordination support',
-        'Live entertainment (mascots + magician)',
-        'Thematic candy/dessert bar setup',
-        'Full operations squad (3-4 members) on-site',
-      ],
-    },
-  ],
-
-  faqs: [
-    {
-      question: 'What does "end-to-end" birthday planning include?',
-      answer:
-        'End-to-end planning means we handle every single detail: concept design, invitation cards, venue management, catering coordination, custom cakes, photography, entertainment, and final post-event cleaning. You simply show up as a guest!',
-    },
-    {
-      question: 'Can you help us find and book a venue in Bangalore?',
-      answer:
-        'Yes! We maintain partnerships with banquet halls, resorts, rooftop spaces, and restaurants across Bangalore and will help you shortlist and book the perfect venue based on your budget.',
-    },
-    {
-      question: 'Is there a dedicated manager on the day of the event?',
-      answer:
-        'Yes. A dedicated event coordinator and operations manager will be on-site from start to finish to ensure everything runs exactly as planned, vendors deliver on time, and schedules are followed.',
-    },
-    {
-      question: 'How do you coordinate catering and cakes?',
-      answer:
-        'We work with leading caterers and bakers in Bangalore. We handle the design brief for the cake, tasting sessions for the menu (if needed), table setups, live counter logistics, and buffet layouts.',
-    },
-    {
-      question: 'Can we change elements in the packages?',
-      answer:
-        'Absolutely. All our packages are customisable. We will tailor the services, decor elements, and catering options specifically to match your exact budget and preference.',
-    },
-  ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function PremiumBirthdayEndToEndPlannerPage() {
   return (
     <>

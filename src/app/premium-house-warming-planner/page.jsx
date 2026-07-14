@@ -1,19 +1,19 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners â€” Eevagga",
+  title: { absolute: "Premium House Warming Planner in Bangalore — Eevagga" },
   description:
-    "Planning a house warming (Griha Pravesh) ceremony? Eevagga provides premium house warming planning in Bangalore â€” traditional and modern decorations, catering, puja setup & logistics.",
+    "Planning a house warming (Griha Pravesh) ceremony? Eevagga provides premium house warming planning in Bangalore — traditional and modern decorations, catering, puja setup & logistics.",
   keywords:
     "premium house warming ceremony planner, Griha Pravesh planner Bangalore, house warming decoration Bangalore, house warming catering, Eevagga Griha Pravesh",
   alternates: {
     canonical: 'https://www.eevagga.com/premium-house-warming-planner',
   },
   openGraph: {
-    title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners â€” Eevagga",
+    title: "Premium House Warming Ceremony Planner | Griha Pravesh Planners — Eevagga",
     description:
       "Step into your new home with joy. Eevagga plans beautiful, traditional or contemporary house warming ceremonies in Bangalore. Floral decors, puja setup, and catering logistics. Get a free quote.",
     url: 'https://www.eevagga.com/premium-house-warming-planner',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Premium House Warming Planner â€” Eevagga",
+    title: "Premium House Warming Planner — Eevagga",
     description: "Traditional and modern Griha Pravesh planning in Bangalore. Decors, puja support & catering.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -96,21 +96,39 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Premium House Warming Planner',
   badge: 'Blessings & Joy',
   h1: "Premium House Warming (Griha Pravesh) Ceremony Planner",
   heroSubtitle:
     "Step into your new home with positive energy and joy. Eevagga designs and organizes beautiful house warming events, handling fresh floral decorations, puja setups, and premium catering coordination.",
-  heroImage: '/service-pages/birthday-hero.png',
+  heroImage: '/service-pages/house-warming-hero.png',
   heroImageAlt: 'Traditional marigold floral decoration at home entrance for Griha Pravesh',
 
   stats: [
     { value: '180+', label: 'Ceremonies Planned' },
     { value: 'Fresh', label: 'Flower Decor' },
     { value: 'Tradition', label: 'Aligned' },
-    { value: '4.8â˜…', label: 'Client Rating' },
+    { value: '4.8★', label: 'Client Rating' },
   ],
 
   breadcrumbs: [
@@ -121,27 +139,27 @@ const pageConfig = {
 
   gallery: [
     {
-      src: '/service-pages/birthday-hero.png',
+      src: '/service-pages/house-warming-hero.png',
       alt: 'Traditional Griha Pravesh flower entrance',
       caption: 'Entrance Floral Decor',
     },
     {
-      src: '/service-pages/birthday-gallery-1.png',
+      src: '/service-pages/house-warming-gallery-1.png',
       alt: 'Homa/Puja mandap setup with marigold garland',
       caption: 'Puja Mandap Setup',
     },
     {
-      src: '/service-pages/birthday-gallery-2.png',
+      src: '/service-pages/house-warming-gallery-2.png',
       alt: 'Traditional dining arrangements for house warming',
       caption: 'Traditional Dining',
     },
     {
-      src: '/service-pages/birthday-gallery-3.png',
+      src: '/service-pages/house-warming-gallery-3.png',
       alt: 'Traditional welcome items and floor design (Rangoli)',
       caption: 'Rangoli & Welcome',
     },
     {
-      src: '/service-pages/birthday-gallery-4.png',
+      src: '/service-pages/house-warming-gallery-4.png',
       alt: 'Elegant lounge seating for house warming guests',
       caption: 'Guest Lounge Area',
     },
@@ -149,117 +167,46 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸŒ¸',
+      icon: '🌸',
       title: 'Traditional Floral Curation',
       description:
         'Beautiful fresh flower arrangements using marigold, jasmine, orchids, and mango leaves for main entrances and puja areas.',
     },
     {
-      icon: 'ðŸ•Œ',
+      icon: '🕌',
       title: 'Homa & Puja Stage Design',
       description:
         'Specially designed mandaps and backdrops keeping religious customs, homa kunda placement, and priest requirements in mind.',
     },
     {
-      icon: 'ðŸ½ï¸',
+      icon: '🍽️',
       title: 'Catering & Dining setups',
       description:
         'Coordinate premium traditional catering (South/North Indian), providing full table setup, servers, and water systems.',
     },
     {
-      icon: 'ðŸª”',
+      icon: '🪔',
       title: 'Aura & Ambient Lighting',
       description:
         'Fairy lights across the balcony/terrace, traditional brass lamps (diyas), and focused spotlights for the puja space.',
     },
     {
-      icon: 'ðŸ“¸',
+      icon: '📸',
       title: 'Puja Candid Photography',
       description:
         'Professional coverage of the early-morning rituals, homa, family interactions, and group guests.',
     },
     {
-      icon: 'ðŸª‘',
+      icon: '🪑',
       title: 'Seating & Mattress Rentals',
       description:
         'Logistics coordination for chairs, traditional floor mattresses, tables, and umbrella shades for outdoor/terrace seating.',
     },
   ],
 
-  pricing: [
-    {
-      name: 'Starter',
-      subtitle: 'Essential traditional styling',
-      price: 15000,
-      featured: false,
-      includes: [
-        'Main door fresh floral arch (marigold/jasmine)',
-        'Traditional puja backdrop (fabric + flower garlands)',
-        'Welcome banner with stand',
-        'Traditional background music system',
-        'Setup before sunrise',
-      ],
-    },
-    {
-      name: 'Premium',
-      subtitle: 'Complete home styling & photography',
-      price: 35000,
-      featured: true,
-      includes: [
-        'Premium entryway floral arch & side pillars',
-        'Elegant indoor floral installations',
-        'Homa mandap backdrop & brass lamp setups',
-        'Professional photography (3 hours)',
-        'Sound system for devotional chants',
-        'On-site event supervisor',
-      ],
-    },
-    {
-      name: 'Luxury',
-      subtitle: 'Bespoke grand Griha Pravesh',
-      price: 75000,
-      featured: false,
-      includes: [
-        'Bespoke fresh floral makeover (interior + exterior)',
-        'Luxury canopy/mandap with designer props',
-        'Candid photo + video highlight reel',
-        'Traditional musical welcome (Nadaswaram group)',
-        'VIP dining table styling & tableware',
-        'Complete guest management team',
-      ],
-    },
-  ],
-
-  faqs: [
-    {
-      question: 'What kind of decorations do you provide for Griha Pravesh?',
-      answer:
-        'We specialize in traditional marigold, jasmine, and mango leaf floral decorations, as well as contemporary setups including fresh flower arches, elegant indoor lighting, and beautiful mandap backdrops.',
-    },
-    {
-      question: 'Do you assist with puja arrangements and catering setups?',
-      answer:
-        'Yes! We coordinate high-quality traditional catering (served on banana leaves or buffet), set up dining tables, and can arrange priests, puja supplies, and homa kunda setups.',
-    },
-    {
-      question: 'Can you handle setups for both apartments and villas?',
-      answer:
-        'Yes, we plan house warming ceremonies for apartments, gated-community villas, independent bungalows, and clubhouses across all major areas of Bangalore.',
-    },
-    {
-      question: 'Do you set up decorations late at night or early in the morning?',
-      answer:
-        'Since Griha Pravesh pujas often start early in the morning (brahma muhurtam), we frequently perform decoration setups overnight to ensure everything is perfect before the family arrives.',
-    },
-    {
-      question: 'Can we hire traditional musicians through Eevagga?',
-      answer:
-        'Yes! We can arrange professional traditional Nadaswaram, Shehnai, or flute players to welcome your guests and create a serene, sacred atmosphere.',
-    },
-  ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function PremiumHouseWarmingPlannerPage() {
   return (
     <>

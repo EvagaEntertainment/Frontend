@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms and Conditions",
+  title: { absolute: "Terms and Conditions — Eevagga" },
   description: "Review the comprehensive terms and conditions of using the Eevagga premium platform.",
   keywords: "terms of service, Eevagga terms, platform rules",
   alternates: { canonical: '/terms-and-condition' },

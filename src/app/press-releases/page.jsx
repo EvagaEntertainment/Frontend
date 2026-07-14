@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Press Releases & Media — Eevagga Entertainment Bangalore",
+  title: { absolute: "Press Releases & Media — Eevagga" },
   description: "Latest news, media announcements and press coverage from Eevagga — Bangalore's premium birthday, house warming and baby shower celebration company.",
   keywords: "Eevagga press releases, Eevagga news, Eevagga media, birthday planner Bangalore news",
   alternates: { canonical: '/press-releases' },

@@ -158,6 +158,7 @@ const apiEndpoints = {
     getOneTestimonial: (id) => `testimonials/get-one-testimonial/${id}`,
     updateTestimonial: (id) => `testimonials/update-testimonial/${id}`,
     deleteTestimonial: (id) => `testimonials/delete-testimonial/${id}`,
+    getEventServicePageByPath: "event-services/page",
   },
   admin: {
     register: "admin/registerAdmin",
@@ -266,6 +267,10 @@ const apiEndpoints = {
     createQR: "qr/create",
     updateQR: (id) => `qr/update/${id}`,
     deleteQR: (id) => `qr/delete/${id}`,
+    // Event Services Page admin endpoints
+    getAllEventServicePages: "event-services/admin/pages",
+    getEventServicePageById: (id) => `event-services/admin/pages/${id}`,
+    updateEventServicePage: (id) => `event-services/admin/pages/${id}`,
   },
   packages: {
     getAllPackages: () => "packages/get-all-packages",

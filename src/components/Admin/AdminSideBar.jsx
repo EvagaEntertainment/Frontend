@@ -117,6 +117,7 @@ const AdminSideBar = ({ selectedMenu, onMenuSelect }) => {
         { id: "Banner", label: "Banner", icon: <FaRegImage /> },
         { id: "Gallery", label: "Gallery", icon: <LuGalleryThumbnails /> },
         { id: "AdminCustomEvent", label: "Custom Event", icon: <BiSolidCalendarEvent /> },
+        { id: "Event Services", label: "Event Services", icon: <BiSolidCalendarEvent /> },
         { id: "Coupons", label: "Coupons", icon: <RiCoupon3Line /> },
         {
           id: "Fee Breakdown by Category",

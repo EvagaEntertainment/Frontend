@@ -1,10 +1,10 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Kids Birthday Party Planner in Bangalore | Theme Planners â€” Eevagga",
+  title: { absolute: "Kids Birthday Party Planner in Bangalore — Eevagga" },
   description:
     "Planning a kids birthday party in Bangalore? Eevagga designs magical children's birthday celebrations with creative themes, fun decors, games & entertainment. Book a free consultation.",
   keywords:
@@ -13,7 +13,7 @@ export const metadata = {
     canonical: 'https://www.eevagga.com/kids-birthday-planner-bangalore',
   },
   openGraph: {
-    title: "Kids Birthday Party Planner in Bangalore | Theme Planners â€” Eevagga",
+    title: "Kids Birthday Party Planner in Bangalore | Theme Planners — Eevagga",
     description:
       "Designs magical children's birthday celebrations in Bangalore. Creative themes, balloon decors, games, emcees, and entertainment. Get your free consultation.",
     url: 'https://www.eevagga.com/kids-birthday-planner-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Kids Birthday Party Planner in Bangalore â€” Eevagga",
-    description: "Creative kids birthday planning in Bangalore. Fun themes, amazing dÃ©cor & entertainment.",
+    title: "Kids Birthday Party Planner in Bangalore — Eevagga",
+    description: "Creative kids birthday planning in Bangalore. Fun themes, amazing décor & entertainment.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -96,8 +96,26 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    },
+    {
+      "label": "Luxury Birthday Planner",
+      "href": "/luxury-birthday-planner-bangalore"
+    }
+  ],
   title: 'Kids Birthday Planner Bangalore',
   badge: 'Magical Kids Celebrations',
   h1: "Kids Birthday Party Planner in Bangalore \u2014 Pure Joy & Fun",
@@ -149,118 +167,46 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸ¦„',
+      icon: '🦄',
       title: 'Exciting Kid-Friendly Themes',
       description:
         'From Cocomelon and Peppa Pig to Space Explorer and Barbie, we bring your child\'s favorite world to life.',
     },
     {
-      icon: 'ðŸŽˆ',
-      title: 'Whimsical Balloon & Prop DÃ©cor',
+      icon: '🎈',
+      title: 'Whimsical Balloon & Prop Décor',
       description:
         'Stunning balloon backdrops, 3D character cutouts, themed table centerpieces, and decorative photo booths.',
     },
     {
-      icon: 'ðŸŽ¤',
+      icon: '🎤',
       title: 'Interactive Emcees & Games',
       description:
         'Professional kid-friendly hosts who conduct engaging games, distribute prizes, and keep the energy high.',
     },
     {
-      icon: 'ðŸŽª',
+      icon: '🎪',
       title: 'Fun Food & Activity Stalls',
       description:
         'Add popcorn, cotton candy, chocolate fountains, tattoo artists, face painters, or caricature artists.',
     },
     {
-      icon: 'ðŸ¦',
+      icon: '🦁',
       title: 'Mascot & Character Entries',
       description:
         'Delight the kids with surprise visits from Mickey Mouse, Elsa, Spider-Man, or a custom mascot.',
     },
     {
-      icon: 'ðŸ“¸',
+      icon: '📸',
       title: 'Photography & Videography',
       description:
         'Candid photographers to capture the genuine smiles, laughter, and fun moments of your child and guests.',
     },
   ],
 
-  pricing: [
-    {
-      name: 'Starter',
-      subtitle: 'Ideal for small home gatherings',
-      price: 15000,
-      featured: false,
-      includes: [
-        'Theme backdrop (basic 3D cutouts)',
-        'Balloon arch & clusters',
-        'Cake table dÃ©cor',
-        'Music system with kids playlist',
-        'Up to 25 kids',
-      ],
-    },
-    {
-      name: 'Premium',
-      subtitle: 'Most popular for halls & backyards',
-      price: 35000,
-      featured: true,
-      includes: [
-        'Full cartoon theme setup',
-        'Premium props & lighting',
-        'Kids emcee & interactive games',
-        'Activity stall (Tattoo/Face paint)',
-        'Candid photography (2 hours)',
-        'Up to 50 guests',
-      ],
-    },
-    {
-      name: 'Luxury',
-      subtitle: 'Grand kids birthday extravaganza',
-      price: 65000,
-      featured: false,
-      includes: [
-        'Custom bespoke theme production',
-        'Grand LED backdrop & lighting',
-        'Mascot appearance (30 mins)',
-        '2 activity stalls + candy floss',
-        'Full-day photography + video highlight',
-        'Dedicated party coordinator',
-        'Unlimited fun',
-      ],
-    },
-  ],
-
-  faqs: [
-    {
-      question: 'What popular themes do you offer for kids birthdays?',
-      answer:
-        'We offer a wide variety of popular themes including Jungle Safari, Disney Princess, Outer Space, Superhero, Cocomelon, Unicorn, Carnival, and custom bespoke themes based on your child\'s favorite characters.',
-    },
-    {
-      question: 'Do you provide game hosts/emcees and entertainment activities?',
-      answer:
-        'Yes! We coordinate professional children\'s emcees, game hosts, magicians, puppet shows, tattoo artists, face painters, balloon sculptors, and mascot performers to keep the kids engaged and entertained.',
-    },
-    {
-      question: 'Can you arrange a custom themed cake?',
-      answer:
-        'Yes, we work with top-tier cake designers and home bakers in Bangalore to design and deliver beautiful, delicious custom themed cakes matching your exact party colors and concept.',
-    },
-    {
-      question: 'Do you set up kids parties in apartment clubhouses?',
-      answer:
-        'Absolutely! We frequently work in apartment clubhouses, party halls, restaurants, backyards, terraces, and indoor play areas across Bangalore.',
-    },
-    {
-      question: 'What is the setup time required for a themed kids party?',
-      answer:
-        'Typically, we require 3 to 4 hours for premium setups, and 4 to 6 hours for complex luxury custom setups to ensure all details are fully ready before the guests arrive.',
-    },
-  ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function KidsBirthdayPlannerBangalorePage() {
   return (
     <>

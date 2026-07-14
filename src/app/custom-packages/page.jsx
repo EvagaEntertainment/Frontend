@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Custom Event Packages",
+  title: { absolute: "Custom Event Packages — Eevagga" },
   description: "Request a fully customised birthday, wedding or corporate event package tailored to your budget, guest count and vision.",
   alternates: { canonical: '/custom-packages' },
   robots: { index: false, follow: false },

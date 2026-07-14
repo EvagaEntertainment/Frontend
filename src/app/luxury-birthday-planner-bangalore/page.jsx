@@ -1,10 +1,10 @@
-﻿import { Suspense } from 'react';
+import { Suspense } from 'react';
 import { ogImages } from '../_seo';
 import ServiceLandingPage from '../../components/ServiceLandingPage/ServiceLandingPage';
 
-/* â”€â”€â”€ SEO Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SEO Metadata ─────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Luxury Birthday Planner in Bangalore | High-End Event Designers â€” Eevagga",
+  title: { absolute: "Luxury Birthday Party Planner in Bangalore — Eevagga" },
   description:
     "Eevagga is the leading luxury birthday planner in Bangalore. We create exquisite, high-end birthday celebrations with premium production, designer styling & VIP management.",
   keywords:
@@ -13,7 +13,7 @@ export const metadata = {
     canonical: 'https://www.eevagga.com/luxury-birthday-planner-bangalore',
   },
   openGraph: {
-    title: "Luxury Birthday Planner in Bangalore | High-End Event Designers â€” Eevagga",
+    title: "Luxury Birthday Planner in Bangalore | High-End Event Designers — Eevagga",
     description:
       "Milestone celebrations engineered to perfection. Eevagga designs magnificent high-end birthday events with designer styling, custom productions, and VIP coordination in Bangalore. Get in touch.",
     url: 'https://www.eevagga.com/luxury-birthday-planner-bangalore',
@@ -23,12 +23,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Luxury Birthday Planner in Bangalore â€” Eevagga",
+    title: "Luxury Birthday Planner in Bangalore — Eevagga",
     description: "Bespoke event production, premium florals, lighting & VIP management for birthdays in Bangalore.",
   },
 };
 
-/* â”€â”€â”€ JSON-LD Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── JSON-LD Schemas ──────────────────────────────────────────────────── */
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -96,8 +96,26 @@ const faqSchema = {
   ],
 };
 
-/* â”€â”€â”€ Page Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Config ──────────────────────────────────────────────────────── */
 const pageConfig = {
+  relatedLinks: [
+    {
+      "label": "Birthday Planner",
+      "href": "/birthday-planner-bangalore"
+    },
+    {
+      "label": "Kids Birthday Planner",
+      "href": "/kids-birthday-planner-bangalore"
+    },
+    {
+      "label": "Birthday Decoration",
+      "href": "/birthday-decoration-bangalore"
+    },
+    {
+      "label": "Birthday Celebration At Home",
+      "href": "/birthday-celebration-at-home-bangalore"
+    }
+  ],
   title: 'Luxury Birthday Planner Bangalore',
   badge: 'Elite Event Designers',
   h1: "Bangalore's Leading Luxury Birthday Event Planner & Designer",
@@ -110,7 +128,7 @@ const pageConfig = {
     { value: '120+', label: 'Luxury Events' },
     { value: 'Bespoke', label: 'Theme Design' },
     { value: 'VIP', label: 'Guest Service' },
-    { value: '5â˜… Rated', label: 'Execution' },
+    { value: '5★ Rated', label: 'Execution' },
   ],
 
   breadcrumbs: [
@@ -149,117 +167,46 @@ const pageConfig = {
 
   features: [
     {
-      icon: 'ðŸ›ï¸',
+      icon: '🏛️',
       title: 'Bespoke Theme Design & 3D Layouts',
       description:
         'Our elite designers create customized concepts, providing detailed mood boards and 3D space layouts for approval.',
     },
     {
-      icon: 'ðŸŒ¸',
+      icon: '🌸',
       title: 'Luxury Floral & Prop Styling',
       description:
         'Exquisite, custom-sourced flowers, grand metallic arches, themed statues, and designer backdrops manufactured in-house.',
     },
     {
-      icon: 'ðŸ’¡',
+      icon: '💡',
       title: 'Concert-Grade AV & Intelligent Lights',
       description:
         'Professional sound systems, LED screen walls, laser shows, moving heads, and custom ambient uplighting.',
     },
     {
-      icon: 'ðŸ‘‘',
+      icon: '👑',
       title: 'VIP Guest & RSVP Coordination',
       description:
         'Dedicated guest relationship officers, digitized invitation flows, hostess management, and valet coordination.',
     },
     {
-      icon: 'ðŸŽ­',
+      icon: '🎭',
       title: 'High-End Artist Booking',
       description:
         'Coordinate top-tier DJs, celebrity emcees, live acoustic/jazz bands, dancers, and international performers.',
     },
     {
-      icon: 'ðŸ“‹',
+      icon: '📋',
       title: 'Dedicated Senior Event Director',
       description:
         'A senior director leads our operations team on-site, ensuring absolute execution precision and schedule adherence.',
     },
   ],
 
-  pricing: [
-    {
-      name: 'Starter',
-      subtitle: 'Premium bespoke design styling',
-      price: 50000,
-      featured: false,
-      includes: [
-        'Bespoke visual theme & design layout',
-        'Upscale panel backdrops & props',
-        'Imported flower/balloon hybrid styling',
-        'Professional candid photographer',
-        'Senior coordinator on site',
-      ],
-    },
-    {
-      name: 'Premium',
-      subtitle: 'Luxury hall transformation',
-      price: 120000,
-      featured: true,
-      includes: [
-        'Grand 3D stage production & props',
-        'Premium lighting (moving heads & LED wash)',
-        'Professional photo & cinematic video highlight',
-        'Thematic entrance arch & carpet path',
-        'Event coordination team (3 members)',
-        'Up to 150 guests',
-      ],
-    },
-    {
-      name: 'Luxury',
-      subtitle: 'Bespoke high-end celebration production',
-      price: 250000,
-      featured: false,
-      includes: [
-        'Complete customized event production',
-        'Large LED wall & concert-grade sound/DJ',
-        'VIP seating & luxury furniture rentals',
-        'Premium entertainment (live band/dancer bookings)',
-        'Dedicated VIP hostess & coordinator squad',
-        'Full digital event management',
-      ],
-    },
-  ],
-
-  faqs: [
-    {
-      question: 'What distinguishes a birthday planning service as "luxury"?',
-      answer:
-        'Luxury birthday planning features custom visual conceptualisation, bespoke prop manufacturing, premium floral imports, designer furniture hire, concert-level AV and lighting, celebrity/artist coordination, and a dedicated VIP guest relations team.',
-    },
-    {
-      question: 'Do you work with luxury 5-star hotels and resorts in Bangalore?',
-      answer:
-        'Yes. Eevagga regularly coordinates with Bangalore\'s premier 5-star hotels, luxury resorts, private villas, and high-end banquet facilities. We manage all logistics, vendor guidelines, and security requirements.',
-    },
-    {
-      question: 'Do you offer custom theme and layout design beforehand?',
-      answer:
-        'Yes! For all premium and luxury bookings, we provide detailed mood boards, custom theme illustrations, color palettes, and 2D/3D floor layouts so you can visualize the event space before execution.',
-    },
-    {
-      question: 'Do you arrange custom dining and bar setups?',
-      answer:
-        'Yes, we coordinate elegant theme-based table designs, customized cutlery, premium linens, glassware, and specialize in styling custom mocktail/cocktail bars and theme food tables.',
-    },
-    {
-      question: 'What is the booking timeline for luxury events?',
-      answer:
-        'For high-end events requiring custom prop fabrication or artist bookings, we recommend booking 4 to 8 weeks in advance to allow sufficient time for designing, production, and sourcing.',
-    },
-  ],
 };
 
-/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page Component ───────────────────────────────────────────────────── */
 export default function LuxuryBirthdayPlannerBangalorePage() {
   return (
     <>
