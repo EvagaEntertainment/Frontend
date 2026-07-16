@@ -416,3 +416,105 @@ input[type="number"] {
 .font-playfair {
   font-family: var(--font-playfair), serif;
 }
+
+/* ── Blog rich-text content styles ───────────────────────────── */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  font-family: var(--font-playfair), "Outfit", serif;
+  color: #333333;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+.blog-content h1 { font-size: 2rem; }
+.blog-content h2 { font-size: 1.6rem; }
+.blog-content h3 { font-size: 1.3rem; }
+.blog-content h4 { font-size: 1.1rem; }
+
+.blog-content p {
+  color: #757575;
+  line-height: 1.85;
+  margin-bottom: 1.2em;
+}
+
+.blog-content a {
+  color: #6A1B9A;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.blog-content a:hover {
+  border-bottom-color: #6A1B9A;
+}
+
+.blog-content strong,
+.blog-content b {
+  color: #333333;
+  font-weight: 600;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #D2D2D2;
+  margin: 1.5em auto;
+  display: block;
+}
+
+.blog-content ul,
+.blog-content ol {
+  color: #757575;
+  padding-left: 1.5rem;
+  margin-bottom: 1.2em;
+  line-height: 1.85;
+}
+.blog-content ul { list-style-type: disc; }
+.blog-content ol { list-style-type: decimal; }
+.blog-content li { margin-bottom: 0.4em; }
+
+.blog-content blockquote {
+  border-left: 3px solid #6A1B9A;
+  margin: 1.5em 0;
+  padding: 0.75em 1.25em;
+  background: #F3E8FF;
+  border-radius: 0 8px 8px 0;
+  color: #757575;
+  font-style: italic;
+}
+.blog-content blockquote p { margin-bottom: 0; }
+
+.blog-content hr {
+  border: none;
+  border-top: 1px solid #D2D2D2;
+  margin: 2em 0;
+}
+
+.blog-content code {
+  background: #F3E8FF;
+  color: #6A1B9A;
+  font-size: 0.88em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.blog-content pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 1.2em 1.5em;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-size: 0.88em;
+}
+.blog-content pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
