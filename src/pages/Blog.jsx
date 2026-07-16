@@ -6,11 +6,12 @@ import commonApis from "../services/commonApis";
 import { Pagination, Stack } from "@mui/material";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
-function Blog() {
-  const [allBlog, setAllBlog] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+function Blog({ initialBlogs, initialPage, initialTotalPages }) {
+  const [allBlog, setAllBlog] = useState(initialBlogs || []);
+  const [page, setPage] = useState(initialPage || 1);
+  const [totalPages, setTotalPages] = useState(initialTotalPages || 1);
   const getAllBlogsApi = useServices(commonApis.getAllBlogs);
+  const isFirstRender = React.useRef(true);
 
   const style = {
     "& .Mui-selected": {
@@ -33,6 +34,12 @@ function Blog() {
   };
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      if (initialBlogs && initialBlogs.length > 0) {
+        return;
+      }
+    }
     getAllBlogsApiHandle();
   }, [page]);
 
