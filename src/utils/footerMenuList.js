@@ -21,7 +21,13 @@ export const footerMenuItems = {
     { label: "Privacy Policy", path: internalRoutes.privacyAndPolicy },
   ],
   rightMenu: [
-    // { label: "Cancellation Policy", path: internalRoutes.cancellationPolicy },
-    // { label: "Feedback Form", path: internalRoutes.feedbackForm },
+    { label: "All Celebrations", path: internalRoutes.viewAllPage },
+    { label: "Birthday Planner Bangalore", path: "/birthday-planner-bangalore" },
+    { label: "Birthday Decoration", path: "/birthday-decoration-bangalore" },
+    { label: "Kids Birthday Planner", path: "/kids-birthday-planner-bangalore" },
+    { label: "Luxury Birthday Planner", path: "/luxury-birthday-planner-bangalore" },
+    { label: "Premium Birthday Planner", path: "/premium-birthday-planner" },
+    { label: "Premium House Warming", path: "/premium-house-warming-planner" },
+    { label: "Premium Baby Shower", path: "/premium-baby-shower-planner" },
   ],
 };

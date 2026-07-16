@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import HomePage from '../pages/HomePage';
 
 export const metadata = {
-  title: { absolute: "Eevagga | Premium Birthday Planner in Bangalore — House Warming & Baby Showers" },
-  description: "Bangalore's premium birthday, house warming & baby shower planning company. End-to-end themes, decor, photography and full execution. Book your celebration today.",
+  title: { absolute: "Eevagga | Birthday Planner Bangalore — House Warming & Baby Showers" },
+  description: "Bangalore's premium birthday, house warming & baby shower planning company. End-to-end themes, decor, photography and execution. Book your celebration today.",
   keywords: "birthday planner Bangalore, birthday decoration Bangalore, house warming planner Bangalore, baby shower planner Bangalore, kids birthday planner Bangalore, premium birthday celebration Bangalore, birthday party planning Bangalore",
   alternates: {
     canonical: 'https://www.eevagga.com',
