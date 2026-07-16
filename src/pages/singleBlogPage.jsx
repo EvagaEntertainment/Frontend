@@ -7,20 +7,21 @@ import useServices from "../hooks/useServices";
 import commonApis from "../services/commonApis";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
-function SingleBlogPage() {
+function SingleBlogPage({ initialBlog }) {
   const params = useParams(); const { blogId  } = params || {};
-  const [blog, setBlog] = useState();
+  const [blog, setBlog] = useState(initialBlog);
   const router = useRouter();
   const getOneBlogApi = useServices(commonApis.getOneBlog);
   const getOneBlogApiHandle = async () => {
     const response = await getOneBlogApi.callApi(blogId);
-    setBlog(response ? response : "");
+    const blogData = response?.data || response;
+    setBlog(blogData ? blogData : "");
   };
   useEffect(() => {
-    if (blogId) {
+    if (blogId && !initialBlog) {
       getOneBlogApiHandle();
     }
-  }, [blogId]);
+  }, [blogId, initialBlog]);
   return (
     <>
       <Breadcrumbs />
