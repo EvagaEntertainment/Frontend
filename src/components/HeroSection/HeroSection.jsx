@@ -47,7 +47,7 @@ const HeroSection = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold tracking-tight text-white mb-4"
               whileHover={{ scale: 1.02 }}
             >
-              Premium Birthday Celebrations, Designed to Be Unforgettable
+              Birthday &amp; Celebration Planning Services in Bangalore
             </motion.h1>
             {/* <motion.p
               className="text-xl md:text-2xl text-white mb-8"

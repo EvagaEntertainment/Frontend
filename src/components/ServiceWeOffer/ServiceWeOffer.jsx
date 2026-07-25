@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ServiceOfferedCard } from "../Cards/ServiceOfferedCard";
 import {
   FiCalendar,
@@ -129,6 +130,30 @@ const ServicesSection = () => {
               description={service.description}
               index={index}
             />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-12 pt-8 border-t border-gray-200 text-center">
+        <p className="text-gray-500 text-sm mb-4">Explore our featured celebration services in Bangalore:</p>
+        <div className="flex flex-wrap justify-center gap-2">
+          {[
+            { label: 'Birthday Planner Bangalore', href: '/birthday-planner-bangalore' },
+            { label: 'Birthday Decoration', href: '/birthday-decoration-bangalore' },
+            { label: 'Kids Birthday Planner', href: '/kids-birthday-planner-bangalore' },
+            { label: 'Luxury Birthday Planner', href: '/luxury-birthday-planner-bangalore' },
+            { label: 'Premium Birthday Planner', href: '/premium-birthday-planner' },
+            { label: 'House Warming Planner', href: '/premium-house-warming-planner' },
+            { label: 'Baby Shower Planner', href: '/premium-baby-shower-planner' },
+            { label: 'Browse All Packages', href: '/viewall' },
+          ].map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className="inline-block px-3 py-1.5 text-sm text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors duration-200"
+            >
+              {label}
+            </Link>
           ))}
         </div>
       </div>

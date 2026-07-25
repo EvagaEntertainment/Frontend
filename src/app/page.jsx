@@ -32,6 +32,18 @@ export default function Home() {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Birthday Planner in Bangalore — House Warming &amp; Baby Shower Celebrations | Eevagga</h1>
+      <div style={{ padding: '0.875rem 1.5rem', background: '#fef9f5', textAlign: 'center', borderBottom: '1px solid #fde8d0' }}>
+        <p style={{ margin: 0, fontSize: '0.925rem', color: '#374151', lineHeight: 1.6 }}>
+          {"Bangalore's trusted celebration company — "}
+          <a href="/birthday-planner-bangalore" style={{ color: '#e65c00', fontWeight: 600 }}>Birthday Planning</a>
+          {", "}
+          <a href="/premium-house-warming-planner" style={{ color: '#e65c00', fontWeight: 600 }}>House Warming</a>
+          {" & "}
+          <a href="/premium-baby-shower-planner" style={{ color: '#e65c00', fontWeight: 600 }}>Baby Showers</a>
+          {" — end-to-end, 500+ events delivered. "}
+          <a href="/viewall" style={{ color: '#e65c00', fontWeight: 600 }}>Browse all packages →</a>
+        </p>
+      </div>
       <Suspense fallback={null}>
         <HomePage />
       </Suspense>
