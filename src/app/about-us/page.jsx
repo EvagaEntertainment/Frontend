@@ -1,6 +1,6 @@
 export const metadata = {
   title: "About Eevagga — Birthday & Celebration Planner in Bangalore",
-  description: "Eevagga is Bangalore's most trusted birthday, house warming and baby shower planning company. Premium execution, creative themes and end-to-end planning.",
+  description: "Eevagga is Bangalore's most trusted birthday, house warming and baby shower planning company. Creative themes and end-to-end planning. Meet our team.",
   keywords: "about Eevagga, birthday planner Bangalore, full-service celebration company, premium event planning Bangalore",
   alternates: { canonical: '/about-us' },
   openGraph: {

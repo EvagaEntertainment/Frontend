@@ -1,6 +1,14 @@
 import { Suspense } from 'react';
 import HomePage from '../pages/HomePage';
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eevagga.com" }
+  ]
+};
+
 export const metadata = {
   title: { absolute: "Eevagga | Birthday Planner Bangalore — House Warming & Baby Showers" },
   description: "Bangalore's premium birthday, house warming & baby shower planning company. End-to-end themes, decor, photography and execution. Book your celebration today.",
@@ -22,6 +30,7 @@ const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, 
 export default function Home() {
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Birthday Planner in Bangalore — House Warming &amp; Baby Shower Celebrations | Eevagga</h1>
       <Suspense fallback={null}>
         <HomePage />
