@@ -101,7 +101,7 @@ function BlogCard({ blog }) {
             },
           }}
           onClick={() =>
-            router.push(`${internalRoutes?.singleBlog + "/" + blog?._id}`)
+            blog?._id && router.push(`${internalRoutes?.singleBlog}/${blog._id}`)
           }
         >
           Read More
