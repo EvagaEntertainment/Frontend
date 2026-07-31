@@ -242,6 +242,8 @@ const pageConfig = {
 };
 
 const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
+const pillStyle = { display: 'inline-block', padding: '0.3rem 0.8rem', fontSize: '0.8rem', color: '#e65c00', border: '1px solid #fca97a', borderRadius: '9999px', textDecoration: 'none', lineHeight: 1.6 };
+const labelStyle = { fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '0.55rem', margin: '0 0 0.55rem' };
 /* ─── Page Component ───────────────────────────────────────────────────── */
 export default function BirthdayPlannerBangalorePage() {
   return (
@@ -265,6 +267,63 @@ export default function BirthdayPlannerBangalorePage() {
       <Suspense fallback={null}>
         <ServiceLandingPage config={pageConfig} />
       </Suspense>
+
+      {/* ── SSR hub links: area/style/venue pages (server-rendered for crawlers) ── */}
+      <div style={{ padding: '2rem 1.5rem 2.5rem', maxWidth: '960px', margin: '0 auto' }}>
+
+        <div style={{ marginBottom: '1.75rem' }}>
+          <p style={labelStyle}>Birthday Planners by Bangalore Area</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {[
+              ['Koramangala', '/birthday-planner-koramangala'],
+              ['Indiranagar', '/birthday-planner-indiranagar'],
+              ['Whitefield', '/birthday-planner-whitefield'],
+              ['HSR Layout', '/birthday-planner-hsr-layout'],
+              ['Sarjapur', '/birthday-planner-sarjapur'],
+              ['Bellandur', '/birthday-planner-bellandur'],
+              ['Hebbal', '/birthday-planner-hebbal'],
+              ['Electronic City', '/birthday-planner-electronic-city'],
+              ['Hennur', '/birthday-planner-hennur'],
+              ['Yelahanka', '/birthday-planner-yellhanka'],
+              ['JP Nagar', '/birthday-planner-jp-nagar'],
+            ].map(([label, href]) => (
+              <a key={href} href={href} style={pillStyle}>{label}</a>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '1.75rem' }}>
+          <p style={labelStyle}>Birthday Celebration Styles</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {[
+              ['1st Birthday Planner', '/1st-birthday-planner-bangalore'],
+              ['Kids Birthday Party', '/kids-birthday-party-bangalore'],
+              ['Teen Birthday Celebration', '/teen-birthday-celebration-bangalore'],
+              ['Adult Birthday Planner', '/adult-birthday-planner-bangalore'],
+              ['Birthday at Home', '/birthday-celebration-at-home-bangalore'],
+              ['End-to-End Birthday Planner', '/premium-birthday-end-to-end-planner'],
+            ].map(([label, href]) => (
+              <a key={href} href={href} style={pillStyle}>{label}</a>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p style={labelStyle}>Birthday Venues in Bangalore</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {[
+              ['Birthday Venues Bangalore', '/birthday-venues-bangalore'],
+              ['Venues in Whitefield', '/birthday-venues-whitefield'],
+              ['Venues Under ₹50K', '/birthday-venues-under-50k-bangalore'],
+              ['Birthday Party Resorts', '/birthday-party-resorts-bangalore'],
+              ['Indoor Birthday Venues', '/indoor-birthday-venues-bangalore'],
+            ].map(([label, href]) => (
+              <a key={href} href={href} style={pillStyle}>{label}</a>
+            ))}
+          </div>
+        </div>
+
+      </div>
     </>
   );
 }
