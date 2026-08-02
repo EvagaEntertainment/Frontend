@@ -1,6 +1,6 @@
 export const metadata = {
   title: "About Eevagga — Birthday & Celebration Planner in Bangalore",
-  description: "Eevagga is Bangalore's most trusted birthday, house warming and baby shower planning company. Premium execution, creative themes and end-to-end planning.",
+  description: "Eevagga is Bangalore's most trusted birthday, house warming and baby shower planning company. Creative themes and end-to-end planning. Meet our team.",
   keywords: "about Eevagga, birthday planner Bangalore, full-service celebration company, premium event planning Bangalore",
   alternates: { canonical: '/about-us' },
   openGraph: {
@@ -44,6 +44,9 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
+      <p style={{ margin: 0, padding: '0.6rem 1.5rem', background: '#f9fafb', textAlign: 'center', fontSize: '0.875rem', color: '#6b7280', borderBottom: '1px solid #e5e7eb' }}>
+        Explore our <a href="/services" style={{ color: '#e65c00' }}>celebration planning services</a> or <a href="/viewall" style={{ color: '#e65c00' }}>browse all packages</a>.
+      </p>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

@@ -48,6 +48,13 @@ const serviceSchema = {
     offerCount: 3,
     availability: 'https://schema.org/InStock',
   },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: 4.8,
+    reviewCount: 500,
+    bestRating: 5,
+    worstRating: 1,
+  },
 };
 
 const breadcrumbSchema = {
@@ -206,6 +213,8 @@ const pageConfig = {
 
 };
 
+const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
+const pillStyle = { display: 'inline-block', padding: '0.3rem 0.8rem', fontSize: '0.8rem', color: '#e65c00', border: '1px solid #fca97a', borderRadius: '9999px', textDecoration: 'none', lineHeight: 1.6 };
 /* ─── Page Component ───────────────────────────────────────────────────── */
 export default function BirthdayDecorationBangalorePage() {
   return (
@@ -222,9 +231,32 @@ export default function BirthdayDecorationBangalorePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
+      <h1 style={srOnly}>{pageConfig.h1}</h1>
+
+      <p style={srOnly}>{pageConfig.heroSubtitle}</p>
+
       <Suspense fallback={null}>
         <ServiceLandingPage config={pageConfig} />
       </Suspense>
+
+      {/* ── SSR hub: theme page links (server-rendered for crawlers) ── */}
+      <div style={{ padding: '2rem 1.5rem 2.5rem', maxWidth: '960px', margin: '0 auto' }}>
+        <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9ca3af', margin: '0 0 0.55rem' }}>
+          Popular Birthday Themes in Bangalore
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+          {[
+            ['Jungle Theme Birthday', '/jungle-theme-birthday-bangalore'],
+            ['Unicorn Theme Birthday', '/unicorn-theme-birthday-bangalore'],
+            ['Space Theme Birthday', '/space-theme-birthday-bangalore'],
+            ['Barbie Theme Birthday', '/barbie-theme-birthday-bangalore'],
+            ['Boss Baby Birthday', '/boss-baby-birthday-decoration-bangalore'],
+            ['Cocomelon Birthday Theme', '/cocomelon-birthday-theme-bangalore'],
+          ].map(([label, href]) => (
+            <a key={href} href={href} style={pillStyle}>{label}</a>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

@@ -48,14 +48,11 @@ const breadcrumbSchema = {
   ]
 };
 
-const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
-
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
-      <h1 style={srOnly}>Birthday &amp; Celebration Services in Bangalore — Eevagga</h1>
       <Suspense fallback={null}><PageComponent /></Suspense>
     </>
   );

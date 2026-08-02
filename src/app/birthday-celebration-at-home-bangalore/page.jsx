@@ -48,6 +48,13 @@ const serviceSchema = {
     offerCount: 3,
     availability: 'https://schema.org/InStock',
   },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: 4.8,
+    reviewCount: 500,
+    bestRating: 5,
+    worstRating: 1,
+  },
 };
 
 const breadcrumbSchema = {
@@ -206,6 +213,7 @@ const pageConfig = {
 
 };
 
+const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
 /* ─── Page Component ───────────────────────────────────────────────────── */
 export default function BirthdayCelebrationAtHomeBangalorePage() {
   return (
@@ -222,6 +230,10 @@ export default function BirthdayCelebrationAtHomeBangalorePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
+      <h1 style={srOnly}>{pageConfig.h1}</h1>
+
+      <p style={srOnly}>{pageConfig.heroSubtitle}</p>
+
       <Suspense fallback={null}>
         <ServiceLandingPage config={pageConfig} />
       </Suspense>
