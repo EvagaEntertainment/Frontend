@@ -92,7 +92,7 @@ export default async function Page({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <Suspense fallback={null}>
-        <PageComponent />
+        <PageComponent initialBlog={blog} />
       </Suspense>
     </>
   );

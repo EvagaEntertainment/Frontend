@@ -29,15 +29,24 @@ const breadcrumbSchema = {
 
 const srOnly = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 };
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const page = parseInt(resolvedParams?.page || '1', 10);
+
   let blogPosts = [];
+  let initialBlogs = [];
+  let initialTotalPages = 1;
+
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}blog/get-all-blog-for-user`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}blog/get-all-blog-for-user?page=${page}`,
       { next: { revalidate: 3600 } }
     );
     const data = await res.json();
-    blogPosts = (data?.data || []).slice(0, 10)
+    initialBlogs = data?.blogs || [];
+    initialTotalPages = data?.totalPages || 1;
+
+    blogPosts = initialBlogs
       .filter(post => post._id && post.title)
       .map(post => ({
         "@type": "BlogPosting",
@@ -46,7 +55,9 @@ export default async function Page() {
         ...(post.createdAt ? { "datePublished": post.createdAt } : {}),
         "url": `https://www.eevagga.com/blogs/singleBlog/${post._id}`
       }));
-  } catch {}
+  } catch (err) {
+    console.error("Error fetching blogs on server:", err);
+  }
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -65,7 +76,13 @@ export default async function Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Eevagga Blog — Birthday &amp; Celebration Ideas, Themes &amp; Planning Guides</h1>
-      <Suspense fallback={null}><PageComponent /></Suspense>
+      <Suspense fallback={null}>
+        <PageComponent 
+          initialBlogs={initialBlogs} 
+          initialPage={page} 
+          initialTotalPages={initialTotalPages} 
+        />
+      </Suspense>
     </>
   );
 }
