@@ -76,11 +76,30 @@ export default async function Page({ searchParams }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }} />
       <h1 style={srOnly}>Eevagga Blog — Birthday &amp; Celebration Ideas, Themes &amp; Planning Guides</h1>
+
+      {/* SSR article links — crawlable without JavaScript */}
+      {initialBlogs.length > 0 && (
+        <nav aria-label="Blog articles" style={{ padding: '1rem 1.5rem 0', maxWidth: '960px', margin: '0 auto' }}>
+          <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9ca3af', margin: '0 0 0.5rem' }}>
+            Recent Articles
+          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            {initialBlogs.filter(p => p._id && p.title).slice(0, 20).map(post => (
+              <li key={post._id}>
+                <a href={`/blogs/singleBlog/${post._id}`} style={{ color: '#6b21a8', fontSize: '0.875rem', textDecoration: 'none' }}>
+                  {post.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
       <Suspense fallback={null}>
-        <PageComponent 
-          initialBlogs={initialBlogs} 
-          initialPage={page} 
-          initialTotalPages={initialTotalPages} 
+        <PageComponent
+          initialBlogs={initialBlogs}
+          initialPage={page}
+          initialTotalPages={initialTotalPages}
         />
       </Suspense>
     </>
