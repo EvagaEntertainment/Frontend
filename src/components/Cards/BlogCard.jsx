@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { internalRoutes } from "../../utils/internalRoutes";
 
-/* ── standalone blog card ─────────────────────────────────────────── */
 function BlogCard({ blog, index = 0 }) {
   const imageUrl = process.env.NEXT_PUBLIC_API_Aws_Image_BASE_URL + (blog?.coverImage || "");
   const plainText = blog?.content ? blog.content.replace(/<[^>]+>/g, "") : "";
@@ -58,50 +57,17 @@ function BlogCard({ blog, index = 0 }) {
         {/* title */}
         <h2 className="font-semibold text-base text-textPrimary leading-snug mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2">
           {blog?.title}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          color="text.secondary"
-          gutterBottom
-          sx={{
-            fontWeight: 500,
-            color: "text.secondary",
-            opacity: 0.8,
-          }}
-        >
-          By {blog?.authorName} |{" "}
-          {new Date(blog?.publishedAt).toLocaleDateString()}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            mb: 2,
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            lineHeight: 1.5,
-          }}
-        >
-          {blog?.content.replace(/<[^>]+>/g, "")}
-        </Typography>
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            mt: 2,
-            fontWeight: 600,
-            background: "linear-gradient(45deg, #6A1B9A 30%, #4A0072 90%)",
-            color: "#fff",
-            "&:hover": {
-              background: "linear-gradient(45deg, #1565c0 30%, #1e88e5 90%)",
-            },
-          }}
-          onClick={() =>
-            blog?._id && router.push(`${internalRoutes?.singleBlog}/${blog._id}`)
-          }
+        </h2>
+
+        {/* excerpt */}
+        <p className="text-sm text-textGray leading-relaxed mb-4 line-clamp-3 flex-grow">
+          {excerpt}
+        </p>
+
+        {/* CTA — renders as <a> tag, crawlable by Google */}
+        <Link
+          href={blog?._id ? `${internalRoutes?.singleBlog}/${blog._id}` : '/blogs'}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-200"
         >
           Read article
           <svg
